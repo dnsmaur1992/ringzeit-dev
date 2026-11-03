@@ -58,7 +58,7 @@
         if (navigator.share)
           return await navigator.share({
             title: "Ringzeit",
-            text: isBoxMain() ? I.shareTextBox : I.shareText,
+            text: isTkdMain() ? I.shareTextTkd : isBoxMain() ? I.shareTextBox : I.shareText,
             url,
           });
       } catch (e) {

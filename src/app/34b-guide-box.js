@@ -122,10 +122,20 @@
     },
   ];
   const readsFor = () =>
-    isBoxMain() ? [...BOX_READS, ...READS.filter((r) => !r.only)] : READS.filter((r) => r.only !== "b");
+    isTkdMain() ? [...tkdReads(), ...READS.filter((r) => !r.only && r.k !== "mistakes").map(tkdShared)] : isBoxMain() ? [...BOX_READS, ...READS.filter((r) => !r.only)] : READS.filter((r) => r.only !== "b");
   const BOX_CARE_SKIP = 2; // shin and foot guards
   function guideSecs(kind) {
     const G = t("guide");
+    if (isTkdMain()) {
+      // no gloves/wraps (care 0, 1) and no Thai oil (aid 1); the KO line names a pause instead of the WAKO suspension
+      if (kind === "care")
+        return G.careSecs
+          .filter((_, i) => i > 1)
+          .map(([a, b]) => [a, b.replace(/^Wie Handschuhe: (.)/, (_, c) => c.toUpperCase()).replace(/^Like gloves: (.)/, (_, c) => c.toUpperCase()).replace("Ein Wäschenetz für die Bandagen und ein Beutel für nasse Sachen halten Ordnung.", "Ein Beutel für nasse Sachen hält Ordnung.").replace("A laundry bag for the wraps and a pouch for wet things keep it tidy.", "A pouch for wet things keeps it tidy.")]);
+      return G.aidSecs
+        .filter((_, i) => i !== 1)
+        .map(([a, b]) => [a, b.replace(/die WAKO-Sperre nach K\.o\. gilt\./, "danach ist eine Pause nötig.").replace(/the WAKO suspension after a KO applies\./, "a break is needed afterwards.")]);
+    }
     if (!isBoxMain()) return kind === "care" ? G.careSecs : G.aidSecs;
     if (kind === "care") return G.careSecs.filter((_, i) => i !== BOX_CARE_SKIP);
     return G.aidSecs.map(([a, b]) => (a === G.aidSecs[3][0] ? [a, b.replace(/die WAKO-Sperre nach K\.o\. gilt\./, "die K.o.-Sperre gilt.").replace(/the WAKO suspension after a KO applies\./, "the KO suspension applies.")] : [a, b]));

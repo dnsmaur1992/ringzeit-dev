@@ -40,7 +40,7 @@
     if (rd >= 0) {
       const R = RL[rd][S.profile.lang === "de" ? "de" : "en"],
         nx = RL[(rd + 1) % RL.length];
-      return `<h3>${esc(R.t)}</h3><p class="sub">${esc(R.sub)}</p>${secs(R.secs)}<p class="sub gsrc">${t("src")}: ${esc(R.src)}</p>${R.link ? `<a class="vlink" href="${WKB_URL}" target="_blank" rel="noopener">▶ ${S.profile.lang === "de" ? "DBV-Wettkampfbestimmungen (PDF, Stand 01.09.2026)" : "DBV competition rules (PDF, version 01.09.2026)"}</a>` : ""}<div class="acts2"><button type="button" class="btn sec" data-sx="close">${t("close")}</button><button type="button" class="btn" data-guide="${nx.k}">${G.nextRead}</button></div>`;
+      return `<h3>${esc(R.t)}</h3><p class="sub">${esc(R.sub)}</p>${secs(R.secs)}<p class="sub gsrc">${t("src")}: ${esc(R.src)}</p>${(R.links || []).map((l) => `<a class="vlink" href="${l.u}" target="_blank" rel="noopener">▶ ${esc(l[S.profile.lang === "de" ? "de" : "en"])}</a>`).join("")}${R.link ? `<a class="vlink" href="${WKB_URL}" target="_blank" rel="noopener">▶ ${S.profile.lang === "de" ? "DBV-Wettkampfbestimmungen (PDF, Stand 01.09.2026)" : "DBV competition rules (PDF, version 01.09.2026)"}</a>` : ""}<div class="acts2"><button type="button" class="btn sec" data-sx="close">${t("close")}</button><button type="button" class="btn" data-guide="${nx.k}">${G.nextRead}</button></div>`;
     }
     if (o.id === "care")
       return `<h3>${G.care}</h3>${secs(guideSecs("care"))}<div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
@@ -713,5 +713,5 @@
     const lg = S.profile.lang === "de" ? "de" : "en",
       read = (r) =>
         `<button type="button" class="grow" data-guide="${r.k}"><span class="gico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${r.ico}</svg></span><span class="gtx"><b>${esc(r[lg].t)}</b><small>${esc(r[lg].sub)}</small></span><span class="chev">›</span></button>`;
-    return `<div class="panel"><div class="field"><span class="lab">${G.title}</span><span class="sub">${isBoxMain() ? G.hintBox : G.hint}</span></div><span class="glab">${G.practical}</span><div class="glist">${row("wrap")}${row("care")}${row("aid")}</div><span class="glab">${G.reads}</span><div class="glist">${readsFor().map(read).join("")}</div></div>`;
+    return `<div class="panel"><div class="field"><span class="lab">${G.title}</span><span class="sub">${isBoxMain() ? G.hintBox : isTkdMain() ? G.hintTkd : G.hint}</span></div><span class="glab">${G.practical}</span><div class="glist">${isTkdMain() ? "" : row("wrap")}${row("care")}${row("aid")}</div><span class="glab">${G.reads}</span><div class="glist">${readsFor().map(read).join("")}</div></div>`;
   }

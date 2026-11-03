@@ -293,6 +293,48 @@
       en: "The first World Amateur Boxing Championships were held in 1974.",
       s: "Wikipedia",
     },
+    {
+      tk: true,
+      de: "Taekwondo setzt sich aus drei Silben zusammen: tae (Fuß), kwon (Faust) und do (Weg). Der Name wurde in den 1950er-Jahren festgelegt.",
+      en: "Taekwondo is made of three syllables: tae (foot), kwon (fist) and do (way). The name was settled in the 1950s.",
+      s: "Wikipedia",
+    },
+    {
+      tk: true,
+      de: "Die Schülergrade heißen Gup (Kup) und zählen abwärts bis zum 1. Gup; danach folgen die Meistergrade (Dan), die aufwärts gezählt werden.",
+      en: "The student grades are called gup (kup) and count down to 1st gup; the master grades (dan) that follow count upwards.",
+      s: "Wikipedia",
+    },
+    {
+      tk: "wt",
+      de: "Die World Taekwondo Federation wurde 1973 gegründet, im selben Jahr fanden in Seoul die ersten Weltmeisterschaften statt. Seit 2017 heißt der Verband World Taekwondo (WT).",
+      en: "The World Taekwondo Federation was founded in 1973, and the first World Championships took place in Seoul the same year. Since 2017 the federation has been called World Taekwondo (WT).",
+      s: "taekwondonation.com",
+    },
+    {
+      tk: "wt",
+      de: "Das IOC erkannte die WT 1980 an. Bei den Spielen 1988 in Seoul und 1992 in Barcelona war Taekwondo Demonstrationssport, seit 2000 ist es olympische Medaillendisziplin.",
+      en: "The IOC recognised WT in 1980. Taekwondo was a demonstration sport at the 1988 Seoul and 1992 Barcelona Games and has been an Olympic medal sport since 2000.",
+      s: "Olympedia; taekwondonation.com",
+    },
+    {
+      tk: "wt",
+      de: "Die Deutsche Taekwondo Union (DTU) ist Mitglied der World Taekwondo, der European Taekwondo Union und des DOSB.",
+      en: "The German Taekwondo Union (DTU) is a member of World Taekwondo, the European Taekwondo Union and the DOSB.",
+      s: "Wikipedia",
+    },
+    {
+      tk: "itf",
+      de: "Die International Taekwon-Do Federation wurde am 22. März 1966 in Seoul von General Choi Hong-hi gegründet. Ihr Sitz ist seit 1985 Wien.",
+      en: "The International Taekwon-Do Federation was founded on 22 March 1966 in Seoul by General Choi Hong-hi. Its seat has been Vienna since 1985.",
+      s: "Wikipedia",
+    },
+    {
+      tk: "itf",
+      de: "Der ITF-D vertritt die International Taekwon-Do Federation in Deutschland.",
+      en: "The ITF-D represents the International Taekwon-Do Federation in Germany.",
+      s: "Wikipedia",
+    },
   ];
   const TIPS = [
     {
@@ -445,6 +487,76 @@
       b: 1,
       de: "Der Treffer kommt auf den ersten beiden Knöcheln, das Handgelenk bleibt gerade – locker bis zum Aufprall, dann fest schließen.",
       en: "Land on the first two knuckles with a straight wrist – relaxed until impact, then close the fist firmly.",
+    },
+    {
+      tk: true,
+      de: "Kicks beginnen in der Hüfte: Erst die Hüfte öffnen, dann das Bein werfen – so wird der Tritt schneller und schont das Knie.",
+      en: "Kicks start at the hip: open the hip first, then throw the leg – faster, and easier on the knee.",
+    },
+    {
+      tk: true,
+      de: "Beim Rundkick dreht das Standbein mit: Ferse in Richtung Ziel drehen, sonst bremst die Hüfte.",
+      en: "On a round kick the standing foot turns with it: rotate the heel towards the target or the hip gets blocked.",
+    },
+    {
+      tk: true,
+      de: "Bein nach dem Treffer sofort zurückziehen: Knie einziehen, dann absetzen – nicht fallen lassen.",
+      en: "Pull the leg back right after impact: knee in first, then set down – don't let it drop.",
+    },
+    {
+      tk: true,
+      de: "Hände oben lassen, auch beim Treten. Eine fallende Deckung ist der häufigste Fehler bei Kicks.",
+      en: "Keep your hands up while kicking. A dropping guard is the most common mistake on kicks.",
+    },
+    {
+      tk: true,
+      de: "Technik vor Höhe: Saubere Mittelhöhe schlägt wacklige Kopfhöhe. Die Höhe kommt mit der Beweglichkeit von selbst.",
+      en: "Technique before height: a clean mid-level kick beats a wobbly head kick. Height follows flexibility.",
+    },
+    {
+      tk: true,
+      de: "Ausatmen beim Treffer: Das spannt die Körpermitte an und hält dich stabil.",
+      en: "Breathe out on impact: it braces your core and keeps you stable.",
+    },
+    {
+      tk: "wt",
+      de: "Kicks starten aus der Bewegung, nicht aus dem Stand: Mit federnden Schritten auf dem Fußballen bleibst du ständig schussbereit.",
+      en: "Kicks start from movement, not from standing still: bouncy steps on the balls of your feet keep you ready to fire.",
+    },
+    {
+      tk: "wt",
+      de: "Bei Doppelkicks das Knie zwischen den Tritten nicht absetzen – das spart Zeit und hält die Balance.",
+      en: "On double kicks don't set the knee down between kicks – it saves time and keeps your balance.",
+    },
+    {
+      tk: "wt",
+      de: "Im WT-Kampf zählen saubere Treffer auf erlaubten Flächen: lieber zielgenau als wild.",
+      en: "In WT sparring clean hits on legal target areas count: be accurate rather than wild.",
+    },
+    {
+      tk: "wt",
+      de: "Schneller Seitenwechsel (Wechselschritt) öffnet neue Winkel: Wer die Beinseite wechselt, kann mit Vorder- und Hinterbein gleich gut treten.",
+      en: "A quick switch of leading leg opens new angles: if you can change sides, you kick equally well with front and back leg.",
+    },
+    {
+      tk: "itf",
+      de: "Im ITF-Training zählen auch Handtechniken: Faust, Handkante und Fingerspitzen gehören zur Kombi wie die Kicks.",
+      en: "In ITF training hand techniques count too: fist, knife-hand and fingertips are part of the combination just like kicks.",
+    },
+    {
+      tk: "itf",
+      de: "Sinuswelle: Körper beim Schritt kurz anheben und beim Treffer senken – das Körpergewicht geht so in die Technik.",
+      en: "Sine wave: rise slightly while stepping and sink on impact – this puts your body weight into the technique.",
+    },
+    {
+      tk: "itf",
+      de: "In den Tul zählen Rhythmus, Blickrichtung, Standtiefe und Genauigkeit – lieber langsam und exakt als schnell und schlampig.",
+      en: "In the tul rhythm, facing, stance depth and precision count – slow and exact beats fast and sloppy.",
+    },
+    {
+      tk: "itf",
+      de: "Kontrolle vor Kraft: Im ITF-Sparring zählt die kontrolliert platzierte Technik, nicht der härteste Schlag.",
+      en: "Control before power: in ITF sparring the well-placed, controlled technique counts, not the hardest blow.",
     },
   ];
 

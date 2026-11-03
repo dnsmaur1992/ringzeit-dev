@@ -1375,7 +1375,7 @@
         ]
           .filter(Boolean)
           .join(" · "),
-        guide: PS.guide[1],
+        guide: isTkdMain() ? PS.guideTkd : PS.guide[1],
         app: PS.app[1],
       };
     let h = header(t("profTitle")) + `<div class="panel plist">`;

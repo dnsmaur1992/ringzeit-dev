@@ -4,13 +4,14 @@
     const lg = S.profile.lang,
       box = document.getElementById("factBox");
     // tips and facts follow the main sport: boxing only gets boxing items, kickboxing keeps its own (k = kickboxing only, b = boxing only)
-    // taekwondo: general tips only until its own items come with the WT/ITF plans and guides (all facts are kickboxing or boxing history)
+    // taekwondo: general tips plus the tk items (tk: true = both styles, "wt"/"itf" = that style only); kickboxing and boxing never get tk items
     const isBoxMain = mainSport() === "boxing",
       isTkdMain = mainSport() === "taekwondo",
+      tkOk = (x) => x.tk === true || x.tk === tkdStyle(),
       tips = TIPS.filter((x) =>
-        isTkdMain ? !x.k && !x.b && !x.d : isBoxMain ? !x.k && !x.d : !x.b && (!x.d || x.d.includes(S.profile.disc)),
+        isTkdMain ? (x.tk ? tkOk(x) : !x.k && !x.b && !x.d) : isBoxMain ? !x.k && !x.d && !x.tk : !x.b && !x.tk && (!x.d || x.d.includes(S.profile.disc)),
       ),
-      facts = isTkdMain ? [] : FACTS.filter((x) => (isBoxMain ? x.b : !x.b));
+      facts = FACTS.filter((x) => (isTkdMain ? x.tk && tkOk(x) : isBoxMain ? x.b : !x.b && !x.tk));
     if (loadIdx % 2 || !facts.length) {
       const x = tips[Math.floor(loadIdx / 2) % tips.length];
       box.className = "fact tip";
