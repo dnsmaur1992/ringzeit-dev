@@ -11,7 +11,7 @@
 
 | Paket | Teil | Modell | Status |
 |---|---|---|---|
-| W1 | 0 – Entwicklungskopie isolieren | Opus | WARTET AUF MANUELLEN TEST |
+| W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | nicht beauftragt |
 
 ## Entscheidungen
@@ -28,15 +28,14 @@ Schritt 0 (03.11.2026, automatisch, nicht auf echten Geräten):
 - `node tests/isolation.e2e.mjs` gegen die stabile App `ff7a7d8` in Chromium auf gemeinsamer Origin (localhost): 12/12 bestanden – getrennte Schlüssel, Caches, Service Worker und Manifest; Cloud bleibt aus; eigene Sicherung hin und zurück; stabile Sicherung abgelehnt; Reset und Update der Dev-App lassen stabile Daten und Caches unberührt; Offline-Neustart der Dev-App.
 - Beobachtet: ein Update der *stabilen* App löscht den Dev-Cache (nicht die Dev-Daten); siehe `architecture.md`.
 
-Manuelle Abnahmen: noch keine.
+Manuelle Abnahmen:
+- 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
 ## Offen
 
-- Manueller Test von Schritt 0 auf echten Geräten (iPhone/Android) mit stabiler App und Dev-App nebeneinander.
-- GitHub Pages für `ringzeit-dev` aktiv? (vom Betreiber zu prüfen)
 - Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
 - `docs/rules-sources.md` entsteht mit den ersten Quellen (spätestens 4a-Q).
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach manueller Abnahme von Schritt 0: Schritt 1 – Architektur und Vergleichsbasis, Modell Opus.
+Schritt 1 – Architektur und Vergleichsbasis (nur Konzept), Modell Opus. Wartet auf ausdrücklichen Auftrag.
