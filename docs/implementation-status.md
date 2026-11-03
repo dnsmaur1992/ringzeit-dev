@@ -21,7 +21,8 @@
 | W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026 15:47, Stand `278b269`; `docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
 | W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a1c2946`, App-Version 03.11.2026 16:32, 164 Tests) |
 | W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
-| W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | WARTET AUF SICHTUNG (`docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
+| W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
+| W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | WARTET AUF SICHTUNG (181 Tests, Baseline Kickboxen identisch) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -101,6 +102,18 @@ Manuelle Abnahmen:
 - Android-Sprachausgabe: Ursache nicht belegt. Für gezielte Behebung werden Gerät, Android-Version, Browser/installierte App und die Fehlermeldung unter „Stimme der Ansagen“ benötigt.
 - Android-Tonprüfung aus der früheren `docs/todo-bedienung-akku.md` (entfernt) steht jetzt hier.
 
+## 6a – Gürtelbereich und Dobok (Umsetzung)
+
+- **Sichtbarkeit**: Taekwondo steht ab 6a ohne Zusatz „Vorschau“ in allen Sportauswahlen. Einheiten bestehen vorerst nur aus sportneutralen Blöcken (Kraft, Kondition, Beweglichkeit, Abhärtung) mit Hinweis „Taekwondo-Technik und Partnerübungen folgen mit den WT- und ITF-Plänen“; Technik, Formate und Regelprofile kommen mit 6b (WT) und 6c (ITF).
+- **Style** (WT / DTU oder ITF-D) wird im Profil (Ziele → Taekwondo-Grad) und im Onboarding gewählt, nicht je Einheit. Das Onboarding fragt bei Taekwondo Style und aktuellen Grad statt der Kickbox-Disziplin.
+- **Grade**: WT 10.–1. Kup, 1. Dan, unter 15 Jahren 1. Poom statt Dan; ITF-D 10.–1. Kup und 1. Dan; kein höherer Dan, kein Minikup. Grad je Style getrennt, **kein Übertrag**. Ein Grad ändert sich nur durch Ersteintrag, manuelle Korrektur oder eine bestandene Prüfung, die der Betreiber bestätigt („Grad übernehmen?“ – erst nach Ja); Einheiten, Abzeichen und Fitnesstest ändern ihn nie.
+- **Prüfung**: Datum + Zielgrad, Ergebnis bestanden/nicht bestanden, Verlauf (Datum, Style, Grad, Art, Ergebnis). Übersicht je Grad „laut PO“ mit Prüfungsteilen, Formname (nur Name, kein Inhalt; WT: übliche Taegeuk-Folge mit Hinweis, PO nennt nur die Nummer) und Mindestwartezeit als Hinweis (keine Sperre). Teile ohne App-Inhalt: „im Verein vorbereiten“. Kein Bruchtest für unter 15 (WT).
+- **Dobok-Figuren**: Ist Taekwondo gezeigt (Einheit, sonst Hauptsport; Ladebild, Onboarding, Startseite), tragen die Figuren einen weißen Dobok mit V-Kragen; der Gürtel entspricht dem Grad des gewählten Styles (kein Grad = weißer Standardgürtel; Poom rot/schwarz geteilt). Badehose/Saisonschmuck ersetzen den Dobok nicht, keine Logos. Gürtelfarben ITF-D = DTU (Angabe des Betreibers 03.11.2026), Spitzen als Streifen.
+- **Technik-Test** Taekwondo: eigene Beschreibung (nur Technik), Stufe je Style.
+- **Sicherung**: `profile.tkd` (Style, Grade, Verlauf, Prüfungen) gehört zum Profil und damit zur Sicherung; `migrate` normalisiert.
+- **Code**: `src/sports/taekwondo/{index,grades}.js`, `src/app/36-tkd-grade.js`; Tests 181 (neu: Grade/Gürtel/Wartezeiten/Formen, Normalisierung, Prüfungsablauf mit Bestätigung, Style-Trennung, Panel, Taekwondo-Einheit, Dobok-/Gürtelfarben, Onboarding, Technik-Test).
+- **Bekannte Grenzen**: keine Taekwondo-Techniken/Drills/Regelprofile (6b/6c); Tipps/Fakten nur allgemein (6d); Handschuhe der Kampfszene sind noch die der Kickbox-Pose; Abhärtung wie bisher, neue Bereiche (Handkante, Finger, Fuß) und Namensumschalter Koreanisch ↔ App-Sprache kommen in 6b/6c.
+
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 5: Teil 6a – Gürtelbereich und Dobok (Modell laut Plan: Sonnet). Erst nach Abnahme von 5 und ausdrücklichem Auftrag.
+Nach Sichtung von 6a: Teil 6b – WT-Pläne (Modell laut Plan: Sonnet). Erst nach Abnahme von 6a und ausdrücklichem Auftrag.
