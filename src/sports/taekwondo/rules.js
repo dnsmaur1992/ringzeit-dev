@@ -8,14 +8,14 @@
 export function wtClass(age) {
   if (age == null) return "s"; // nothing entered: adult
   if (age < 7) return null;
-  if (age <= 8) return "d";
-  if (age <= 11) return "c";
-  if (age <= 14) return "b";
-  if (age <= 17) return "a";
-  return age >= 35 ? "m" : "s";
+  if (age <= 8) return "td";
+  if (age <= 11) return "tc";
+  if (age <= 14) return "tb";
+  if (age <= 17) return "ta";
+  return age >= 35 ? "v" : "s";
 }
 /* round length per class (WOZ 7.1): Senioren and Jugend A 3 × 2 min, Jugend B–D and Masters 3 × 1:30; 1 min break */
-const ROUND = { d: 90, c: 90, b: 90, a: 120, s: 120, m: 90 };
+const ROUND = { td: 90, tc: 90, tb: 90, ta: 120, s: 120, v: 90 };
 
 /** Official bout format of the age class, or null (under 7). Same signature as the other rule profiles (discipline unused). */
 export function wtFormat(_disc, age) {
@@ -29,4 +29,24 @@ export function koDaysFor(age) {
   if (age == null || age >= 18) return 30;
   if (age >= 15) return 40;
   return 50;
+}
+
+/* ITF-D (6c): age classes of the ITF-D competition rules (WO 2.5, R4b): D-Jugend 6–8 · C-Jugend 9–11 · B-Jugend 12–14 ·
+   A-Jugend 15–17 · adults from 18. Round format of the ITF rules (R4c, Fassung 22.03.2026): adults 2 × 2 min / 1 min
+   break; 12–13 and 10–11 years 2 × 1:30 / 45 s; 8–9 years 2 × 1 min / 30 s. Under 8: no format. */
+export function itfClass(age) {
+  if (age == null) return "s";
+  if (age < 6) return null;
+  if (age <= 8) return "td";
+  if (age <= 11) return "tc";
+  if (age <= 14) return "tb";
+  if (age <= 17) return "ta";
+  return "s";
+}
+export function itfFormat(_style, age) {
+  const cls = itfClass(age);
+  if (!cls || age < 8) return null;
+  if (age >= 14) return { r: 2, w: 120, b: 60, cls };
+  if (age >= 10) return { r: 2, w: 90, b: 45, cls };
+  return { r: 2, w: 60, b: 30, cls };
 }

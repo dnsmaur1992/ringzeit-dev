@@ -28,6 +28,8 @@ export const TECH = {
 };
 /* kicks (red chip); punch and steps are not */
 export const KICKS = new Set(["ap", "dol", "dolh", "yeop", "mireo", "dwi", "nae", "ban", "dhu", "ttdol", "ttyeop"]);
+/* hand techniques (a wrist or shoulder limit removes them) */
+export const HANDS = new Set(["jir"]);
 export const STEPS = new Set(["stepf", "stepb", "steps", "turn", "swch"]);
 /* head-height kicks: only after the warm-up rounds */
 export const HEAD = new Set(["dolh", "nae", "dhu"]);
@@ -116,6 +118,9 @@ export const COMBOS = [
     ["ap", "dol", "dolh"],
     ["mireo", "dol", "dolh"],
     ["dol", "nae"],
+    ["ap", "dol", "yeop", "dolh"],
+    ["dol", "dolh", "nae", "dol"],
+    ["ap", "dol", "dolh", "dol", "yeop"],
     ["ap", "dol", "nae"],
     ["dol", "ban"],
     ["yeop", "dwi"],
@@ -140,8 +145,16 @@ export const COMBOS = [
     ["swch", "dol", "dolh", "dwi"],
     ["sr3"],
     ["sr1", "dolh"],
+    ["ap", "dol", "dolh", "dwi", "dol"],
+    ["sr4", "dolh", "dwi", "dolh"],
+    ["turn", "dol", "dolh", "dwi", "dol"],
+    ["stepf", "ap", "dol", "dolh", "dwi", "dolh"],
+    ["sr1", "sr5", "dolh"],
   ],
 ];
+/** number of kicks in a combo (a series counts its parts, steps and punches do not) */
+export const kickCount = (c) => c.reduce((n, x) => n + (SERIES[x] ? SERIES[x].p.filter(([y]) => KICKS.has(y)).length : KICKS.has(x) ? 1 : 0), 0);
+
 /* with a wrist or shoulder limit: short light work, no pad or bag load */
 export const LIGHT = [
   ["ap", "dol"],
@@ -216,17 +229,17 @@ export const RT = {
    gear = needs a partner and full protection, touch = at most one round per session, not for children. */
 export const TASKS = [
   {
-    id: "tk_pad", sport: "taekwondo", light: true,
+    id: "tk_pad", sport: "taekwondo", style: "wt", light: true,
     de: ["Tritt-Pratze", "A tritt kontrolliert auf die Pratzen, B hält und gibt vor, welche Tritte kommen. Nach 3–5 Aktionen Rollen tauschen.", "Tritte auf den Sack oder in die Luft mit sauberem Zurückziehen, Beinarbeit dazwischen."],
     en: ["Kick pads", "A kicks the pads with control, B holds and calls which kicks come. Swap roles every 3–5 actions.", "Kicks onto the bag or into the air with a clean pull-back, footwork in between."],
   },
   {
-    id: "tk_step", sport: "taekwondo", light: true,
+    id: "tk_step", sport: "taekwondo", style: "wt", light: true,
     de: ["Step-Sparring", "A greift mit einem vorher festgelegten Tritt an, B weicht aus oder blockt und kontert mit einem festgelegten Tritt. Langsam und kontrolliert, danach Rollen tauschen.", null],
     en: ["Step sparring", "A attacks with a kick agreed beforehand, B evades or blocks and counters with an agreed kick. Slow and controlled, then swap roles.", null],
   },
   {
-    id: "tk_kicks", sport: "taekwondo", light: true,
+    id: "tk_kicks", sport: "taekwondo", style: "wt", light: true,
     de: ["Nur Tritte zum Rumpf", "Beide treten nur zum Rumpf, kontrolliert und ohne Härte, die Hände bleiben oben. Fokus: Distanz und sauberes Zurückziehen.", "Nur Tritte zum Rumpf gegen einen vorgestellten Gegner, dazwischen Beinarbeit."],
     en: ["Trunk kicks only", "Both kick to the trunk only, with control and no force, hands stay up. Focus: distance and a clean pull-back.", "Trunk kicks only against an imagined opponent, footwork in between."],
   },
@@ -246,7 +259,7 @@ export const TASKS = [
     en: ["Situation sparring", "A fixed starting situation, for example A pushes forward and B has to counter, or B stands on the boundary line. One action, then stop and restart. Controlled.", null],
   },
   {
-    id: "tk_free", sport: "taekwondo", lvl: 1, gear: true, touch: true,
+    id: "tk_free", sport: "taekwondo", style: "wt", lvl: 1, gear: true, touch: true,
     de: ["Freies technisches Sparring", "Frei treten mit höchstens 50 % Tempo und Härte, Partner und volle Schutzausrüstung. Freies Sparring nur nach Absprache mit deinem Trainer und unter Aufsicht.", null],
     en: ["Free technical sparring", "Spar freely at no more than 50 % speed and force, with a partner and full protective gear. Free sparring only in agreement with your coach and under supervision.", null],
   },
