@@ -353,3 +353,11 @@ test("sports: boxing is registered but hidden; it is offered only as a developme
   assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing"]);
   assert.deepEqual(previewSports().map((s) => s.id), ["boxing"]);
 });
+
+import { BOX_NO_EX } from "../src/sports/boxing/techniques.js";
+test("boxing: every catalogue exercise whose text is about kicks is excluded from boxing sessions", () => {
+  const kicky = EX.filter((e) => /kick|tritt|schienbein|roundhouse|spinning|sweep/i.test([e.de, e.en, e.dde, e.den].join(" "))).map((e) => e.key);
+  assert.ok(kicky.length >= 7);
+  for (const k of kicky) assert.ok(BOX_NO_EX.has(k), k + " is missing in BOX_NO_EX");
+  for (const k of BOX_NO_EX) assert.ok(EX.some((e) => e.key === k), k + " exists in the catalogue");
+});
