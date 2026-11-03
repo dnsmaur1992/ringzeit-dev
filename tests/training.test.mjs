@@ -2997,3 +2997,32 @@ test("6a: dobok stands out – pure white dobok, skin-tone head and fists, no gl
   assert.ok(h.includes("#FEFEFC") && h.includes("#E3B48F"));
   assert.ok(!h.includes('r="11" fill="#C8404A"'), "no kickboxing gloves on the dobok figures");
 });
+
+test("6a: taekwondo offers only strength, conditioning and mobility as unit type; no kickboxing combinations even if technique/fight is forced", async () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;S.profile.days=[0,1,2,3,4,5,6];");
+  for (const ty of ["T", "C", "P"]) {
+    const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-03','${ty}','gym',['bag','pads','partner','weights'],{sport:'taekwondo'}))`));
+    assert.ok(["S", "K", "M"].includes(s.type), `${ty} -> ${s.type}`);
+    assert.doesNotMatch(JSON.stringify(s), /jab|cross|hook|Schattenbox|roundhouse/i);
+  }
+  a.run("{const d='2026-11-03';S.sessions[d]=buildSession(d,'S','gym',[],{sport:'taekwondo'});ui.sel=d;ui.tab='session';ui.setup=setupOf(S.sessions[d],d);}");
+  const h = a.run("renderSession()");
+  assert.doesNotMatch(h, /data-stype="T"|data-stype="C"|data-stype="P"/);
+  assert.match(h, /data-stype="S"/);
+  // switching the unit from kickboxing technique to taekwondo moves the type to a neutral one
+  a.run("ui.setup.sport='kickboxing';ui.setup.type='T';");
+  await a.click({ dataset: { usport: "taekwondo" } });
+  assert.equal(a.run("ui.setup.type"), "S");
+  a.run("ui.setup.sport='kickboxing';");
+  assert.match(a.run("renderSession()"), /data-stype="T"/, "kickboxing keeps all types");
+});
+
+test("6a: onboarding picture fits the sport – boxing shows the boxing scene, taekwondo the dobok, the picture never collapses", () => {
+  const a = app();
+  const onb = (sp) => { a.run(`ui.onb={step:0,disc:'lc',days:[0,2,4],minutes:75,birthYear:'',comp:'',clubDays:[],clubMin:90,sport:'${sp}',tstyle:'wt',tgrade:''};renderOnb();`); return a.run("document.getElementById('onb').innerHTML"); };
+  const box = onb("boxing");
+  assert.ok(box.includes(a.run("fightPair('box',14,true)").slice(0, 200)), "boxing scene with corner colours");
+  assert.ok(onb("taekwondo").includes("#FEFEFC"));
+  assert.match(box, /flex-shrink:0/);
+});
