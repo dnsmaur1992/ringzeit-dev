@@ -20,7 +20,8 @@
 | W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `e7fb557` inkl. Korrektur „Freier Lauf“, App-Version 03.11.2026 13:50; Altdaten, Full-Contact-Abhärtung und explosive Sätze nur automatisch getestet, auf Wunsch des Betreibers nicht von Hand) |
 | W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026 15:47, Stand `278b269`; `docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
 | W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a1c2946`, App-Version 03.11.2026 16:32, 164 Tests) |
-| W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | WARTET AUF SICHTUNG (B1–B4 umgesetzt, 169 Tests, Kickbox-Baseline unverändert; Boxen regulär sichtbar; siehe Abschnitt „4b“) |
+| W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
+| W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | WARTET AUF SICHTUNG (`docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -102,4 +103,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 4b: Teil 5 – Taekwondo (Modell laut Plan: Opus). Erst nach Abnahme von 4b und ausdrücklichem Auftrag.
+Nach Sichtung von 5: Teil 6a – Gürtelbereich und Dobok (Modell laut Plan: Sonnet). Erst nach Abnahme von 5 und ausdrücklichem Auftrag.
