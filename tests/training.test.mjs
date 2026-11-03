@@ -3555,3 +3555,43 @@ test("6d: style change loses nothing (grades, history, exams, names stay); the w
   assert.match(a.run("guideSheetHtml({id:'tgrade'})"), /Taegeuk/);
   assert.match(a.run("JSON.stringify(S)"), /"tkd":\{"style":"wt","names":"app"/);
 });
+test("6d-3: free round timer – presets and default by main sport and style; coach calls use the sport's techniques", () => {
+  const a = app();
+  const pres = (sport, style, year) => {
+    a.run(`S.profile.sport='${sport}';S.profile.birthYear=${year};S.profile.ft=undefined;S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${style}'});`);
+    return JSON.parse(a.run("JSON.stringify(ftPresets())"));
+  };
+  const kb = pres("kickboxing", "wt", 1995);
+  assert.deepEqual(kb.map((p) => p.id), ["wako", "k1", "spar", "pads", "hiit", "pro"]);
+  const bx = pres("boxing", "wt", 1995);
+  assert.equal(bx[0].id, "fbox");
+  assert.ok(!bx.some((p) => ["wako", "k1"].includes(p.id)));
+  const wt = pres("taekwondo", "wt", 1995);
+  assert.equal(wt[0].id, "fwt");
+  assert.deepEqual([wt[0].r, wt[0].w, wt[0].b], [3, 120, 60]);
+  assert.ok(!wt.some((p) => ["wako", "k1", "pro"].includes(p.id)));
+  const itf = pres("taekwondo", "itf", 1995);
+  assert.equal(itf[0].id, "fitf");
+  assert.deepEqual([itf[0].r, itf[0].w, itf[0].b], [2, 120, 60]);
+  const kid = pres("taekwondo", "itf", 2017);
+  assert.deepEqual([kid[0].r, kid[0].w, kid[0].b], [2, 60, 30], "age 9: 2 x 1:00 / 0:30");
+  // default setup follows the sport; saved values stay
+  pres("taekwondo", "itf", 1995);
+  assert.equal(a.run("ftCfg().r"), 2);
+  a.run("S.profile.ft={r:7,w:100,b:30,prep:true,warn:true,coach:false};");
+  assert.equal(a.run("ftCfg().r"), 7);
+  // labels in both languages for every preset of every sport
+  for (const lg of ["de", "en"])
+    for (const sp of ["kickboxing", "boxing", "taekwondo"]) {
+      pres(sp, "wt", 1995);
+      a.run(`S.profile.lang='${lg}';`);
+      for (const p of JSON.parse(a.run("JSON.stringify(ftPresets())"))) assert.ok(a.run(`t('ft').pre['${p.id}']`), p.id + lg);
+    }
+  // coach call text for taekwondo uses its own techniques (no crash, no kickboxing names)
+  pres("taekwondo", "wt", 1995);
+  a.run("S.profile.lang='de';S.profile.level=1;");
+  for (let i = 0; i < 20; i++) {
+    const txt = a.run("combo('shadow', null).map((x) => techNm(x)).join(' · ')");
+    assert.ok(txt && !/undefined/.test(txt), txt);
+  }
+});
