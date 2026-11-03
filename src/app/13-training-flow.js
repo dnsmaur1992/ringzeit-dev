@@ -245,7 +245,7 @@
   function sessionRegions(sess) {
     const list = [];
     (sess?.blocks || []).forEach((b) => {
-      if (!["warm", "cool", "mob", "hard"].includes(b.key))
+      if (!["warm", "cool", "mob", "hard", "wrist"].includes(b.key))
         b.items.forEach((it) => {
           if (it.kind === "ex" && EX[it.id]) list.push(exRegions(EX[it.id]));
         });
@@ -566,13 +566,14 @@ ${setupFields(setup, ty)}
     }
     if ((sess.notes && sess.notes.length) || dataLine) {
       const notes = sess.notes || [];
-      const safety = ["koNote", "gearNote", "wrNote", "knNote"]
+      const safety = ["koNote", "koNoteBox", "gearNote", "wrNote", "knNote"]
         .flatMap((key) => [L.de[key], L.en[key]])
         .filter((x) => typeof x === "string");
       const critical = notes.filter((n) => safety.includes(n));
       if (critical.length) h += `<div class="note warn">${critical.map(esc).join("<br>")}</div>`;
       if (!simpleView()) h += `<details class="note"><summary>${flowText().why}</summary><div>${[...notes, dataLine].filter(Boolean).map(esc).join("<br>")}</div></details>`;
     }
+    if (sess.sport === "boxing") h += `<div class="note">${esc(t("boxPreview"))} <a href="${WKB_URL}" target="_blank" rel="noopener">${S.profile.lang === "de" ? "Regelwerk (DBV-WKB)" : "Rules (DBV WKB)"}</a></div>`;
     sess.blocks.forEach((b, bi) => {
       h += sessionBlockHtml(sess, bi, true);
     });

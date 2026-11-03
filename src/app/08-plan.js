@@ -91,7 +91,15 @@
     };
   }
   /* WAKO: no competing for at least 4 weeks after a KO or a stoppage by head blows */
-  const koLock = (ds) => !!S.ko && ds >= S.ko && daysBetween(parse(S.ko), parse(ds)) < 28;
+  /* Sport of the session being built (set by buildSession); otherwise the main sport. Boxing has no discipline:
+     discOf() is "box" there, so none of the kickboxing discipline rules apply. */
+  let buildSport = null;
+  const sportNow = () => buildSport || S.profile.sport || "kickboxing";
+  const isBox = () => sportNow() === "boxing";
+  const discOf = () => (isBox() ? "box" : S.profile.disc);
+  /* Protection ban after a KO: kickboxing 4 weeks (WAKO), boxing 30 days (DBV §89) */
+  const koDays = () => sportFor(sportNow()).rules.koDays || 28;
+  const koLock = (ds) => !!S.ko && ds >= S.ko && daysBetween(parse(S.ko), parse(ds)) < koDays();
   /* Weekly suggestion; no sparring during a KO suspension or the day after club sparring */
   function suggestOn(ds) {
     const bi = blockInfo(ds);
@@ -404,12 +412,21 @@
   }
   const kneeAnk = () => S.profile.limits.some((l) => l === "knee" || l === "ankle");
   function chooseTheme() {
+    if (isBox()) {
+      const lv = S.profile.level,
+        recent = Object.values(S.sessions)
+          .sort((a, b) => (a.created || 0) - (b.created || 0))
+          .slice(-12)
+          .map((s) => s.theme),
+        ok = BOXT.BOX_THEMES.filter((th) => !th.lvl || lv >= th.lvl);
+      return ok.sort((a, b) => recent.filter((x) => x === a.id).length - recent.filter((x) => x === b.id).length + (Math.random() - 0.5) * 0.5)[0] || null;
+    }
     const p = S.profile,
       ka = kneeAnk(),
       focus = p.level === 0 ? "bal" : p.focus;
     const ok = THEMES.filter(
       (th) =>
-        (!th.disc || th.disc.includes(p.disc)) &&
+        (!th.disc || th.disc.includes(discOf())) &&
         (!th.lvl || p.level >= th.lvl) &&
         !(ka && th.risky) &&
         !(th.id === "sweepFinish" && p.limits.includes("ankle")),
@@ -426,6 +443,7 @@
     return ok.sort((a, b) => sc(a) - sc(b))[0] || null;
   }
   function combo(kind, theme) {
+    if (isBox()) return boxCombo(kind, theme);
     const p = S.profile,
       lim = p.limits,
       ka = kneeAnk(),
@@ -440,7 +458,7 @@
       kickOnly = true;
     } else {
       pool = COMBOS.slice(0, p.level + 1).flat();
-      if (EXTRA[p.disc] && !ka && Math.random() < 0.35) pool = EXTRA[p.disc];
+      if (EXTRA[discOf()] && !ka && Math.random() < 0.35) pool = EXTRA[discOf()];
       if (ka) pool = pool.filter((c) => c.every((x) => !RISKY.has(x)));
       if (ka && kind === "bag") pool = HAND_ONLY;
       if (young()) pool = pool.filter((c) => !c.includes("back"));
@@ -454,6 +472,26 @@
       const maxLen = ageGroup() === "kids" ? 3 : p.level + 3;
       while (c.length > maxLen) c.splice(1, 1);
       if (ka) c = c.filter((x) => !RISKY.has(x));
+      if (c.length < 2) c.push("cross");
+    }
+    return partnerClean(c);
+  }
+  /* boxing: punches only; with a wrist or shoulder limit short light work instead of bag and pad load */
+  function boxCombo(kind, theme) {
+    const p = S.profile,
+      lim = p.limits,
+      load = kind === "bag" || kind === "pads";
+    let pool =
+      load && (lim.includes("wrist") || lim.includes("shoulder"))
+        ? BOXT.BOX_LIGHT
+        : BOXT.BOX_COMBOS.slice(0, p.level + 1).flat();
+    if (ageGroup() === "kids") pool = pool.filter((c) => c.length <= 3);
+    if (!pool.length) pool = BOXT.BOX_LIGHT;
+    let c = rnd(pool).slice();
+    if (theme && pool !== BOXT.BOX_LIGHT) {
+      c = theme.ap(c, p);
+      const maxLen = ageGroup() === "kids" ? 3 : p.level + 3;
+      while (c.length > maxLen) c.splice(1, 1);
       if (c.length < 2) c.push("cross");
     }
     return partnerClean(c);
@@ -473,7 +511,7 @@
   }
   // Leichtkontakt: short, fast combos – at most 4 techniques (the opener and the finish stay)
   function lcShort(c) {
-    if (S.profile.disc !== "lc") return c;
+    if (discOf() !== "lc") return c;
     c = c.slice();
     while (c.length > 4) c.splice(1, 1);
     return c;
@@ -520,6 +558,19 @@
       "6-kick round",
       "Mindestens 6 Kicks in der Runde – mitzählen! (WAKO Full Contact)",
       "At least 6 kicks this round – count them! (WAKO Full Contact)",
+    ],
+    // boxing: footwork round and evasion round (always with an opponent action, imagined or real)
+    foot: [
+      "Beinarbeit-Runde",
+      "Footwork round",
+      "Schattenboxen mit Fokus auf Schritte: Winkel, Distanz halten, Jab als Führung. Nach jedem Schritt wieder in die Grundstellung.",
+      "Shadowboxing with a focus on steps: angles, holding distance, the jab as a lead. Back into your stance after every step.",
+    ],
+    evade: [
+      "Meiden & Kontern",
+      "Slip & counter",
+      "Stell dir die Aktion des Gegners (B) vor, weiche aus (A) und kontere mit der Kombination. Kopf bewegen, Hände oben.",
+      "Picture the opponent's action (B), evade (A) and counter with the combination. Move your head, hands up.",
     ],
     rope: [
       "Seil-Runde",
@@ -720,31 +771,47 @@
       en: ["Free technical sparring", "Everything the rules allow, 50 % power, coach watching.", null],
     },
   ];
+  TASKS.push(...BOX_TASKS);
   const LIGHT_TASKS = ["hands", "kicks", "lead", "counter", "bodyhead", "control", "attdef"];
   function sparRounds(n, loc, eq, light) {
     const p = S.profile,
       ka = kneeAnk(),
-      mode = eq.includes("partner") ? "p" : eq.includes("bag") && loc !== "out" ? "b" : "s";
+      box = isBox(),
+      kid = ageGroup() === "kids",
+      // boxing: children never spar with a partner (solo work with an imagined opponent)
+      mode = eq.includes("partner") && !(box && kid) ? "p" : eq.includes("bag") && loc !== "out" ? "b" : "s";
     const ok = TASKS.filter(
       (x) =>
+        (box ? x.sport === "boxing" : x.sport !== "boxing") &&
+        !(x.touch && (kid || light)) &&
         (mode === "p" || x.de[2]) &&
-        (!x.disc || x.disc.includes(p.disc)) &&
+        (!x.disc || x.disc.includes(discOf())) &&
         (!x.lvl || p.level >= x.lvl) &&
         !(ka && x.risky) &&
-        !(x.gear && !eq.includes("partner")) &&
-        !(light && !LIGHT_TASKS.includes(x.id)),
+        !(x.gear && mode !== "p") &&
+        !(light && !(LIGHT_TASKS.includes(x.id) || x.light)),
     );
     // discipline-specific tasks always make the cut, the rest is shuffled
     const must = ok.filter((x) => x.disc),
       rest = shuffle(ok.filter((x) => !x.disc));
     const order = [...must, ...rest].slice(0, n);
     const picked = shuffle(order);
-    return Array.from({ length: n }, (_, i) => ({
+    const out = Array.from({ length: n }, (_, i) => ({
       kind: "round",
       k: "task",
       id: picked[i % picked.length].id,
       m: mode,
     }));
+    // touch sparring: at most one round per session; free hitting never repeats
+    const tough = new Set(TASKS.filter((x) => x.touch).map((x) => x.id)),
+      other = picked.filter((x) => !tough.has(x.id));
+    let seenTouch = false;
+    out.forEach((r, i) => {
+      if (!tough.has(r.id)) return;
+      if (!seenTouch) seenTouch = true;
+      else if (other.length) r.id = other[i % other.length].id;
+    });
+    return out;
   }
   /* head-height kicks: they need warm hips, so never in the opening round(s) */
   const HIGHK = new Set(["roundh", "axe", "hookk", "brazil", "shook", "tornado", "jknee"]);
@@ -809,14 +876,16 @@
     const p = S.profile,
       kid = ageGroup() === "kids",
       ka = kneeAnk(),
-      lowOk = (p.disc === "kl" || p.disc === "k1") && !ka && !kid,
+      box = isBox(),
+      lowOk = (discOf() === "kl" || discOf() === "k1") && !ka && !kid,
       lvl = p.level || 0;
     const atts = Object.keys(COUNTER_ATT).filter((a) => {
       const x = COUNTER_ATT[a];
+      if (box) return BOXT.BOX_ATT.has(a) && (kid ? a === "jab" || a === "cross" : lvl >= x.lvl);
       if (kid) return a === "jab" || a === "cross";
       if (x.low) return lowOk;
       if (x.sweep) return lvl >= x.lvl && !p.limits.includes("ankle");
-      if (x.k1) return p.disc === "k1" && lvl >= x.lvl;
+      if (x.k1) return discOf() === "k1" && lvl >= x.lvl;
       return lvl >= x.lvl;
     });
     const pick = (low) => {
@@ -837,8 +906,9 @@
       if (kid || Math.random() >= [0, 0.5, 0.85][lvl]) return x;
       const ok = (ANSWER[x.d] || []).filter(
         (t) =>
+          !(box && !BOXT.BOX_ATT.has(t)) &&
           !(t === "lowk" && !lowOk) &&
-          !(t === "knee" && (p.disc !== "k1" || ka)) &&
+          !(t === "knee" && (discOf() !== "k1" || ka)) &&
           !((t === "upper" || t === "hookb") && lvl < 1),
       );
       return ok.length ? { ...x, c: ok[Math.floor(Math.random() * ok.length)] } : x;
@@ -853,7 +923,7 @@
     else if (at === "post") r.post = answer(pick(lowOk && Math.random() < 0.35));
     else r.mid = { at: cuts[Math.floor(Math.random() * cuts.length)], ...pick(false) };
     // Wettkampf: in some rounds the partner comes in twice – before your combo and again after it
-    const dbl = p.disc === "fc" ? [0, 0.25, 0.6][lvl] : lvl >= 2 ? 0.4 : 0;
+    const dbl = discOf() === "fc" ? [0, 0.25, 0.6][lvl] : lvl >= 2 ? 0.4 : 0;
     if (!kid && !r.post && Math.random() < dbl) r.post = answer(pick(lowOk && Math.random() < 0.35));
     return r;
   }
@@ -867,7 +937,8 @@
   function reactCount(partnerRounds) {
     const lvl = ageGroup() === "kids" ? 0 : S.profile.level || 0,
       [lo, hi] = REACT_N[lvl] || REACT_N[0];
-    return Math.min(lo + Math.floor(Math.random() * (hi - lo + 1)), partnerRounds);
+    // boxing: more evasion work with a real opponent action (docs/boxing-concept.md §3.1)
+    return Math.min(lo + Math.floor(Math.random() * (hi - lo + 1)) + (isBox() && lvl > 0 ? 1 : 0), partnerRounds);
   }
   /* Partner rounds with a counter action: who does what, in order, as framed groups – A (attacker, light blue)
      and B (partner, yellow). Inside the frames the usual technique chips; a defence is a plain chip. */
@@ -892,13 +963,82 @@
   const PARTNER_K = new Set(["partner", "pads", "counter"]);
   // Full Contact partner rounds: a short reminder to get straight back into the guard
   const guardCue = (it) =>
-    PARTNER_K.has(it.k) ? (S.profile.disc === "fc" ? t("fcGuard") : S.profile.disc === "lc" ? t("lcControl") : "") : "";
+    PARTNER_K.has(it.k) ? (discOf() === "fc" ? t("fcGuard") : discOf() === "lc" ? t("lcControl") : "") : "";
   // round text; the heavy bag reads differently in Full Contact (impact) and Leichtkontakt (speed)
-  const roundDesc = (it, lg) => (it.k === "bag" && t("bagDisc")[S.profile.disc]) || (RT[it.k] || [])[lg + 2] || "";
+  const roundDesc = (it, lg) => (it.k === "bag" && t("bagDisc")[discOf()]) || (RT[it.k] || [])[lg + 2] || "";
   /* rough difficulty of a combo: length, kicks, head kicks and advanced techniques */
   const comboLevel = (c) =>
     c.length + 0.5 * c.filter((x) => KICKS.has(x)).length + c.filter((x) => HIGHK.has(x)).length + 1.5 * c.filter((x) => ADV.has(x)).length;
+  /* Boxing technique/conditioning rounds: shadow, bag, partner drills plus a larger share of footwork rounds and
+     evasion rounds (always an opponent action first, imagined or real – never a random defence) */
+  function boxRounds(type, n, loc, eq, theme, easy) {
+    const p = S.profile,
+      partner = eq.includes("partner"),
+      ka = kneeAnk(),
+      lvl = p.level || 0,
+      kid = ageGroup() === "kids",
+      bag = eq.includes("bag") && loc !== "out" && !p.limits.includes("wrist") && !p.limits.includes("shoulder"),
+      cyc = partner ? ["partner", "foot", "partner", "evade"] : bag ? ["shadow", "foot", "bag", "evade"] : ["shadow", "foot", "evade"],
+      kinds = [];
+    for (let i = 0; i < n; i++) {
+      let k = cyc[i % cyc.length];
+      if (type === "C" && eq.includes("rope") && i === n - 1 && !ka) k = "rope";
+      kinds.push(k);
+    }
+    const counters = BOXT.BOX_COUNTER.filter((c) => c.lvl <= lvl && (!kid || ["cover", "parry", "step"].includes(c.d)) && (!kid || c.c.length <= 2));
+    const used = new Set();
+    const out = kinds.map((k) => {
+      const r = { kind: "round", k };
+      if (k === "shadow" || k === "bag" || k === "partner") r.combo = combo(k === "partner" ? "pads" : k, theme);
+      if (k === "evade") {
+        const fresh = counters.filter((c) => !used.has(c.d + c.att)),
+          c = rnd(fresh.length ? fresh : counters);
+        used.add(c.d + c.att);
+        r.combo = c.c.slice();
+        r.react = { pre: { a: c.att, d: c.d } };
+      }
+      return r;
+    });
+    // no combo twice in one session
+    const seen = new Set();
+    for (const r of out) {
+      if (!r.combo || r.k === "evade") continue;
+      for (let t = 0; t < 6 && seen.has(r.combo.join()); t++) r.combo = combo(r.k === "partner" ? "pads" : r.k, theme);
+      seen.add(r.combo.join());
+    }
+    // every session has punches to the body
+    const BODY = ["jabb", "crossb", "hookb"],
+      withC = out.filter((r) => r.combo && r.k !== "evade" && r.k !== "bag");
+    if (!out.some((r) => r.combo && r.combo.some((x) => BODY.includes(x)))) {
+      const cand = withC.filter((r) => r.combo.includes("cross") || r.combo.includes("jab"));
+      if (cand.length) {
+        const r = rnd(cand),
+          i = r.combo.lastIndexOf("cross") >= 0 ? r.combo.lastIndexOf("cross") : r.combo.indexOf("jab");
+        r.combo[i] = r.combo[i] === "cross" ? "crossb" : "jabb";
+      }
+    }
+    // partner rounds build up from easy to hard
+    if (partner) {
+      const pr = out.filter((r) => r.k === "partner" && r.combo),
+        sorted = pr.map((r) => r.combo).sort((x, y) => x.length - y.length);
+      pr.forEach((r, i) => (r.combo = sorted[i]));
+    }
+    // ease into it: the first round(s) at 70 %
+    for (let i = 0; i < Math.min(easy, out.length - 1); i++) out[i].ease = 1;
+    if (kid) for (const r of out) if (r.combo) while (r.combo.length > 3) r.combo.splice(1, 1);
+    // real counter actions of the partner on some partner rounds (more with a higher level)
+    if (partner) {
+      const idx = out.map((r, i) => i).filter((i) => out[i].k === "partner" && out[i].combo),
+        pool = idx.length > 1 ? idx.slice(1) : idx,
+        want = reactCount(pool.length),
+        order = pool.map((i) => ({ i, w: i + Math.random() * pool.length * 0.6 })).sort((a, b) => b.w - a.w);
+      usedAtt.clear();
+      order.slice(0, want).forEach(({ i }) => (out[i].react = partnerReact(out[i].combo)));
+    }
+    return out;
+  }
   function fightRounds(type, n, loc, eq, theme, easy = 1) {
+    if (isBox()) return boxRounds(type, n, loc, eq, theme, easy);
     const p = S.profile,
       partner = eq.includes("partner"),
       ka = kneeAnk();
@@ -916,7 +1056,7 @@
       if (type === "C" && eq.includes("rope") && i === n - 1 && !ka) k = "rope";
       kinds.push(k);
     }
-    if (p.disc === "fc" && n >= 3 && !ka) {
+    if (discOf() === "fc" && n >= 3 && !ka) {
       const idx = Math.min(2, n - 1);
       if (["shadow", "bag"].includes(kinds[idx]) || !partner) kinds[idx] = "sixkick";
     }
@@ -964,7 +1104,7 @@
         !(r.k === "bag" && (ka || p.limits.includes("wrist") || p.limits.includes("shoulder"))),
     );
     const need = ["roundh"];
-    if (EXTRA[p.disc] && !ka) need.push(...(p.disc === "k1" ? ["lowk", "knee"] : ["lowk"]));
+    if (EXTRA[discOf()] && !ka) need.push(...(discOf() === "k1" ? ["lowk", "knee"] : ["lowk"]));
     const highPool = COMBOS.slice(0, p.level + 1)
       .flat()
       .filter(
@@ -981,7 +1121,7 @@
           pool = free.length ? free : withC.filter((x) => !x.combo.includes(tech));
         if (!pool.length) break;
         const r = pool[(j + m * 2 + 1) % pool.length];
-        const src = tech === "roundh" ? (highPool.length ? highPool : [["jab", "cross", "roundh"]]) : EXTRA[p.disc].filter((c) => c.includes(tech)),
+        const src = tech === "roundh" ? (highPool.length ? highPool : [["jab", "cross", "roundh"]]) : EXTRA[discOf()].filter((c) => c.includes(tech)),
           have = new Set(out.map((x) => x.combo && x.combo.join())),
           fresh = src.filter((c) => !have.has(partnerClean(c).join()));
         // all fitting combos are in use already (few at Grundlage): this round's combo ends in the high kick instead
@@ -992,7 +1132,7 @@
     // every session has punches to the body: without one, a cross (or jab) of one combo goes to the body
     // Full Contact: at least two combos with a body shot (impact to the body counts there)
     const BODY = ["jabb", "crossb", "hookb"],
-      bodyWant = p.disc === "fc" ? 2 : 1;
+      bodyWant = discOf() === "fc" ? 2 : 1;
     for (let m = out.filter((r) => r.combo && r.combo.some((x) => BODY.includes(x))).length; m < bodyWant; m++) {
       const cand = withC.filter((r) => !r.combo.some((x) => BODY.includes(x)) && (r.combo.includes("cross") || r.combo.includes("jab")));
       if (cand.length) {
@@ -1033,7 +1173,7 @@
     if (ageGroup() === "kids")
       for (const r of out) if (r.combo && !r.mine) while (r.combo.length > 3) r.combo.splice(1, 1);
     // Full Contact with a partner: the 6-kick rule on one partner round (not the opening round)
-    if (partner && p.disc === "fc" && n >= 3 && !ka) {
+    if (partner && discOf() === "fc" && n >= 3 && !ka) {
       const pr = out.filter((r) => PARTNER_K.has(r.k) && r.combo).slice(1),
         withK = pr.filter((r) => r.combo.some((x) => KICKS.has(x)));
       const r = (withK.length ? withK : pr)[0];
@@ -1282,6 +1422,22 @@
       de: ["Isometrische Nackenkräftigung – Halteübung", "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung {s} s gegeneinander drücken – der Kopf bleibt in Position."],
       en: ["Isometric neck strengthening – hold", "Hand on forehead, back of head and each side of the head, press head and hand against each other for {s} s per direction – the head stays in place."],
     },
+    /* boxing only (block "Handgelenk & Griff", docs/boxing-concept.md §3.4) */
+    {
+      id: "wristCurl",
+      boxOnly: true,
+      m: "s",
+      wr: true,
+      de: ["Handgelenk beugen und strecken", "Mit leichter Kurzhantel oder Band: Unterarm aufliegend, Handgelenk langsam beugen und strecken, 2× 15 Wiederholungen je Hand."],
+      en: ["Wrist curls and extensions", "With a light dumbbell or band: forearm supported, slowly bend and extend the wrist, 2× 15 reps per hand."],
+    },
+    {
+      id: "fingerExt",
+      boxOnly: true,
+      m: "s",
+      de: ["Fingerstrecken gegen Gummiband", "Gummiband um die Finger legen und die Finger gegen den Widerstand weit spreizen und langsam schließen, 2× 20 Wiederholungen."],
+      en: ["Finger extensions against a band", "Put a rubber band around your fingers, spread them wide against the resistance and close slowly, 2× 20 reps."],
+    },
   ];
   /* name and text of a hardening item; the harder full-contact dose when the item carries h */
   function hardTxt(id, h) {
@@ -1292,10 +1448,31 @@
     // numbers of the text come from the prescription the timer runs (core/prescription.js)
     return [hd[lg][0], rx ? rxFill(text, rx, lg) : text];
   }
-  function hardBlock(eq, loc, soft) {
+  /* Boxing: no hardening with hits, a fixed 6-minute block for wrists and grip instead (docs/boxing-concept.md §3.4).
+     Towel and grip every time; the rest by age, level, limits and equipment; taper/recovery weeks: only the gentle ones. */
+  function wristBlock(eq, soft, blocks = []) {
+    const p = S.profile,
+      kid = ageGroup() === "kids",
+      yg = young(),
+      lim = p.limits.includes("wrist"),
+      base = ["fWring", "fFinger"],
+      more = [];
+    if (!soft && !kid) {
+      if (!lim) more.push("fPlank");
+      if (!lim && p.level >= 1 && !yg) more.push("fPush");
+      if (!lim && eq.some((q) => ["weights", "kb", "bands"].includes(q))) more.push("wristCurl");
+      if (eq.includes("bands")) more.push("fingerExt");
+    }
+    // the neck hold is dropped when the session already has it (strength block)
+    if (!kid && !blocks.some((b) => b.items.some((it) => it.id === "str.neck_iso_hold"))) more.push("neck");
+    const pick = shuffle(more).slice(0, kid ? 0 : 1);
+    return { key: "wrist", min: 6, items: [...base, ...pick].map((id) => ({ kind: "hard", id })) };
+  }
+  function hardBlock(eq, loc, soft, blocks = []) {
+    if (isBox()) return wristBlock(eq, soft, blocks);
     const p = S.profile,
       // harder only for full-contact adults and never in taper/recovery weeks (soft)
-      full = (p.disc === "fc" || p.disc === "k1") && !young() && !soft,
+      full = (discOf() === "fc" || discOf() === "k1") && !young() && !soft,
       ka = kneeAnk(),
       modes = ["s"];
     // taper and recovery weeks: solo work without impact only
@@ -1304,7 +1481,8 @@
     const ok = HARD.filter(
       (x) =>
         modes.includes(x.m) &&
-        (!x.disc || x.disc.includes(p.disc)) &&
+        (!x.disc || x.disc.includes(discOf())) &&
+        !x.boxOnly &&
         !(x.risky && ka) &&
         !(x.lim && p.limits.includes("shoulder")) &&
         !(x.adult && young()) &&
@@ -1315,7 +1493,7 @@
       fistPick = shuffle(fists.filter((x) => x.m !== "s"))[0] || shuffle(fists)[0];
     const others = ok.filter((x) => !x.fist),
       // full contact (FC, K1): the area the discipline takes the hits on comes first – body in FC, shins in K1
-      focusArea = full ? (p.disc === "k1" ? ["checks", "shinbag", "shintap"] : ["abs", "bodybag", "brace"]) : [],
+      focusArea = full ? (discOf() === "k1" ? ["checks", "shinbag", "shintap"] : ["abs", "bodybag", "brace"]) : [],
       pref = others.filter((x) => focusArea.includes(x.id)),
       other =
         shuffle(pref.filter((x) => x.m !== "s"))[0] ||
@@ -1331,15 +1509,23 @@
   }
   /* Sport of the main setting and the choice offered per unit (only finished sports are visible) */
   const mainSport = () => S.profile.sport || "kickboxing";
-  const sportChoices = () => visibleSports().map((x) => x.id);
+  /* preview = also the sports in development (labelled); the main sport in the profile never offers them */
+  const sportChoices = (preview = false) => [...visibleSports(), ...(preview ? previewSports() : [])].map((x) => x.id);
+  const sportLabel = (k) => (t("sportNames")[k] || k) + (SPORTS[k] && !SPORTS[k].visible && SPORTS[k].preview ? " · " + t("previewTag") : "");
   function sportRow(attr, cur) {
-    return `<div class="field"><span class="lab">${t("sportL")}</span><div class="seg">${sportChoices()
-      .map((k) => `<button type="button" ${attr}="${k}" aria-pressed="${(cur || mainSport()) === k}">${t("sportNames")[k] || k}</button>`)
+    return `<div class="field"><span class="lab">${t("sportL")}</span><div class="seg">${sportChoices(true)
+      .map((k) => `<button type="button" ${attr}="${k}" aria-pressed="${(cur || mainSport()) === k}">${sportLabel(k)}</button>`)
       .join("")}</div></div>`;
   }
   /* A built session carries its sport (default: main sport) and a stable id that links it to its log entry */
   function buildSession(dateStr, type, loc, eqIn, opts = {}) {
-    const s = buildSessionCore(dateStr, type, loc, eqIn, opts);
+    buildSport = opts.sport || mainSport();
+    let s;
+    try {
+      s = buildSessionCore(dateStr, type, loc, eqIn, opts);
+    } finally {
+      buildSport = null;
+    }
     s.sport = opts.sport || mainSport();
     s.id = s.id || "s" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36);
     return s;
@@ -1376,9 +1562,11 @@
       form = formOn(dateStr),
       work = S.profile.work || "";
     // round length and break: the tournament bout format during preparation, otherwise training defaults
-    const fmtR = prep ? ph.format : null,
+    const box = isBox(),
+      bf = box ? boxStandard(ageAt(parse(dateStr))) : null,
+      fmtR = prep ? ph.format : null,
       kAge = kidAge(),
-      fightW = fmtR ? fmtR.w : kAge != null ? (kAge <= 9 ? 60 : 90) : 180,
+      fightW = fmtR ? fmtR.w : box ? bf.w : kAge != null ? (kAge <= 9 ? 60 : 90) : 180,
       condW = fmtR ? fmtR.w : kAge != null ? (kAge <= 9 ? 45 : 60) : 120,
       restB = fmtR ? fmtR.b : 60;
     const roundsFor = (min, len = 3) => {
@@ -1507,7 +1695,7 @@
     const warmMin = Math.max(8, Math.round(D * 0.15)),
       coolMin = Math.max(5, Math.round(D * 0.1)) + (bk === "mob" ? 5 : 0),
       // 30-minute sessions skip the hardening block, so the main part keeps enough time
-      hardMin = D <= 30 || ageGroup() === "kids" ? 0 : 6,
+      hardMin = D <= 30 || (ageGroup() === "kids" && !box) ? 0 : 6,
       rest = D - warmMin - coolMin - hardMin;
     // power exercises; with knee/ankle limits the jumps drop out and strength work fills in
     const powPick = (n) => {
@@ -1719,7 +1907,7 @@
         sets: supSets,
       });
     }
-    if (hardMin) blocks.push(hardBlock(eq, loc, soft));
+    if (hardMin) blocks.push(hardBlock(eq, loc, soft, blocks));
     blocks.push({
       key: "cool",
       min: coolMin,
@@ -1742,17 +1930,21 @@
     }
     if (ph.phase !== "base" && type !== "M") {
       notes.unshift(prepText(ph, type));
-      if (prep && !S.profile.birthYear) notes.push(t("needBirth"));
+      if (prep && !S.profile.birthYear && !box) notes.push(t("needBirth"));
       else if (prep && !ph.official) notes.push(t("noFormat"));
       const les = lastLesson();
       if (prep && les) notes.push(t("lastLesson")(les));
     }
     if (ramp) notes.unshift(t("rampNote")(ramp.left));
-    if (ko) notes.unshift(t("koNote"));
+    if (ko) notes.unshift(t(box ? "koNoteBox" : "koNote"));
+    if (box) {
+      if (!prep && bf.official === false && bf.cls === "m") notes.push(t("boxMasters"));
+      if (type === "P" && eq.includes("partner")) notes.push(t("boxGear"));
+    }
     if (load.deload) notes.push(t("deloadNote"));
     if (p.limits.includes("wrist") && theme) notes.push(t("wrNote"));
     if (kneeAnk()) notes.push(t("knNote"));
-    if (kneeAnk() && EXTRA[p.disc] && theme) notes.push(t("noLowNote")(p.disc));
+    if (kneeAnk() && EXTRA[discOf()] && theme) notes.push(t("noLowNote")(discOf()));
     return progressSession({
       date: dateStr,
       type,

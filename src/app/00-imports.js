@@ -6,6 +6,8 @@
 /* prescriptions: dose text, timer phases and time estimate from one source (src/core/prescription.js) */
   const { RX, RX_HARD, rxOf, rxText, rxFill, rxPlan, rxSeconds, rxMinutes } = RZ;
   /* exercise catalogue (src/catalog) and sports (src/sports) */
-  const { EX, AV, EX_KEYS, keyOfLegacy, sportFor, visibleSports, SPORTS } = RZ;
+  const { EX, AV, EX_KEYS, keyOfLegacy, sportFor, visibleSports, previewSports, SPORTS } = RZ;
+  /* boxing (src/sports/boxing): technique pools, tasks and the DBV rules */
+  const { BOXT, BOX_TASKS, dbvClass, boxStandard, WKB_URL, BOX_KO_DAYS } = RZ;
   /* kickboxing techniques and combos used by the combo and drill builders (src/sports/kickboxing/techniques.js) */
   const { TECH, KICKS, STRIKE, RISKY, ADV, COMBOS, EXTRA, KICK_ONLY, HAND_ONLY, THEMES } = RZ;

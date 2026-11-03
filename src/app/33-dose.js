@@ -215,7 +215,7 @@
             : "";
     let duo = "",
       extra = "";
-    const pair = !!sess && (sess.eq || []).includes("partner") && !b.rounds && !["warm", "cool", "hard"].includes(b.key);
+    const pair = !!sess && (sess.eq || []).includes("partner") && !b.rounds && !["warm", "cool", "hard", "wrist"].includes(b.key);
     if (pair && isDuo(sess, b)) {
       const bi = sess.blocks.indexOf(b),
         d = duoOff(sess, b);
