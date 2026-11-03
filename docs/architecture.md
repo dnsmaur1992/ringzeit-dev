@@ -69,11 +69,12 @@ src/
     ids.js                   stabile Text-IDs der 88 Übungen (`<Kategorie>.<Name>`), Zuordnung alter Zeilennummer ↔ ID (3-D)
     exercises.js             Übungskatalog (88 Zeilen) → EX, AV; `EX[id]` per Text-ID (und weiter per alter Zeilennummer lesbar)
   sports/
-    index.js                 Register: SPORTS, sportFor(id) (ohne/unbekannt → kickboxing), visibleSports()
+    index.js                 Register: SPORTS, sportFor(id) (ohne/unbekannt → kickboxing), visibleSports(), previewSports()
     kickboxing/index.js      SportDefinition: id, visible, rules, dayPattern (früher PATTERN), techniques
     kickboxing/rules.js      RULE_PROFILE (WAKO): DISCIPLINES, waFormat, STD_FORMAT; Fassung noch nicht belegt
     kickboxing/techniques.js TECH, KICKS, STRIKE, RISKY, ADV, COMBOS, EXTRA, KICK_ONLY, HAND_ONLY, THEMES
-    boxing/, taekwondo/      später (4a-U, 6a–6c)
+    boxing/                  SportDefinition (visible: false, preview: true), rules.js (DBV: Altersklassen, Formate, K.o.-Sperre, WKB-Link), techniques.js (Kombinationen, Konter, Themen), tasks.js (Aufgabensparring) (4a-U)
+    taekwondo/               später (6a–6c)
   app/                       übriger App-Code als geordnete Teile in gemeinsamem Scope (Reihenfolge = Dateiname)
     00-imports.js            die einzige Stelle, die Namen aus RZ übernimmt
     01-overview-i18n.js … 39-boot.js   (neu in 2-B: 38b-resume.js, Wiederaufnahme) Schnitt entlang der bisherigen Abschnittsköpfe (03/04 sind nach catalog/ bzw.
@@ -219,8 +220,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `docs/boxing-concept.md` | Boxen (4a-Q): DBV-Regelmatrix, Trainingskonzept, Aufgabensparring, Beispielprofile, Vorschlag 4a-U |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 128 Tests (3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
-| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 19 Tests (3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 136 Tests (4a-U: Boxprofile, Handgelenkblock, Formate, Touch-Sparring, K.o.-Sperre, Sportwechsel; 3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
+| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 24 Tests (4a-U: DBV-Regeln, Boxdaten, Aufgaben, Register; 3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
 

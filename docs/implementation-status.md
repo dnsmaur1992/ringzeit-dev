@@ -18,7 +18,8 @@
 | W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026, Stand 97bf4f1) |
 | W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `5484843`, App-Version 03.11.2026 12:27; Sicherungs-Rückladung nicht von Hand getestet, nur automatisch) |
 | W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `e7fb557` inkl. Korrektur „Freier Lauf“, App-Version 03.11.2026 13:50; Altdaten, Full-Contact-Abhärtung und explosive Sätze nur automatisch getestet, auf Wunsch des Betreibers nicht von Hand) |
-| W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | WARTET AUF SICHTUNG (`docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
+| W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026 15:47, Stand `278b269`; `docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
+| W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | WARTET AUF SICHTUNG (U1–U5 umgesetzt, 160 Tests, Kickbox-Baseline unverändert; siehe Abschnitt „4a-U“) |
 
 ## Entscheidungen
 
@@ -69,6 +70,16 @@ Manuelle Abnahmen:
 - 03.11.2026, 4a-Q (Betreiber): B1 Regeln in der App nur verlinkt (WKB-PDF), keine Unzen/Gewichtstabellen · B2 Partnertage = Aufgabensparring, höchstens eine Runde „Freies Touch-Sparring“ (30–40 % Schlaghärte, Partner + Schutz, ab Fortgeschritten, Hinweis „nur nach Absprache mit Trainer“) · B3 keine Abhärtung, dafür Handgelenk & Griff; mehr Beinarbeit und Meiden mit dem Kopf · B4 über 40: 3 × 2 Min., „kein offizielles DBV-Format“. Details `docs/boxing-concept.md`.
 - 03.11.2026, 3-D (Betreiber): A10 nach Vorschlag (in explosiven Blöcken ohne Gewichte nur Schnellkraftübungen mit 3–5 Wdh.; „langsam (3 s ab)“ nur in langsamen Blöcken). Umsetzung und Abweichungen: `docs/data-load-concept.md` §10 (stabile Text-IDs mit Migration in `hydrate`, `core/prescription.js`, A1–A12 und neu A13 Schienbein-Checks). Vergleichsbasis neu aufgezeichnet.
 
+## 4a-U – Boxpläne (Umsetzung)
+
+- **U1 Regeln** (`src/sports/boxing/rules.js`): DBV-Altersklasse nach Kalenderjahr (U13/U15/U17/U19/Erwachsene, §46), Rundenlänge je Klasse (§47, immer 3 Runden, 1 min Pause), Trainingsstandard ohne Turnier (3 × 3 min; jüngere Klassen mit der Rundenlänge ihrer Klasse; über 40: 3 × 2 min, „kein offizielles DBV-Format“), K.o.-Sperre 30 Tage (§89, Hinweis auf Steigerung und Anhang 5), Link zur WKB. Ohne Geburtsjahr gilt „Erwachsene“ (Betreiber, 03.11.2026). Boxen ist als `visible: false, preview: true` registriert.
+- **U2 Technik** (`src/sports/boxing/techniques.js`, `tasks.js`): nur Schläge und gemeinsame Bewegungen aus dem Bestand (keine neuen Skizzen; Skizzen für Meiden/Körperhaken kommen mit 4b), Kombinationen je Level, Konterbausteine mit vorgegebener Gegneraktion, neun Boxaufgaben.
+- **U3 Planer** (`src/app/08-plan.js`): `buildSession` setzt die Sportart der Einheit (`buildSport`); `discOf()` liefert für Boxen „box“, damit keine Kickbox-Disziplinregel greift. Neue Rundenarten „Beinarbeit-Runde“ und „Meiden & Kontern“ (immer mit Gegneraktion, A/B-Rahmen wie bei Partnerrunden); höherer Anteil an Beinarbeit und Meiden. Block „Handgelenk & Griff“ (6 min, fest) statt Abhärtung: Handtuch und Faustschluss immer, dazu eine Übung nach Alter, Level, Einschränkung und Ausrüstung (Faust-Stütz, Faust-Liegestütze, Handgelenk beugen/strecken, Fingerstrecken, Nackenhalten – nie doppelt zur Kraft-Übung); Kinder nur Handtuch und Griff.
+- **U4 Partner**: Aufgabensparring; „Freies Touch-Sparring“ höchstens einmal je Einheit, nicht für Anfänger, Kinder, in Tapering-/Erholungswochen und nicht bei K.o.-Sperre, mit Hinweis „nur nach Absprache mit deinem Trainer und unter Aufsicht“. Kinder sparren nicht mit Partner. Gegneraktionen nur Schläge.
+- **U5 Tests**: Kickbox-Baseline unverändert (24 Profile × 9 Einheiten, 2 Abläufe); neue Tests für Regeln, Daten, Formate, Handgelenkblock, Touch-Sparring, K.o.-Sperre (Boxen 30 Tage, Kickboxen 4 Wochen), Wechsel Boxen ↔ Kickboxen mit gemeinsamer Belastung. Bestehende Tests, die „boxing“ als unfertige Sportart benutzten, nutzen jetzt „taekwondo“.
+- **Entwicklungsvorschau**: Boxen erscheint nur in der Sportwahl der Einheit (Beschriftung „Boxen · Entwicklungsvorschau“) und mit Hinweis samt Link zum Regelwerk in der Einheit; nicht im Profil (Hauptsportart), nicht im normalen Menü.
+- **Bekannte Grenzen**: Wochenplan und Einheiten bleiben bei der Hauptsportart (Kickboxen); Boxen entsteht nur über die Sportwahl je Einheit. Wettkämpfe der Sportart Boxen nutzen das DBV-Format. Keine Skizzen für Meiden/Körperhaken (4b). Keine Gewichtsklassen/Handschuhgewichte (verlinkt). Eigene Kombinationen aus dem Verein (`myCombos`) gelten nur für Kickboxen.
+
 ## Offen
 
 - Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
@@ -79,4 +90,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 4a-Q: Teil 4a-U – Boxpläne (Modell laut Plan: Sonnet), in Unterteilen U1–U5 laut `docs/boxing-concept.md` §6.
+Nach Sichtung von 4a-U: Teil 4b – Boxen: Darstellung und Abschluss (Modell laut Plan: Sonnet): Skizzen für Meiden/Körperhaken, Beschriftung statt Entwicklungsvorschau, Tour/News/README. Erst nach Abnahme von 4a-U und ausdrücklichem Auftrag.
