@@ -8,10 +8,10 @@
 // The app is loaded like in training.test.mjs: the inline script without its boot call, browser services stubbed.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import vm from "node:vm";
+import { appHtml } from "./app-source.mjs";
 
-const SRC = new URL("../src/ringzeit.html", import.meta.url);
 const OUT = new URL("./baseline/kickboxing.json", import.meta.url);
-const html = readFileSync(SRC, "utf8");
+const html = appHtml();
 const script = html.slice(html.lastIndexOf("<script>") + 8, html.lastIndexOf("</script>"));
 const unbooted = script.slice(0, script.indexOf("  (function boot() {"));
 

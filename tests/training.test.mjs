@@ -1,14 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
 import vm from "node:vm";
+import { appHtml } from "./app-source.mjs";
 
 // Execute the actual inline application, without starting the DOM boot/animation loop.
 // Only browser services are stubbed; planning, state, rendering and event handlers are the production code.
-const html = readFileSync(
-  new URL("../src/ringzeit.html", import.meta.url),
-  "utf8",
-);
+const html = appHtml();
 const script = html.slice(
   html.lastIndexOf("<script>") + 8,
   html.lastIndexOf("</script>"),
