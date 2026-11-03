@@ -63,3 +63,14 @@ export const BOX_THEMES = [
   { id: "hookFinish", tag: "hand", ap: (c) => [...c.filter((x) => x !== "hook"), "hook"] },
   { id: "upperFinish", tag: "hand", lvl: 1, ap: (c) => [...c.filter((x) => x !== "upper"), "upper"] },
 ];
+
+/* catalogue exercises that are about kicks (or whose text mentions kicks): not part of boxing sessions */
+export const BOX_NO_EX = new Set([
+  "cond.kick_intervals",
+  "str.single_leg_kick_hold",
+  "str.cable_woodchop",
+  "str.copenhagen_plank",
+  "mob.slow_motion_kicks",
+  "mob.kick_holds",
+  "cool.adductors_and_splits",
+]);
