@@ -382,14 +382,14 @@
   function sides(c) {
     let last = null;
     return c.map((x) => {
-      if (!STRIKE.has(x)) return null;
-      const s = FIXED[x] || (last ? (last === "L" ? "R" : "L") : DEF[x]);
+      if (!STRIKE.has(x) && !TKDT.SIDED.has(x)) return null;
+      const s = FIXED[x] || TKDT.FIXED[x] || (last ? (last === "L" ? "R" : "L") : DEF[x] || TKDT.SIDE_DEF[x]);
       last = s;
-      return SIDED.has(x) ? s : null;
+      return SIDED.has(x) || TKDT.SIDED.has(x) ? s : null;
     });
   }
   // a single technique outside a combo (partner attack, quick answer): its usual side, so every kick says V or H
-  const oneSide = (x) => (SIDED.has(x) ? FIXED[x] || DEF[x] : null);
+  const oneSide = (x) => (SIDED.has(x) ? FIXED[x] || DEF[x] : TKDT.SIDED.has(x) ? TKDT.FIXED[x] || TKDT.SIDE_DEF[x] : null);
   const sideLbl = (s) => (S.profile.lang === "de" ? (s === "L" ? "V" : "H") : s);
   /* one technique chip (kicks red, V/H side mark) – also used inside the partner groups */
   function techChip(x, sd) {
@@ -596,7 +596,7 @@ ${setupFields(setup, ty)}
     let h = "";
     h += `<div class="block" data-block="${bi}">${blockHead(b, sess)}`;
     if (b.items.some((it) => it.combo))
-      h += `<div class="legend">${[sess.sport === "taekwondo" ? "" : t("legend"), b.items.some((it) => it.react) ? t("legendReact") : "", b.items.some((it) => PARTNER_K.has(it.k)) ? esc(t("partnerNote")) : "", (() => { const g = b.items.map(guardCue).find(Boolean); return g ? esc(g) : ""; })()].filter(Boolean).join("<br>")}</div>`;
+      h += `<div class="legend">${[sess.sport === "taekwondo" ? t("legendTkd") : t("legend"), b.items.some((it) => it.react) ? t("legendReact") : "", b.items.some((it) => PARTNER_K.has(it.k)) ? esc(t("partnerNote")) : "", (() => { const g = b.items.map(guardCue).find(Boolean); return g ? esc(g) : ""; })()].filter(Boolean).join("<br>")}</div>`;
     b.items.forEach((it, n) => {
       const checked = itemDone(sess, bi, n),
         itemAttr = `data-item="${bi}.${n}"`;
