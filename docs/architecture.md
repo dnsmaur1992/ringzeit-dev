@@ -75,7 +75,7 @@ src/
     boxing/, taekwondo/      später (4a-U, 6a–6c)
   app/                       übriger App-Code als geordnete Teile in gemeinsamem Scope (Reihenfolge = Dateiname)
     00-imports.js            die einzige Stelle, die Namen aus RZ übernimmt
-    01-overview-i18n.js … 39-boot.js   Schnitt entlang der bisherigen Abschnittsköpfe (03/04 sind nach catalog/ bzw.
+    01-overview-i18n.js … 39-boot.js   (neu in 2-B: 38b-resume.js, Wiederaufnahme) Schnitt entlang der bisherigen Abschnittsköpfe (03/04 sind nach catalog/ bzw.
                              sports/ umgezogen; die Nummern der übrigen Teile blieben, um Verwechslungen zu vermeiden)
 tools/build_pwa.py           esbuild bündelt src/modules.js (IIFE, global RZ), hängt app/*.js an, setzt beides in
                              index.html ein → build/ringzeit.html (lesbar, von allen Tests genutzt) → pwa/ (komprimiert)
@@ -214,7 +214,7 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `index.html`, `sw.js`, `manifest.webmanifest` | generiert, veröffentlicht (Kopie aus `pwa/`) – nicht von Hand ändern |
 | `installieren.html` | Installationsseite, QR-Code auf die Dev-Adresse |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung) – 105 Tests |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen) – 113 Tests |
 | `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen) – 9 Tests |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
@@ -229,3 +229,11 @@ node tests/isolation.e2e.mjs <Ordner der stabilen App>
 
 Baseline-Stand vor Schritt 0: Commit `914ed7d`, inhaltsgleich mit der stabilen App `ff7a7d8`; 105/105 Tests; Build mit
 esbuild 0.24.2 bis auf den Versionsstempel byte-identisch zum veröffentlichten `index.html`.
+
+## 10. Wiederaufnahme nach Neuladen/Beenden (2-B)
+
+- **Eigener Speicherschlüssel** `ringzeit-dev.resume.v1` (Präfix der Dev-App, nicht Teil der Sicherung, wird mit „Neu starten“ gelöscht). Inhalt: Zeitstempel, Datum der Einheit, Position im Ablauf (Block/Schritt), Übungstimer und Rundentimer – **immer mit `running: false`** und der verbleibenden Zeit.
+- **Gespeichert wird laufend** (`app/38b-resume.js`): bei jedem Taktgeber-Durchlauf (höchstens alle 2 s, mit nachlaufendem Schreiben), bei jedem Schrittwechsel/Phasenende, beim Verbergen der Seite und bei `pagehide`. Ein Stand mitten im Nachholen (Uhr hinkt) wird nicht geschrieben; es bleibt der letzte gute Stand.
+- **Beim Start** (nach dem Ladebild, vor Neuigkeiten/Tour) fragt ein Dialog „Training fortsetzen?“ mit Datum, Uhrzeit und Schritt. Bis zur Antwort schreibt die App nichts (sonst würde der Stand gelöscht). „Fortsetzen“ stellt Position und Timer **pausiert** her; „Nicht fortsetzen“ löscht nur den Stand (Plan, Haken und die normale Schaltfläche „Training fortsetzen“ bleiben).
+- **Nicht angeboten** (Stand wird still gelöscht, ggf. Hinweis): Einheit gelöscht, neu aufgebaut (Startzeit/Typ/Blockzahl anders) oder schon abgeschlossen.
+- **Abgrenzung:** Bildschirmsperre/Appwechsel (Seite lebt weiter) bleibt unverändert – der Taktgeber holt die Zeit nach. Die Wiederaufnahme betrifft nur Neuladen, Schließen und Beenden durch das System; die in der Zwischenzeit vergangene Zeit wird nie als Runde, Haken oder Belastung verbucht.

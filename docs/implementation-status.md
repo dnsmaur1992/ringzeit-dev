@@ -13,8 +13,8 @@
 |---|---|---|---|
 | W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
-| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | WARTET AUF MANUELLEN TEST |
-| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet | nicht beauftragt |
+| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
+| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | WARTET AUF MANUELLEN TEST |
 
 ## Entscheidungen
 
@@ -23,8 +23,9 @@
 - 03.11.2026, Schritt 0: Sicherungen der stabilen App werden in der Dev-App abgelehnt (Durchsetzung „kein Altimport“); eigene Dev-Sicherungen lassen sich speichern und zurückladen.
 - Kontingent: Wochenlimit setzt dienstags 04:00 zurück.
 - 03.11.2026, Schritt 1: Ordnerstruktur `core/`, `catalog/`, `sports/`, `app/` vom Betreiber als nachvollziehbar bestätigt. Schritt 2 als ein Umbau mit einer Abnahme (2.1–2.3 nur interne Zwischenstände mit Prüfung), weil es eine Entwicklungsversion ist und Rückfallmechanismen vorhanden sind. Übergang über `RZ`-Naht empfohlen (Verträge: `architecture.md` Abschnitt 6).
-- 03.11.2026, Schritt 1: Satzpause, die beim Vor-/Zurückblättern verworfen wird, bleibt in Schritt 2 unverändert; mögliche Korrektur in 2-B.
+- 03.11.2026, Schritt 1: Satzpause, die beim Vor-/Zurückblättern verworfen wird, bleibt in Schritt 2 unverändert; mögliche Korrektur in 2-B (umgesetzt, siehe unten).
 - 03.11.2026, Schritt 2: `RT`, `okEx`/`pickEx` bleiben vorerst in `app/08-plan.js` (mit Planlogik bzw. Profilgrenzen verwoben); Umzug, wenn 3-U/4a sie ohnehin anpassen.
+- 03.11.2026, 2-B (Betreiber: „Android, Deutsch, mehr weiß ich nicht“; übrige Vorschläge unwidersprochen übernommen): Wiederaufnahme mit Dialog (immer, bei Stand älter als 24 h mit Zusatzzeile), Timer pausiert, nichts wird automatisch verbucht; paginierte Satzpause bleibt erhalten, wenn man zur selben Übung zurückkommt; Nackenübung überall „Isometrische Nackenkräftigung – Halteübung“, Dosierung unverändert 4 × 10 s (Text an den Timer angepasst, keine Mehrbelastung – der Full-Contact-Text „15 s, 2 Durchgänge“ entfällt).
 - 03.11.2026, Schritt 1: Vergleichsbasis um vier Profile (Schulter/Rücken, wenig Zeit, 5 Tage, Gürtelprüfung) und zwei Abläufe „Navigieren während des Trainings und Fortsetzen“ erweitert.
 
 ## Prüfungen
@@ -45,6 +46,13 @@ Schritt 2 (03.11.2026, automatisch; Zwischenstände lokal geprüft):
 - Browser-Rauchtest der komprimierten App (Chromium, 390 × 844): Start ohne Konsolenfehler, Speicher lokal unter `ringzeit-dev.v1`, Einheit starten, Aufwärm-Timer läuft.
 - Nicht geprüft: echte Geräte (iOS/Android), Ton/Sprachausgabe, Bildschirmsperre.
 
+2-B (03.11.2026, automatisch; nicht auf echten Geräten):
+- `node --test tests/training.test.mjs tests/core.test.mjs`: 122/122 (113 + 9; neu: Wiederaufnahme ×4, Satzpause beim Blättern, Nackenübung, Ansagen ×2).
+- `node tests/baseline.mjs`: unverändert identisch (24 Profilläufe × 9 Einheiten, 2 Abläufe). Absichtlich geändert, aber von der Vergleichsbasis nicht erfasst: Texte/Name der Nackenübung, Wiederaufnahme, Satzpause beim Blättern, Ansage-Wiederholung – dafür eigene Tests.
+- `node tests/isolation.e2e.mjs ../ringzeit`: 12/12.
+- Chromium (komprimierte App, 390 × 844): Einheit starten → Seite neu laden → Dialog „Training fortsetzen?“ (Dienstag, 3.11. … Schritt 1 von 15) → „Fortsetzen“ → Ablauf an derselben Stelle, Timer auf Pause; keine Konsolenfehler.
+- Android-Sprachausgabe: **nicht reproduziert** (kein Gerät, keine Gerätedaten). Es wurden nur begründete Absicherungen eingebaut, kein Fehler als „behoben“ gemeldet: (1) Sprachcode `de_DE` → `de-DE` (Android meldet Unterstriche; manche Engines wählen sonst die Standardstimme), (2) Stimmenliste beim Start einmal anfordern (Chrome lädt sie verzögert), (3) bei Fehlern (`synthesis-failed`, `language-unavailable` …) bis zu zwei Wiederholungen: nächstbeste Stimme, dann nur Sprache, (4) letzter Fehler erscheint unter Profil → App & Daten → „Stimme der Ansagen“ zur Diagnose. Unverändert: Offline-Stimmen bevorzugt, Online-Stimmen abgewertet, kein Cloud-TTS.
+
 Manuelle Abnahmen:
 - 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
@@ -54,6 +62,9 @@ Manuelle Abnahmen:
 - Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
 - `docs/rules-sources.md` entsteht mit den ersten Quellen (spätestens 4a-Q).
 
+- Android-Sprachausgabe: Ursache nicht belegt. Für gezielte Behebung werden Gerät, Android-Version, Browser/installierte App und die Fehlermeldung unter „Stimme der Ansagen“ benötigt.
+- `docs/todo-bedienung-akku.md`: alle Punkte außer der Tonprüfung auf Android erledigt; die Tonprüfung steht jetzt hier. Datei kann entfernt werden.
+
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Abnahme von Schritt 2: Schritt 2-B – Wiederaufnahme nach Neuladen/Beenden, Android-Sprachausgabe, Nackenhalte-Texte (Modell laut Plan Sonnet). Vor Code: offene Timerfragen und Android-Reproduktionsdaten klären.
+Nach Abnahme von 2-B: Wochenpaket 3/8, Teil 3-Q (Quellen und Regelstand Kickboxen/Belastungsmodell; Modell laut Plan Opus).
