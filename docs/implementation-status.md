@@ -25,7 +25,7 @@
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
 | W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
 | W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:59, Stand `58224bd`, App-Version 03.11.2026 21:47, 206 Tests) |
-| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | WARTET AUF SICHTUNG (212 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
+| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | WARTET AUF SICHTUNG (213 Tests, Baseline Kickboxen identisch, Isolationstest 12/12; Nachbesserungen 6d-2 Tipps, 6d-3 Rundentimer) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -183,6 +183,10 @@ Entscheidungen 1–9 (Vorschläge des Auftragnehmers, vom Betreiber am 03.11.202
 
 Weitere Änderungen: `02-tips.js`, `10-loader.js`, `34-guide.js`, `34b-guide-box.js`, `34c-guide-tkd.js` (neu), `35-packing.js`, `13-training-flow.js`, `15-player.js`, `18-tour.js`, `31-install-share.js`, `01-overview-i18n.js`, Tests.
 - **Bekannte Grenzen**: Gürtelbinden und Dobok-Pflege sind allgemeine Praxis (Trainerprüfung empfohlen); die Namensbildung 1950er-Jahre ist bewusst ohne genaues Jahr; Tul-/Partnerform je Kup (D3) weiter nicht am Original geprüft.
+
+Nachbesserungen nach der Sichtung:
+- **6d-2** (03.11.2026 22:23): sechs Tipps mit Box-Technik (Haken ×2, Uppercut, Jab, Cross) bzw. „Füße nie kreuzen“ erscheinen bei Taekwondo nicht mehr (Markierung `nt`).
+- **6d-3** (03.11.2026 22:31): Freier Rundentimer folgt dem Hauptsport. Kickboxen unverändert (WAKO, K1 …); Boxen: „Amateur“ (DBV-Format nach Alter) plus Sparring, Pratzen, HIIT, Profi; Taekwondo: „WT-Kampf“ bzw. „ITF-Kampf“ (Format nach Alter aus `wtFormat`/`itfFormat`) plus Sparring, Pratzen, HIIT. Voreinstellung = Kampfformat des Sports; gespeicherte eigene Werte bleiben. Coach-Ansagen nutzen bei Taekwondo und Boxen die Techniknamen der Sportart (vorher Kickbox-Namen). Dateien: `27-free-timer.js`, `38-events.js`, `01-overview-i18n.js`, Tests.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
