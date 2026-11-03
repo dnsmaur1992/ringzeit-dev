@@ -1,24 +1,33 @@
 import json, time, os, re
-"""Ringzeit build: turns the readable source (src/ringzeit.html) into the installable app in pwa/
+"""Ringzeit Dev build: turns the readable source (src/ringzeit.html) into the installable app in pwa/
 (index.html with app meta tags, manifest, service worker sw.js; CSS/JS minified when esbuild is available).
-Usage: python3 tools/build_pwa.py [path/to/ringzeit.html]  ->  upload pwa/index.html and pwa/sw.js"""
+App id and name come from APP_ID / APP_NAME in the source, so storage key, cache names, manifest and title
+stay separate from the stable Ringzeit app on the same origin.
+Usage: python3 tools/build_pwa.py [path/to/ringzeit.html]  ->  upload pwa/index.html, pwa/sw.js, pwa/manifest.webmanifest"""
 import sys
 SRC=next(p for p in (sys.argv[1:]+['src/ringzeit.html','/home/claude/ringzeit.html']) if os.path.exists(p))
 src=open(SRC).read()
+def const(name):
+    m=re.search(r'const '+name+r' = "([^"]+)";',src)
+    if not m: raise SystemExit(name+' not found in '+SRC)
+    return m.group(1)
+APP_ID=const('APP_ID'); APP_NAME=const('APP_NAME')
+if not re.fullmatch(r'[a-z0-9-]+',APP_ID): raise SystemExit('APP_ID must be lowercase letters, digits and dashes')
+DESC='Entwicklungsversion – Trainingsplaner für Kickboxen nach WAKO-Regeln'
 ver=time.strftime('%Y%m%d%H%M')
-body=src.replace('const APP_VER = "dev";', 'const APP_VER = "'+time.strftime('%d.%m.%Y %H:%M')+'";').replace('<title>Ringzeit</title>\n','').replace('<meta name="claude:viewport-fit-sides" content="cover" />\n','')
+body=src.replace('const APP_VER = "dev";', 'const APP_VER = "'+time.strftime('%d.%m.%Y %H:%M')+'";').replace('<title>'+APP_NAME+'</title>\n','').replace('<meta name="claude:viewport-fit-sides" content="cover" />\n','')
 head=f'''<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>Ringzeit</title>
-<meta name="description" content="Trainingsplaner für Kickboxen nach WAKO-Regeln" />
+<title>{APP_NAME}</title>
+<meta name="description" content="{DESC}" />
 <meta name="theme-color" content="#0b0c0f" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Ringzeit" />
+<meta name="apple-mobile-web-app-title" content="{APP_NAME}" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icon-180.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
@@ -49,18 +58,20 @@ if ESB:
     body=body[:js_s]+mini(body[js_s:js_e],'js')+body[js_e:]
 os.makedirs('pwa',exist_ok=True)
 open('pwa/index.html','w').write(head+body+tail)
-man={"name":"Ringzeit","short_name":"Ringzeit","description":"Trainingsplaner für Kickboxen nach WAKO-Regeln","lang":"de","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0b0c0f","theme_color":"#0b0c0f",
+man={"id":"./","name":APP_NAME,"short_name":APP_NAME,"description":DESC,"lang":"de","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0b0c0f","theme_color":"#0b0c0f",
  "icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 open('pwa/manifest.webmanifest','w').write(json.dumps(man,ensure_ascii=False,indent=2))
-sw=f'''/* Ringzeit service worker: the app works offline; updates are fetched in the background and used on the next start */
-const CACHE = "ringzeit-{ver}";
+sw=f'''/* {APP_NAME} service worker: the app works offline; updates are fetched in the background and used on the next start.
+   Only caches with this app's own prefix are touched: the stable Ringzeit app shares the origin and keeps its own caches. */
+const PREFIX = "{APP_ID}-";
+const CACHE = PREFIX + "{ver}";
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
 self.addEventListener("install", (e) => {{
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
 }});
 self.addEventListener("activate", (e) => {{
   e.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()),
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()),
   );
 }});
 self.addEventListener("fetch", (e) => {{
