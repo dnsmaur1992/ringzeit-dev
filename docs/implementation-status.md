@@ -16,7 +16,8 @@
 | W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
 | W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
 | W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026, Stand 97bf4f1) |
-| W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | GELIEFERT – Abnahme offen |
+| W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `5484843`, App-Version 03.11.2026 12:27; Sicherungs-Rückladung nicht von Hand getestet, nur automatisch) |
+| W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ZUR SICHTUNG (nicht veröffentlicht) |
 
 ## Entscheidungen
 
@@ -63,6 +64,7 @@ Manuelle Abnahmen:
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
 - 03.11.2026, 3-U (Betreiber): Vorauswahlen und vorbelegte Dauer bleiben wie bisher (E5 geändert); Sportwahl wird sichtbar (zurzeit nur Kickboxen); keine interne Testansicht nötig (Dev-App). Umsetzung und Abweichungen: `data-load-concept.md` Abschnitt 9. Schwelle der Bereichsregel 0,35 statt 0,4 (sonst löst hartes Sparring nie aus).
+- 03.11.2026, 3-D (Betreiber): A10 nach Vorschlag (in explosiven Blöcken ohne Gewichte nur Schnellkraftübungen mit 3–5 Wdh.; „langsam (3 s ab)“ nur in langsamen Blöcken). Umsetzung und Abweichungen: `docs/data-load-concept.md` §10 (stabile Text-IDs mit Migration in `hydrate`, `core/prescription.js`, A1–A12 und neu A13 Schienbein-Checks). Vergleichsbasis neu aufgezeichnet.
 
 ## Offen
 
@@ -74,4 +76,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Abnahme von 3-U: Teil 3-D – stabile Übungs-IDs, strukturierte Dosierung, Timer-Text-Abweichungen A1–A12 (Modell laut Plan Sonnet).
+Nach Abnahme von 3-D (Wochenpaket 3/8 abgeschlossen): Wochenpaket 4/8, Teil 4a-Q – Box-Regeln und Fachkonzept (Modell laut Plan: Opus).

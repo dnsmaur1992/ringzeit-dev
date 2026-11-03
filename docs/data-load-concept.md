@@ -233,7 +233,7 @@ Ermittelt mit den echten Funktionen (`buildSession`, `doseTxt`/`targetText`/`har
 
 Nicht als Abweichung gewertet: Wiederholungsübungen ohne Timer (gewollt), Aufwärmen als Zeitfenster mit
 Wiederholungshinweis, Ziel-Texte aus der Kraftprogression mit passendem Timer, die Nackenübung ohne Ziel (4 × 10 s).
-Hinweis zu A6: In 2-B wurden Name und Texte angepasst; die Skizze zeigt bisher nur eine Handposition (`app/19-sketches.js`).
+Hinweis zu A6: In 2-B wurden Name und Texte angepasst; in 3-D zeigt die Skizze alle vier Richtungen (Stirn, Hinterkopf, links, rechts).
 
 ## 8. Nicht Teil von 3-Q/3-U
 
@@ -251,3 +251,35 @@ Hinweis zu A6: In 2-B wurden Name und Texte angepasst; die Skizze zeigt bisher n
 - **Turniere/Prüfungen:** neue Einträge speichern `sport`; Turniere jeder Sportart steuern die Phasen, Turnierformat nur, wenn die Sportart ein Modul hat; Gürtelprüfungen wirken nur auf ihre Sportart. Eine Auswahl der Sportart beim Eintragen gibt es (Zeile über der Art), ebenfalls nur mit fertigen Sportarten.
 - **Vergleichsbasis:** Baseline unverändert bis auf die dokumentierten Felder `sport` und `id` je Einheit (zufällige ID wird beim Vergleich ausgeblendet; `sport` muss `kickboxing` sein).
 - **Wochenprojektion:** erwartete Woche = Einträge bis heute + geplante Einheiten bis Sonntag (eigene: geplante Minuten × Basis-Anstrengung, Verein: Minuten × 6); über 1,3 × Mittel der drei Vorwochen und > 600 → Entlastungsstufe nur für noch nicht begonnene Einheiten (`why: "proj"`).
+
+## 10. Umsetzung 3-D (03.11.2026)
+
+**Stabile Übungs-IDs.** `catalog/ids.js` führt 88 Text-IDs der Form `<Kategorie>.<englischer Name>` (z. B. `str.plank`, `mob.kick_holds`); die Reihenfolge
+der Liste ist die alte Zeilennummer (`legacyIndex`). `EX[id]` liefert die Übung, `EX[alteNummer]` bleibt lesbar. Alle namensbasierten Tabellen
+(Dosierung, Skizzen, Tipps, Blocklisten, Kraft-Grundübungen, Aufwärm-/Mobility-Listen) sind auf IDs umgestellt – Umbenennen ändert keine Dosierung mehr.
+`hydrate` schreibt alte Zahlen-IDs in gespeicherten Einheiten und im Verlauf (`perf[].id`) auf Text-IDs um (zweimaliges Laden ändert nichts);
+Härtungs-IDs (`fPlank`, `neck` …) waren schon Text und bleiben.
+
+**Dosierung.** `core/prescription.js` hält je zeitbehafteter Übung eine strukturierte Verordnung (`RX`): Halten (`hold`), Intervalle (`iv`),
+Wechsel (`alt`), Halten je Seite mit Zeitfenster (`holds`), Sätze (`sets`, `sidedsets`), Richtungen (`dirs`), Griffkraft (`grip`). Daraus
+entstehen `rxText` (Dosierungstext, de/en), `rxPlan` (Timerphasen mit Rolle und Zählern; die App macht daraus die Beschriftung) und
+`rxSeconds`/`rxMinutes` (Zeitschätzung). `DOSE_FIX` wird für diese Übungen aus `RX` erzeugt; die Härtungstexte tragen Platzhalter
+(`{rx}`, `{n}`, `{s}`, `{r}`), die `hardTxt` aus derselben Verordnung füllt. Die Full-Contact-Stufe steht als Unterschied in `RX_HARD`.
+Wiederholungsübungen ohne Zeit behalten ihre Texttabelle (`DOSE_TXT`); die Blockdauer bleibt für sie maßgeblich.
+
+**Entscheidungen A1–A12 – umgesetzt:** A1 Fauststütz+h Wahl 30/45 · A2 Faustklopfen+h 45 s pro Hand · A3/A4 Härtung ohne Bandagen/mit Bandagen+h 3 Durchgänge ·
+A5 Einbeinstand: Kraftsatz = erst links, dann rechts (Text nennt die Reihenfolge; „3 × … pro Bein“ = 3 Sätze) · A6 Nackenübung: Text nennt „je Richtung“
+und die vier Handpositionen, Timer-Beschriftung mit Richtung, Skizze mit vier Richtungen · A7 Kick-Halten: Durchgänge wiederholen sich, bis ca. 4–4½ Min.
+gefüllt sind (je nach gewählten 3 oder 5 s: 275 bzw. 265 s); Text „ca. 4–5 Min.“ stammt aus dem Timer · A8 Kopfzeile Mobility „je Übung ca. 3–4 Min., Halteübungen 60–90 s“ ·
+A9 Taube „insgesamt ca. 2–3 Min.“, Froschdehnung/Tiefe Hocke „ca. 1–2 Min.“ aus dem Timer · A10 s. u. · A11 Seil-/Rudergerät-/Laufband-Intervalle:
+„2 Min. im Wechsel (30 s zügig / 30 s locker)“ = 4 Phasen · A12 „3 × 4 Läufe à 20 m“, „3 × 4 Sprints“, „3 × (2 × 80 m)“ im Satzblock (im Zirkel bleibt es bei einer Runde).
+
+**A10 (Entscheidung „Vorschlag“).** Sätze mit „explosiv“ (Turnier-Vorbereitung ohne Block-Schwerpunkt Kraft, Taper) wählen ohne Gewichte (kein Hantel-/Kettlebell-/Langhantel-Zubehör, kein Studio)
+nur Schnellkraftübungen (Kategorie `pow`; bei Knie-/Sprunggelenkbeschwerden greift die bisherige Kraft-Ersatzauswahl), mit „3–5 Wdh.“ aus der Kopfzeile statt der fest
+eingebauten 5. „langsam (3 s ab)“ steht nur noch in Blöcken mit schweren Wiederholungszahlen (≤ 8), nie in explosiven. Mit Gewichten bleibt alles wie bisher.
+
+**A13 (neu, beim Ableiten gefunden).** Schienbein-Checks (Full Contact): Text 3 × 30 s, Timer 2 × 30 s – Timer folgt dem Text (3 Durchgänge).
+
+**Vergleichsbasis.** Neu aufgezeichnet (`node tests/baseline.mjs --write`); Abweichungen gegenüber dem Stand 3-U ausschließlich: A11 (Text und 4 Phasen Seil-Intervalle,
+Dosistext Rudergerät/Laufband), A12 („3 × 4 Läufe à 20 m“), A7 (Kick-Halten Text und 87 statt 21 Phasen), A9 (Gesamtzeit), A6 (Nackentext). Die Einheiten selbst (Übungswahl, Blöcke) sind
+unverändert; die Vergleichsdatei führt die Übungen weiter unter der alten Zeilennummer (`legacyIndex`), damit nur echte Änderungen auffallen.

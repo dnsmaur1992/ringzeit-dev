@@ -64,9 +64,10 @@ src/
     storage.js               createStore({ key, storage, getState, compact, onFull, cloud, applyCloud, cloudDocs, onCloudLost })
     index.js                 sammelt core/
     history.js               Belastung (Minuten × Anstrengung), Entlastungsauslöser, Wochenprojektion, Bereichsmodell, Level je Sport – nur explizite Eingaben (3-U)
-    prescription.js          später: strukturierte Dosierung – Vertrag 6.3, Umsetzung 3-D
+    prescription.js          strukturierte Dosierung (RX): Text, Timerphasen und Zeitschätzung aus denselben Zahlen; Härtungsstufen RX_HARD (3-D)
   catalog/
-    exercises.js             Übungskatalog (88 Zeilen) → EX, AV; Reihenfolge = heutige ID, stabile IDs in 3-D
+    ids.js                   stabile Text-IDs der 88 Übungen (`<Kategorie>.<Name>`), Zuordnung alter Zeilennummer ↔ ID (3-D)
+    exercises.js             Übungskatalog (88 Zeilen) → EX, AV; `EX[id]` per Text-ID (und weiter per alter Zeilennummer lesbar)
   sports/
     index.js                 Register: SPORTS, sportFor(id) (ohne/unbekannt → kickboxing), visibleSports()
     kickboxing/index.js      SportDefinition: id, visible, rules, dayPattern (früher PATTERN), techniques
@@ -101,7 +102,7 @@ und ein neues Test-Harness; zu großer Sprung für eine reine Extraktion.
 | Baustein (Zeile) | Übernahme | Wann |
 |---|---|---|
 | `store` + `migrate`/`slimSessions`/`hydrate` (8481) | wird `createStore`, Kennung/Cloud von außen; Migrationen bleiben | 2 |
-| `X`/`EX`, `okEx`, `pickEx` (7438, 9096) | Daten nach `catalog/exercises.js`, Auswahl unverändert; stabile IDs in 3-D | 2 / 3-D |
+| `X`/`EX`, `okEx`, `pickEx` (7438, 9096) | Daten nach `catalog/exercises.js`, Auswahl unverändert; stabile Text-IDs (`catalog/ids.js`), Altdaten werden in `hydrate` (`migrateExIds`) umgeschrieben | 2 / 3-D ✓ |
 | `TECH`/`COMBOS`/`EXTRA` (7236), `RT` (9220), `waFormat` (8953) | nach `sports/kickboxing/`; Regeln bekommen Alter/Disziplin als Parameter | 2 |
 | `scheduleTimers`/`syncTimers`/`pauseOtherTimer` (19372), Audio, Wake Lock | bleiben in `app/`, unverändert; gemeinsamer Timervertrag erst bei Bedarf (2-B Wiederaufnahme) | – |
 | `playerSteps`/`stepDone`/`setsHtml` (12887, 12274) | bleiben, werden von neuen Sportarten mitgenutzt | – |
@@ -217,8 +218,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/data-load-concept.md` | Daten-/Belastungskonzept (3-Q): Schema, Belastungsvertrag, Dosierungsvertrag, Abweichungen, Akzeptanzfälle |
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 121 Tests |
-| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 15 Tests |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 128 Tests (3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
+| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 19 Tests (3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
 
