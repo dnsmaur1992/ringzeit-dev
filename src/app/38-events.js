@@ -120,7 +120,7 @@
         html: `<div class="legal"><h4>${G.h1}</h4>${G.p1.map((x) => `<p>${x}</p>`).join("")}<h4>${G.h2}</h4>${G.p2.map((x) => `<p>${x}</p>`).join("")}</div>`,
       });
     }
-    if (ds.lock) return toast(t(ds.lock === "age" ? "discAgeT" : "discLockT"));
+    if (ds.lock) return toast(t(ds.lock === "age" ? "discAgeT" : ds.lock === "level" ? "levelLock" : "discLockT"));
     if (ds.resetAll)
       return openSheet({
         kind: "confirm",
