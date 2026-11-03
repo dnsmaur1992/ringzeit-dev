@@ -22,7 +22,8 @@
 | W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a1c2946`, App-Version 03.11.2026 16:32, 164 Tests) |
 | W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
 | W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
-| W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | WARTET AUF SICHTUNG (186 Tests, Baseline Kickboxen identisch; Nachbesserung nach erster Sichtung 03.11.2026 18:59, siehe unten) |
+| W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
+| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (196 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -113,8 +114,29 @@ Manuelle Abnahmen:
 - **Sicherung**: `profile.tkd` (Style, Grade, Verlauf, Prüfungen) gehört zum Profil und damit zur Sicherung; `migrate` normalisiert.
 - **Code**: `src/sports/taekwondo/{index,grades}.js`, `src/app/36-tkd-grade.js`; Tests 186 (neu: Grade/Gürtel/Wartezeiten/Formen, Normalisierung, Prüfungsablauf mit Bestätigung, Style-Trennung, Panel, Taekwondo-Einheit, Dobok-/Gürtelfarben, Onboarding, Technik-Test).
 - **Nachbesserung nach erster Sichtung (Betreiber, 03.11.2026 18:56)**: (1) Taekwondo-Einheiten enthielten noch Kickbox-Übungen (Schattenboxen, Kick-Intervalle, Speed-Runden, Kick-Halten, Zeitlupen-Kicks, Beinarbeit „in Kampfstellung“ u. a.) – jetzt per Ausschlussliste `TKDT.NO_EX` (13 Übungen) aus allen Taekwondo-Einheiten entfernt, bis 6b/6c eigene Technikblöcke bringen; neutrale Übungen und die Abhärtung bleiben. (2) Der **Stil (WT/ITF-D)** ist wieder beim Hauptsport einstellbar (Profil → Training), zusätzlich im Gradbereich. (3) **Umschalter „Technik-Namen: Koreanisch / App-Sprache“** (Standard Koreanisch, `profile.tkd.names`, Sicherung/Migration) ist eingebaut; er wirkt auf die Technik-Namen, sobald die WT-/ITF-Pläne (6b/6c) Techniken enthalten, die Sprachausgabe nennt sie immer in der App-Sprache (T4/T5). (3a) **Einheitenart bei Taekwondo** (Betreiber 19:12: „Schattenboxen“ mit Jab/Cross/High Kick trotz Namenseinstellung): die Auswahl in „Einheit anpassen“ bot Technik, Kampf und Partner auch für Taekwondo an und baute damit Kickbox-Kombinationen. Jetzt nur Kraft, Kondition, Mobility; ein Wechsel auf Taekwondo setzt eine unpassende Art auf Kraft, und der Planer wandelt T/C/P bei Taekwondo in Kraft um. Die Kickbox-Technikblöcke bekommen keine koreanischen Namen – die Namen kommen mit den eigenen Technikblöcken (6b/6c). (3b) **Onboarding-Bild** (Betreiber 19:13): bei Taekwondo wurde das Bild auf Höhe 0 zusammengedrückt (fehlte), bei Boxen zeigte es die Kick-Szene – jetzt feste Höhe (`flex-shrink:0`), Boxen zeigt die Boxszene (blau/rot), Taekwondo die Dobok-Figuren, Kickboxen unverändert. (4) **Dobok deutlicher**: reinweiß mit Naht- und Kragenlinien, Weiß-Ärmel mit dunklem Rand, Kopf und Fäuste in Hautton, keine Handschuhe bei Taekwondo-Figuren.
-- **Bekannte Grenzen**: keine Taekwondo-Techniken/Drills/Regelprofile (6b/6c); Tipps/Fakten nur allgemein (6d); Abhärtung wie bisher, neue Bereiche (Handkante, Finger, Fuß) kommen in 6b/6c; das Onboarding-Bild bei Boxen ist angepasst (3b).
+- **Bekannte Grenzen**: keine Taekwondo-Techniken/Drills/Regelprofile (6b/6c); Tipps/Fakten nur allgemein (6d); Abhärtung: neue Bereiche kamen mit 6b; das Onboarding-Bild bei Boxen ist angepasst (3b).
+
+## 6b – WT-Pläne (Umsetzung)
+
+Entscheidungen 1–10 (Vorschläge des Auftragnehmers, vom Betreiber unverändert übernommen):
+
+1. **Geltung**: 6b nur für WT / DTU. ITF-D bleibt bei Kraft, Kondition, Beweglichkeit (S/K/M) bis 6c; die Typauswahl blendet T/C/P dort aus, der Planer macht daraus S.
+2. **Freischaltung** (`src/sports/taekwondo/techniques.js`, `allowed(id, ctx)`): Grundtechniken (Ap-chagi, Dollyeo-chagi Rumpf, Yeop-chagi, Mireo-chagi, Jireugi Rumpf, Schritte) von Anfang an; ab Level 1: Dollyeo Kopf, Nae-chagi, Ban-dal, Drehschritt; Dwi-chagi nicht unter 19; Dwi-huryeo-chagi ab Level 1 und höchstens 6. Kup (oder ohne Grad); Sprungtritte ab Level 1 und höchstens 4. Kup; Kinder unter 13 nur Grundtechniken; Knie-/Sprunggelenkbeschwerden entfernen die riskanten; ohne Grad zählt nur das Level.
+3. **Technik (T)**: Tritttechnik mit Kombinationen aus 2–4 Techniken (Empfehlung, keine Regel); die ersten Runden ohne Kopftritte.
+4. **Technik & Kondition (C)**: Tritt-Intervalle, Schattentritte, Seil, Pratzenrunden.
+5. **Sparring (P)**: Pratzen, Schrittsparring, Situationssparring, Konter, freies technisches Sparring (nur Touch, höchstens 1 Runde, 50 %, Schutzausrüstung, mit Trainer, ab Level 1, nur mit Partner); Kinder nur Pratzen und Schrittsparring.
+6. **Namen**: Technikname Koreanisch (WT-Umschrift) als Vorgabe, umschaltbar auf App-Sprache (Profil → Hauptsport und Taekwondo-Grad); Ansagen immer in App-Sprache; allgemeine Übungen bleiben DE/EN.
+7. **Abhärtung**: pro Einheit ein Handbereich (Faust/Knöchel, Handkante, Finger) und ein Beinbereich (Schienbein, Fuß), neue Übungen `tkEdge`, `tkTips`, `tkFoot`, `tkBall` (nur Taekwondo); Kinder/Jugend nur sanfte Solo-Varianten; Schläge mit Handschuh/Pratzen („Geraden“) gehören nicht dazu.
+8. **WT-Format** (`rules.js`): 3 × 2 min / 1 min Pause (Jugend B–D und Masters 3 × 1:30), Altersklassen nach WOZ 4.1; K.o.-/Kopftreffer-Sperre nach Alter 30/40/50 Tage (WOZ 17.3). ITF-D weiter 30.
+9. **Wochenmuster**: wie beim Boxen (T zuerst, dann S, P, K, C, M).
+10. **Tests** inkl. Beispiele (Kind 10 J./8. Kup; 16 J./4. Kup).
+
+Weitere Änderungen:
+- **Fehlerbehebung Mobility**: gewählte Ausrüstung „Widerstandsbänder“ wird in Mobility-Einheiten jeder Sportart bevorzugt (Aufwärmen und Mobility-Block). Dadurch änderte sich die Baseline Kickboxen nur bei Mobility-Einheiten zuhause (zwei Profile); die Baseline wurde neu aufgenommen, sonst identisch.
+- Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
+- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 196 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
+- **Bekannte Grenzen**: ITF-D-Techniken und Regelprofil (6c); Tipps/Fakten/Ratgeber Taekwondo (6d); WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 6a: Teil 6b – WT-Pläne (Modell laut Plan: Sonnet). Erst nach Abnahme von 6a und ausdrücklichem Auftrag.
+Nach Sichtung von 6b: Teil 6c – ITF-D-Pläne (Modell laut Plan: Sonnet). Erst nach Abnahme von 6b und ausdrücklichem Auftrag.
