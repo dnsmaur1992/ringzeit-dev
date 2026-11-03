@@ -100,6 +100,7 @@ function app() {
     localStorage: {
       getItem: (k) => saved.get(k) ?? null,
       setItem: (k, v) => saved.set(k, v),
+      removeItem: (k) => saved.delete(k),
     },
     matchMedia: () => ({ matches: true }),
   });
@@ -2039,4 +2040,188 @@ test("full contact (FC, K1): harder conditioning for adults, same length; not in
   assert.equal(Object.keys(r).filter((k) => k.startsWith("fc") && k !== "fc1995").map((k) => r[k].h)[0], 0);
   assert.ok(r.fc1995.area > 90 && r.k11995.area > 90);
   assert.equal(r.fc1995.min, 6); assert.equal(r.soft, false);
+});
+
+// ---- 2-B: resume after reload / close ----
+const RESUME_KEY = "ringzeit-dev.resume.v1";
+function restart(a) {
+  // a second page load on the same device: only localStorage survives
+  const b = app();
+  a.run("store.writeLocal()");
+  for (const [k, v] of a.saved) b.saved.set(k, v);
+  b.run("S=hydrate(store.readLocal()); ui.onb=null");
+  return b;
+}
+test("resume: exercise timer and position are kept while training; after a restart they return paused, nothing is booked", () => {
+  const a = app();
+  a.run(
+    `resumeReady=true;ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{min:60});startWorkout();exerciseTimerAction('start',{key:'0.0'});`,
+  );
+  a.advance(30000);
+  const snap = JSON.parse(a.saved.get(RESUME_KEY));
+  assert.equal(snap.ds, "2026-11-02");
+  assert.equal(snap.ex.running, false, "snapshot never stores a running clock");
+  assert.ok(snap.ex.remainingMs <= 90000 && snap.ex.remainingMs >= 88000, String(snap.ex.remainingMs));
+  const before = a.run("JSON.stringify([S.log.length,S.sessions[ui.sel].checked||null,S.sessions[ui.sel].perf||null])");
+  const b = restart(a);
+  assert.equal(b.run("resumeOffer(()=>{})"), true);
+  assert.equal(b.run("ui.sheet.kind"), "confirm");
+  assert.equal(b.run("ui.exerciseTimer == null"), true, "nothing restored before the answer");
+  b.run("sheetAction('confirm')");
+  assert.equal(b.run("ui.exerciseTimer.running"), false);
+  assert.equal(b.run("ui.exerciseTimer.remainingMs"), snap.ex.remainingMs);
+  assert.equal(b.run("ui.workout.ds"), "2026-11-02");
+  assert.equal(b.run("ui.workout.step"), snap.workout.step);
+  b.advance(10 * 60 * 1000);
+  b.elapse(10 * 60 * 1000);
+  b.run("exerciseTick();tick()");
+  assert.equal(b.run("ui.exerciseTimer.remainingMs"), snap.ex.remainingMs, "paused time does not run");
+  assert.equal(b.run("JSON.stringify([S.log.length,S.sessions[ui.sel].checked||null,S.sessions[ui.sel].perf||null])"), before);
+  assert.equal(b.calls.filter((c) => c[0] === "bell").length, 0);
+  // the user starts it again by hand: it continues from the saved remaining time
+  b.run("exerciseTimerAction('toggle')");
+  assert.equal(b.run("ui.exerciseTimer.running"), true);
+  assert.ok(Math.abs(b.run("ui.exerciseTimer.endAt-Date.now()") - snap.ex.remainingMs) < 50);
+});
+test("resume: round timer comes back paused with the same phase and second", () => {
+  const a = app();
+  a.run(`resumeReady=true;ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{min:60});selectSessionTimer(ui.sel);timerGo();`);
+  a.advance(25000);
+  const tm = JSON.parse(a.run("JSON.stringify(ui.timer)"));
+  assert.equal(tm.phase, "work");
+  const snap = JSON.parse(a.saved.get(RESUME_KEY));
+  assert.equal(snap.timer.running, false);
+  assert.equal(snap.timer.phase, "work");
+  assert.ok(Math.abs(snap.timer.left - tm.left) <= 2);
+  const b = restart(a);
+  assert.equal(b.run("resumeOffer(()=>{})"), true);
+  b.run("sheetAction('confirm')");
+  assert.equal(b.run("ui.timer.running"), false);
+  assert.equal(b.run("ui.timer.phase"), "work");
+  const left = b.run("ui.timer.left"),
+    done = b.run("S.sessions[ui.sel].rdone||0");
+  b.advance(20 * 60 * 1000);
+  b.run("tick()");
+  assert.equal(b.run("ui.timer.left"), left);
+  assert.equal(b.run("S.sessions[ui.sel].rdone||0"), done);
+});
+test("resume: deleted, rebuilt or finished sessions are not offered and the snapshot is removed", () => {
+  const mk = () => {
+    const a = app();
+    a.run(`resumeReady=true;ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{min:60});startWorkout();exerciseTimerAction('start',{key:'0.0'});`);
+    a.advance(5000);
+    return a;
+  };
+  let b = restart(mk());
+  b.run("delete S.sessions['2026-11-02']");
+  assert.equal(b.run("resumeOffer(()=>{})"), false);
+  assert.equal(b.saved.has(RESUME_KEY), false);
+  b = restart(mk());
+  b.run("S.sessions['2026-11-02']=buildSession('2026-11-02','K','gym',[],{min:45})");
+  assert.equal(b.run("resumeOffer(()=>{})"), false);
+  assert.equal(b.saved.has(RESUME_KEY), false);
+  b = restart(mk());
+  b.run("S.log.push({id:'e1',date:'2026-11-02',min:60,rpe:5,type:'T'})");
+  assert.equal(b.run("resumeOffer(()=>{})"), false);
+  b = restart(mk());
+  b.saved.delete(RESUME_KEY);
+  assert.equal(b.run("resumeOffer(()=>{})"), false);
+});
+test("resume: declining keeps the plan and the stored position, removes only the snapshot; closing the training clears the timers' snapshot", () => {
+  const a = app();
+  a.run(`resumeReady=true;ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{min:60});startWorkout();exerciseTimerAction('start',{key:'0.0'});`);
+  a.advance(5000);
+  const b = restart(a);
+  b.run("globalThis.__n=0;resumeOffer(()=>{__n++})");
+  b.run("sheetAction('confirmNo')");
+  assert.equal(b.run("__n"), 1);
+  assert.equal(b.saved.has(RESUME_KEY), false);
+  assert.equal(b.run("ui.exerciseTimer == null"), true);
+  assert.ok(b.run("S.sessions['2026-11-02'].flow.startedAt") > 0, "the normal 'Training fortsetzen' button still works");
+  // while the offer is open, background saving must not erase the snapshot
+  const c = restart(a);
+  c.run("resumeOffer(()=>{})");
+  c.run("resumeSave(true)");
+  assert.equal(c.saved.has(RESUME_KEY), true);
+  // leaving the training for good (timers gone) removes the snapshot
+  a.run("closeWorkout(false);clearSessionTimer();resumeSave(true)");
+  assert.equal(a.saved.has(RESUME_KEY), false);
+});
+
+test("player: a paused set rest keeps its remaining time when paging away and back; other paused timers are dropped as before", () => {
+  const a = app();
+  a.run(`ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{min:60});startWorkout();playerGo(2);`);
+  a.run(`ui.exerciseTimer={ds:ui.sel,key:'x',bi:0,ni:-1,phases:[{seconds:60,label:'Pause'}],index:0,restOnly:true,running:false,done:false,player:2,remainingMs:41000};`);
+  a.run("playerGo(3)");
+  assert.equal(a.run("ui.exerciseTimer == null"), true, "not shown on another step");
+  a.run("playerGo(2)");
+  assert.equal(a.run("ui.exerciseTimer.remainingMs"), 41000);
+  assert.equal(a.run("ui.exerciseTimer.running"), false, "stays paused");
+  a.advance(120000);
+  assert.equal(a.run("ui.exerciseTimer.remainingMs"), 41000);
+  // a non-rest timer is still dropped when leaving its step
+  a.run(`ui.exerciseTimer={ds:ui.sel,key:'y',bi:0,ni:0,phases:[{seconds:60,label:'x'}],index:0,restOnly:false,running:false,done:false,player:2,remainingMs:30000};playerGo(3);playerGo(2);`);
+  assert.equal(a.run("ui.exerciseTimer == null"), true);
+});
+test("neck hold exercise: one name, texts that match the timer (4 directions × 10 s), no old name left", () => {
+  const a = app();
+  const name = "Isometrische Nackenkräftigung – Halteübung";
+  assert.equal(a.run("EX.filter(e=>e.de==='Nackenstärkung').length"), 0);
+  const id = a.run(`EX.findIndex(e=>e.de==='${name}')`);
+  assert.ok(id >= 0);
+  assert.match(a.run(`EX[${id}].desc`) || a.run(`EX[${id}].dde`) || "", /10 s/);
+  // hardening item (normal and full-contact text) and the tracked strength item both run 4 × 10 s with changes in between
+  for (const item of [`{kind:'hard',id:'neck'}`, `{kind:'hard',id:'neck',h:1}`, `{id:${id},target:{r:10}}`]) {
+    a.run(`ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'${item.includes("hard") ? "hard" : "str"}',min:5,sets:'3×',items:[${item}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};`);
+    const secs = Array.from(a.run("exerciseTiming(S.sessions.x,0,0,undefined,0).phases.map(p=>p.seconds)"));
+    assert.deepEqual(secs, [10, 5, 10, 5, 10, 5, 10], item);
+  }
+  for (const h of [undefined, 1]) {
+    const [title, text] = a.run(`hardTxt('neck',${h})`);
+    assert.equal(title, name);
+    assert.match(text, /10 s/);
+    assert.doesNotMatch(text, /15 s|2 Durchg/);
+  }
+  assert.ok(a.run("SKETCH['Isometrische Nackenkräftigung – Halteübung'] != null"));
+});
+
+// ---- 2-B: announcer on Android-like engines ----
+function speechApp(voices, { failFor = [], code = "synthesis-failed" } = {}) {
+  const a = app();
+  a.run(`globalThis.__spoken=[];globalThis.SpeechSynthesisUtterance=class{constructor(t){this.text=t}};
+    globalThis.speechSynthesis={speaking:false,pending:false,paused:false,cancel(){},resume(){},getVoices:()=>${JSON.stringify(voices)},
+      speak(u){__spoken.push({text:u.text,lang:u.lang,voice:u.voice?u.voice.name:null});
+        const fail=${JSON.stringify(failFor)};
+        if(u.voice? fail.includes(u.voice.name) : fail.includes('*')) setTimeout(()=>u.onerror&&u.onerror({error:${JSON.stringify(code)}}),10)}};
+    window.speechSynthesis=speechSynthesis;S.profile.lang='de';S.profile.voice=true;`);
+  return a;
+}
+const V = (name, lang, local = true) => ({ name, voiceURI: name, lang, localService: local });
+test("announcer: Android voice codes like de_DE become de-DE; offline German voice beats the online one", () => {
+  const a = speechApp([V("English", "en_US"), V("German online", "de_DE", false), V("German local", "de_DE", true)]);
+  a.run("say('Runde 1')");
+  const sp = Array.from(a.run("__spoken")).map((x) => ({ ...x }));
+  assert.equal(sp.length, 1);
+  assert.equal(sp[0].voice, "German local");
+  assert.equal(sp[0].lang, "de-DE");
+});
+test("announcer: no voice list yet -> language only; a failing voice is retried with the next one, then with the language alone", () => {
+  let a = speechApp([]);
+  a.run("say('Hallo')");
+  let sp = Array.from(a.run("__spoken"));
+  assert.equal(sp.length, 1);
+  assert.equal(sp[0].lang, "de-DE");
+  assert.equal(sp[0].voice, null);
+  a = speechApp([V("German local", "de_DE", true), V("German online", "de_DE", false)], { failFor: ["German local", "German online"] });
+  a.run("say('Hallo')");
+  a.advance(1000);
+  sp = Array.from(a.run("__spoken")).map((x) => x.voice);
+  assert.deepEqual(sp, ["German local", "German online", null], "stops after the language-only attempt");
+  assert.equal(a.run("speechFail.code"), "synthesis-failed");
+  // cancel()/interrupt are normal and neither retried nor reported
+  a = speechApp([V("German local", "de_DE")], { failFor: ["German local"], code: "interrupted" });
+  a.run("say('Hallo')");
+  a.advance(1000);
+  assert.equal(Array.from(a.run("__spoken")).length, 1);
+  assert.equal(a.run("speechFail"), null);
 });
