@@ -217,7 +217,7 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/data-load-concept.md` | Daten-/Belastungskonzept (3-Q): Schema, Belastungsvertrag, Dosierungsvertrag, Abweichungen, Akzeptanzfälle |
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 120 Tests |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 121 Tests |
 | `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 15 Tests |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
