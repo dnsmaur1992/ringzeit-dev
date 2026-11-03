@@ -30,7 +30,7 @@
       .map((x, i) => {
         const w = sp[x] || techNm(x, true);
         // the side is only spoken where it isn't obvious (jab and cross are always lead and rear)
-        return sd[i] && !FIXED[x] && !TKDT.FIXED[x]
+        return sd[i] && !FIXED[x] && !tkm().FIXED[x]
           ? `${w} ${lg === "de" ? (sd[i] === "L" ? "vorne" : "hinten") : sd[i] === "L" ? "lead" : "rear"}`
           : w;
       })
@@ -129,6 +129,7 @@
       rb = roundBlock(sess),
       it = rb && rb.items[round - 1];
     if (!it) return;
+    unitStyle = sess.sport === "taekwondo" ? sess.tstyle || null : null;
     tm.called = round;
     const info = roundInfo(it),
       de = S.profile.lang === "de",

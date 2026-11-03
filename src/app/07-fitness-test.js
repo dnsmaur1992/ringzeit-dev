@@ -39,7 +39,7 @@
   }
   /* Level from the latest tests, per sport: shared values + the technique part of THIS sport (core/history.js levelFor) */
   function maxLevel(sport = mainSport(), style) {
-    return levelFor(S.tests, sport, style || (sport === "taekwondo" ? tkdStyle() : undefined)).level;
+    return levelFor(S.tests, sport, style || (sport === "taekwondo" ? tkdUnitStyle() : undefined)).level;
   }
   /* Effort with five faces instead of numbers; each face stands for a value on the 1–10 scale the planning uses */
   const effortFaces = () =>

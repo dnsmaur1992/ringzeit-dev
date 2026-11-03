@@ -568,8 +568,17 @@
     }
     if (ds.usport) {
       ui.setup.sport = ds.usport;
-      // taekwondo ITF-D has no technique/fight/partner units yet (6c): only strength, conditioning, mobility
-      if (ds.usport === "taekwondo" && tkdStyle() === "itf" && !["S", "K", "M"].includes(ui.setup.type)) ui.setup.type = "S";
+      render();
+      return;
+    }
+    // style (taekwondo) or discipline (kickboxing) of this unit only
+    if (ds.ustyle) {
+      ui.setup.tstyle = ds.ustyle;
+      render();
+      return;
+    }
+    if (ds.udisc) {
+      ui.setup.disc = ds.udisc;
       render();
       return;
     }

@@ -42,6 +42,7 @@
     const el = document.getElementById("focus"),
       sess = S.sessions[ui.sel],
       rb = sess && roundBlock(sess);
+    unitStyle = sess && sess.sport === "taekwondo" ? sess.tstyle || null : null;
     if (!ui.focus || ui.tab !== "session" || !rb) {
       el.hidden = true;
       const guide = document.getElementById("workout");

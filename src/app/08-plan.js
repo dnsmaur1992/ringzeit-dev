@@ -9,7 +9,7 @@
     const p = S.profile,
       days = p.days.slice().sort((a, b) => a - b),
       sp0 = sportFor(p.sport),
-      pat = ((sp0.id === "taekwondo" && tkdStyle() === "itf" && sp0.dayPatternItf) || sp0.dayPattern)[days.length] || [];
+      pat = sp0.dayPattern[days.length] || [];
     const m = {};
     days.forEach((d, i) => {
       let ty = pat[i];
@@ -98,7 +98,8 @@
   const sportNow = () => buildSport || S.profile.sport || "kickboxing";
   const isBox = () => sportNow() === "boxing";
   const isTkd = () => sportNow() === "taekwondo";
-  const discOf = () => (isBox() ? "box" : isTkd() ? "tkd" : S.profile.disc);
+  let buildDisc = null; // discipline of the unit being built (kickboxing); null = profile discipline
+  const discOf = () => (isBox() ? "box" : isTkd() ? "tkd" : buildDisc || S.profile.disc);
   /* Protection ban after a KO: kickboxing 4 weeks (WAKO), boxing 30 days (DBV §89) */
   const koDays = () => {
     const k = sportFor(sportNow()).rules.koDays;
@@ -780,7 +781,7 @@
       en: ["Free technical sparring", "Everything the rules allow, 50 % power, coach watching.", null],
     },
   ];
-  TASKS.push(...BOX_TASKS, ...TKDT.TASKS);
+  TASKS.push(...BOX_TASKS, ...TKDT.TASKS, ...ITFT.TASKS);
   const LIGHT_TASKS = ["hands", "kicks", "lead", "counter", "bodyhead", "control", "attdef"];
   function sparRounds(n, loc, eq, light) {
     const p = S.profile,
@@ -788,11 +789,15 @@
       box = isBox(),
       tkd = isTkd(),
       kid = ageGroup() === "kids",
+      age = ageAt(today()),
       // boxing: children never spar with a partner (solo work with an imagined opponent)
       mode = eq.includes("partner") && !(box && kid) ? "p" : eq.includes("bag") && loc !== "out" ? "b" : "s";
     const ok = TASKS.filter(
       (x) =>
-        (box ? x.sport === "boxing" : tkd ? x.sport === "taekwondo" : x.sport !== "boxing" && x.sport !== "taekwondo") &&
+        (box ? x.sport === "boxing" : tkd ? x.sport === "taekwondo" && (!x.style || x.style === tkdUnitStyle()) : x.sport !== "boxing" && x.sport !== "taekwondo") &&
+        !(x.minAge && age != null && age < x.minAge) &&
+        !(x.maxAge && age != null && age > x.maxAge) &&
+        !(x.kup != null && (tkdKup() == null ? p.level < 1 : tkdKup() > x.kup)) &&
         !(x.touch && (kid || light)) &&
         (mode === "p" || x.de[2]) &&
         (!x.disc || x.disc.includes(discOf())) &&
@@ -849,7 +854,7 @@
     check: ["Checken (Schienbein-Block)", "Check (shin block)"],
     lift: ["Fuß anheben", "Lift the foot"],
   };
-  Object.assign(DEFS, TKDT.DEFS); // taekwondo defences (Zurückweichen, Ausweichen, Abblocken, Eindrehen)
+  Object.assign(DEFS, TKDT.DEFS, ITFT.DEFS); // taekwondo defences (Zurückweichen, Ausweichen, Abblocken, Eindrehen)
   const COUNTER_ATT = {
     jab: { lvl: 0, d: [["cover", 0], ["step", 0], ["parry", 1], ["slip", 1]] },
     cross: { lvl: 0, d: [["cover", 0], ["step", 0], ["parry", 1], ["slip", 1]] },
@@ -982,7 +987,7 @@
     PARTNER_K.has(it.k) ? (discOf() === "fc" ? t("fcGuard") : discOf() === "lc" ? t("lcControl") : "") : "";
   // round text; the heavy bag reads differently in Full Contact (impact) and Leichtkontakt (speed)
   /* taekwondo rounds carry sp: "t" and read their own texts */
-  const rtOf = (it) => (it.sp === "t" && TKDT.RT[it.k]) || RT[it.k];
+  const rtOf = (it) => (it.sp === "t" && tkm().RT[it.k]) || RT[it.k];
   const roundDesc = (it, lg) => (it.k === "bag" && it.sp !== "t" && t("bagDisc")[discOf()]) || (rtOf(it) || [])[lg + 2] || "";
   /* rough difficulty of a combo: length, kicks, head kicks and advanced techniques */
   const comboLevel = (c) =>
@@ -995,12 +1000,17 @@
     const p = S.profile,
       ctx = tkdCtx(),
       lim = p.limits;
-    let pool = TKDT.COMBOS.slice(0, (p.level || 0) + 1).flat();
-    pool = pool.filter((c) => c.every((x) => TKDT.allowed(x, ctx)));
-    if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.includes("jir"));
-    if (noHead) pool = pool.filter((c) => !c.some((x) => TKDT.HEAD.has(x)));
+    const M = tkm();
+    let pool = M.COMBOS.slice(0, (p.level || 0) + 1).flat();
+    pool = pool.filter((c) => c.every((x) => M.allowed(x, ctx)));
+    if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.some((x) => TKDT.HANDS.has(x) || (M.HANDS && M.HANDS.has(x))));
+    if (noHead) pool = pool.filter((c) => !c.some((x) => M.HEAD.has(x)));
     if (ctx.kid) pool = pool.filter((c) => c.length <= 3);
-    if (!pool.length) pool = TKDT.LIGHT.filter((c) => c.every((x) => TKDT.allowed(x, ctx)));
+    // the fitter, the longer the kick chains: advanced at least 3 kicks, competition level at least 4 (most of the time)
+    const lvl = p.level || 0,
+      longer = pool.filter((c) => M.kickCount(c) >= 2 + lvl);
+    if (lvl >= 1 && longer.length && Math.random() < 0.75) pool = longer;
+    if (!pool.length) pool = M.LIGHT.filter((c) => c.every((x) => M.allowed(x, ctx)));
     if (!pool.length) pool = [["ap", "dol"]];
     return rnd(pool).slice();
   }
@@ -1020,7 +1030,8 @@
       if (type === "C" && eq.includes("rope") && i === n - 1 && !ka) k = "rope";
       kinds.push(k);
     }
-    const counters = TKDT.COUNTER.filter((c) => c.lvl <= lvl && c.c.every((x) => TKDT.allowed(x, ctx)) && (!kid || (TKDT.KID_DEFS.has(c.d) && c.c.length <= 2)));
+    const M = tkm(),
+      counters = M.COUNTER.filter((c) => c.lvl <= lvl && c.c.every((x) => M.allowed(x, ctx)) && (!kid || (M.KID_DEFS.has(c.d) && c.c.length <= 2)));
     const used = new Set(),
       warm = Math.max(1, easy);
     const out = kinds.map((k, i) => {
@@ -1028,7 +1039,7 @@
       if (k === "shadow" || k === "bag" || k === "partner") r.combo = tkdCombo(k === "partner" ? "pads" : k, i < warm);
       if (k === "evade") {
         const fresh = counters.filter((c) => !used.has(c.d + c.att)),
-          pickC = rnd(fresh.length ? fresh : counters.length ? counters : TKDT.COUNTER.slice(0, 2));
+          pickC = rnd(fresh.length ? fresh : counters.length ? counters : M.COUNTER.slice(0, 2));
         used.add(pickC.d + pickC.att);
         r.combo = pickC.c.slice();
         r.evade = { d: pickC.d };
@@ -1664,20 +1675,26 @@
   /* A built session carries its sport (default: main sport) and a stable id that links it to its log entry */
   function buildSession(dateStr, type, loc, eqIn, opts = {}) {
     buildSport = opts.sport || mainSport();
+    buildDisc = buildSport === "kickboxing" ? opts.disc || null : null;
+    unitStyle = buildSport === "taekwondo" ? opts.tstyle || null : null;
     let s;
     try {
       s = buildSessionCore(dateStr, type, loc, eqIn, opts);
     } finally {
       buildSport = null;
+      buildDisc = null;
+      unitStyle = null;
     }
     s.sport = opts.sport || mainSport();
+    // a unit of another style/discipline than the profile keeps it (taekwondo: WT or ITF-D, kickboxing: discipline)
+    if (s.sport === "taekwondo") s.tstyle = opts.tstyle || tkdStyle();
+    if (s.sport === "kickboxing" && opts.disc && opts.disc !== S.profile.disc) s.disc = opts.disc;
+    unitStyle = null;
     s.id = s.id || "s" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36);
     return s;
   }
   function buildSessionCore(dateStr, type, loc, eqIn, opts = {}) {
     loadCache = {};
-    // taekwondo ITF-D: technique, fight and partner units come with 6c – until then only the sport-neutral types
-    if (isTkd() && tkdStyle() === "itf" && ["T", "C", "P"].includes(type)) type = "S";
     // the fitness gym only exists for strength and conditioning; it brings its standard equipment along
     if (loc === "studio" && type !== "S" && type !== "K") loc = "gym";
     const studio = loc === "studio",

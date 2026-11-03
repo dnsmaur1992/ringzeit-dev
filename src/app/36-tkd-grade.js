@@ -4,6 +4,11 @@
      WT and ITF grades are separate; nothing is carried over between the styles. */
   const tkdOf = (p = S.profile) => p.tkd || { style: "wt", wt: "", itf: "", hist: [], exams: [] };
   const tkdStyle = (p = S.profile) => (tkdOf(p).style === "itf" ? "itf" : "wt");
+  /* style of the unit being built or shown (a unit can differ from the profile style: ITF-D unit, then WT); null = profile style */
+  let unitStyle = null;
+  const tkdUnitStyle = () => unitStyle || tkdStyle();
+  /* data module of the unit's style: WT (sports/taekwondo/techniques.js) or ITF-D (itf.js) */
+  const tkm = () => (tkdUnitStyle() === "itf" ? ITFT : TKDT);
   const tkdGradeOf = (style = tkdStyle(), p = S.profile) => tkdOf(p)[style] || "";
   const tkdW = () => (S.profile.tkd = S.profile.tkd || { style: "wt", names: "ko", wt: "", itf: "", hist: [], exams: [] });
   /* technique names: "ko" = Korean names, "app" = names in the app language (used by the WT/ITF plans, 6b/6c; speech always uses the app language) */
@@ -26,7 +31,7 @@
     return { tkd: TKDT.beltOf(g) };
   }
   /* number of the Kup of the worn grade of the current style: 0 = Dan/Poom (above all Kup), null = no grade entered */
-  const tkdKup = (style = tkdStyle()) => {
+  const tkdKup = (style = tkdUnitStyle()) => {
     const g = tkdGradeOf(style);
     return g ? (g[0] === "k" ? +g.slice(1) : 0) : null;
   };

@@ -382,18 +382,18 @@
   function sides(c) {
     let last = null;
     return c.map((x) => {
-      if (!STRIKE.has(x) && !TKDT.SIDED.has(x)) return null;
-      const s = FIXED[x] || TKDT.FIXED[x] || (last ? (last === "L" ? "R" : "L") : DEF[x] || TKDT.SIDE_DEF[x]);
+      if (!STRIKE.has(x) && !tkm().SIDED.has(x)) return null;
+      const s = FIXED[x] || tkm().FIXED[x] || (last ? (last === "L" ? "R" : "L") : DEF[x] || tkm().SIDE_DEF[x]);
       last = s;
-      return SIDED.has(x) || TKDT.SIDED.has(x) ? s : null;
+      return SIDED.has(x) || tkm().SIDED.has(x) ? s : null;
     });
   }
   // a single technique outside a combo (partner attack, quick answer): its usual side, so every kick says V or H
-  const oneSide = (x) => (SIDED.has(x) ? FIXED[x] || DEF[x] : TKDT.SIDED.has(x) ? TKDT.FIXED[x] || TKDT.SIDE_DEF[x] : null);
+  const oneSide = (x) => (SIDED.has(x) ? FIXED[x] || DEF[x] : tkm().SIDED.has(x) ? tkm().FIXED[x] || tkm().SIDE_DEF[x] : null);
   const sideLbl = (s) => (S.profile.lang === "de" ? (s === "L" ? "V" : "H") : s);
   /* one technique chip (kicks red, V/H side mark) – also used inside the partner groups */
   function techChip(x, sd) {
-    const sr = TKDT.SERIES[x];
+    const sr = tkm().SERIES[x];
     // series: one bracketed chip around the parts, arrows between them (fast sequence without setting down)
     if (sr) return `<span class="ser">${sr.p.map(([y, s]) => techChip(y, s)).join('<b class="arr">›</b>')}</span>`;
     return `<span class="${isKickId(x) ? "k" : ""}">${esc(techNm(x))}${sd ? `<i>${sideLbl(sd)}</i>` : ""}</span>`;
@@ -401,9 +401,9 @@
   /* technique name in the display; taekwondo: Korean (WT transliteration) or the app language by the name switch, speech always app language */
   function techNm(x, speech) {
     const lg = S.profile.lang === "de" ? 0 : 1,
-      k = TKDT.TECH[x];
-    if (k && TKDT.SERIES[x] && speech) return TKDT.SERIES[x].p.map(([y, s]) => techNm(y, true) + (s ? (lg === 0 ? (s === "L" ? " vorne" : " hinten") : s === "L" ? " lead" : " rear") : "")).join(", ");
-    if (k) return !speech && tkdNames() === "ko" ? k[2] : k[lg];
+      k = tkm().TECH[x];
+    if (k && tkm().SERIES[x] && speech) return tkm().SERIES[x].p.map(([y, s]) => techNm(y, true) + (s ? (lg === 0 ? (s === "L" ? " vorne" : " hinten") : s === "L" ? " lead" : " rear") : "")).join(", ");
+    if (k) return !speech && tkdNames() === "ko" && k[2] ? k[2] : k[lg];
     return TECH[x][lg];
   }
   const isKickId = (x) => KICKS.has(x) || TKDT.KICKS.has(x);
@@ -422,6 +422,8 @@
     type: sess.type,
     run: !!sess.run,
     sport: sess.sport || mainSport(),
+    tstyle: sess.tstyle || tkdStyle(),
+    disc: sess.disc || S.profile.disc,
     min: sess.min || sessMin(sess.type),
   });
   function setupDirty(ds) {
@@ -437,9 +439,25 @@
       su.loc !== base.loc ||
       su.min !== base.min ||
       (su.sport || mainSport()) !== base.sport ||
+      ((su.sport || mainSport()) === "taekwondo" && (su.tstyle || tkdStyle()) !== base.tstyle) ||
+      ((su.sport || mainSport()) === "kickboxing" && (su.disc || S.profile.disc) !== base.disc) ||
       !!su.run !== base.run ||
       eqKey(su.eq, su.type, su.loc) !== eqKey(base.eq, base.type, base.loc)
     );
+  }
+  /* Style (taekwondo: WT or ITF-D) or discipline (kickboxing) of this unit only – the default comes from the profile and the profile stays untouched */
+  function unitSubRow(setup) {
+    const sp = setup.sport || mainSport();
+    if (sp === "taekwondo") {
+      const cur = setup.tstyle || tkdStyle();
+      return `<div class="field"><span class="lab">${t("unitStyleL")}</span><div class="seg">${TKDT.STYLES.map((k) => `<button type="button" data-ustyle="${k}" aria-pressed="${cur === k}">${t("tkd").styles[k]}</button>`).join("")}</div></div>`;
+    }
+    if (sp === "kickboxing") {
+      const cur = setup.disc || S.profile.disc,
+        young = ageAt(today()) != null && ageAt(today()) < 15;
+      return `<div class="field"><span class="lab">${t("unitDiscL")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].filter((k) => !(young && (k === "fc" || k === "k1"))).map((k) => `<button type="button" data-udisc="${k}" aria-pressed="${cur === k}">${t("disc")[k]}</button>`).join("")}</div></div>`;
+    }
+    return "";
   }
   /* The setup form only asks what matters for the chosen session type */
   function setupFields(setup, ty) {
@@ -538,7 +556,7 @@
     const durs = [...new Set(lowTime() ? [20, 30] : [30, 45, 60, S.profile.minutes])]
       .filter((m) => (ty !== "M" || m <= 45) && (kidAge() == null || m <= (kidAge() <= 9 ? 30 : 45)))
       .sort((a, b) => a - b);
-    h += `<div class="panel">${sportRow("data-usport", setup.sport)}<div class="field"><span class="lab">${t("sessType")}</span><div class="seg g3">${["T", "C", "P", "S", "K", "M"].filter((k) => (!(setup.sport === "taekwondo" && tkdStyle() === "itf") || "SKM".includes(k)) && (k !== "P" || !simpleView() || ty === "P")).map((k) => `<button type="button" data-stype="${k}" aria-pressed="${ty === k}" ${k === "P" && (koLock(ds) || ageGroup() === "kids") ? "disabled" : ""}>${t("types")[k]}${k === planned ? `<small>${t("suggested")}</small>` : ""}</button>`).join("")}</div>${koLock(ds) ? `<span class="sub">${t("koNote")}</span>` : ""}</div>
+    h += `<div class="panel">${sportRow("data-usport", setup.sport)}${unitSubRow(setup)}<div class="field"><span class="lab">${t("sessType")}</span><div class="seg g3">${["T", "C", "P", "S", "K", "M"].filter((k) => (k !== "P" || !simpleView() || ty === "P")).map((k) => `<button type="button" data-stype="${k}" aria-pressed="${ty === k}" ${k === "P" && (koLock(ds) || ageGroup() === "kids") ? "disabled" : ""}>${t("types")[k]}${k === planned ? `<small>${t("suggested")}</small>` : ""}</button>`).join("")}</div>${koLock(ds) ? `<span class="sub">${t("koNote")}</span>` : ""}</div>
  <div class="field"><span class="lab">${t("dur")}</span><div class="seg">${durs.map((m) => `<button type="button" data-dur="${m}" aria-pressed="${setup.min === m}">${m}</button>`).join("")}</div></div>
  <div class="field"><span class="lab">${t("where")}</span><div class="seg ${ty === "S" || ty === "K" ? "g2" : ""}">${(ty === "S" || ty === "K" ? ["gym", "studio", "home", "out"] : ["gym", "home", "out"]).map((l) => `<button type="button" data-loc="${l}" aria-pressed="${setup.loc === l}">${t("locs")[l]}</button>`).join("")}</div></div>
 ${setupFields(setup, ty)}
@@ -584,7 +602,6 @@ ${setupFields(setup, ty)}
       if (critical.length) h += `<div class="note warn">${critical.map(esc).join("<br>")}</div>`;
       if (!simpleView()) h += `<details class="note"><summary>${flowText().why}</summary><div>${[...notes, dataLine].filter(Boolean).map(esc).join("<br>")}</div></details>`;
     }
-    if (sess.sport === "taekwondo" && tkdStyle() === "itf") h += `<div class="note">${t("tkd").sessNote}</div>`;
     sess.blocks.forEach((b, bi) => {
       h += sessionBlockHtml(sess, bi, true);
     });
@@ -595,6 +612,7 @@ ${setupFields(setup, ty)}
     return h;
   }
   function sessionBlockHtml(sess, bi, preview = false) {
+    unitStyle = sess.sport === "taekwondo" ? sess.tstyle || null : null;
     const b = sess.blocks[bi],
       lg = S.profile.lang === "de" ? 0 : 1;
     let h = "";

@@ -153,6 +153,8 @@
     S.sessions[d] = buildSession(d, ty, ui.setup.loc, ui.setup.eq.slice(), {
       run: ui.setup.run === "free" ? false : ui.setup.run,
       sport: ui.setup.sport,
+      tstyle: ui.setup.tstyle,
+      disc: ui.setup.disc,
       min: ui.setup.min,
     });
     // the form now shows what the new session really uses

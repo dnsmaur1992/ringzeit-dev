@@ -79,6 +79,8 @@
           min: sess.min,
           run: sess.run,
           sport: sess.sport,
+          tstyle: sess.tstyle,
+          disc: sess.disc,
         });
         clearSessionTimer();
       }
