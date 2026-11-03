@@ -202,6 +202,7 @@ python3 tools/build_pwa.py
 cp pwa/index.html index.html
 cp pwa/sw.js sw.js
 cp pwa/manifest.webmanifest manifest.webmanifest
+node tests/baseline.mjs          # Vergleichsbasis Kickboxen (muss bei reinen Umbauten identisch bleiben)
 # Isolation stabile App ↔ Dev-App im Browser (Playwright/Chromium, Ordner mit den Dateien der stabilen App):
 node tests/isolation.e2e.mjs ../ringzeit
 ```
@@ -240,7 +241,7 @@ ringzeit-dev/
 ├── icon-*.png             App-Icons
 ├── src/ringzeit.html      Lesbarer Quellcode
 ├── tools/build_pwa.py     Baut aus dem Quellcode index.html und sw.js
-├── tests/                 training.test.mjs (Logik), isolation.e2e.mjs (Browser)
+├── tests/                 training.test.mjs (Logik), baseline.mjs (Vergleichsbasis), isolation.e2e.mjs (Browser)
 └── docs/                  Bilder, Architektur, Umsetzungsstand
 ```
 
