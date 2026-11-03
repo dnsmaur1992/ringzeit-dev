@@ -23,7 +23,8 @@
 | W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
 | W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
-| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (200 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
+| W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
+| W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (206 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -138,10 +139,33 @@ Weitere Änderungen:
 - **Sichtung 03.11.2026 20:57**: Taekwondo-Tritte tragen jetzt V/H (vorderes/hinteres Bein) wie beim Kickboxen: Mireo-chagi vorderes Bein; Dwi-chagi, Dwi-huryeo, Ban-dal und Sprungtritte hinteres Bein; bei den übrigen wechselt die Seite in der Folge. Eigene Legende. Handtechniken (Jireugi) sind bei WT bewusst selten (unter 8 % der Techniken, WT wertet nur Faust zum Rumpf); die volle Handtechnik kommt mit ITF-D in 6c (Tests 199).
 - **Sichtung 03.11.2026 20:59**: Neues Element „Stellungswechsel (kleiner Hüpfer)“, koreanisch Bal-bakkum (Quelle: nbtkda.com/footwork, US-Verband; nicht durch WT/DTU belegt), ab Level 1, in Kombis und Fußarbeit. Ein echter Sprung ohne Bodenkontakt ist in der Quelle nicht beschrieben; das Element bleibt deshalb ein flacher Wechsel mit kleinem Hüpfer.
 - **Sichtung 03.11.2026 21:11**: Serien (schnelle Tritte ohne Absetzen) erscheinen als ein gestrichelt umrandeter Chip mit Pfeilen und festem V/H je Tritt: Dollyeo V → H, Ban-dal V → Dollyeo V, Yeop V → Dwi H → Bal-bakkum, Ap V → Dollyeo H, Dollyeo H → V. Ab Level 1, nie für Kinder, Freischaltung = strengste Grenze der Teile (z. B. kein Dwi-chagi unter 19, nicht mit Knie-/Sprunggelenkbeschwerden). Die Ansage nennt die Teile am Stück mit „vorne/hinten“. Daten `SERIES` in `techniques.js` (Tests 200).
+- **Sichtung 03.11.2026 21:37**: Kickketten wachsen mit dem Level: Anfänger höchstens 3 Tritte, Fortgeschritten bevorzugt ab 3, Wettkampf bevorzugt ab 4 und bis 6 Tritte (Serien zählen mit ihren Teilen); Kinder höchstens 3 Elemente. Verband/Disziplin je Einheit: laut Betreiber mit 6c (Tests 201).
 - Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
-- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 200 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
+- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 201 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
 - **Bekannte Grenzen**: ITF-D-Techniken und Regelprofil (6c); Tipps/Fakten/Ratgeber Taekwondo (6d); WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
+
+## 6c – ITF-D-Pläne (Umsetzung)
+
+Entscheidungen 1–11 (Vorschläge des Auftragnehmers, vom Betreiber am 03.11.2026 21:40 unverändert übernommen):
+
+1. **Typen**: ITF-D bekommt Technik, Technik & Kondition, Sparring, Kraft, Kondition, Mobility und dasselbe Wochenmuster wie WT; eigene Inhalte in `src/sports/taekwondo/itf.js`, keine umbenannten WT- oder Kickbox-Pläne.
+2. **Namen**: ITF-Schreibweise nur für Begriffe der ITF-D-PO und der ITF-Wettkampfregeln (Ap Chagi, Dollyo Chagi, Yop Chagi, Dwit Chagi, Bandae Dollyo Chagi, Twimyo Dollyo/Yop Chagi, Ap Joomuk Jirugi, Sambo-/Ibo-/Ilbo-/Jayu-Matsogi, Hosinsul). Axttritt, Sicheltritt, Schiebetritt, Faustrücken-Schlag, Schritte und Stellungswechsel stehen nur auf Deutsch/Englisch (D4: keine erfundenen koreanischen Begriffe). Umschalter Koreanisch/App-Sprache gilt auch hier.
+3. **Freischaltung** (`ITFT.allowed`): Grundtritte und Fauststoß von Anfang an; ab Level 1 Kopftritte, Faustrücken, Axt-, Sichel-, Drehschritt; Rückwärts- und Drehhakentritt ab Level 1 und höchstens 4. Kup, nicht unter 19; Sprungtritte (Twimyo) ab Level 1 und höchstens 2. Kup (Kyok-Pa-Liste, R4a), für Jugendliche erlaubt, für Kinder unter 13 nicht; Knie-/Sprunggelenkbeschwerden entfernen die riskanten; ohne Grad zählt nur das Level. Der Kup stammt aus dem ITF-Grad der Einheit, nicht aus dem WT-Grad.
+4. **Gewichtung**: Hand-Fuß-Verbindungen, Hand ungefähr 20–50 % der Elemente (Test), Ketten wachsen mit dem Level wie bei WT; Belastungsbereiche wie im Konzept (Beine 0,40, Arme 0,25, Rumpf 0,15, Ausdauer 0,20).
+5. **Partner**: Pratze Hand-Fuß, Sambo-Matsogi (ab 12 J.), Ibo-Matsogi (ab 12 J., höchstens 5. Kup), Ilbo-Matsogi (ab 12 J., höchstens 3. Kup), Jayu Matsogi (Leichtkontakt, ab 12 J., Level 1, Schutzausrüstung, höchstens eine Runde, mit Trainer); Kinder unter 12 nur Pratze und Semikontakt-Drill (Punkt-Stopp) (T11). Ohne eingetragenen Grad brauchen die Kup-abhängigen Drills Level 1.
+6. **Tul und Selbstverteidigung**: Tul-Namen nur als Liste in der Prüfungsvorbereitung (6a); eine langsame Hosinsul-Aufgabe ab Level 1 und ab 12 Jahren mit dem Hinweis „im Verein vertiefen“.
+7. **Format** (`itfFormat`): Erwachsene und ab 14 J. 2 × 2 min / 1 min Pause, 10–13 J. 2 × 1:30 / 45 s, 8–9 J. 2 × 1 min / 30 s, unter 8 kein Format (R4c, Fassung 22.03.2026); Altersklassen D/C/B/A-Jugend nach WO 2.5; K.o.-Sperre weiter 30 Tage.
+8. **Verband/Disziplin pro Einheit** („Einheit anpassen“): Zeile „Verband (nur diese Einheit)“ bei Taekwondo (WT / DTU oder ITF-D) und „Disziplin (nur diese Einheit)“ bei Kickboxen (Full Contact und K1 nicht unter 15 Jahren); die Einheit speichert `tstyle` bzw. `disc`, das Profil bleibt unverändert; Namen, Technik, Kup, Level und Aufgaben richten sich nach dem Style der Einheit; Neuerstellen und Zurücksetzen behalten ihn.
+9. **Gürtelfarben ITF-D**: unverändert aus 6a (Angabe des Betreibers).
+10. **Tipps/Fakten**: weiter nur die allgemeinen Tipps; Taekwondo-spezifische Tipps und Ratgeber kommen mit 6d (nichts Unbelegtes angezeigt).
+11. **Tests** (206): Freischaltung, ITF-Namen, Einheiten je Profil (Erwachsener 5. Kup, Kind 9 J., Jugendlicher 16 J. 4. Kup, Knie), Partneraufgaben nach Kup/Alter, Format, Einheitenstil/-disziplin, kein Leck nach dem Bauen.
+
+Weitere Änderungen:
+- Der Hinweis „ITF-D-Technik und Partnerübungen folgen mit den ITF-Plänen“ und die Beschränkung auf S/K/M entfallen; Onboarding-Text angepasst.
+- Fehlerbehebung Anzeige: die Altersklasse des Wettkampfformats in der Turnierliste zeigte für WT und Boxen „undefined“ (fehlende Bezeichnungen); jetzt D-/C-/B-/A-Jugend, U13–U19, Erwachsene. WT-Klassen heißen intern `td`/`tc`/`tb`/`ta`/`s`/`v`.
+- `src/sports/taekwondo/itf.js` (neu), `rules.js` (itfFormat), `index.js` (Muster), `08-plan.js`, `13-training-flow.js`, `14-guided-training.js`, `25-announcer.js`, `36-everyday.js`, `36-tkd-grade.js`, `37-training-mode.js`, `38-events.js`, `07-fitness-test.js`, `01-overview-i18n.js`, `src/modules.js`, `src/app/00-imports.js`.
+- **Bekannte Grenzen**: Tul-Ablauf und Hosinsul-Inhalte (nur Namen/Hinweis); die Zuordnung Tul/Partnerform je Kup (D3) ist nicht am Original geprüft; ITF-Tipps, Fakten und Ratgeber folgen mit 6d.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 6b: Teil 6c – ITF-D-Pläne (Modell laut Plan: Sonnet). Erst nach Abnahme von 6b und ausdrücklichem Auftrag.
+Nach Sichtung von 6c: Teil 6d – Stilbezogene Inhalte vervollständigen (Tipps, Fakten, Ratgeber für WT und ITF-D; Modell laut Plan: Sonnet). Erst nach Abnahme von 6c und ausdrücklichem Auftrag.
