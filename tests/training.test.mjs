@@ -2983,6 +2983,7 @@ test("6d: loader – tips and facts by sport × style × language (no foreign it
         }
         if (FACTS.includes(x)) facts++;
       }
+      for (const txt of seen) assert.doesNotMatch(txt, /Haken|Jab|Cross|Uppercut|hook|Füße kreuzen|cross your feet/i, "no punch technique tip in taekwondo: " + txt);
       assert.ok(tk >= 8, "tk items shown " + style + lg);
       assert.ok(facts >= 3, "facts shown " + style + lg);
       const other = style === "wt" ? "itf" : "wt";
