@@ -274,8 +274,22 @@
     h +=
       `</div></div>` +
       (simple ? "" : ruleTags()) +
-      `<p class="foot">${t("disclaimer")}<a href="https://www.wako-deutschland.de/downloads/" target="_blank" rel="noopener">${S.profile.lang === "de" ? "Regelwerke der WAKO Deutschland" : "WAKO Germany rulebooks (German)"}</a></p>`;
+      `<p class="foot">${t("disclaimer")}${rulesLink()}</p>`;
     return h;
+  }
+  /* rule book link of the main sport's federation (kickboxing WAKO Germany, boxing DBV, taekwondo DTU or ITF-D) */
+  function rulesLink() {
+    const de = S.profile.lang === "de",
+      sp = mainSport(),
+      L =
+        sp === "boxing"
+          ? [WKB_URL, "Wettkampfbestimmungen des DBV", "DBV competition rules (German)"]
+          : sp === "taekwondo"
+            ? tkdStyle() === "itf"
+              ? ["https://www.itf-d.de/api/public/res/file-manager/downloads/rules/63a9cc9056659.pdf", "Wettkampfordnung der ITF-D", "ITF-D competition rules (German)"]
+              : ["https://www.dtu.de/fileadmin/Downloads/Ordnungen/2026/8.1_Wettkampfordnung_Zweikampf_Stand_01.01.2026.pdf", "Wettkampfordnung der DTU", "DTU competition rules (German)"]
+            : ["https://www.wako-deutschland.de/downloads/", "Regelwerke der WAKO Deutschland", "WAKO Germany rulebooks (German)"];
+    return `<a href="${L[0]}" target="_blank" rel="noopener">${de ? L[1] : L[2]}</a>`;
   }
   function exText(id) {
     const e = EX[id],

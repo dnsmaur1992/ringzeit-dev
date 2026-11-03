@@ -1279,7 +1279,7 @@
       })
       .join(
         "",
-      )}${sportRow("data-csport", ui.csport)}<div class="field"><div class="seg">${["comp", "grade"].map((k) => `<button type="button" data-ckind="${k}" aria-pressed="${(ui.ckind || "comp") === k}">${t("compKind")[k]}</button>`).join("")}</div><div class="inline"><input id="pCompNew" type="date" min="${iso(today())}"><button type="button" class="btn sec" id="pCompAdd">${t("compAdd")}</button></div><span class="sub">${t("compHint")}</span></div></div>`;
+      )}${sportRow("data-csport", ui.csport)}<div class="field">${(ui.csport || mainSport()) === "boxing" ? "" : `<div class="seg">${["comp", "grade"].map((k) => `<button type="button" data-ckind="${k}" aria-pressed="${(ui.ckind || "comp") === k}">${t("compKind")[k]}</button>`).join("")}</div>`}<div class="inline"><input id="pCompNew" type="date" min="${iso(today())}"><button type="button" class="btn sec" id="pCompAdd">${t("compAdd")}</button></div><span class="sub">${t("compHint")}</span></div></div>`;
     more += `<div class="panel"><div class="field"><span class="lab">${t("limits")}</span><div class="chips">${Object.keys(
       AV,
     )

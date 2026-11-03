@@ -83,7 +83,7 @@
           "Die Trainingsvorschläge sind allgemeine Empfehlungen und ersetzen weder Trainer noch ärztliche Beratung. Die Nutzung erfolgt auf eigene Verantwortung.",
           "Bei Vorerkrankungen, Verletzungen, Schwangerschaft oder Beschwerden das Training vorher ärztlich abklären. Bei Schmerzen, Schwindel oder Atemnot sofort aufhören.",
           "Sparring und Partnerübungen nur unter Aufsicht. Kinder und Jugendliche unter 18 nutzen Ringzeit nur mit Einverständnis der Eltern.",
-          "Verbindlich sind immer die aktuellen Regelwerke der WAKO Deutschland und die Anweisungen deiner Trainer.",
+          "Verbindlich sind immer die aktuellen Regelwerke deines Verbands (WAKO Deutschland, DBV, DTU, ITF-D) und die Anweisungen deiner Trainer.",
         ],
         h2: "Datenschutz",
         p2: [
@@ -1317,7 +1317,7 @@
           "The training suggestions are general recommendations and replace neither a coach nor medical advice. Use at your own risk.",
           "With pre-existing conditions, injuries, pregnancy or complaints, check with a doctor before training. Stop at once with pain, dizziness or shortness of breath.",
           "Sparring and partner drills only under supervision. Children and teenagers under 18 use Ringzeit only with their parents' consent.",
-          "The current WAKO Germany rulebooks and your coaches' instructions always take precedence.",
+          "The current rulebooks of your federation (WAKO Germany, DBV, DTU, ITF-D) and your coaches' instructions always take precedence.",
         ],
         h2: "Privacy",
         p2: [

@@ -949,7 +949,7 @@
       draft.comps.push({
         id: "c" + Date.now().toString(36),
         date: v,
-        kind: ui.ckind || "comp",
+        kind: (ui.csport || mainSport()) === "boxing" ? "comp" : ui.ckind || "comp", // boxing has no belt exams
         sport: ui.csport || mainSport(),
       });
       applyPlan();
