@@ -2811,11 +2811,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -2823,6 +2823,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -2850,10 +2854,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -2908,7 +2908,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -2917,7 +2917,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -2927,6 +2927,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -2989,15 +2998,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -5599,11 +5599,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -5611,6 +5611,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -5638,10 +5642,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -5696,7 +5696,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -5705,7 +5705,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -5715,6 +5715,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -5777,15 +5786,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -8667,11 +8667,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -8679,6 +8679,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -8706,10 +8710,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -8764,7 +8764,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -8773,7 +8773,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -8783,6 +8783,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -8845,15 +8854,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -11485,11 +11485,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -11497,6 +11497,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -11524,10 +11528,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -11582,7 +11582,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -11591,7 +11591,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -11601,6 +11601,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -11663,15 +11672,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -14379,11 +14379,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -14391,6 +14391,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -14418,10 +14422,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -14476,7 +14476,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -14485,7 +14485,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -14495,6 +14495,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -14557,15 +14566,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -17158,11 +17158,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -17170,6 +17170,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -17197,10 +17201,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -17255,7 +17255,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -17264,7 +17264,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -17274,6 +17274,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -17336,15 +17345,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -20384,11 +20384,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -20396,6 +20396,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -20423,10 +20427,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -20481,7 +20481,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -20490,7 +20490,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -20500,6 +20500,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -20562,15 +20571,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -23362,11 +23362,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -23374,6 +23374,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -23401,10 +23405,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -23459,7 +23459,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -23468,7 +23468,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -23478,6 +23478,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -23540,15 +23549,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -26578,11 +26578,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -26590,6 +26590,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 71
@@ -26617,10 +26621,6 @@
          {
           "kind": "ex",
           "id": 68
-         },
-         {
-          "kind": "ex",
-          "id": 65
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -26679,7 +26679,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -26688,7 +26688,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -26698,6 +26698,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "je Richtung 5 · insgesamt ca. 4 Min.",
         "timer": {
@@ -26745,15 +26754,6 @@
        },
        {
         "dose": "je Seite 5 · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -29568,11 +29568,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -29580,6 +29580,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 71
@@ -29607,10 +29611,6 @@
          {
           "kind": "ex",
           "id": 68
-         },
-         {
-          "kind": "ex",
-          "id": 65
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -29669,7 +29669,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -29678,7 +29678,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -29688,6 +29688,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "je Richtung 5 · insgesamt ca. 4 Min.",
         "timer": {
@@ -29735,15 +29744,6 @@
        },
        {
         "dose": "je Seite 5 · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -32139,11 +32139,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -32151,6 +32151,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -32178,10 +32182,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -32236,7 +32236,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -32245,7 +32245,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -32255,6 +32255,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -32317,15 +32326,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -34588,11 +34588,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -34600,6 +34600,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -34627,10 +34631,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -34685,7 +34685,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -34694,7 +34694,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -34704,6 +34704,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -34766,15 +34775,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -37579,11 +37579,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -37591,6 +37591,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -37618,10 +37622,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "60–90 s each, breathe slowly"
@@ -37676,7 +37676,7 @@
      "items": [
       [
        {
-        "dose": "4 min · 10 circles per joint",
+        "dose": "4 min · 15 reps per exercise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -37685,7 +37685,7 @@
         }
        },
        {
-        "dose": "4 min · 15 reps per exercise",
+        "dose": "4 min · 10 circles per joint",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -37695,6 +37695,15 @@
        }
       ],
       [
+       {
+        "dose": "10 reps · about 4 min in total",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 reps · about 4 min in total",
         "timer": {
@@ -37757,15 +37766,6 @@
        },
        {
         "dose": "6 circles per side · about 4 min in total",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 switches · about 4 min in total",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -40355,11 +40355,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -40367,6 +40367,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -40394,10 +40398,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "60–90 s each, breathe slowly"
@@ -40452,7 +40452,7 @@
      "items": [
       [
        {
-        "dose": "4 min · 10 circles per joint",
+        "dose": "4 min · 15 reps per exercise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -40461,7 +40461,7 @@
         }
        },
        {
-        "dose": "4 min · 15 reps per exercise",
+        "dose": "4 min · 10 circles per joint",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -40471,6 +40471,15 @@
        }
       ],
       [
+       {
+        "dose": "10 reps · about 4 min in total",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 reps · about 4 min in total",
         "timer": {
@@ -40533,15 +40542,6 @@
        },
        {
         "dose": "6 circles per side · about 4 min in total",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 switches · about 4 min in total",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -43405,11 +43405,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -43439,15 +43439,15 @@
          },
          {
           "kind": "ex",
+          "id": 65
+         },
+         {
+          "kind": "ex",
           "id": 68
          },
          {
           "kind": "ex",
           "id": 85
-         },
-         {
-          "kind": "ex",
-          "id": 64
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -43507,7 +43507,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -43516,7 +43516,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -43581,6 +43581,15 @@
         }
        },
        {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
+       {
         "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
          "phases": 87,
@@ -43590,15 +43599,6 @@
           5
          ],
          "perSet": 3
-        }
-       },
-       {
-        "dose": "je Seite 10 · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
         }
        }
       ],
@@ -46207,11 +46207,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -46241,15 +46241,15 @@
          },
          {
           "kind": "ex",
+          "id": 65
+         },
+         {
+          "kind": "ex",
           "id": 68
          },
          {
           "kind": "ex",
           "id": 85
-         },
-         {
-          "kind": "ex",
-          "id": 64
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -46309,7 +46309,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -46318,7 +46318,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -46383,6 +46383,15 @@
         }
        },
        {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
+       {
         "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
          "phases": 87,
@@ -46392,15 +46401,6 @@
           5
          ],
          "perSet": 3
-        }
-       },
-       {
-        "dose": "je Seite 10 · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
         }
        }
       ],
@@ -49238,11 +49238,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -49335,7 +49335,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -49344,7 +49344,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -52038,11 +52038,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -52135,7 +52135,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -52144,7 +52144,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -54441,11 +54441,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -54453,6 +54453,10 @@
         "key": "mob",
         "min": 15,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -54468,10 +54472,6 @@
          {
           "kind": "ex",
           "id": 84
-         },
-         {
-          "kind": "ex",
-          "id": 64
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -54528,7 +54528,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -54537,7 +54537,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -54547,6 +54547,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 3 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 180,
+         "choices": [],
+         "perSet": 180
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 3 Min.",
         "timer": {
@@ -54575,15 +54584,6 @@
           5
          ],
          "perSet": 3
-        }
-       },
-       {
-        "dose": "je Seite 10 · insgesamt ca. 3 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [],
-         "perSet": 180
         }
        },
        {
@@ -56674,11 +56674,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -56686,6 +56686,10 @@
         "key": "mob",
         "min": 15,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -56701,10 +56705,6 @@
          {
           "kind": "ex",
           "id": 84
-         },
-         {
-          "kind": "ex",
-          "id": 64
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -56761,7 +56761,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -56770,7 +56770,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -56780,6 +56780,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 3 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 180,
+         "choices": [],
+         "perSet": 180
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 3 Min.",
         "timer": {
@@ -56808,15 +56817,6 @@
           5
          ],
          "perSet": 3
-        }
-       },
-       {
-        "dose": "je Seite 10 · insgesamt ca. 3 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [],
-         "perSet": 180
         }
        },
        {
@@ -59740,11 +59740,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -59752,6 +59752,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -59779,10 +59783,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -59837,7 +59837,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -59846,7 +59846,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -59856,6 +59856,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -59918,15 +59927,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -62574,11 +62574,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -62586,6 +62586,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -62613,10 +62617,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -62671,7 +62671,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -62680,7 +62680,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -62690,6 +62690,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -62752,15 +62761,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -65611,11 +65611,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -65623,6 +65623,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -65650,10 +65654,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -65708,7 +65708,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -65717,7 +65717,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -65727,6 +65727,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -65789,15 +65798,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -68507,11 +68507,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 2
+          "id": 6
          },
          {
           "kind": "ex",
-          "id": 6
+          "id": 2
          }
         ]
        },
@@ -68519,6 +68519,10 @@
         "key": "mob",
         "min": 30,
         "items": [
+         {
+          "kind": "ex",
+          "id": 65
+         },
          {
           "kind": "ex",
           "id": 68
@@ -68546,10 +68550,6 @@
          {
           "kind": "ex",
           "id": 59
-         },
-         {
-          "kind": "ex",
-          "id": 60
          }
         ],
         "sets": "je 60–90 s, ruhig atmen"
@@ -68604,7 +68604,7 @@
      "items": [
       [
        {
-        "dose": "4 Min. · je Gelenk 10 Kreise",
+        "dose": "4 Min. · je Übung 15 Wdh.",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -68613,7 +68613,7 @@
         }
        },
        {
-        "dose": "4 Min. · je Übung 15 Wdh.",
+        "dose": "4 Min. · je Gelenk 10 Kreise",
         "timer": {
          "phases": 1,
          "seconds": 240,
@@ -68623,6 +68623,15 @@
        }
       ],
       [
+       {
+        "dose": "10 Wdh. · insgesamt ca. 4 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 240,
+         "choices": [],
+         "perSet": 240
+        }
+       },
        {
         "dose": "10 Wdh. · insgesamt ca. 4 Min.",
         "timer": {
@@ -68685,15 +68694,6 @@
        },
        {
         "dose": "je Seite 6 Kreise · insgesamt ca. 4 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 240,
-         "choices": [],
-         "perSet": 240
-        }
-       },
-       {
-        "dose": "10 Wechsel · insgesamt ca. 4 Min.",
         "timer": {
          "phases": 1,
          "seconds": 240,
