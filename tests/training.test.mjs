@@ -3046,7 +3046,7 @@ test("6b: resistance bands chosen for a mobility unit are used – in every spor
 });
 
 /* ---------- 6b: Taekwondo WT plans (technique, technique & conditioning, sparring) ---------- */
-const TKD_IDS = "ap dol dolh yeop mireo dwi nae ban dhu ttdol ttyeop jir stepf stepb steps turn".split(" ");
+const TKD_IDS = "ap dol dolh yeop mireo dwi nae ban dhu ttdol ttyeop jir stepf stepb steps turn swch".split(" ");
 function tkdProfile(a, o = {}) {
   a.run(
     `S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.days=[0,1,2,3];S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.limits || [])};S.profile.tkd.wt='${o.grade || ""}';`,
@@ -3211,4 +3211,24 @@ test("6b: the Today footer links the rule book of the main sport's federation", 
   a.run("S.profile.tkd.style='itf';");
   assert.match(foot(), /itf-d\.de/);
   assert.ok(!/wako/i.test(foot()));
+});
+test("6b: taekwondo kicks say lead (V) or rear (H) leg; hand techniques stay rare in WT", () => {
+  const a = app();
+  tkdProfile(a, { lvl: 1 });
+  const sd = (c) => JSON.parse(a.run(`JSON.stringify(sides(${JSON.stringify(c)}))`));
+  assert.deepEqual(sd(["dwi"]), ["R"], "spinning back kick: rear leg");
+  assert.deepEqual(sd(["mireo"]), ["L"], "push kick: lead leg");
+  assert.deepEqual(sd(["dol", "dol"]), ["R", "L"], "side alternates in a series");
+  assert.equal(sd(["stepf"])[0], null, "steps have no side");
+  assert.match(a.run("comboHtml(['dol','yeop'])"), /<i>H<\/i>.*<i>V<\/i>/);
+  assert.match(a.run("t('legendTkd')"), /vorderes Bein/);
+  let hands = 0,
+    total = 0;
+  for (let i = 0; i < 40; i++)
+    for (const m of JSON.stringify(tkdSess(a, "T")).matchAll(/"combo":\[([^\]]*)\]/g)) {
+      const ids = m[1].match(/[a-z]+/g) || [];
+      total += ids.length;
+      hands += ids.filter((x) => x === "jir").length;
+    }
+  assert.ok(hands / total < 0.08, "punches " + hands + "/" + total);
 });
