@@ -348,9 +348,9 @@ test("boxing tasks: all with partner text or solo text; touch sparring needs a p
   assert.ok(BOX_TASKS.filter((t) => t.touch).length === 1);
   for (const t of BOX_TASKS) assert.ok(!/Kick|Tritt/.test(t.de.join(" ")), t.id + " has no kick wording");
 });
-test("sports: boxing is released with 4b and visible next to kickboxing; no preview sports remain", () => {
+test("sports: boxing (4b) and taekwondo (6a) are visible next to kickboxing; no preview sports remain", () => {
   assert.equal(SPORTS.boxing.visible, true);
-  assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing", "boxing"]);
+  assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing", "boxing", "taekwondo"]);
   assert.deepEqual(previewSports().map((s) => s.id), []);
 });
 
@@ -360,4 +360,42 @@ test("boxing: every catalogue exercise whose text is about kicks is excluded fro
   assert.ok(kicky.length >= 7);
   for (const k of kicky) assert.ok(BOX_NO_EX.has(k), k + " is missing in BOX_NO_EX");
   for (const k of BOX_NO_EX) assert.ok(EX.some((e) => e.key === k), k + " exists in the catalogue");
+});
+
+/* ---------- taekwondo grades (6a) ---------- */
+import * as TKD from "../src/sports/taekwondo/grades.js";
+test("taekwondo grades: belts per grade, WT and ITF use the same colour sequence, no grade above the 1st Dan", () => {
+  const seq = { k10: ["white", null], k9: ["white", "yellow"], k8: ["yellow", null], k7: ["yellow", "green"], k6: ["green", null], k5: ["green", "blue"], k4: ["blue", null], k3: ["blue", "red"], k2: ["red", null], k1: ["red", "black"], d1: ["black", null] };
+  for (const [c, [b, t]] of Object.entries(seq)) {
+    assert.equal(TKD.beltOf(c).base, TKD.COLORS[b], c);
+    assert.equal(TKD.beltOf(c).tip, t ? TKD.COLORS[t] : null, c);
+  }
+  assert.equal(TKD.beltOf("").base, TKD.COLORS.white, "no grade = white standard drawing");
+  assert.deepEqual(TKD.gradesFor("itf", 30), ["k10", "k9", "k8", "k7", "k6", "k5", "k4", "k3", "k2", "k1", "d1"]);
+  assert.equal(TKD.gradesFor("wt", 30).at(-1), "d1");
+  assert.equal(TKD.gradesFor("wt", 12).at(-1), "p1", "WT under 15: 1st Poom instead of the 1st Dan");
+  assert.equal(TKD.gradesFor("wt", null).at(-1), "d1", "unknown age: Dan");
+  assert.equal(TKD.isGrade("itf", "p1"), false);
+  assert.equal(TKD.nextGrade("wt", "k1", 30), "d1");
+  assert.equal(TKD.nextGrade("wt", "d1", 30), null, "no higher Dan");
+  assert.equal(TKD.nextGrade("itf", "", 30), "k9");
+});
+test("taekwondo grades: waiting times, forms (name only), exam parts, earliest date", () => {
+  assert.equal(TKD.waitMonths("wt", "k4"), 4);
+  assert.equal(TKD.waitMonths("wt", "k1"), 6);
+  assert.equal(TKD.waitMonths("itf", "k7"), 3);
+  assert.equal(TKD.waitMonths("itf", "k1"), 6);
+  assert.equal(TKD.waitMonths("wt", "d1"), 12);
+  assert.deepEqual(TKD.formOf("wt", "k6"), [2, "Taegeuk Ee Jang"]);
+  assert.deepEqual(TKD.formOf("wt", "d1"), [8, "Taegeuk Pal Jang"]);
+  assert.deepEqual(TKD.formOf("itf", "k3"), [null, "Joong-Gun"]);
+  assert.equal(TKD.formOf("itf", "k9"), null);
+  assert.ok(TKD.examParts("wt", "k4").includes("break1") && TKD.examParts("wt", "k3").includes("break2"));
+  assert.ok(!TKD.examParts("wt", "k5").some((p) => p.startsWith("break")), "no break test before the 4th Kup");
+  assert.ok(TKD.examParts("itf", "k5").includes("kyokpa") && !TKD.examParts("itf", "k6").includes("kyokpa"));
+  assert.equal(TKD.earliestExam("wt", "k4", "2026-01-31"), "2026-05-31");
+  assert.equal(TKD.earliestExam("wt", "k4", null), null);
+  assert.equal(TKD.gradeText("k4", "de"), "4. Kup");
+  assert.equal(TKD.gradeText("d1", "en"), "1st Dan");
+  assert.equal(TKD.gradeText("k10", "en"), "10th Kup");
 });
