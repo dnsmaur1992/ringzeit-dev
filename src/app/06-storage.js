@@ -80,6 +80,7 @@
     const T = p.tkd && typeof p.tkd === "object" ? p.tkd : {};
     p.tkd = {
       style: T.style === "itf" ? "itf" : "wt",
+      names: T.names === "app" ? "app" : "ko",
       wt: TKDT.isGrade("wt", T.wt) ? T.wt : "",
       itf: TKDT.isGrade("itf", T.itf) ? T.itf : "",
       hist: (Array.isArray(T.hist) ? T.hist : []).filter((x) => x && TKDT.STYLES.includes(x.style) && typeof x.date === "string").slice(-200),

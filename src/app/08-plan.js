@@ -357,6 +357,7 @@
   }
   function okEx(e, loc, eq) {
     if (isBox() && BOXT.BOX_NO_EX.has(e.key)) return false; // no kick exercises in boxing
+    if (isTkd() && TKDT.NO_EX.has(e.key)) return false; // no kickboxing technique exercises in taekwondo (own plans: 6b/6c)
     const av = S.profile.limits.map((l) => AV[l]).join("");
     // the fitness gym ("studio") also allows every indoor hall exercise
     if (loc === "studio" ? !/[gf]/.test(e.locs) : !e.locs.includes(loc[0])) return false;

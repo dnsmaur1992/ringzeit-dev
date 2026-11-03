@@ -1120,7 +1120,7 @@
   }
   /* main sport of the plan (profile draft): same choice row, written to the profile with the other plan settings */
   const sportRowP = (p) =>
-    `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices(true).map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${sportLabel(k)}</button>`).join("")}</div></div>`;
+    `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices(true).map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${sportLabel(k)}</button>`).join("")}</div></div>${(p.sport || mainSport()) === "taekwondo" ? tkdPrefsHtml() : ""}`;
   function renderLog() {
     let h = header(t("logTitle"));
     const mon = monday(today()),

@@ -176,7 +176,8 @@
     return { legs, body };
   }
   /* taekwondo: white dobok (long trousers, V-neck) with the belt of the grade; a swimsuit never replaces it */
-  const DOBOK = "#EFEBDF";
+  const DOBOK = "#FEFEFC",
+    SKIN = "#E3B48F"; // dobok pure white, head and fists in skin tone so the dobok stands out from the figure
   function tkdOutfit(o, belt) {
     const b = o.body,
       n = (o.belly.match(/-?[\d.]+/g) || []).map(Number),
@@ -185,7 +186,7 @@
     o.legs.forEach((l) => {
       const [h, k, f] = l,
         pts = `${h.join(",")} ${k.join(",")} ${f.join(",")}`;
-      legs += `<polyline points="${pts}" fill="none" stroke="${FIG.BG}" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="${DOBOK}" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>`;
+      legs += `<polyline points="${pts}" fill="none" stroke="${FIG.BG}" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="${DOBOK}" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="#CFCFD9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`;
     });
     // belt along the belly line: dark outline, belt colour, tip colour on the first part of the curve
     let belly = "",
@@ -196,12 +197,12 @@
         ky = (n[1] + 2 * n[3] + n[5]) / 4;
       belly = `<path d="${d}" fill="none" stroke="${FIG.BG}" stroke-width="11" stroke-linecap="butt"/><path d="${d}" fill="none" stroke="${belt.base}" stroke-width="7.5" stroke-linecap="butt"/>`;
       if (belt.half) belly += `<path d="${d}" pathLength="100" fill="none" stroke="${belt.tip}" stroke-width="7.5" stroke-dasharray="0 50 50"/>`;
-      else if (belt.tip) belly += `<path d="${d}" pathLength="100" fill="none" stroke="${belt.tip}" stroke-width="7.5" stroke-dasharray="0 62 7 31"/>`;
-      knot = `<path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${FIG.BG}" stroke-width="7" stroke-linecap="round"/><path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${belt.base}" stroke-width="4" stroke-linecap="round"/><rect x="${kx - 5}" y="${ky - 5}" width="10" height="10" rx="2.5" fill="${belt.base}" stroke="${FIG.BG}" stroke-width="2.5"/>`;
+      else if (belt.tip) belly += `<path d="${d}" fill="none" stroke="${belt.tip}" stroke-width="3.2" stroke-linecap="butt"/>`; // second colour: lengthwise stripe in the middle of the whole belt
+      knot = `<path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${FIG.BG}" stroke-width="7" stroke-linecap="round"/><path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${belt.base}" stroke-width="4" stroke-linecap="round"/>${belt.tip && !belt.half ? `<path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${belt.tip}" stroke-width="1.6" stroke-linecap="butt"/>` : ""}<rect x="${kx - 5}" y="${ky - 5}" width="10" height="10" rx="2.5" fill="${belt.base}" stroke="${FIG.BG}" stroke-width="2.5"/>`;
     }
     const hx = o.head.x,
       hy = o.head.y,
-      collar = `<path d="M${hx - 11} ${hy + 22} L${hx + 1} ${hy + 40} L${hx + 12} ${hy + 22}" fill="none" stroke="#8C8576" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+      collar = `<path d="M${hx - 11} ${hy + 22} L${hx + 1} ${hy + 40} L${hx + 12} ${hy + 22}" fill="none" stroke="#3F3F4A" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M${hx + 1} ${hy + 40} L${hx + 4} ${hy + 62}" fill="none" stroke="#3F3F4A" stroke-width="3" stroke-linecap="round"/>`;
     const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - b.rx - 4}" y="${b.cy - b.ry - 4}" width="${b.rx * 2 + 8}" height="${b.ry * 2 + 8}" fill="${DOBOK}"/></g>${collar}${belly}${knot}`;
     return { legs, body };
   }
@@ -214,9 +215,14 @@
   }
   function figure(o, outfit) {
     let s = "";
+    const dob = !!(outfit && outfit.dobok);
     const arm = (a) => {
-      const e = a[a.length - 1];
-      s += limb(a, 17) + glove(e[0], e[1]);
+      const e = a[a.length - 1],
+        pl = a.map((q) => q.join(",")).join(" ");
+      if (dob)
+        // dobok sleeve: white with dark outline, bare fist
+        s += `<polyline points="${pl}" fill="none" stroke="${FIG.BG}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pl}" fill="none" stroke="${DOBOK}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${e[0]}" cy="${e[1]}" r="9.5" fill="${SKIN}" stroke="${FIG.BG}" stroke-width="3"/>`;
+      else s += limb(a, 17) + glove(e[0], e[1]);
     };
     const se = season(),
       tr = outfit ? (outfit.dobok ? tkdOutfit(o, outfit.belt) : boxOutfit(o, outfit)) : se && se.trunks ? trunks(o) : null;
@@ -225,11 +231,11 @@
     o.legs.forEach((l) => (s += limb(l, 23)));
     if (tr) s += tr.legs;
     const b = o.body;
-    s += `<ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx}" ry="${b.ry}" transform="rotate(${b.rot} ${b.cx} ${b.cy})" fill="${FIG.W}" stroke="${FIG.BG}" stroke-width="4"/>`;
+    s += `<ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx}" ry="${b.ry}" transform="rotate(${b.rot} ${b.cx} ${b.cy})" fill="${dob ? DOBOK : FIG.W}" stroke="${FIG.BG}" stroke-width="4"/>`;
     s += `<path d="${o.belly}" fill="none" stroke="${FIG.BG}" stroke-width="3.5" stroke-linecap="round"/>`;
     if (tr) s += tr.body;
     o.front.forEach(arm);
-    s += `<circle cx="${o.head.x}" cy="${o.head.y}" r="21" fill="${FIG.W}" stroke="${FIG.BG}" stroke-width="4"/>`;
+    s += `<circle cx="${o.head.x}" cy="${o.head.y}" r="21" fill="${dob ? SKIN : FIG.W}" stroke="${FIG.BG}" stroke-width="4"/>`;
     if (se && se.hat) s += hatSvg(se.hat, o.head.x, o.head.y);
     return s;
   }

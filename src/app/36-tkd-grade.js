@@ -5,13 +5,15 @@
   const tkdOf = (p = S.profile) => p.tkd || { style: "wt", wt: "", itf: "", hist: [], exams: [] };
   const tkdStyle = (p = S.profile) => (tkdOf(p).style === "itf" ? "itf" : "wt");
   const tkdGradeOf = (style = tkdStyle(), p = S.profile) => tkdOf(p)[style] || "";
-  const tkdW = () => (S.profile.tkd = S.profile.tkd || { style: "wt", wt: "", itf: "", hist: [], exams: [] });
+  const tkdW = () => (S.profile.tkd = S.profile.tkd || { style: "wt", names: "ko", wt: "", itf: "", hist: [], exams: [] });
+  /* technique names: "ko" = Korean names, "app" = names in the app language (used by the WT/ITF plans, 6b/6c; speech always uses the app language) */
+  const tkdNames = (p = S.profile) => (tkdOf(p).names === "app" ? "app" : "ko");
   const tkdGradeLbl = (code) => TKDT.gradeText(code, S.profile.lang === "de" ? "de" : "en");
   /* belt colours name for the grade line (no grade = the white standard drawing, not a confirmed grade) */
   function tkdBeltSvg(code, w = 64) {
     const b = TKDT.beltOf(code),
       h = Math.round(w * 0.2);
-    const stripe = b.tip ? `<rect x="${w * 0.78}" y="0" width="${w * 0.1}" height="${h}" fill="${b.tip}"/>` : "";
+    const stripe = b.tip ? `<rect x="0" y="${h * 0.36}" width="${w}" height="${h * 0.28}" fill="${b.tip}"/>` : "";
     const half = b.half ? `<rect x="${w / 2}" y="0" width="${w / 2}" height="${h}" fill="${b.tip}"/>` : "";
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true" style="border-radius:3px;border:1px solid var(--line);vertical-align:middle"><rect width="${w}" height="${h}" fill="${b.base}"/>${b.half ? half : stripe}</svg>`;
   }
@@ -68,6 +70,14 @@
     return h;
   }
 
+  /* style (association) and name language: shown in the profile under "Hauptsport" and in the grade area; both act on S.profile at once */
+  function tkdPrefsHtml() {
+    const K = t("tkd"),
+      st = tkdStyle(),
+      nm = tkdNames();
+    return `<div class="field"><span class="lab">${K.style}</span><div class="seg">${TKDT.STYLES.map((k) => `<button type="button" data-tk="style" data-tv="${k}" aria-pressed="${st === k}">${K.styles[k]}</button>`).join("")}</div><span class="sub">${K.styleNote}</span></div><div class="field"><span class="lab">${K.names}</span><div class="seg">${["ko", "app"].map((k) => `<button type="button" data-tk="names" data-tv="${k}" aria-pressed="${nm === k}">${K.namesOpt[k]}</button>`).join("")}</div><span class="sub">${K.namesNote}</span></div>`;
+  }
+
   function tkdPanelHtml() {
     const K = t("tkd"),
       T = tkdOf(),
@@ -81,7 +91,7 @@
       hist = (T.hist || []).filter((x) => x.style === st).sort((a, b) => b.date.localeCompare(a.date) || (a.id < b.id ? 1 : -1));
     const ask = ui.tkdAsk && exams.find((x) => x.id === ui.tkdAsk);
     let h = `<div class="panel"><div class="field"><span class="lab">${K.title}</span><span class="sub">${K.hint}</span></div>`;
-    h += `<div class="field"><span class="lab">${K.style}</span><div class="seg">${TKDT.STYLES.map((k) => `<button type="button" data-tk="style" data-tv="${k}" aria-pressed="${st === k}">${K.styles[k]}</button>`).join("")}</div><span class="sub">${K.styleNote}</span></div>`;
+    h += tkdPrefsHtml();
     h += `<div class="field"><span class="lab">${K.current}</span><div class="row" style="gap:10px;align-items:center">${tkdBeltSvg(cur)}<b>${cur ? esc(tkdGradeLbl(cur)) : K.none}</b></div>${cur ? "" : `<span class="sub">${K.noneNote}</span>`}</div>`;
     h += `<div class="field"><span class="lab">${cur ? K.correct : K.enter}</span><div class="chips">${list.map((c) => `<button type="button" class="chip" data-tk="grade" data-tv="${c}" aria-pressed="${cur === c}">${esc(tkdGradeLbl(c))}</button>`).join("")}</div><span class="sub">${K.enterNote}</span></div>`;
     // exam planning
@@ -133,6 +143,8 @@
     if (a === "style") {
       T.style = v === "itf" ? "itf" : "wt";
       ui.tkdAsk = null;
+    } else if (a === "names") {
+      T.names = v === "app" ? "app" : "ko";
     } else if (a === "grade") {
       const st = tkdStyle();
       if (TKDT.isGrade(st, v) && v !== T[st]) tkdSetGrade(st, v);
