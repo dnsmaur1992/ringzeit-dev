@@ -20,7 +20,8 @@
 - 03.11.2026, Schritt 0: Dev-App läuft unter `/ringzeit-dev/`. Daten nur lokal auf dem Gerät; Cloud-/Claude-Host-Speicherung abgeschaltet (`CLOUD_SYNC = false`).
 - 03.11.2026, Schritt 0: Sicherungen der stabilen App werden in der Dev-App abgelehnt (Durchsetzung „kein Altimport“); eigene Dev-Sicherungen lassen sich speichern und zurückladen.
 - Kontingent: Wochenlimit setzt dienstags 04:00 zurück.
-- 03.11.2026, Schritt 1 (Vorschlag, noch nicht gesichtet): Zielstruktur `core/`, `catalog/`, `sports/`, `app/` mit `RZ`-Naht; Schritt 2 in drei Unterteile 2.1/2.2/2.3; Verträge siehe `architecture.md` Abschnitt 6.
+- 03.11.2026, Schritt 1: Ordnerstruktur `core/`, `catalog/`, `sports/`, `app/` vom Betreiber als nachvollziehbar bestätigt. Schritt 2 als ein Umbau mit einer Abnahme (2.1–2.3 nur interne Zwischenstände mit Prüfung), weil es eine Entwicklungsversion ist und Rückfallmechanismen vorhanden sind. Übergang über `RZ`-Naht empfohlen (Verträge: `architecture.md` Abschnitt 6).
+- 03.11.2026, Schritt 1: Vergleichsbasis um vier Profile (Schulter/Rücken, wenig Zeit, 5 Tage, Gürtelprüfung) und zwei Abläufe „Navigieren während des Trainings und Fortsetzen“ erweitert.
 
 ## Prüfungen
 
@@ -30,7 +31,7 @@ Schritt 0 (03.11.2026, automatisch, nicht auf echten Geräten):
 - Beobachtet: ein Update der *stabilen* App löscht den Dev-Cache (nicht die Dev-Daten); siehe `architecture.md`.
 
 Schritt 1 (03.11.2026, automatisch):
-- `node tests/baseline.mjs`: Vergleichsbasis Kickboxen aufgenommen (8 Profile × ohne/mit Historie × 8 Einheiten), zweimal reproduziert, Empfindlichkeit gegen geänderte Dosierung/Rundenregel geprüft.
+- `node tests/baseline.mjs`: Vergleichsbasis Kickboxen aufgenommen (12 Profile × ohne/mit Historie × 9 Einheiten + 2 Navigationsabläufe), reproduziert, Empfindlichkeit gegen geänderte Dosierung, Rundenregel und nicht pausierenden Timer geprüft.
 - Bestandstests unverändert 105/105.
 
 Manuelle Abnahmen:
@@ -43,4 +44,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von Schritt 1: Schritt 2.1 – Aufteilung und Build (reine Extraktion), Modell Sonnet.
+Nach Sichtung von Schritt 1: Schritt 2 – gemeinsamer Kern und Kickboxmodul als ein Umbau (Zwischenstände 2.1–2.3), Modell Sonnet.

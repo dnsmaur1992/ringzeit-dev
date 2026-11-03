@@ -145,11 +145,14 @@ Planaktualisierung legt 3-Q fest. Einträge ohne `sport` gelten als Kickboxen (b
 
 Allen gemeinsam: **keine** Änderung an Training, Dosierung, Bedienung oder Texten; Vergleichsbasis muss identisch bleiben.
 
-| Teil | Inhalt | Prüfung |
+Umsetzung als **ein Umbau mit einer Abnahme** (Entscheidung 03.11.2026); die drei Teile sind interne Zwischenstände,
+nach jedem laufen Bestandstests, Vergleichsbasis und Isolationstest. Fällt ein Zwischenstand durch, wird dort korrigiert.
+
+| Zwischenstand | Inhalt | Prüfung |
 |---|---|---|
 | **2.1 Aufteilung und Build** | `ringzeit.html` → `src/index.html` + `src/app/*.js` entlang der Abschnitte; Build setzt zusammen, erzeugt `build/ringzeit.html` (lesbar) und `pwa/` | zusammengesetztes Script **byte-gleich** zum alten; alle Tests laufen auf `build/ringzeit.html`; Baseline identisch; Isolationstest |
 | **2.2 Kerndienste** | `core/format`, `dates`, `random`, `storage` als Module + `RZ`-Naht; `fmt`/`fmtS` zusammen; `store` über `createStore` | neue Modultests (Node); 105 Bestandstests; Baseline identisch; Sicherung/Reset im Isolationstest |
-| **2.3 Kickboxmodul** | `catalog/exercises.js`, `sports/kickboxing/*` (Techniken, Kombis, Formate, Regeln) + `planContext`; Sportregister mit nur Kickboxen sichtbar | Baseline identisch (alle 16 Profilläufe × 8 Einheiten); Bestandstests; manuelles Kickboxtraining komplett |
+| **2.3 Kickboxmodul** | `catalog/exercises.js`, `sports/kickboxing/*` (Techniken, Kombis, Formate, Regeln) + `planContext`; Sportregister mit nur Kickboxen sichtbar | Baseline identisch (alle 24 Profilläufe × 9 Einheiten + 2 Abläufe); Bestandstests; manuelles Kickboxtraining komplett |
 
 Nicht in 2: stabile IDs/Dosierung (3-D), Belastungsmodell (3-U), Timer-Zustandsmaschine, UI-Vereinheitlichung,
 Entfernen der Fitnesssperre, Bedienkorrekturen (2-B).
@@ -157,15 +160,30 @@ Entfernen der Fitnesssperre, Bedienkorrekturen (2-B).
 ## 8. Vergleichsbasis
 
 `node tests/baseline.mjs` führt die echten Funktionen (`buildSession`, `weekPlan`, `planOn`, `clubOn`, `weekLoad`,
-`phaseInfo`, `doseTxt`, `exerciseTiming`) mit festem Datum (Mo 02.11.2026, 09:00), festem Zufall (mulberry32,
-Seed je Fall) und synthetischen Profilen aus und vergleicht mit `tests/baseline/kickboxing.json`.
+`phaseInfo`, `doseTxt`, `exerciseTiming`) und den echten Klick-Handler der App mit festem Datum (Mo 02.11.2026, 09:00),
+virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profilen aus und vergleicht mit
+`tests/baseline/kickboxing.json`. Ton, Bildschirm-Wachhaltung und Zeichnen werden dabei nur protokolliert.
 
-- **Profile (8):** LC Level 0 Erwachsen · LC Level 1 mit Vereinstagen · KL Jugend · FC Level 2 mit Turnier am
+- **Profile (12):** LC Level 0 Erwachsen · LC Level 1 mit Vereinstagen · KL Jugend · FC Level 2 mit Turnier am
   28.11. (Peak-Phase) · K1 Level 2 mit Knieeinschränkung · LC Kinder (45 Min.) · KL Masters englisch, 4 Tage · LC mit
-  Mobilitäts-Schwerpunktblock. Jedes Profil ohne und mit Historie (2 Wochen eigene + Vereinseinheiten, löst Entlastung aus).
-- **Je Profillauf:** Planung über 14 Tage, Belastung/Phase für 3 Wochen, 8 Einheiten am 04.11. (Technik Halle/zu Hause,
-  Partner, Kondition Halle/Lauf draußen, Kraft Halle/Studio, Mobilität) inkl. Dosierungstext und Timerphasen je Übung.
-- **Empfindlichkeit geprüft:** Eine geänderte Dosierungszahl oder Rundenregel wird als Abweichung gemeldet.
+  Mobilitäts-Schwerpunktblock · KL mit Schulter- und Rückeneinschränkung · LC „wenig Zeit“ (30 Min.) · KL Level 2 an
+  5 Tagen · LC mit Gürtelprüfung am 20.11. Jedes Profil ohne und mit Historie (2 Wochen eigene + Vereinseinheiten,
+  löst Entlastung aus).
+- **Je Profillauf:** Planung über 14 Tage, Belastung/Phase für 3 Wochen, 9 Einheiten am 04.11. (Technik Halle/zu Hause,
+  Partner, gemischt, Kondition Halle/Lauf draußen, Kraft Halle/Studio, Mobilität) inkl. Dosierungstext und Timerphasen
+  je Übung.
+- **Zweckfremde Bedienung während des Trainings (2 Abläufe):**
+  - *Technik:* Aufwärm-Timer starten → mit ✕ schließen → Heute, Profil → freier Rundentimer starten/schließen →
+    Einheit wieder öffnen, fortsetzen → zur Runde springen, Runde starten → Übersicht öffnen und zurück → schließen,
+    Verlauf öffnen, 45 s warten → zurück, Runde fortsetzen.
+  - *Kraft:* Satzpause starten → schließen, 25 s auf Heute → zurück → vor- und zurückblättern → 90 s warten.
+  - Festgehalten wird an jedem Punkt: Ansicht, Schritt, Rundentimer (Phase, Runde, läuft, Restzeit), Übungstimer,
+    freier Timer, erledigte/offene Übungen, Eingaben, Logeinträge sowie die Folge von Glocke/Piepton/Wachhaltung.
+  - Ist-Verhalten heute (nicht bewertet): Schließen/Navigieren pausiert laufende Timer ohne Zeitverlust, nichts wird
+    automatisch abgehakt oder verbucht; Vor-/Zurückblättern verwirft eine pausierte Satzpause.
+- **Empfindlichkeit geprüft:** Eine geänderte Dosierungszahl, eine geänderte Rundenregel und ein Timer, der beim
+  Schließen weiterläuft, werden als Abweichung gemeldet.
+- Nicht enthalten: Neuladen/Beenden der App während des Trainings – das ist Wiederaufnahme und gehört zu 2-B.
 - Regel: Schritt 2 muss identisch bleiben. Bewusste Änderungen ab 2-B/3-U: Abweichung erklären, in
   `implementation-status.md` dokumentieren, dann mit `--write` neu aufnehmen.
 
