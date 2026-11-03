@@ -12,7 +12,8 @@
 | Paket | Teil | Modell | Status |
 |---|---|---|---|
 | W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
-| W1 | 1 – Architektur und Vergleichsbasis | Opus | WARTET AUF SICHTUNG (Konzept + Vergleichsbasis) |
+| W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
+| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Sonnet laut Plan, Opus empfohlen | nicht beauftragt |
 
 ## Entscheidungen
 
@@ -35,6 +36,7 @@ Schritt 1 (03.11.2026, automatisch):
 - Bestandstests unverändert 105/105.
 
 Manuelle Abnahmen:
+- 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis 12 Profile × 2 × 9 Einheiten + 2 Navigationsabläufe). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau, Satzpause beim Blättern bleibt in Schritt 2 unverändert (mögliche Korrektur in 2-B). **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
 ## Offen
