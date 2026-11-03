@@ -1,28 +1,38 @@
-/* Sport definition: taekwondo (styles WT and ITF-D). 6a: grade area and dobok figures; the style specific plans
-   (techniques, drills, formats) follow in 6b (WT) and 6c (ITF). Until then a taekwondo unit consists of the sport-neutral
-   blocks only (strength, conditioning, mobility), see docs/taekwondo-concept.md. */
+/* Sport definition: taekwondo (styles WT and ITF-D). 6a: grade area and dobok figures. 6b: WT plans (techniques,
+   combos, counters, partner tasks, rule profile). ITF-D follows with 6c – until then an ITF unit consists of the
+   sport-neutral blocks only (strength, conditioning, mobility), see docs/taekwondo-concept.md. */
 import * as grades from "./grades.js";
+import * as techniques from "./techniques.js";
+import { wtFormat, STD_FORMAT, koDaysFor } from "./rules.js";
 
-/* rule data of the styles come with 6b/6c; until then: no tournament format, a training standard, 30 days after a concussion
-   (WT: 30/40/50 days by age, the shortest applies for now) */
-const STD_FORMAT = { r: 3, w: 120, b: 60, cls: null };
 export const RULE_PROFILE = {
-  publisher: "WT / DTU · ITF-D",
-  title: "Taekwondo (Regelprofile folgen in 6b/6c)",
-  version: "–",
-  url: "",
+  publisher: "WT / DTU",
+  title: "World Taekwondo Competition Rules · DTU Wettkampfordnung Zweikampf (WOZ)",
+  version: "WT ab 01.06.2026 · WOZ Stand 01.01.2026",
+  url: "https://www.dtu.de/",
   disciplines: [],
-  format: () => null,
+  /* the style (WT or ITF-D) is passed as the first argument; the ITF-D profile follows with 6c */
+  format: (style, age) => (style === "itf" ? null : wtFormat(style, age)),
   standardFormat: STD_FORMAT,
-  koDays: 30,
+  koDays: koDaysFor, // by age (WOZ 17.3)
 };
 
 export const taekwondo = {
   id: "taekwondo",
   visible: true,
   rules: RULE_PROFILE,
-  /* only sport-neutral types until the technique plans exist (6b/6c): S strength, K conditioning, M mobility */
+  /* technique first like boxing; from 5 days a different mix (docs/taekwondo-concept.md 6.2) */
   dayPattern: {
+    1: ["T"],
+    2: ["T", "S"],
+    3: ["T", "S", "P"],
+    4: ["T", "S", "P", "K"],
+    5: ["T", "S", "P", "C", "K"],
+    6: ["T", "S", "P", "K", "T", "M"],
+    7: ["T", "S", "P", "K", "C", "S", "M"],
+  },
+  /* ITF-D until 6c: sport-neutral types only */
+  dayPatternItf: {
     1: ["S"],
     2: ["S", "K"],
     3: ["S", "K", "M"],
@@ -31,6 +41,6 @@ export const taekwondo = {
     6: ["S", "K", "S", "K", "S", "M"],
     7: ["S", "K", "S", "K", "S", "K", "M"],
   },
-  techniques: {},
+  techniques,
   grades,
 };
