@@ -277,7 +277,7 @@
     const P = playerText(),
       W = workoutText(),
       phases = [{ seconds: PREP_S, label: P.ready, prep: true }];
-    const leg = DOSE_LEG.has(EX[b.items[st.ni].id]?.de),
+    const leg = DOSE_LEG.has(EX[b.items[st.ni].id]?.key),
       LR = legLabels();
     todo.forEach((i, k) => {
       if (leg) {
@@ -438,7 +438,7 @@
       const rows = perfRows(sess, key, b),
         r = rows[st.lap] || {},
         ph = it.target ? it.target.r : ((b.sets || "").match(/(\d+)[–-](\d+)/) || [, "10"])[1];
-      const leg = DOSE_LEG.has(EX[it.id]?.de),
+      const leg = DOSE_LEG.has(EX[it.id]?.key),
         LR = legLabels(),
         goal = `${S.profile.lang === "de" ? "Ziel" : "Goal"} ${ph}`;
       h += `<div class="sets lap${leg ? " leg" : ""} ${kg ? "" : "nokg"}"><span></span><span class="hd">${leg ? LR[0] + " · " : ""}${timed ? t("secs") : t("reps")}</span>${leg ? `<span class="hd">${LR[1]}</span>` : ""}${kg ? `<span class="hd">${t("kg")}</span>` : ""}<span class="sl${r.r != null ? " ok" : ""}" data-sl="${key}.${st.lap}">${t("setL")} ${st.lap + 1}</span>${leg ? legInputs(key, st.lap, r, goal, timed) : `<input class="si${r.r != null ? " ok" : ""}" type="text" inputmode="numeric" data-k="${key}" data-i="${st.lap}" data-f="r" value="${r.r ?? ""}" placeholder="${goal}" aria-label="${t("setL")} ${st.lap + 1}">`}${kg ? `<input class="si" type="text" inputmode="decimal" data-k="${key}" data-i="${st.lap}" data-f="kg" value="${r.kg ?? ""}" placeholder="kg" aria-label="${t("setL")} ${st.lap + 1} kg">` : ""}</div>`;
@@ -501,11 +501,11 @@
               d2 = stepDose(sess, s2),
               t2 = stepDesc(sess, s2),
               sk2 = x && EX[x.id] && hasSketch(x.id);
-            return `<div class="pdc ${who}"><span class="pdw">${who.toUpperCase()}</span>${sk2 ? `<div class="fsk">${sketchSvg(EX[x.id].de, true)}</div>` : ""}<b>${esc(itemTitle(sess, st.bi, ni))}${who === "a" && done ? " ✓" : ""}</b>${d2 ? `<span class="dose">${esc(d2)}</span>` : ""}${t2 ? `<p>${esc(t2)}</p>` : ""}</div>`;
+            return `<div class="pdc ${who}"><span class="pdw">${who.toUpperCase()}</span>${sk2 ? `<div class="fsk">${sketchSvg(EX[x.id].key, true)}</div>` : ""}<b>${esc(itemTitle(sess, st.bi, ni))}${who === "a" && done ? " ✓" : ""}</b>${d2 ? `<span class="dose">${esc(d2)}</span>` : ""}${t2 ? `<p>${esc(t2)}</p>` : ""}</div>`;
           };
         h += `<div class="pcard${done ? " done" : ""}">${small ? `<small>${esc(small)}</small>` : ""}<div class="pduo">${side("a", st.ni)}${side("b", bk)}</div></div>`;
       } else {
-      h += `<div class="pcard${done ? " done" : ""}">${sk ? `<div class="fsk">${sketchSvg(EX[it.id].de, true)}</div>` : ""}${small ? `<small>${esc(small)}</small>` : ""}<b>${esc(stepTitle(sess, st))}${done ? " ✓" : ""}</b>${dose ? `<span class="dose">${esc(dose)}</span>` : ""}${desc ? `<p>${esc(desc)}</p>` : ""}`;
+      h += `<div class="pcard${done ? " done" : ""}">${sk ? `<div class="fsk">${sketchSvg(EX[it.id].key, true)}</div>` : ""}${small ? `<small>${esc(small)}</small>` : ""}<b>${esc(stepTitle(sess, st))}${done ? " ✓" : ""}</b>${dose ? `<span class="dose">${esc(dose)}</span>` : ""}${desc ? `<p>${esc(desc)}</p>` : ""}`;
       if (st.lap != null)
         h += `<ol class="plap">${b.items.map((x, k) => `<li class="${k === st.ni ? "on" : ""}">${esc(itemTitle(sess, st.bi, k))}</li>`).join("")}</ol>`;
       h += `</div>`;
@@ -600,6 +600,39 @@
   }
   // Structured phase plans use the same prescription as the visible exercise dose.
   // Work and rests stay distinct; per-side holds include an explicit changeover.
+  /* turns a phase of a prescription (role + counters from core/prescription.js) into the text the person sees */
+  function rxLabel(p, rx, W) {
+    const de = S.profile.lang === "de",
+      cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+    switch (p.role) {
+      case "change":
+        return W.change;
+      case "run":
+        return W.run;
+      case "side":
+        return `${W.side} ${p.side}/${p.sides}`;
+      case "set":
+        return `${W.set} ${p.i}/${p.n}`;
+      case "sideset":
+        return `${W.side} ${p.side}/2 · ${W.set} ${p.set}/${p.sets}`;
+      case "dir":
+        return `${de ? "Richtung" : "Direction"} ${p.i}/${p.n}${p.name ? " · " + p.name[de ? 0 : 1] : ""}`;
+      case "grip":
+        return `${W.work} ${p.i}/${p.n} · ${W.lap} ${p.round}/${p.rounds}`;
+      case "spread":
+        return de ? "Finger spreizen" : "Spread fingers";
+      case "fast":
+        return `${cap(rx.onW[de ? 0 : 1])} ${p.i}/${p.n}`;
+      case "easy":
+        return cap(rx.offW[de ? 0 : 1]);
+      default: {
+        let l = p.role === "work" ? `${W.work} ${p.i}/${p.n}` : W.rest;
+        if (p.side) l = `${W.side} ${p.side} · ${l}`;
+        if (p.passes > 1) l = `${W.lap} ${p.pass}/${p.passes} · ${l}`;
+        return l;
+      }
+    }
+  }
   /* a prescription in repetitions (e.g. "10 reps" for burpees) is confirmed with ✓ – no work timer replaces it */
   const repDose = (id, b) => {
     const d = doseTxt(id, b) || "";
@@ -608,7 +641,7 @@
   function exerciseTiming(sess, bi, ni, choice, setIndex) {
     const b = sess.blocks[bi],
       it = b.items[ni],
-      name = EX[it.id]?.de,
+      name = EX[it.id]?.key,
       W = workoutText();
     if (b.rounds) return null;
     if (DOSE_LEG.has(name)) W.side = S.profile.lang === "de" ? "Bein" : "Leg";
@@ -623,59 +656,23 @@
       seconds = 0,
       sides = 1;
     const tracked = EX[it.id]?.cat === "str" && !["warm", "cool"].includes(b.key) && tracksSets(it.id);
+    // every prescription (core/prescription.js) gives text, phases and time from the same numbers
+    const fromRx = (rx, o = {}) => {
+      const r = rxPlan(rx, { choice, ...o });
+      phases = r.phases.map((p) => ({ seconds: p.seconds, label: rxLabel(p, rx, W) }));
+      choices = r.choices;
+      seconds = r.seconds;
+      sides = r.sides;
+    };
     if (it.kind === "hard") {
-      const durations = {
-        fGlove: [3, 20],
-        fWraps: [2, 30],
-        fBare: [2, 20],
-        fPads: [3, 20],
-        fPlank: [3, [20, 30]],
-        fWring: [3, 20],
-        abs: [3, 20],
-        arms: [2, 30],
-        checks: [2, 30],
-      }[it.id];
-      if (durations) {
-        choices = Array.isArray(durations[1]) ? durations[1] : [durations[1]];
-        seconds = choices.includes(choice) ? choice : choices[0];
-        phases = Array.from({ length: durations[0] }, (_, i) => [
-          phase(seconds, `${W.set} ${i + 1}/${durations[0]}`),
-          ...(i < durations[0] - 1 ? [phase(5, W.change)] : []),
-        ]).flat();
-      } else if (it.id === "fTap" || it.id === "bodybag")
-        phases = Array.from({ length: 6 }, (_, i) => [
-          phase(it.id === "fTap" ? 30 : 20, `${W.side} ${(i % 2) + 1}/2 · ${W.set} ${Math.floor(i / 2) + 1}/3`),
-          ...(i < 5 ? [phase(5, W.change)] : []),
-        ]).flat();
-      else if (it.id === "shintap")
-        phases = [phase(60, `${W.side} 1/2`), phase(5, W.change), phase(60, `${W.side} 2/2`)];
-      else if (it.id === "neck")
-        phases = Array.from({ length: 4 }, (_, i) => [
-          phase(10, `${S.profile.lang === "de" ? "Richtung" : "Direction"} ${i + 1}/4`),
-          ...(i < 3 ? [phase(5, W.change)] : []),
-        ]).flat();
-      else if (it.id === "fFinger")
-        phases = Array.from({ length: 20 }, (_, i) => [
-          phase(3, `${W.work} ${(i % 10) + 1}/10 · ${W.lap} ${Math.floor(i / 10) + 1}/2`),
-          ...(i < 19 ? [phase(3, S.profile.lang === "de" ? "Finger spreizen" : "Spread fingers")] : []),
-        ]).flat();
+      const rx = rxOf(it.id, it.h);
+      if (rx) fromRx(rx);
     } else if (it.kind === "run")
       phases = it.zone === 3 ? interval(it.reps, it.on * 60, it.off * 60) : [phase(it.min * 60, t("run"))];
     else if (b.key === "warm" && name && EX[it.id]?.cat !== "pre")
       seconds = Math.max(2, Math.round(b.min / Math.max(1, b.items.length))) * 60;
-    else if (tracked && ["Isometrische Nackenkräftigung – Halteübung", "Einbeinstand mit Kick-Hold"].includes(name)) {
-      seconds = it.target?.r || 10;
-      const n = 4;
-      phases = Array.from({ length: n }, (_, i) => [
-        phase(
-          seconds,
-          name === "Isometrische Nackenkräftigung – Halteübung"
-            ? `${S.profile.lang === "de" ? "Richtung" : "Direction"} ${i + 1}/4`
-            : `${W.side} ${(i % 2) + 1}/2 · ${W.work} ${Math.floor(i / 2) + 1}/2`,
-        ),
-        ...(i < n - 1 ? [phase(5, W.change)] : []),
-      ]).flat();
-    } else if (TIMED.has(it.id) && tracked) {
+    else if (tracked && name === "str.neck_iso_hold") fromRx(RX[name], { seconds: it.target?.r || 10 });
+    else if (TIMED.has(it.id) && tracked) {
       choices = it.target
         ? [it.target.r]
         : [
@@ -684,72 +681,15 @@
             [45, 60],
           ][S.profile.level] || [30, 45];
       seconds = choices.includes(choice) ? choice : choices[0];
-      sides = DOSE_SIDE.has(name) ? 2 : 1;
+      sides = DOSE_SIDE.has(name) || DOSE_LEG.has(name) ? 2 : 1;
     } else {
-      const fixed = {
-        "Hüftbeuger dehnen": [45, 2],
-        "Oberschenkel hinten": [45, 2],
-        "Schulter & Brust": [30, 2],
-        "Adduktoren & Spagat": [[60, 90], 1],
-        Froschdehnung: [[60, 90], 1],
-        Taube: [[60, 90], 2],
-        "Tiefe Hocke halten": [[60, 90], 1],
-        Atmung: [120, 1],
-        Auslaufen: [300, 1],
-        "Seil-Intervalle": [120, 1],
-        "Rudergerät-Intervalle": [120, 1],
-        "Laufband-Intervalle": [120, 1],
-        "Steppen und leichte Beinarbeit": [180, 1],
-        "Kurz andehnen": [120, 1],
-      }[name];
-      const intervals = {
-        "Schatten-Sprints": [3, 20, 10],
-        "Sack-Sprints": [4, 15, 15],
-        "Kick-Intervalle": [3, 20, 10],
-        "Rad-Sprints": [2, 20, 40],
-        "Speed-Runden": [4, 10, 20],
-      }[name];
-      if (intervals) phases = interval(...intervals);
-      else if (fixed) {
-        choices = Array.isArray(fixed[0]) ? fixed[0] : [fixed[0]];
-        seconds = choices.includes(choice) ? choice : choices[0];
-        sides = fixed[1];
-      } else if (EX[it.id]?.cat === "cond" && !DOSE_FIX[name] && !repDose(it.id, b)) {
+      const rx = RX[name];
+      if (rx) fromRx(rx);
+      else if (EX[it.id]?.cat === "cond" && !DOSE_FIX[name] && !repDose(it.id, b)) {
         phases = interval(1, [30, 40, 45][S.profile.level], [30, 20, 15][S.profile.level]);
       } else if (["cool", "mob"].includes(b.key) && !DOSE_FIX[name]) {
         choices = b.key === "mob" ? [60, 90] : [45, 60];
         seconds = choices.includes(choice) ? choice : choices[0];
-      } else if (name === "Kick-Halten") {
-        seconds = 3;
-        choices = [3, 5];
-        seconds = choices.includes(choice) ? choice : 3;
-        sides = 2;
-        phases = interval(5, seconds, 3)
-          .map((p) => ({ ...p, label: `${W.side} 1 · ${p.label}` }))
-          .concat(
-            [phase(5, W.change)],
-            interval(5, seconds, 3).map((p) => ({
-              ...p,
-              label: `${W.side} 2 · ${p.label}`,
-            })),
-          );
-      } else if (name === "Einbeinstand mit Kick-Hold") {
-        seconds = 10;
-        sides = 2;
-        phases = interval(2, 10, 3)
-          .map((p) => ({ ...p, label: `${W.side} 1 · ${p.label}` }))
-          .concat(
-            [phase(5, W.change)],
-            interval(2, 10, 3).map((p) => ({
-              ...p,
-              label: `${W.side} 2 · ${p.label}`,
-            })),
-          );
-      } else if (name === "Isometrische Nackenkräftigung – Halteübung") {
-        phases = Array.from({ length: 4 }, (_, i) => [
-          phase(10, `${S.profile.lang === "de" ? "Richtung" : "Direction"} ${i + 1}/4`),
-          ...(i < 3 ? [phase(5, W.change)] : []),
-        ]).flat();
       } else if (b.key === "mob") {
         seconds = Math.max(2, Math.round(b.min / Math.max(1, b.items.length))) * 60;
       }
@@ -876,7 +816,7 @@
       if (rows[tm.setIndex] && rows[tm.setIndex].r == null) {
         rows[tm.setIndex].r = tm.seconds;
         // the single-set timer already covers both legs (side 1 / side 2)
-        if (DOSE_LEG.has(EX[b.items[tm.ni].id]?.de)) rows[tm.setIndex].rL = rows[tm.setIndex].rR = tm.seconds;
+        if (DOSE_LEG.has(EX[b.items[tm.ni].id]?.key)) rows[tm.setIndex].rL = rows[tm.setIndex].rR = tm.seconds;
       }
     } else {
       // the player knows which lap ran; the plain list timer completes the next open lap

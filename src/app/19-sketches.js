@@ -58,6 +58,19 @@
     if (k === "tower") return `<rect x="${a}" y="6" width="10" height="143" rx="3" fill="#2a2e35"/>`;
     if (k === "rope")
       return `<path d="M${a[0]} ${a[1]} C${a[0] + 46} ${b} ${a[2] - 46} ${b} ${a[2]} ${a[1]}" fill="none" stroke="${L}" stroke-width="2.5"/>`;
+    /* isometric neck work: pressure from the four directions – forehead and back of the head as arrows,
+       the two sides as a dot (towards you) and a cross (away from you) above the head */
+    if (k === "neck4") {
+      const c = SK.BRASS,
+        arrow = (x1, x2, y) =>
+          `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${c}" stroke-width="3" stroke-linecap="round"/><path d="M${x2 + (x2 > x1 ? -7 : 7)} ${y - 5} L${x2} ${y} L${x2 + (x2 > x1 ? -7 : 7)} ${y + 5}" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+      return (
+        arrow(172, 150, 30) +
+        arrow(68, 90, 38) +
+        `<circle cx="136" cy="11" r="6" fill="none" stroke="${c}" stroke-width="2"/><circle cx="136" cy="11" r="1.8" fill="${c}"/>` +
+        `<circle cx="104" cy="11" r="6" fill="none" stroke="${c}" stroke-width="2"/><path d="M100.5 7.5 L107.5 14.5 M107.5 7.5 L100.5 14.5" stroke="${c}" stroke-width="2" stroke-linecap="round"/>`
+      );
+    }
     if (k === "stairs") return `<path d="M112 149 V133 H136 V117 H160 V101 H184 V85 H232 V149 Z" fill="#2a2e35"/>`;
     if (k === "stick")
       return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#a88a5c" stroke-width="5" stroke-linecap="round"/>`;
@@ -187,7 +200,7 @@
   const cpl = skLine([66, 98], -20);
   /* Key = German exercise name. a/b = poses, props/pb = props per pose, arrow = movement, hold = static hold */
   const SKETCH = {
-    Liegestütze: {
+    "str.push_ups": {
       a: { ...pu, w: [119, 147], ea: [-1, 0] },
       b: { ...pd, w: [119, 147], ea: [-1, -0.3] },
       arrow: [
@@ -195,15 +208,15 @@
         [190, 120],
       ],
     },
-    "Plank mit Schultertippen": {
+    "str.plank_shoulder_taps": {
       a: { ...pu, w: [119, 147], ea: [-1, 0] },
       b: { ...pu, w: [pu.s[0] + 8, pu.s[1] + 10], W: [119, 147], ea: [1, 1] },
     },
-    Unterarmstütz: {
+    "str.plank": {
       a: { ...fp, w: [fp.s[0] + 21, 146], ea: [0, 1] },
       hold: true,
     },
-    "Hollow Hold": {
+    "str.hollow_hold": {
       a: {
         p: [100, 138],
         s: [134, 134],
@@ -215,7 +228,7 @@
       },
       hold: true,
     },
-    Klimmzüge: {
+    "str.pull_ups": {
       a: HANG,
       b: PULLED,
       props: [["pullbar", 24]],
@@ -224,7 +237,7 @@
         [166, 62],
       ],
     },
-    "Negative Klimmzüge": {
+    "str.negative_pull_ups": {
       a: PULLED,
       b: HANG,
       props: [["pullbar", 24]],
@@ -233,7 +246,7 @@
         [166, 96],
       ],
     },
-    "Hängendes Knieheben": {
+    "str.hanging_knee_raises": {
       a: HANG,
       b: {
         ...HANG,
@@ -248,8 +261,8 @@
         [178, 104],
       ],
     },
-    "Dead Hang": { a: HANG, props: [["pullbar", 24]], hold: true },
-    "Kniebeugen mit Langhantel": {
+    "str.dead_hang": { a: HANG, props: [["pullbar", 24]], hold: true },
+    "str.barbell_back_squat": {
       a: st({ w: [116, 58], W: [116, 58], ea: [0, 1] }),
       b: { ...SQUAT, w: [108, 84], W: [108, 84], ea: [0, 1] },
       props: [["plate", [116, 62]]],
@@ -259,7 +272,7 @@
         [176, 98],
       ],
     },
-    "Goblet Squats": {
+    "str.goblet_squats": {
       a: st({ w: [134, 72], W: [134, 72], ea: [0.3, 1] }),
       b: { ...SQUAT, w: [128, 98], W: [128, 98], ea: [0.3, 1] },
       props: [["kb", [134, 66]]],
@@ -269,7 +282,7 @@
         [176, 98],
       ],
     },
-    "Kreuzheben rumänisch (Langhantel)": {
+    "str.barbell_romanian_deadlift": {
       a: st({ w: [126, 100], W: [126, 100] }),
       b: HINGE({ w: [136, 128], W: [136, 128], ea: [-1, 0] }),
       props: [["plate", [127, 104]]],
@@ -279,7 +292,7 @@
         [186, 92],
       ],
     },
-    "Rumänisches Kreuzheben": {
+    "str.romanian_deadlift": {
       a: st({ w: [126, 100], W: [126, 100] }),
       b: HINGE({ w: [136, 128], W: [136, 128], ea: [-1, 0] }),
       props: [["db", [126, 102]]],
@@ -289,7 +302,7 @@
         [186, 92],
       ],
     },
-    "Kettlebell-Swings": {
+    "cond.kettlebell_swings": {
       a: HINGE({ w: [118, 126], W: [118, 126], ea: [-1, 0] }),
       b: st({ w: [164, 64], W: [164, 64], ea: [0, 1] }),
       props: [["kb", [118, 124]]],
@@ -299,7 +312,7 @@
         [178, 98],
       ],
     },
-    Bankdrücken: {
+    "str.bench_press": {
       a: { ...SUP, w: [124, 68], ea: [-1, 0] },
       b: { ...SUP, w: [126, 94], ea: [-1, 0.6] },
       props: [BENCH, ["plate", [124, 66]]],
@@ -309,7 +322,7 @@
         [184, 66],
       ],
     },
-    "Kurzhantel-Drücken": {
+    "str.dumbbell_press": {
       a: { ...SUP, w: [124, 68], ea: [-1, 0] },
       b: { ...SUP, w: [126, 94], ea: [-1, 0.6] },
       props: [BENCH, ["db", [124, 66]]],
@@ -319,7 +332,7 @@
         [184, 66],
       ],
     },
-    Latzug: {
+    "str.lat_pulldown": {
       a: {
         p: [110, 114],
         s: [112, 80],
@@ -355,7 +368,7 @@
         [182, 74],
       ],
     },
-    "Rudern am Kabelzug": {
+    "str.seated_cable_row": {
       a: {
         p: [84, 126],
         s: [96, 94],
@@ -391,7 +404,7 @@
         [146, 90],
       ],
     },
-    "Band-Rudern": {
+    "str.band_rows": {
       a: st({ w: [160, 90], W: [160, 90], ea: [0, 1] }),
       b: st({ w: [136, 84], W: [136, 84], ea: [-1, 0.3] }),
       props: [["band", [222, 90], [160, 90]]],
@@ -401,7 +414,7 @@
         [160, 74],
       ],
     },
-    "Face Pulls am Kabel": {
+    "str.cable_face_pulls": {
       a: st({ w: [160, 48], W: [160, 48], ea: [0, 1] }),
       b: st({ w: [136, 38], W: [136, 38], ea: [-0.3, -1] }),
       props: [
@@ -417,7 +430,7 @@
         [162, 24],
       ],
     },
-    "Face Pulls mit Band": {
+    "str.band_face_pulls": {
       a: st({ w: [160, 48], W: [160, 48], ea: [0, 1] }),
       b: st({ w: [136, 38], W: [136, 38], ea: [-0.3, -1] }),
       props: [["band", [222, 46], [160, 48]]],
@@ -427,7 +440,7 @@
         [162, 24],
       ],
     },
-    "Pallof Press": {
+    "str.pallof_press": {
       a: st({ w: [136, 80], W: [136, 80], ea: [0, 1] }),
       b: st({ w: [162, 78], W: [162, 78], ea: [0, 1] }),
       props: [["band", [20, 80], [136, 80]]],
@@ -437,7 +450,7 @@
         [174, 62],
       ],
     },
-    "Woodchopper am Kabelzug": {
+    "str.cable_woodchop": {
       a: st({
         w: [80, 26],
         W: [80, 26],
@@ -465,7 +478,7 @@
         [214, 70],
       ],
     },
-    "Schulterdrücken sitzend (Kurzhanteln)": {
+    "str.seated_dumbbell_shoulder_press": {
       a: { ...SEAT, w: [126, 70], ea: [0, 1] },
       b: { ...SEAT, w: [118, 36], ea: [1, 0] },
       props: [
@@ -481,7 +494,7 @@
         [172, 36],
       ],
     },
-    Beinpresse: {
+    "str.leg_press": {
       a: {
         p: [96, 124],
         s: [71, 101],
@@ -517,7 +530,7 @@
         [180, 94],
       ],
     },
-    "Hip Thrust mit Langhantel": {
+    "str.barbell_hip_thrust": {
       a: {
         s: [64, 112],
         h: [42, 106],
@@ -551,7 +564,7 @@
         [170, 108],
       ],
     },
-    "Glute Bridges": {
+    "str.glute_bridges": {
       a: {
         s: [66, 140],
         h: [44, 138],
@@ -577,7 +590,7 @@
         [170, 112],
       ],
     },
-    "Dead Bugs": {
+    "str.dead_bugs": {
       a: {
         s: [138, 138],
         p: [104, 138],
@@ -603,7 +616,7 @@
         ea: [0, -1],
       },
     },
-    "Russian Twists": {
+    "str.russian_twists": {
       a: {
         p: [104, 130],
         s: [94, 98],
@@ -631,7 +644,7 @@
         [140, 144],
       ],
     },
-    Ausfallschritte: {
+    "str.lunges": {
       a: st({}),
       b: {
         h: [120, 62],
@@ -649,7 +662,7 @@
         [184, 92],
       ],
     },
-    "Bulgarian Split Squats": {
+    "str.bulgarian_split_squats": {
       a: {
         h: [118, 38],
         s: [116, 62],
@@ -676,7 +689,7 @@
         [184, 92],
       ],
     },
-    "Step-ups": {
+    "str.step_ups": {
       a: {
         h: [118, 36],
         s: [118, 60],
@@ -701,7 +714,7 @@
         [196, 40],
       ],
     },
-    "Wadenheben einbeinig": {
+    "str.single_leg_calf_raises": {
       a: {
         h: [120, 22],
         s: [120, 46],
@@ -728,7 +741,7 @@
         [170, 40],
       ],
     },
-    "Copenhagen Plank": {
+    "str.copenhagen_plank": {
       a: {
         ...cpl,
         w: [cpl.s[0] + 20, 146],
@@ -739,7 +752,7 @@
       props: [["rect", [26, 100], [44, 8]]],
       hold: true,
     },
-    "Einbeinstand mit Kick-Hold": {
+    "str.single_leg_kick_hold": {
       a: st({ w: [136, 52], W: [130, 48], ea: [0.5, 1] }),
       b: st({
         w: [136, 52],
@@ -753,9 +766,9 @@
         [196, 96],
       ],
     },
-    "Isometrische Nackenkräftigung – Halteübung": { a: st({ w: [134, 32], ea: [1, 1] }), hold: true },
+    "str.neck_iso_hold": { a: st({ w: [134, 32], ea: [1, 1] }), props: [["neck4"]], hold: true },
     /* conditioning (round-based, shown in the full-screen timer) */
-    Burpees: {
+    "cond.burpees": {
       a: { ...pu, w: [119, 147], ea: [-1, 0] },
       b: {
         h: [121, 26],
@@ -773,7 +786,7 @@
         [186, 70],
       ],
     },
-    "Mountain Climbers": {
+    "cond.mountain_climbers": {
       a: { ...pu, w: [119, 147], ea: [-1, 0], f: [104, 142], ka: [1, 1] },
       b: { ...pu, w: [119, 147], ea: [-1, 0], F: [104, 142], KA: [1, 1] },
       arrow: [
@@ -781,7 +794,7 @@
         [176, 132],
       ],
     },
-    "Skater-Sprünge": {
+    "cond.skater_jumps": {
       a: {
         h: [96, 58],
         s: [88, 80],
@@ -811,7 +824,7 @@
         [150, 40],
       ],
     },
-    "Bear Crawl": {
+    "cond.bear_crawl": {
       a: {
         p: [92, 106],
         s: [132, 102],
@@ -841,7 +854,7 @@
         [212, 128],
       ],
     },
-    "Band-Schläge": {
+    "cond.band_punches": {
       a: {
         h: [124, 38],
         s: [118, 62],
@@ -873,7 +886,7 @@
         [204, 40],
       ],
     },
-    "Schatten-Sprints": {
+    "cond.shadow_sprints": {
       a: {
         h: [126, 38],
         s: [120, 62],
@@ -899,7 +912,7 @@
         EA: [0, 1],
       },
     },
-    "Sack-Sprints": {
+    "cond.bag_sprints": {
       a: {
         h: [116, 38],
         s: [110, 62],
@@ -929,7 +942,7 @@
         ["rect", [164, 22], [34, 100]],
       ],
     },
-    "Seil-Intervalle": {
+    "cond.rope_intervals": {
       a: {
         ...STAND,
         w: [134, 100],
@@ -951,7 +964,7 @@
       props: [["rope", [134, 100, 108], -30]],
       pb: [["rope", [134, 90, 108], 176]],
     },
-    "Kick-Intervalle": {
+    "cond.kick_intervals": {
       a: {
         h: [124, 38],
         s: [118, 62],
@@ -982,7 +995,7 @@
         [188, 104],
       ],
     },
-    "Treppen- oder Bankläufe": {
+    "cond.stair_or_bench_runs": {
       a: {
         h: [126, 40],
         s: [120, 64],
@@ -1026,7 +1039,7 @@
           .filter((x) => SK_FRONT.has(x[0]))
           .map(skProp)
           .join("")}</g>`;
-    return `<svg class="sketch${k.b ? " moving" : ""}${fast ? " fast" : ""}" viewBox="0 0 240 156" role="img" aria-label="${esc(name)}"><defs><marker id="skHead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${SK.BRASS}"/></marker></defs>${skProp(["floor"])}${layer(k.a, k.props, "fa")}${k.b ? layer(b, k.pb || k.props, "fb") : ""}${k.arrow ? skArrow(...k.arrow) : ""}${k.arc ? skArc(...k.arc) : ""}</svg>`;
+    return `<svg class="sketch${k.b ? " moving" : ""}${fast ? " fast" : ""}" viewBox="0 0 240 156" role="img" aria-label="${esc(EX[name] ? (S.profile.lang === "de" ? EX[name].de : EX[name].en) : name)}"><defs><marker id="skHead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${SK.BRASS}"/></marker></defs>${skProp(["floor"])}${layer(k.a, k.props, "fa")}${k.b ? layer(b, k.pb || k.props, "fb") : ""}${k.arrow ? skArrow(...k.arrow) : ""}${k.arc ? skArc(...k.arc) : ""}</svg>`;
   }
 
   /* ============ Self-defence sketches: you (light) and the attacker (grey), with the key move of the release ============ */
@@ -1613,8 +1626,8 @@
     ];
   Object.assign(SKETCH, {
     /* warm-up */
-    "Seilspringen locker": SKETCH["Seil-Intervalle"],
-    Einlaufen: {
+    "warm.easy_jump_rope": SKETCH["cond.rope_intervals"],
+    "warm.easy_jog": {
       a: RUN_A,
       b: RUN_B,
       arrow: [
@@ -1622,12 +1635,12 @@
         [206, 140],
       ],
     },
-    Gelenkmobilisation: {
+    "warm.joint_mobility": {
       a: st({ w: [126, 16], W: [118, 18], ea: [0, -1], EA: [0, -1] }),
       b: st({ w: [160, 74], W: [156, 78], ea: [0, 1], EA: [0, 1] }),
       arc: [[120, 60], 52, -150, 30],
     },
-    "Dynamisches Dehnen": {
+    "warm.dynamic_stretching": {
       a: st({
         f: [168, 104],
         ka: [1, 0],
@@ -1645,7 +1658,7 @@
       props: [["wall", 62]],
       arc: [[120, 94], 54, 120, 20],
     },
-    "Bänder-Aktivierung": {
+    "warm.band_activation": {
       a: st({ w: [162, 64], W: [158, 62], ea: [0, 1], EA: [0, 1] }),
       b: st({ w: [124, 62], W: [116, 62], ea: [1, -0.2], EA: [-1, -0.2] }),
       props: [["band2", [162, 64], [158, 62]]],
@@ -1656,12 +1669,12 @@
       ],
     },
     /* mobility */
-    "Hüftkreise im Vierfüßler": {
+    "mob.quadruped_hip_circles": {
       a: QUAD,
       b: { ...QUAD, f: [86, 112], ka: [-1, 0] },
       arc: [[94, 120], 26, 200, 520],
     },
-    "90/90 Hüftwechsel": {
+    "mob.90_90_hip_switches": {
       a: {
         p: [108, 140],
         s: [110, 104],
@@ -1688,7 +1701,7 @@
       },
       arc: [[110, 128], 34, 340, 200],
     },
-    "Cossack Squats": {
+    "mob.cossack_squats": {
       a: {
         p: [96, 126],
         s: [104, 94],
@@ -1718,7 +1731,7 @@
         [150, 40],
       ],
     },
-    "World's Greatest Stretch": {
+    "mob.worlds_greatest_stretch": {
       a: {
         p: [110, 118],
         s: [140, 100],
@@ -1748,7 +1761,7 @@
         [186, 60],
       ],
     },
-    "Offenes Buch": {
+    "mob.open_book_rotation": {
       a: {
         p: [104, 140],
         s: [140, 136],
@@ -1775,7 +1788,7 @@
       },
       arc: [[140, 130], 40, -10, -170],
     },
-    "Sprunggelenk an der Wand": {
+    "mob.knee_to_wall_ankle": {
       a: {
         p: [126, 116],
         s: [130, 82],
@@ -1806,14 +1819,14 @@
         [178, 98],
       ],
     },
-    "Band-Dislocates": {
+    "mob.band_dislocates": {
       a: st({ w: [150, 100], W: [146, 100], ea: [0, 1], EA: [0, 1] }),
       b: st({ w: [92, 42], W: [96, 40], ea: [-1, -1], EA: [-1, -1] }),
       props: [["band2", [150, 100], [146, 100]]],
       pb: [["band2", [92, 42], [96, 40]]],
       arc: [[120, 60], 50, 40, -200],
     },
-    Froschdehnung: {
+    "mob.frog_stretch": {
       a: {
         p: [104, 118],
         s: [140, 126],
@@ -1843,7 +1856,7 @@
         [36, 104],
       ],
     },
-    Taube: {
+    "mob.pigeon_stretch": {
       a: {
         p: [104, 132],
         s: [110, 98],
@@ -1870,7 +1883,7 @@
       },
       arc: [[106, 132], 44, -95, -20],
     },
-    "Katze-Kuh": {
+    "mob.cat_cow": {
       a: { ...QUAD, p: [96, 104], s: [138, 102], h: [152, 118] },
       b: { ...QUAD, p: [96, 114], s: [138, 112], h: [162, 92] },
       arrow: [
@@ -1878,7 +1891,7 @@
         [117, 100],
       ],
     },
-    "Tiefe Hocke halten": {
+    "mob.deep_squat_hold": {
       a: {
         p: [104, 134],
         s: [116, 102],
@@ -1894,13 +1907,13 @@
       },
       hold: true,
     },
-    Nackenmobilisation: {
+    "mob.neck_mobility": {
       a: st({ h: [114, 36] }),
       b: st({ h: [130, 42] }),
       arc: [[121, 38], 24, -160, -20],
     },
     /* cool-down */
-    "Hüftbeuger dehnen": {
+    "cool.hip_flexor_stretch": {
       a: LUNGE_K,
       b: {
         ...LUNGE_K,
@@ -1916,7 +1929,7 @@
       ],
       hold: true,
     },
-    "Adduktoren & Spagat": {
+    "cool.adductors_and_splits": {
       a: {
         p: [120, 112],
         s: [120, 78],
@@ -1932,7 +1945,7 @@
       },
       hold: true,
     },
-    "Oberschenkel hinten": {
+    "cool.hamstrings": {
       a: {
         p: [94, 138],
         s: [126, 120],
@@ -1947,12 +1960,12 @@
       },
       hold: true,
     },
-    "Schulter & Brust": {
+    "cool.shoulder_and_chest": {
       a: st({ w: [76, 60], W: [116, 100], ea: [0, 1] }),
       props: [["wall", 62]],
       hold: true,
     },
-    Atmung: {
+    "cool.breathing": {
       a: {
         p: [110, 140],
         s: [146, 140],
@@ -1971,7 +1984,7 @@
       ],
       hold: true,
     },
-    Auslaufen: {
+    "cool.easy_cool_down_jog": {
       a: WALK_A,
       b: WALK_B,
       arrow: [
@@ -1980,7 +1993,7 @@
       ],
     },
     /* running and machines */
-    Sprints: {
+    "cond.sprints": {
       a: SPR_A,
       b: SPR_B,
       arrow: [
@@ -1988,7 +2001,7 @@
         [212, 140],
       ],
     },
-    Steigerungsläufe: {
+    "cond.strides": {
       a: RUN_A,
       b: SPR_B,
       arrow: [
@@ -1996,7 +2009,7 @@
         [212, 140],
       ],
     },
-    Bergsprints: {
+    "cond.hill_sprints": {
       a: skShift(SPR_A, 0, -9),
       b: skShift(SPR_B, 0, -9),
       props: [["hill"]],
@@ -2005,17 +2018,17 @@
         [204, 92],
       ],
     },
-    "Laufband-Intervalle": {
+    "cond.treadmill_intervals": {
       a: skShift(RUN_A, -6, -8),
       b: skShift(RUN_B, -6, -8),
       props: TREAD,
     },
-    "Rad-Sprints": {
+    "cond.bike_sprints": {
       a: BIKE_A,
       b: { ...BIKE_A, f: [106, 119], F: [118, 136] },
       props: BIKE,
     },
-    "Rudergerät-Intervalle": {
+    "cond.rowing_machine_intervals": {
       a: {
         p: [118, 128],
         s: [138, 96],

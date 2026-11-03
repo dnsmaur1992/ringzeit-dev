@@ -50,7 +50,7 @@
   }
   /* "What's new": shown once per big update to people who already used the app.
      Raise NEWS_V (and update the texts under "news") only for updates worth telling about. */
-  const NEWS_V = 5;
+  const NEWS_V = 6;
   const needNews = () => !S.profile.example && !!S.profile.toured && (S.profile.newsSeen || 0) < NEWS_V;
   const showNews = () => openSheet({ kind: "news" });
   async function finishOnb(skip, test) {

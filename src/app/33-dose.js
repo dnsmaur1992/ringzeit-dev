@@ -1,99 +1,83 @@
   /* ============ Dose: every exercise says how much – reps, seconds, distance or minutes ============ */
-  /* per-exercise doses by German name: [de, en] */
-  const DOSE_FIX = {
+  /* per-exercise doses by exercise id: [de, en] */
+  /* texts without a timer number; everything with timer numbers comes from its prescription (RX) */
+  const DOSE_TXT = {
     // warm-up (shown after the minutes)
-    Gelenkmobilisation: ["je Gelenk 10 Kreise", "10 circles per joint"],
-    "Kurz andehnen": ["je Muskel 15–30 s · ca. 2 Min.", "15–30 s per muscle · about 2 min"],
-    "Dynamisches Dehnen": ["je Bewegung 10 Wdh.", "10 reps per movement"],
-    "Bänder-Aktivierung": ["je Übung 15 Wdh.", "15 reps per exercise"],
+    "warm.joint_mobility": ["je Gelenk 10 Kreise", "10 circles per joint"],
+    "warm.dynamic_stretching": ["je Bewegung 10 Wdh.", "10 reps per movement"],
+    "warm.band_activation": ["je Übung 15 Wdh.", "15 reps per exercise"],
     // cool-down
-    "Hüftbeuger dehnen": ["je Seite 45 s", "45 s per side"],
-    "Adduktoren & Spagat": ["60–90 s halten", "hold 60–90 s"],
-    "Oberschenkel hinten": ["je Seite 45 s", "45 s per side"],
-    "Schulter & Brust": ["je Seite 30 s", "30 s per side"],
-    Atmung: ["2 Min.", "2 min"],
-    Auslaufen: ["5 Min. locker", "5 min easy"],
     // mobility
-    "Hüftkreise im Vierfüßler": ["je Seite 6 Kreise", "6 circles per side"],
-    "90/90 Hüftwechsel": ["10 Wechsel", "10 switches"],
-    "Cossack Squats": ["je Seite 6", "6 per side"],
-    "World's Greatest Stretch": ["je Seite 5", "5 per side"],
-    "Offenes Buch": ["je Seite 8", "8 per side"],
-    "Sprunggelenk an der Wand": ["je Seite 10", "10 per side"],
-    "Band-Dislocates": ["10 Wdh.", "10 reps"],
-    Froschdehnung: ["60–90 s halten", "hold 60–90 s"],
-    Taube: ["je Seite 60–90 s", "60–90 s per side"],
-    "Katze-Kuh": ["10 Wdh.", "10 reps"],
-    "Zeitlupen-Kicks": ["je Seite 5", "5 per side"],
-    "Tiefe Hocke halten": ["60–90 s halten", "hold 60–90 s"],
-    Nackenmobilisation: ["je Richtung 5", "5 each direction"],
-    "Beinpendel kontrolliert": ["je Seite 10", "10 per side"],
-    "Kick-Halten": ["je Seite 5 × 3–5 s", "5 × 3–5 s per side"],
-    "Aktive Beinheber": ["je Seite 8", "8 per side"],
+    "mob.quadruped_hip_circles": ["je Seite 6 Kreise", "6 circles per side"],
+    "mob.90_90_hip_switches": ["10 Wechsel", "10 switches"],
+    "mob.cossack_squats": ["je Seite 6", "6 per side"],
+    "mob.worlds_greatest_stretch": ["je Seite 5", "5 per side"],
+    "mob.open_book_rotation": ["je Seite 8", "8 per side"],
+    "mob.knee_to_wall_ankle": ["je Seite 10", "10 per side"],
+    "mob.band_dislocates": ["10 Wdh.", "10 reps"],
+    "mob.cat_cow": ["10 Wdh.", "10 reps"],
+    "mob.slow_motion_kicks": ["je Seite 5", "5 per side"],
+    "mob.neck_mobility": ["je Richtung 5", "5 each direction"],
+    "mob.controlled_leg_swings": ["je Seite 10", "10 per side"],
+    "mob.active_leg_raises": ["je Seite 8", "8 per side"],
     // strength specials
-    Klimmzüge: ["so viele saubere wie möglich", "as many clean reps as possible"],
-    "Negative Klimmzüge": ["3–5 Wdh.", "3–5 reps"],
-    "Isometrische Nackenkräftigung – Halteübung": ["je Richtung 10 s", "10 s each direction"],
-    "Einbeinstand mit Kick-Hold": ["pro Bein 2 × 10 s", "2 × 10 s per leg"],
+    "str.pull_ups": ["so viele saubere wie möglich", "as many clean reps as possible"],
+    "str.negative_pull_ups": ["3–5 Wdh.", "3–5 reps"],
     // conditioning with their own pattern (one block per circuit lap)
-    "Seil-Intervalle": ["2 Min. im Wechsel", "2 min alternating"],
-    Sprints: ["4 Läufe à 20 m", "4 runs of 20 m"],
-    Bergsprints: ["4 Sprints", "4 sprints"],
-    "Schatten-Sprints": ["3 × (20 s Vollgas / 10 s locker)", "3 × (20 s all-out / 10 s easy)"],
-    "Sack-Sprints": ["4 × (15 s / 15 s Pause)", "4 × (15 s / 15 s rest)"],
-    "Kick-Intervalle": ["3 × (20 s / 10 s Pause)", "3 × (20 s / 10 s rest)"],
-    Steigerungsläufe: ["2 × 80 m", "2 × 80 m"],
-    "Rudergerät-Intervalle": ["2 Min. im Wechsel", "2 min alternating"],
-    "Laufband-Intervalle": ["2 Min. im Wechsel", "2 min alternating"],
-    "Rad-Sprints": ["2 × (20 s / 40 s locker)", "2 × (20 s / 40 s easy)"],
-    "Speed-Runden": ["4 × (10 s / 20 s locker)", "4 × (10 s / 20 s easy)"],
-    "Steppen und leichte Beinarbeit": ["3 Min.", "3 min"],
-    "Kettlebell-Swings": ["15 Wdh.", "15 reps"],
-    "Skater-Sprünge": ["pro Bein 10", "10 per leg"],
+    "cond.sprints": ["4 Läufe à 20 m", "4 runs of 20 m"],
+    "cond.hill_sprints": ["4 Sprints", "4 sprints"],
+    "cond.strides": ["2 × 80 m", "2 × 80 m"],
+    "cond.kettlebell_swings": ["15 Wdh.", "15 reps"],
+    "cond.skater_jumps": ["pro Bein 10", "10 per leg"],
   };
+  const DOSE_FIX = { ...DOSE_TXT };
+  for (const [k, rx] of Object.entries(RX)) if (k.includes(".")) DOSE_FIX[k] = [rxText(rx, "de"), rxText(rx, "en")];
   /* minutes one circuit lap of these takes (everything else ≈ 1 min) */
   const DOSE_MIN = {
-    "Seil-Intervalle": 2,
-    Sprints: 1.5,
-    Bergsprints: 2,
-    "Schatten-Sprints": 1.5,
-    "Sack-Sprints": 2,
-    "Kick-Intervalle": 1.5,
-    Steigerungsläufe: 1.5,
-    "Rudergerät-Intervalle": 2,
-    "Laufband-Intervalle": 2,
-    "Rad-Sprints": 2,
-    "Speed-Runden": 2,
-    "Steppen und leichte Beinarbeit": 3,
+    "cond.rope_intervals": 2,
+    "cond.sprints": 1.5,
+    "cond.hill_sprints": 2,
+    "cond.shadow_sprints": 1.5,
+    "cond.bag_sprints": 2,
+    "cond.kick_intervals": 1.5,
+    "cond.strides": 1.5,
+    "cond.rowing_machine_intervals": 2,
+    "cond.treadmill_intervals": 2,
+    "cond.bike_sprints": 2,
+    "cond.speed_rounds": 2,
+    "cond.stepping_and_light_footwork": 3,
   };
   const DOSE_SIDE = new Set([
-    "Ausfallschritte",
-    "Bulgarian Split Squats",
-    "Step-ups",
-    "Wadenheben einbeinig",
-    "Woodchopper am Kabelzug",
-    "Pallof Press",
-    "Copenhagen Plank",
-    "Russian Twists",
-    "Seitliche Sprünge",
+    "str.lunges",
+    "str.bulgarian_split_squats",
+    "str.step_ups",
+    "str.single_leg_calf_raises",
+    "str.cable_woodchop",
+    "str.pallof_press",
+    "str.copenhagen_plank",
+    "str.russian_twists",
+    "pow.lateral_bounds",
   ]);
   /* one-legged exercises: the dose is per leg ("pro Bein") instead of "je Seite" */
   const DOSE_LEG = new Set([
-    "Ausfallschritte",
-    "Bulgarian Split Squats",
-    "Step-ups",
-    "Wadenheben einbeinig",
-    "Einbeinstand mit Kick-Hold",
-    "Skater-Sprünge",
+    "str.lunges",
+    "str.bulgarian_split_squats",
+    "str.step_ups",
+    "str.single_leg_calf_raises",
+    "str.single_leg_kick_hold",
+    "cond.skater_jumps",
   ]);
-  const sideWord = (name, de = S.profile.lang === "de") =>
-    DOSE_LEG.has(name) ? (de ? " pro Bein" : " per leg") : DOSE_SIDE.has(name) ? (de ? " je Seite" : " per side") : "";
+  /* sprint-type items that state their own count: a block with several sets repeats it ("3 × 4 Sprints") */
+  const DOSE_REPEAT = new Set(["cond.sprints", "cond.hill_sprints", "cond.strides"]);
+  const isExplSets = (sets) => /explosiv/i.test(sets || "");
+  const sideWord = (key, de = S.profile.lang === "de") =>
+    DOSE_LEG.has(key) ? (de ? " pro Bein" : " per leg") : DOSE_SIDE.has(key) ? (de ? " je Seite" : " per side") : "";
   /* a circuit: "3×" without reps – all exercises one after another, then a lap break */
   const isCirc = (b) => /^\d+\s*×$/.test((b.sets || "").trim());
   const circLap = (b) =>
     b.items.reduce((a, it) => {
       const e = EX[it.id];
-      return a + (!e ? 1 : DOSE_MIN[e.de] || (DOSE_SIDE.has(e.de) ? 1.5 : 1));
+      return a + (!e ? 1 : DOSE_MIN[e.key] || (DOSE_SIDE.has(e.key) ? 1.5 : 1));
     }, 0) + 1.5;
   /* laps that fill the block's minutes (2–6) */
   const circN = (b) => Math.max(2, Math.min(6, Math.round(b.min / circLap(b))));
@@ -103,8 +87,8 @@
     if (!e) return "";
     const de = S.profile.lang === "de",
       L = S.profile.level,
-      fix = DOSE_FIX[e.de] ? DOSE_FIX[e.de][de ? 0 : 1] : "",
-      side = sideWord(e.de, de),
+      fix = DOSE_FIX[e.key] ? DOSE_FIX[e.key][de ? 0 : 1] : "",
+      side = sideWord(e.key, de),
       reps = de ? " Wdh." : " reps",
       circ = isCirc(b),
       m = (b.sets || "").match(/^(\d+)×\s*(\d+(?:[–-]\d+)?)?/),
@@ -115,17 +99,21 @@
       return `${mins} ${de ? "Min." : "min"}${fix ? " · " + fix : ""}`;
     }
     if (b.key === "mob") {
+      const rx = RX[e.key];
+      // a prescription with a timer states the total from that timer (the timer and the text cannot differ)
+      if (rx && rx.fillSec) return fix;
+      if (rx && rx.k === "hold") return `${fix} · ${de ? "insgesamt ca." : "about"} ${rxMinutes(rx)} ${de ? "Min." : "min in total"}`;
       const mins = Math.max(2, Math.round(b.min / Math.max(1, b.items.length)));
       return `${fix || (de ? "60–90 s halten" : "hold 60–90 s")} · ${de ? "insgesamt ca." : "about"} ${mins} ${de ? "Min." : "min in total"}`;
     }
     if (b.key === "cool" || e.cat === "cool" || e.cat === "mob")
       return fix || (de ? "45–60 s halten" : "hold 45–60 s");
     if (e.cat === "cond") {
-      if (fix) return fix;
-      if (e.de === "Burpees") return ["6", "10", "15"][L] + reps;
+      if (fix) return DOSE_REPEAT.has(e.key) && !circ && n > 1 ? `${n} × ${/×/.test(fix) ? `(${fix})` : fix}` : fix;
+      if (e.key === "cond.burpees") return ["6", "10", "15"][L] + reps;
       const W = [30, 40, 45][L],
         R = [30, 20, 15][L];
-      if (e.de === "Bear Crawl")
+      if (e.key === "cond.bear_crawl")
         return de
           ? `${W} s (ca. 10 m hin und zurück), ${R} s Pause`
           : `${W} s (about 10 m out and back), ${R} s rest`;
@@ -133,7 +121,7 @@
     }
     // strength, core and power
     if (e.cat === "pow") {
-      const one = (de ? "5 Wdh." : "5 reps") + side;
+      const one = (m && m[2] ? m[2] : "5") + (de ? " Wdh." : " reps") + side;
       if (circ) return one;
       if (/^Kontrast|^Contrast/.test(b.sets || ""))
         return de
@@ -142,14 +130,16 @@
       return `${n} × ${one} · ${de ? "1–2 Min. Pause" : "1–2 min rest"}`;
     }
     let one;
-    if (fix) one = fix;
+    // a timed one-legged hold counts in sets (one set = left, then right), not in the fixed 2 × 10 s pattern
+    const setHold = TIMED.has(id) && RX[e.key] && RX[e.key].k === "holds";
+    if (fix && !setHold) one = fix;
     else if (TIMED.has(id)) {
       const h = [
         [20, 30],
         [30, 45],
         [45, 60],
       ][L] || [30, 45];
-      one = `${h[0]}–${h[1]} s${side} ${de ? "halten" : "hold"}`;
+      one = `${h[0]}–${h[1]} s${side} ${de ? "halten" : "hold"}${setHold ? (de ? " · ein Satz = erst links, dann rechts" : " · one set = left first, then right") : ""}`;
     } else {
       const heavyBw = bwHeavy(b, id),
         r = heavyBw ? ["8–10", "10–12", "12–15"][L] : m && m[2] ? m[2] : hasKg(id) ? "8–12" : ["8–10", "10–12", "12–15"][L];
@@ -199,7 +189,7 @@
   function blockHead(b, sess) {
     const de = S.profile.lang === "de";
     let info = b.sets || "";
-    if (b.key === "mob") info = "";
+    if (b.key === "mob") info = de ? "je Übung ca. 3–4 Min., Halteübungen 60–90 s" : "about 3–4 min per exercise, holds 60–90 s";
     else if (isCirc(b)) info = de ? `${circN(b)} Durchgänge` : `${circN(b)} laps`;
     if (b.rounds) {
       const w = b.w || (b.items.some((i) => i.k !== "ex") ? 180 : 120),

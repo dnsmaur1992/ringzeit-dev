@@ -177,23 +177,22 @@
   // Repeated basic movements provide comparable logs; remaining slots retain the existing exercise variety.
   function strengthBasics(n, loc, eq, used, prefer) {
     const groups = [
-        ["Kniebeugen mit Langhantel", "Goblet Squats", "Beinpresse", "Kniebeugen", "Ausfallschritte"],
-        ["Bankdrücken", "Kurzhantel-Drücken", "Liegestütze"],
+        ["str.barbell_back_squat", "str.goblet_squats", "str.leg_press", "str.lunges"],
+        ["str.bench_press", "str.dumbbell_press", "str.push_ups"],
         [
-          "Rudern am Kabelzug",
-          "Einarmiges Rudern",
-          "Band-Rudern",
-          "Klimmzüge",
-          "Negative Klimmzüge",
-          "Unterarmstütz",
-          "Dead Bugs",
+          "str.seated_cable_row",
+          "str.band_rows",
+          "str.pull_ups",
+          "str.negative_pull_ups",
+          "str.plank",
+          "str.dead_bugs",
         ],
       ],
       selected = [];
     for (const group of groups) {
       const candidates = EX.filter(
-        (e) => e.cat === "str" && group.includes(e.de) && okEx(e, loc, eq) && !used.has(e.id),
-      ).sort((a, b) => (prefer ? prefer(b) - prefer(a) : 0) || group.indexOf(a.de) - group.indexOf(b.de));
+        (e) => e.cat === "str" && group.includes(e.key) && okEx(e, loc, eq) && !used.has(e.id),
+      ).sort((a, b) => (prefer ? prefer(b) - prefer(a) : 0) || group.indexOf(a.key) - group.indexOf(b.key));
       if (candidates[0] && selected.length < n) {
         selected.push({ kind: "ex", id: candidates[0].id, basic: true });
         used.add(candidates[0].id);
@@ -320,7 +319,7 @@
       ][S.profile.level] || [30, 45],
       ph = timed ? String(hold[0]) : ((b.sets || "").match(/(\d+)[–-](\d+)/) || [, "10"])[1];
     let h = timed ? `<div class="last" style="margin-top:6px">${t("holdTarget")(rows.length, hold)}</div>` : "";
-    const leg = DOSE_LEG.has(EX[id]?.de),
+    const leg = DOSE_LEG.has(EX[id]?.key),
       LR = legLabels();
     h += leg
       ? `<div class="sets leg ${kg ? "" : "nokg"}"><span></span><span class="hd">${LR[0]} · ${timed ? t("secs") : t("reps")}</span><span class="hd">${LR[1]}</span>${kg ? `<span class="hd">${t("kg")}</span>` : ""}<span></span>`
@@ -602,7 +601,7 @@ ${setupFields(setup, ty)}
       } else if (it.kind === "hard") {
         const hd = HARD.find((q) => q.id === it.id) || HARD[0],
           x = hardTxt(hd.id, it.h);
-        h += `<div class="ex${checked ? " past" : ""}" ${itemAttr}>${checkButton(sess, bi, n, pad(n + 1), preview)}<div class="tx">${SKETCH[hd.de[0]] ? `<button type="button" class="exn" data-hardinfo="${hd.id}${it.h ? "|h" : ""}"><b>${esc(x[0])}</b><span class="exi" aria-hidden="true">i</span></button>` : `<b>${esc(x[0])}</b>`}<div>${esc(x[1])}</div></div></div>`;
+        h += `<div class="ex${checked ? " past" : ""}" ${itemAttr}>${checkButton(sess, bi, n, pad(n + 1), preview)}<div class="tx">${SKETCH[hd.sk] ? `<button type="button" class="exn" data-hardinfo="${hd.id}${it.h ? "|h" : ""}"><b>${esc(x[0])}</b><span class="exi" aria-hidden="true">i</span></button>` : `<b>${esc(x[0])}</b>`}<div>${esc(x[1])}</div></div></div>`;
       } else if (it.k === "sim") {
         h += `<div class="ex${checked ? " past" : ""}" ${itemAttr} ${preview ? "" : `data-rd="${n + 1}"`}>${checkButton(sess, bi, n, t("roundAbbr") + (n + 1), preview)}<div class="tx"><b>${t("simT")(it.fight, it.r)}</b><div>${it.fight > 1 && it.r === 1 ? t("simD2") : t("simD1")}${it.beg ? t("simBeg") : ""}</div></div></div>`;
       } else if (it.k === "task") {

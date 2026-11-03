@@ -414,7 +414,7 @@
   ];
   const bwHeavy = (b, id) => {
     const m = (b.sets || "").match(/^\d+×\s*(\d+)[–-](\d+)/);
-    return !!m && +m[2] <= 8 && !hasKg(id) && !TIMED.has(id);
+    return !!m && +m[2] <= 8 && !hasKg(id) && !TIMED.has(id) && !isExplSets(b.sets);
   };
   function strengthTarget(sess, b, it) {
     const pr = sess.progression,
@@ -430,7 +430,7 @@
           ? BW_RANGE[S.profile.level] || BW_RANGE[1]
           : match && [+match[1], +match[2]];
     // Circuits, explosive lifts, AMRAP/special prescriptions and changed equipment keep their own dosing.
-    if (!range || isCirc(b) || EX[it.id]?.cat !== "str" || (DOSE_FIX[EX[it.id].de] && !timed)) return null;
+    if (!range || isCirc(b) || EX[it.id]?.cat !== "str" || (DOSE_FIX[EX[it.id].key] && !timed)) return null;
     const n = blockSets(b),
       [lo, hi] = range,
       kind = `${pr.signature}:${sess.loc}:${relevantEquipment(it.id, sess.eq)}:${lo}-${hi}:${n}:${timed ? "s" : "r"}`,
@@ -548,7 +548,7 @@
       why = target.reason === "up" || target.reason === "down" ? ` · ${T.targetWhy[target.reason]}` : "",
       kgHint = target.kg == null && id != null && hasKg(id) ? ` · ${T.ownWeight}` : "";
     const slow = target.slow ? (S.profile.lang === "de" ? ", langsam (3 s ab)" : ", slow (3 s down)") : "";
-    const per = id != null && EX[id] ? sideWord(EX[id].de) : "";
+    const per = id != null && EX[id] ? sideWord(EX[id].key) : "";
     return `${T.target}: ${target.n} × ${target.r}${target.timed ? " s" : ""}${per}${target.kg != null ? ` × ${numF(target.kg)} kg` : ""}${slow}${why}${kgHint}`;
   }
   function progressSession(sess) {

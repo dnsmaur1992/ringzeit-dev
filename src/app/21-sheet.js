@@ -95,8 +95,8 @@
     } else if (o.kind === "hard") {
       const hd = HARD.find((q) => q.id === o.id),
         x = hardTxt(o.id, o.h),
-        k = SKETCH[hd.de[0]];
-      h += `<h3>${esc(x[0])}</h3><div class="skwrap">${sketchSvg(hd.de[0])}${k.hold ? `<span class="skhold">${t("skHold")}</span>` : ""}</div><p class="sub" style="margin:0">${esc(x[1])}</p><div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
+        k = SKETCH[hd.sk];
+      h += `<h3>${esc(x[0])}</h3><div class="skwrap">${sketchSvg(hd.sk)}${k.hold ? `<span class="skhold">${t("skHold")}</span>` : ""}</div><p class="sub" style="margin:0">${esc(x[1])}</p><div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
     } else if (o.kind === "ex") {
       h += `<h3>${esc(exText(o.id).name)}</h3>${exInfoHtml(o.id)}<div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
     } else if (o.kind === "badge") {

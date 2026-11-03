@@ -15,12 +15,12 @@
   /* test areas per block (for the suggestion and the before/after comparison) */
   const BLK_CATS = { end: ["end"], pow: ["str", "spd"], mob: ["flx"] };
   /* fight-specific conditioning first in the endurance block */
-  const BLK_END = ["Schatten-Sprints", "Sack-Sprints", "Kick-Intervalle", "Seil-Intervalle", "Speed-Runden"];
+  const BLK_END = ["cond.shadow_sprints", "cond.bag_sprints", "cond.kick_intervals", "cond.rope_intervals", "cond.speed_rounds"];
   /* mobility per stage: hips & adductors → dynamic kick mobility → active range */
   const BLK_MOB = [
-    ["Hüftkreise im Vierfüßler", "90/90 Hüftwechsel", "Cossack Squats", "Froschdehnung", "Taube", "Tiefe Hocke halten"],
-    ["Beinpendel kontrolliert", "Zeitlupen-Kicks", "World's Greatest Stretch", "Cossack Squats", "90/90 Hüftwechsel"],
-    ["Kick-Halten", "Aktive Beinheber", "Zeitlupen-Kicks", "Cossack Squats", "Beinpendel kontrolliert"],
+    ["mob.quadruped_hip_circles", "mob.90_90_hip_switches", "mob.cossack_squats", "mob.frog_stretch", "mob.pigeon_stretch", "mob.deep_squat_hold"],
+    ["mob.controlled_leg_swings", "mob.slow_motion_kicks", "mob.worlds_greatest_stretch", "mob.cossack_squats", "mob.90_90_hip_switches"],
+    ["mob.kick_holds", "mob.active_leg_raises", "mob.slow_motion_kicks", "mob.cossack_squats", "mob.controlled_leg_swings"],
   ];
   /* block week on a date (1–6) regardless of tournaments; null outside the block or while paused */
   function blockRaw(ds) {

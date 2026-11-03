@@ -1072,23 +1072,23 @@
     /* Fist (fist: true) – one of these is in every hardening block. strike = hitting something; wr = loads the wrist */
     {
       id: "fGlove",
-      h: { de: "3× 20 s kräftige Geraden mit voller Wucht und fest geschlossener Faust, Treffer mit den ersten beiden Knöcheln, Handgelenk gerade.", en: "3× 20 s hard straights with full impact and a tight fist, land with the first two knuckles, wrist straight." },
+      h: { de: "{rx} kräftige Geraden mit voller Wucht und fest geschlossener Faust, Treffer mit den ersten beiden Knöcheln, Handgelenk gerade.", en: "{rx} hard straights with full impact and a tight fist, land with the first two knuckles, wrist straight." },
       fist: true,
       m: "b",
       strike: true,
       wr: true,
       de: [
         "Faust fest am Sack (Handschuhe)",
-        "3× 20 s gerade Schläge mit fest geschlossener Faust, Treffer mit den ersten beiden Knöcheln, Handgelenk gerade.",
+        "{rx} gerade Schläge mit fest geschlossener Faust, Treffer mit den ersten beiden Knöcheln, Handgelenk gerade.",
       ],
       en: [
         "Firm fist on the bag (gloves)",
-        "3× 20 s straight punches with a tight fist, land with the first two knuckles, wrist straight.",
+        "{rx} straight punches with a tight fist, land with the first two knuckles, wrist straight.",
       ],
     },
     {
       id: "fWraps",
-      h: { de: "Nur mit Bandagen, ohne Handschuhe: 3× 30 s gerade Schläge mit 50–70 % Kraft. Sofort stoppen, wenn etwas schmerzt.", en: "Wraps only, no gloves: 3× 30 s straight punches at 50–70 % power. Stop at once if anything hurts." },
+      h: { de: "Nur mit Bandagen, ohne Handschuhe: {rx} gerade Schläge mit 50–70 % Kraft. Sofort stoppen, wenn etwas schmerzt.", en: "Wraps only, no gloves: {rx} straight punches at 50–70 % power. Stop at once if anything hurts." },
       fist: true,
       m: "b",
       strike: true,
@@ -1096,16 +1096,16 @@
       adult: true,
       de: [
         "Bandagen-Schläge am Sack",
-        "Nur mit Bandagen, ohne Handschuhe: 2× 30 s gerade Schläge mit 30–50 % Kraft. Sofort stoppen, wenn etwas schmerzt.",
+        "Nur mit Bandagen, ohne Handschuhe: {rx} gerade Schläge mit 30–50 % Kraft. Sofort stoppen, wenn etwas schmerzt.",
       ],
       en: [
         "Wraps-only bag work",
-        "Wraps only, no gloves: 2× 30 s straight punches at 30–50 % power. Stop at once if anything hurts.",
+        "Wraps only, no gloves: {rx} straight punches at 30–50 % power. Stop at once if anything hurts.",
       ],
     },
     {
       id: "fBare",
-      h: { de: "Ohne Bandagen und Handschuhe: 3× 20 s Geraden mit höchstens 50 % Kraft, nur auf den Sack. Steigerung über Wochen, nicht über Tage.", en: "No wraps, no gloves: 3× 20 s straights at no more than 50 % power, bag only. Progress over weeks, not days." },
+      h: { de: "Ohne Bandagen und Handschuhe: {rx} Geraden mit höchstens 50 % Kraft, nur auf den Sack. Steigerung über Wochen, nicht über Tage.", en: "No wraps, no gloves: {rx} straights at no more than 50 % power, bag only. Progress over weeks, not days." },
       fist: true,
       m: "b",
       strike: true,
@@ -1114,27 +1114,27 @@
       lvl: 1,
       de: [
         "Faust ohne Schutz am Sack",
-        "Ohne Bandagen und Handschuhe: 2× 20 s lockere Geraden mit höchstens 30 % Kraft, nur auf den weichen Sack. Steigerung über Wochen, nicht über Tage.",
+        "Ohne Bandagen und Handschuhe: {rx} lockere Geraden mit höchstens 30 % Kraft, nur auf den weichen Sack. Steigerung über Wochen, nicht über Tage.",
       ],
       en: [
         "Bare fist on the bag",
-        "No wraps, no gloves: 2× 20 s light straights at no more than 30 % power, soft bag only. Progress over weeks, not days.",
+        "No wraps, no gloves: {rx} light straights at no more than 30 % power, soft bag only. Progress over weeks, not days.",
       ],
     },
     {
       id: "fPads",
-      h: { de: "Partner hält fest dagegen, 3× 20 s harte Geraden mit fester Faust und geradem Handgelenk. Dann tauschen.", en: "Partner holds firm, 3× 20 s hard straights with a tight fist and straight wrist. Then swap." },
+      h: { de: "Partner hält fest dagegen, {rx} harte Geraden mit fester Faust und geradem Handgelenk. Dann tauschen.", en: "Partner holds firm, {rx} hard straights with a tight fist and straight wrist. Then swap." },
       fist: true,
       m: "p",
       strike: true,
       wr: true,
       de: [
         "Faust fest an den Pratzen",
-        "Partner hält ruhig, 3× 20 s Geraden mit fester Faust und geradem Handgelenk – Fokus auf saubere Knöchelfläche. Dann tauschen.",
+        "Partner hält ruhig, {rx} Geraden mit fester Faust und geradem Handgelenk – Fokus auf saubere Knöchelfläche. Dann tauschen.",
       ],
       en: [
         "Firm fist on the pads",
-        "Partner holds steady, 3× 20 s straights with a tight fist and straight wrist – focus on a clean knuckle surface. Then swap.",
+        "Partner holds steady, {rx} straights with a tight fist and straight wrist – focus on a clean knuckle surface. Then swap.",
       ],
     },
     {
@@ -1151,25 +1151,25 @@
     },
     {
       id: "fPlank",
-      h: { de: "Liegestütz-Position auf den Fäusten auf festem Boden halten, 3× 30–45 s, Handgelenke gerade.", en: "Hold the push-up position on your fists on a hard floor, 3× 30–45 s, wrists straight." },
+      h: { de: "Liegestütz-Position auf den Fäusten auf festem Boden halten, {rx}, Handgelenke gerade.", en: "Hold the push-up position on your fists on a hard floor, {rx}, wrists straight." },
       fist: true,
       m: "s",
       wr: true,
-      de: ["Faust-Stütz", "Liegestütz-Position auf den Fäusten halten, 3× 20–30 s, Handgelenke gerade."],
-      en: ["Fist plank", "Hold the push-up position on your fists, 3× 20–30 s, wrists straight."],
+      de: ["Faust-Stütz", "Liegestütz-Position auf den Fäusten halten, {rx}, Handgelenke gerade."],
+      en: ["Fist plank", "Hold the push-up position on your fists, {rx}, wrists straight."],
     },
     {
       id: "fTap",
-      h: { de: "Mit der Faust kräftig auf eine feste, dünn gepolsterte Fläche klopfen, 3× 45 s pro Hand.", en: "Tap a firm, thinly padded surface hard with your fist, 3× 45 s per hand." },
+      h: { de: "Mit der Faust kräftig auf eine feste, dünn gepolsterte Fläche klopfen, {rx}.", en: "Tap a firm, thinly padded surface hard with your fist, {rx}." },
       fist: true,
       m: "s",
       strike: true,
       adult: true,
       de: [
         "Knöchel-Klopfen",
-        "Mit der Faust leicht auf eine gepolsterte Fläche klopfen (Matte, gefalteter Teppich), 3× 30 s pro Hand.",
+        "Mit der Faust leicht auf eine gepolsterte Fläche klopfen (Matte, gefalteter Teppich), {rx}.",
       ],
-      en: ["Knuckle tapping", "Tap a padded surface lightly with your fist (mat, folded rug), 3× 30 s per hand."],
+      en: ["Knuckle tapping", "Tap a padded surface lightly with your fist (mat, folded rug), {rx}."],
     },
     {
       id: "fWring",
@@ -1177,9 +1177,9 @@
       m: "s",
       de: [
         "Handtuch auswringen",
-        "Ein Handtuch kräftig in beide Richtungen auswringen, 3× 20 s – stärkt Finger, Faustschluss und Handgelenk.",
+        "Ein Handtuch kräftig in beide Richtungen auswringen, {rx} – stärkt Finger, Faustschluss und Handgelenk.",
       ],
-      en: ["Towel wring", "Wring a towel hard in both directions, 3× 20 s – strengthens fingers, grip and wrist."],
+      en: ["Towel wring", "Wring a towel hard in both directions, {rx} – strengthens fingers, grip and wrist."],
     },
     {
       id: "fFinger",
@@ -1187,51 +1187,51 @@
       m: "s",
       de: [
         "Faustschluss-Kraft",
-        "Faust 10× langsam maximal fest schließen und 3 s halten, dann Finger weit spreizen. 2 Durchgänge.",
+        "Faust {n}× langsam maximal fest schließen und {s} s halten, dann Finger weit spreizen. {r} Durchgänge.",
       ],
       en: [
         "Grip strength",
-        "Close your fist as hard as you can 10× slowly, hold 3 s, then spread your fingers wide. 2 rounds.",
+        "Close your fist as hard as you can {n}× slowly, hold {s} s, then spread your fingers wide. {r} rounds.",
       ],
     },
     {
       id: "abs",
-      h: { de: "Partner schlägt mit Handschuhen Geraden und Körperhaken mit mittlerem Druck gegen Bauch und Seiten, du spannst an und atmest scharf aus. 3× 20 s, dann tauschen. Den Druck über Wochen steigern.", en: "Partner throws straights and body hooks with gloves at medium pressure to your stomach and sides while you brace and exhale sharply. 3× 20 s, then swap. Build pressure over weeks." },
+      h: { de: "Partner schlägt mit Handschuhen Geraden und Körperhaken mit mittlerem Druck gegen Bauch und Seiten, du spannst an und atmest scharf aus. {rx}, dann tauschen. Den Druck über Wochen steigern.", en: "Partner throws straights and body hooks with gloves at medium pressure to your stomach and sides while you brace and exhale sharply. {rx}, then swap. Build pressure over weeks." },
       m: "p",
       de: [
         "Bauch-Abhärtung",
-        "Partner tippt mit Handschuhen kontrolliert gegen den Bauch, du spannst an und atmest scharf aus. 3× 20 s, Druck nur langsam steigern. Dann tauschen.",
+        "Partner tippt mit Handschuhen kontrolliert gegen den Bauch, du spannst an und atmest scharf aus. {rx}, Druck nur langsam steigern. Dann tauschen.",
       ],
       en: [
         "Ab conditioning",
-        "Partner taps your stomach with gloves while you brace and exhale sharply. 3× 20 s, build pressure slowly. Then swap.",
+        "Partner taps your stomach with gloves while you brace and exhale sharply. {rx}, build pressure slowly. Then swap.",
       ],
     },
     {
       id: "arms",
-      h: { de: "Partner schlägt und tritt mittelhart auf deine Deckung, du blockst mit festen Unterarmen. 2× 30 s, dann tauschen.", en: "Partner punches and kicks at medium power into your guard, you block with firm forearms. 2× 30 s, then swap." },
+      h: { de: "Partner schlägt und tritt mittelhart auf deine Deckung, du blockst mit festen Unterarmen. {rx}, dann tauschen.", en: "Partner punches and kicks at medium power into your guard, you block with firm forearms. {rx}, then swap." },
       m: "p",
       lim: "s",
       de: [
         "Unterarm-Blocks",
-        "Partner schlägt leicht auf deine Deckung, du blockst mit festen Unterarmen. 2× 30 s, dann tauschen.",
+        "Partner schlägt leicht auf deine Deckung, du blockst mit festen Unterarmen. {rx}, dann tauschen.",
       ],
       en: [
         "Forearm blocks",
-        "Partner throws light shots at your guard, you block with firm forearms. 2× 30 s, then swap.",
+        "Partner throws light shots at your guard, you block with firm forearms. {rx}, then swap.",
       ],
     },
     {
       id: "checks",
-      h: { de: "Abwechselnd Low Kicks mit mittlerem Druck und Checks Schienbein gegen Schienbein, mit Schienbeinschonern. 3× 30 s.", en: "Take turns throwing low kicks at medium pressure and checking shin to shin, with shin guards. 3× 30 s." },
+      h: { de: "Abwechselnd Low Kicks mit mittlerem Druck und Checks Schienbein gegen Schienbein, mit Schienbeinschonern. {rx}.", en: "Take turns throwing low kicks at medium pressure and checking shin to shin, with shin guards. {rx}." },
       m: "p",
       disc: ["kl", "k1"],
       risky: true,
       de: [
         "Schienbein-Checks",
-        "Abwechselnd leichte Low Kicks und Checks Schienbein gegen Schienbein, mit Schienbeinschonern. 2× 30 s.",
+        "Abwechselnd leichte Low Kicks und Checks Schienbein gegen Schienbein, mit Schienbeinschonern. {rx}.",
       ],
-      en: ["Shin checks", "Take turns throwing light low kicks and checking shin to shin, with shin guards. 2× 30 s."],
+      en: ["Shin checks", "Take turns throwing light low kicks and checking shin to shin, with shin guards. {rx}."],
     },
     {
       id: "shinbag",
@@ -1246,13 +1246,13 @@
     },
     {
       id: "bodybag",
-      h: { de: "Den Sandsack kräftig anschwingen und den angespannten Rumpf dagegen nehmen, vorne und seitlich. 3× 20 s je Seite.", en: "Swing the bag hard and take it on your braced core, front and sides. 3× 20 s per side." },
+      h: { de: "Den Sandsack kräftig anschwingen und den angespannten Rumpf dagegen nehmen, vorne und seitlich. {rx}.", en: "Swing the bag hard and take it on your braced core, front and sides. {rx}." },
       m: "b",
       de: [
         "Rumpf an den Sack",
-        "Seitlich an den Sandsack lehnen und den Rumpf anspannen, während er zurückschwingt. 3× 20 s je Seite.",
+        "Seitlich an den Sandsack lehnen und den Rumpf anspannen, während er zurückschwingt. {rx}.",
       ],
-      en: ["Core against the bag", "Brace your side against the swinging bag as it comes back. 3× 20 s per side."],
+      en: ["Core against the bag", "Brace your side against the swinging bag as it comes back. {rx}."],
     },
     {
       id: "brace",
@@ -1266,27 +1266,31 @@
     },
     {
       id: "shintap",
-      h: { de: "Schienbeine mit der Faust kräftig abklopfen, von unten nach oben, je Bein 1 Minute.", en: "Tap your shins firmly with a fist, bottom to top, 1 minute per leg." },
+      h: { de: "Schienbeine mit der Faust kräftig abklopfen, von unten nach oben, {rx}.", en: "Tap your shins firmly with a fist, bottom to top, {rx}." },
       m: "s",
       de: [
         "Schienbeine abklopfen",
-        "Mit der Faust oder flachen Hand die Schienbeine leicht abklopfen, je Bein 1 Minute.",
+        "Mit der Faust oder flachen Hand die Schienbeine leicht abklopfen, {rx}.",
       ],
-      en: ["Shin tapping", "Lightly tap your shins with a fist or flat hand, 1 minute per leg."],
+      en: ["Shin tapping", "Lightly tap your shins with a fist or flat hand, {rx}."],
     },
     {
       id: "neck",
-      h: { de: "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung 10 s gegeneinander drücken – kontrolliert und gleichmäßig, der Kopf bleibt in Position.", en: "Hand on forehead, back of head and each side of the head, press head and hand against each other for 10 s per direction – controlled and steady, the head stays in place." },
+      sk: "str.neck_iso_hold",
+      h: { de: "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung {s} s gegeneinander drücken – kontrolliert und gleichmäßig, der Kopf bleibt in Position.", en: "Hand on forehead, back of head and each side of the head, press head and hand against each other for {s} s per direction – controlled and steady, the head stays in place." },
       m: "s",
-      de: ["Isometrische Nackenkräftigung – Halteübung", "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung 10 s gegeneinander drücken – der Kopf bleibt in Position."],
-      en: ["Isometric neck strengthening – hold", "Hand on forehead, back of head and each side of the head, press head and hand against each other for 10 s per direction – the head stays in place."],
+      de: ["Isometrische Nackenkräftigung – Halteübung", "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung {s} s gegeneinander drücken – der Kopf bleibt in Position."],
+      en: ["Isometric neck strengthening – hold", "Hand on forehead, back of head and each side of the head, press head and hand against each other for {s} s per direction – the head stays in place."],
     },
   ];
   /* name and text of a hardening item; the harder full-contact dose when the item carries h */
   function hardTxt(id, h) {
     const hd = HARD.find((x) => x.id === id) || HARD[0],
       lg = S.profile.lang;
-    return [hd[lg][0], h && hd.h ? hd.h[lg] : hd[lg][1]];
+    const text = h && hd.h ? hd.h[lg] : hd[lg][1],
+      rx = rxOf(id, h);
+    // numbers of the text come from the prescription the timer runs (core/prescription.js)
+    return [hd[lg][0], rx ? rxFill(text, rx, lg) : text];
   }
   function hardBlock(eq, loc, soft) {
     const p = S.profile,
@@ -1410,7 +1414,7 @@
     const bi = blockInfo(dateStr),
       bk = bi && bi.k,
       blk = bi ? { k: bi.k, wk: bi.wk } : null,
-      byName = (list, base) => (e) => (list.includes(e.de) ? 3 : 0) + (base ? base(e) : 0);
+      byName = (list, base) => (e) => (list.includes(e.key) ? 3 : 0) + (base ? base(e) : 0);
     if (bi) notes.push(t("blk").note[bi.k][bi.st]);
     if (type === "M") {
       const warm = 8,
@@ -1440,7 +1444,7 @@
         ),
         sets: t("holdNote"),
       });
-      const breath = EX.find((e) => e.de === "Atmung");
+      const breath = EX["cool.breathing"];
       blocks.push({
         key: "cool",
         min: cool,
@@ -1527,7 +1531,7 @@
     // before kicking sessions: a short pre-stretch after the pulse raiser, followed by dynamic work (short holds don't cost power)
     if (["T", "C", "P"].includes(type)) {
       const wb = blocks[blocks.length - 1],
-        pre = EX.find((e) => e.de === "Kurz andehnen");
+        pre = EX["pre.short_pre_stretch"];
       wb.items.splice(wb.items.length - 1, 0, { kind: "ex", id: pre.id });
     }
     // strength is maintained, not built, before a tournament: fewer, explosive reps
@@ -1566,21 +1570,20 @@
           items: strengthBasics(p.level === 0 ? 3 : 4, loc, eq, used, machines),
           sets: light ? "3× 8–10" : "3× 4–6 · " + B.heavy,
         });
-      } else
+      } else {
+        const nStr = (taper ? 3 : p.level === 0 ? 4 : 5) - (work === "phys" ? 1 : 0),
+          // explosive sets (taper / tournament preparation) without weights: only exercises that are explosive by nature,
+          // so "3–5 explosive reps" is never asked of a plank or a slow push-up (docs/data-load-concept.md A10)
+          explNoWeights = (taper || prep) && !(bk === "pow" && !load.deload) && !/weights|kb|bb/.test(eq.join(",")) && loc !== "studio";
         blocks.push({
           key: "str",
           min: main,
-          items: strengthBasics(
-            (taper ? 3 : p.level === 0 ? 4 : 5) - (work === "phys" ? 1 : 0),
-            loc,
-            eq,
-            used,
-            machines,
-          ),
+          items: explNoWeights ? powPick(Math.min(nStr, 4)) : strengthBasics(nStr, loc, eq, used, machines),
           sets: bk === "pow" && !load.deload ? (light ? "3× 8–10 · " + B.clean : "4× 4–6 · " + B.heavy) : sets,
         });
+      }
       const n = Math.max(2, Math.floor(fin / 3)),
-        cpref = bk === "pow" && bi.st === 2 ? byName(["Speed-Runden"]) : bk === "end" ? byName(BLK_END) : null;
+        cpref = bk === "pow" && bi.st === 2 ? byName(["cond.speed_rounds"]) : bk === "end" ? byName(BLK_END) : null;
       blocks.push({
         key: "cond",
         min: fin,
@@ -1724,7 +1727,7 @@
         bk === "mob"
           ? [
               ...pickEx("mob", 2, loc, eq, used, byName(BLK_MOB[bi.st])),
-              ...pickEx("cool", 2, loc, eq, used, byName(["Adduktoren & Spagat", "Hüftbeuger dehnen"])),
+              ...pickEx("cool", 2, loc, eq, used, byName(["cool.adductors_and_splits", "cool.hip_flexor_stretch"])),
             ]
           : pickEx("cool", 3, loc, eq, used),
     });
@@ -1732,7 +1735,7 @@
       const cb = blocks[blocks.length - 1];
       cb.items.push(
         ...pickEx("mob", 1, loc, eq, used, (e) =>
-          ["Offenes Buch", "90/90 Hüftwechsel", "World's Greatest Stretch"].includes(e.de) ? 3 : 0,
+          ["mob.open_book_rotation", "mob.90_90_hip_switches", "mob.worlds_greatest_stretch"].includes(e.key) ? 3 : 0,
         ),
       );
       cb.min += 2;

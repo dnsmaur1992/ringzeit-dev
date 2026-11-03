@@ -93,9 +93,19 @@
     for (const k in sessions) if (k >= cut) out[k] = sessions[k];
     return out;
   }
+  /* Data saved before 3-D names exercises by their row number; this turns the numbers into the stable text ids
+     (planned sessions and the exercise entries of the history). Text ids stay as they are. */
+  function migrateExIds(st) {
+    const fix = (o) => {
+      if (o && typeof o.id === "number") o.id = keyOfLegacy(o.id);
+    };
+    Object.values(st.sessions || {}).forEach((s) => (s.blocks || []).forEach((b) => (b.items || []).forEach(fix)));
+    (st.log || []).forEach((e) => (e.perf || []).forEach(fix));
+    return st;
+  }
   function hydrate(d) {
     const log = d.log || [];
-    return {
+    return migrateExIds({
       v: 2,
       profile: migrate({ ...DEFAULT_PROFILE, ...(d.profile || {}) }),
       sessions: slimSessions(d.sessions || {}, log),
@@ -106,6 +116,6 @@
       cov: d.cov || {},
       pauses: d.pauses || [],
       ko: d.ko || "",
-    };
+    });
   }
 

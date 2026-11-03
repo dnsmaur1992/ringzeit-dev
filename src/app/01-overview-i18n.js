@@ -54,6 +54,7 @@
         sub: "Die Neuerungen des letzten großen Updates",
         h: "Was ist neu",
         pts: [
+          "<b>Timer = Text:</b> Bei Halteübungen, Intervallen und der Abhärtung läuft der Timer jetzt genau so, wie die Übung es sagt (z. B. Seil-Intervalle im 30-s-Wechsel, Kick-Halten ca. 4–5 Min., Einbeinstand erst links, dann rechts). Die Nackenübung zeigt alle vier Richtungen.",
           "<b>Sportart je Einheit:</b> Unter „Einheit anpassen“ und beim Vereinstraining siehst du die Sportart. Standard ist dein Hauptsport (Profil → Training → Mehr). Weitere Sportarten kommen später dazu.",
           "<b>Freier Lauf:</b> Bei Kondition draußen gibt es neben Intervallen und Lauf Zone 2–3 jetzt „Freier Lauf“ – ohne Timer. Danach trägst du Minuten, Strecke und Anstrengung ein.",
           "<b>Einträge ändern:</b> Im Verlauf und beim Vereinstraining kannst du Einträge bearbeiten. Ändert sich dadurch deine Wochenbelastung, werden nur noch nicht begonnene Einheiten der Woche angepasst – Trainingstage bleiben.",
@@ -1198,6 +1199,7 @@
         sub: "The changes of the last big update",
         h: "What's new",
         pts: [
+          "<b>Timer = text:</b> For holds, intervals and conditioning the timer now runs exactly as the exercise says (e.g. rope intervals in a 30 s alternation, kick holds about 4–5 min, one-leg stand left first, then right). The neck exercise shows all four directions.",
           "<b>Sport per session:</b> under “Adjust session” and for club training you see the sport. The default is your main sport (Profile → Training → More). More sports come later.",
           "<b>Free run:</b> for outdoor conditioning there is now “Free run” next to intervals and zone 2–3 run – no timer. Afterwards you enter minutes, distance and effort.",
           "<b>Edit entries:</b> in History and for club training you can edit entries. If that changes your weekly load, only sessions not begun yet are adjusted – training days stay.",

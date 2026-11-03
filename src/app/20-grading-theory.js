@@ -698,7 +698,7 @@
   /* Form cues: German name → [DE cues, EN cues, DE mistake, EN mistake] */
   /* focus blocks: power and active mobility */
   Object.assign(SKETCH, {
-    Sprungkniebeugen: {
+    "pow.jump_squats": {
       a: { ...SQUAT, w: [92, 104], W: [88, 104], ea: [0, 1] },
       b: {
         h: [120, 20],
@@ -716,7 +716,7 @@
         [186, 70],
       ],
     },
-    Standweitsprung: {
+    "pow.broad_jumps": {
       a: {
         h: [83, 65],
         s: [72, 86],
@@ -744,8 +744,8 @@
         [170, 30],
       ],
     },
-    "Seitliche Sprünge": SKETCH["Skater-Sprünge"],
-    "Klatsch-Liegestütze": {
+    "pow.lateral_bounds": SKETCH["cond.skater_jumps"],
+    "pow.clap_push_ups": {
       a: { ...pd, w: [119, 147], ea: [-1, -0.3] },
       b: { ...skLine([40, 146], 36), w: [130, 116], W: [128, 118], ea: [1, 1] },
       arrow: [
@@ -753,7 +753,7 @@
         [192, 86],
       ],
     },
-    "Explosive Liegestütze": {
+    "pow.explosive_push_ups": {
       a: { ...pd, w: [119, 147], ea: [-1, -0.3] },
       b: { ...skLine([40, 146], 36), w: [122, 134], ea: [-1, 0] },
       arrow: [
@@ -761,9 +761,9 @@
         [192, 86],
       ],
     },
-    "Speed-Runden": SKETCH["Schatten-Sprints"],
-    "Kurz andehnen": SKETCH["Hüftbeuger dehnen"],
-    "Beinpendel kontrolliert": {
+    "cond.speed_rounds": SKETCH["cond.shadow_sprints"],
+    "pre.short_pre_stretch": SKETCH["cool.hip_flexor_stretch"],
+    "mob.controlled_leg_swings": {
       a: st({
         W: [94, 66],
         EA: [0, 1],
@@ -781,7 +781,7 @@
       props: [["wall", 82]],
       arc: [[120, 94], 66, 115, -18],
     },
-    "Kick-Halten": {
+    "mob.kick_holds": {
       a: st({
         w: [132, 50],
         W: [126, 54],
@@ -805,7 +805,7 @@
         [196, 98],
       ],
     },
-    "Aktive Beinheber": {
+    "mob.active_leg_raises": {
       a: {
         h: [182, 134],
         s: [158, 138],
@@ -832,7 +832,7 @@
     },
   });
   const EXTIPS = {
-    "Kurz andehnen": [
+    "pre.short_pre_stretch": [
       [
         "Nur nach dem Aufwärmen, nie kalt",
         "15–30 s pro Muskel – länger kostet Schnellkraft",
@@ -846,79 +846,79 @@
       "Lange und bis an die Schmerzgrenze halten",
       "Holding long and up to the pain threshold",
     ],
-    Sprungkniebeugen: [
+    "pow.jump_squats": [
       ["Knie zeigen in Richtung Zehen", "Arme schwingen kraftvoll mit", "Weich über den Vorfuß landen"],
       ["Knees point over the toes", "Swing the arms powerfully", "Land softly through the forefoot"],
       "Knie fallen bei der Landung nach innen",
       "Knees cave in on landing",
     ],
-    Standweitsprung: [
+    "pow.broad_jumps": [
       ["Ausholen mit Armen und Hüfte", "Beide Füße gleichzeitig", "Landung halten, erst dann aufrichten"],
       ["Load with arms and hips", "Both feet at the same time", "Stick the landing before standing up"],
       "Nach der Landung nach vorn stolpern",
       "Stumbling forward after landing",
     ],
-    "Seitliche Sprünge": [
+    "pow.lateral_bounds": [
       ["Vom Außenbein abdrücken", "Landung auf einem Bein, Knie über dem Fuß", "1 s stabil halten"],
       ["Push off the outside leg", "Land on one leg, knee over the foot", "Hold steady for 1 s"],
       "Sofort weiterspringen ohne stabile Landung",
       "Bouncing on without a stable landing",
     ],
-    "Klatsch-Liegestütze": [
+    "pow.clap_push_ups": [
       ["Körper bleibt ein Brett", "Explosiv drücken, schnell klatschen", "Mit gebeugten Armen weich landen"],
       ["Body stays a plank", "Push explosively, clap fast", "Land soft with bent arms"],
       "Mit gestreckten Armen landen",
       "Landing on locked arms",
     ],
-    "Explosive Liegestütze": [
+    "pow.explosive_push_ups": [
       ["Langsam runter, explosiv hoch", "Hände lösen sich nur kurz", "Rumpf fest"],
       ["Lower slowly, push up explosively", "Hands leave the floor only briefly", "Tight core"],
       "Hüfte hängt durch",
       "Hips sag",
     ],
-    "Speed-Runden": [
+    "cond.speed_rounds": [
       ["10 s wirklich Maximaltempo", "Hände kommen sofort zurück an den Kopf", "20 s locker bewegen, nicht stehen"],
       ["10 s truly at max speed", "Hands come straight back to the head", "Move easy for 20 s, don't stand still"],
       "Tempo geht auf Kosten der Deckung",
       "Speed at the cost of the guard",
     ],
-    "Beinpendel kontrolliert": [
+    "mob.controlled_leg_swings": [
       ["Oberkörper bleibt aufrecht", "Höhe langsam steigern", "Standbein leicht gebeugt"],
       ["Upper body stays upright", "Increase the height gradually", "Standing knee slightly bent"],
       "Mit Schwung über den Schmerz reißen",
       "Yanking the leg up past the pain",
     ],
-    "Kick-Halten": [
+    "mob.kick_holds": [
       ["Knie erst hoch anziehen, dann strecken", "Ferse führt, Fuß angezogen", "Höhe halten, die du kontrollierst"],
       ["Chamber the knee high first, then extend", "Heel leads, foot flexed", "Hold the height you control"],
       "Oberkörper kippt weit nach hinten weg",
       "Upper body tips far back",
     ],
-    "Aktive Beinheber": [
+    "mob.active_leg_raises": [
       ["Unteres Bein bleibt am Boden", "Knie gestreckt, Fuß angezogen", "Langsam absenken"],
       ["Lower leg stays on the floor", "Knee straight, foot flexed", "Lower slowly"],
       "Mit Schwung hochwerfen",
       "Throwing the leg up with momentum",
     ],
-    Liegestütze: [
+    "str.push_ups": [
       ["Hände unter den Schultern", "Körper bleibt ein Brett: Po und Bauch fest", "Brust bis knapp über den Boden"],
       ["Hands under the shoulders", "Body stays a plank: glutes and abs tight", "Chest to just above the floor"],
       "Hüfte hängt durch oder Po ragt nach oben",
       "Hips sag or the butt sticks up",
     ],
-    "Plank mit Schultertippen": [
+    "str.plank_shoulder_taps": [
       ["Füße etwas breiter für mehr Stabilität", "Hüfte bleibt ruhig und waagrecht", "Langsam abwechselnd tippen"],
       ["Feet a little wider for stability", "Hips stay still and level", "Tap slowly, alternating sides"],
       "Hüfte schaukelt bei jedem Tippen mit",
       "Hips rock with every tap",
     ],
-    Unterarmstütz: [
+    "str.plank": [
       ["Ellbogen unter den Schultern", "Po anspannen, Bauchnabel einziehen", "Blick zum Boden, Nacken lang"],
       ["Elbows under the shoulders", "Squeeze glutes, pull the belly button in", "Look at the floor, long neck"],
       "Hohlkreuz, wenn die Spannung nachlässt",
       "Arched lower back as tension fades",
     ],
-    "Hollow Hold": [
+    "str.hollow_hold": [
       [
         "Lendenwirbelsäule fest in den Boden drücken",
         "Schultern und Beine knapp über dem Boden",
@@ -928,7 +928,7 @@
       "Unterer Rücken hebt vom Boden ab",
       "Lower back lifts off the floor",
     ],
-    Klimmzüge: [
+    "str.pull_ups": [
       [
         "Aus dem ganzen Hang starten",
         "Schulterblätter zuerst nach unten ziehen",
@@ -938,25 +938,25 @@
       "Mit Schwung aus den Beinen hochkippen",
       "Kipping up with leg swing",
     ],
-    "Negative Klimmzüge": [
+    "str.negative_pull_ups": [
       ["Mit Sprung oder Kasten nach oben", "3–5 Sekunden langsam ablassen", "Unten ganz ausstrecken"],
       ["Jump or step to the top", "Lower slowly over 3–5 seconds", "Straighten fully at the bottom"],
       "Die letzte Hälfte einfach fallen lassen",
       "Dropping through the last half",
     ],
-    "Hängendes Knieheben": [
+    "str.hanging_knee_raises": [
       ["Schultern aktiv, nicht passiv hängen", "Knie zur Brust, Becken einrollen", "Langsam ablassen, kein Pendeln"],
       ["Active shoulders, not a passive hang", "Knees to chest, curl the pelvis", "Lower slowly, no swinging"],
       "Schwung statt Bauchkraft",
       "Using momentum instead of abs",
     ],
-    "Dead Hang": [
+    "str.dead_hang": [
       ["Schulterbreit greifen", "Schultern leicht aktiv halten", "Ruhig weiteratmen"],
       ["Shoulder-width grip", "Keep shoulders slightly engaged", "Keep breathing calmly"],
       "Schultern ganz bis zu den Ohren hochziehen lassen",
       "Letting shoulders creep up to the ears",
     ],
-    "Kniebeugen mit Langhantel": [
+    "str.barbell_back_squat": [
       [
         "Stange auf dem oberen Rücken, nicht am Nacken",
         "Knie zeigen in Richtung Fußspitzen",
@@ -966,13 +966,13 @@
       "Knie fallen nach innen",
       "Knees cave inward",
     ],
-    "Goblet Squats": [
+    "str.goblet_squats": [
       ["Gewicht eng vor der Brust", "Ellbogen zwischen die Knie sinken lassen", "Aufrecht bleiben, Fersen am Boden"],
       ["Weight close to the chest", "Let the elbows sink between the knees", "Stay upright, heels down"],
       "Fersen heben ab, Gewicht kippt nach vorn",
       "Heels lift and the weight tips forward",
     ],
-    "Kreuzheben rumänisch (Langhantel)": [
+    "str.barbell_romanian_deadlift": [
       [
         "Hüfte nach hinten schieben, Knie leicht gebeugt",
         "Stange eng an den Beinen führen",
@@ -982,25 +982,25 @@
       "Runder Rücken beim Absenken",
       "Rounding the back on the way down",
     ],
-    "Rumänisches Kreuzheben": [
+    "str.romanian_deadlift": [
       ["Hüfte nach hinten schieben, Knie leicht gebeugt", "Hanteln eng an den Beinen führen", "Rücken bleibt gerade"],
       ["Push the hips back, knees soft", "Keep the weights close to the legs", "Flat back throughout"],
       "Aus den Knien statt aus der Hüfte beugen",
       "Bending at the knees instead of the hips",
     ],
-    "Kettlebell-Swings": [
+    "cond.kettlebell_swings": [
       ["Bewegung kommt aus der Hüfte, nicht aus den Armen", "Oben Po fest anspannen", "Glocke schwingt bis Brusthöhe"],
       ["Drive from the hips, not the arms", "Squeeze the glutes at the top", "Bell swings to chest height"],
       "Kniebeuge statt Hüftstreckung",
       "Squatting instead of hinging",
     ],
-    Bankdrücken: [
+    "str.bench_press": [
       ["Schulterblätter zusammen und nach unten", "Stange zur unteren Brust führen", "Füße fest am Boden"],
       ["Shoulder blades back and down", "Lower the bar to the lower chest", "Feet planted"],
       "Ellbogen stehen 90° zur Seite ab",
       "Elbows flared straight out at 90°",
     ],
-    "Kurzhantel-Drücken": [
+    "str.dumbbell_press": [
       [
         "Schulterblätter fest auf der Bank",
         "Hanteln kontrolliert seitlich der Brust absenken",
@@ -1010,49 +1010,49 @@
       "Hohlkreuz und Po hebt ab",
       "Arching hard and lifting the hips",
     ],
-    Latzug: [
+    "str.lat_pulldown": [
       ["Brust raus, leicht zurücklehnen", "Stange zur oberen Brust ziehen", "Ellbogen nach unten und hinten"],
       ["Chest up, lean back slightly", "Pull the bar to the upper chest", "Drive the elbows down and back"],
       "Mit dem ganzen Körper nach hinten reißen",
       "Yanking with the whole body",
     ],
-    "Rudern am Kabelzug": [
+    "str.seated_cable_row": [
       ["Aufrecht sitzen, Knie leicht gebeugt", "Griff zum Bauch ziehen", "Schulterblätter zusammenführen"],
       ["Sit tall, knees slightly bent", "Pull the handle to the belly", "Squeeze the shoulder blades"],
       "Oberkörper schaukelt vor und zurück",
       "Rocking the torso back and forth",
     ],
-    "Band-Rudern": [
+    "str.band_rows": [
       ["Band auf Brusthöhe befestigen", "Ellbogen eng am Körper nach hinten", "Kurz halten, langsam zurück"],
       ["Anchor the band at chest height", "Elbows close, drive them back", "Pause briefly, return slowly"],
       "Schultern ziehen zu den Ohren hoch",
       "Shrugging the shoulders up",
     ],
-    "Face Pulls am Kabel": [
+    "str.cable_face_pulls": [
       ["Seil auf Gesichtshöhe", "Zum Gesicht ziehen, Hände auseinander", "Ellbogen bleiben hoch"],
       ["Rope at face height", "Pull towards the face, hands apart", "Keep the elbows high"],
       "Zu viel Gewicht und Ziehen aus dem Rücken",
       "Too much weight, pulling with the lower back",
     ],
-    "Face Pulls mit Band": [
+    "str.band_face_pulls": [
       ["Band auf Gesichtshöhe befestigen", "Zum Gesicht ziehen, Hände auseinander", "Ellbogen bleiben hoch"],
       ["Anchor the band at face height", "Pull towards the face, hands apart", "Keep the elbows high"],
       "Ellbogen sinken ab, es wird ein Rudern",
       "Elbows drop and it turns into a row",
     ],
-    "Pallof Press": [
+    "str.pallof_press": [
       ["Seitlich zum Band stehen", "Hände vor der Brust gerade nach vorn drücken", "Oberkörper darf nicht mitdrehen"],
       ["Stand side-on to the band", "Press the hands straight out from the chest", "Don't let the torso rotate"],
       "Zu nah am Ankerpunkt, keine Spannung",
       "Standing too close, no tension",
     ],
-    "Woodchopper am Kabelzug": [
+    "str.cable_woodchop": [
       ["Bewegung startet aus Hüfte und hinterem Fuß", "Arme fast gestreckt, diagonal ziehen", "Kontrolliert zurück"],
       ["Start the move from hips and back foot", "Arms almost straight, pull diagonally", "Return under control"],
       "Nur aus den Armen ziehen",
       "Pulling only with the arms",
     ],
-    "Schulterdrücken sitzend (Kurzhanteln)": [
+    "str.seated_dumbbell_shoulder_press": [
       [
         "Rücken an der Lehne, Bauch fest",
         "Hanteln auf Schulterhöhe starten",
@@ -1066,31 +1066,31 @@
       "Hohlkreuz beim Drücken",
       "Arching the lower back to press",
     ],
-    Beinpresse: [
+    "str.leg_press": [
       ["Füße schulterbreit mittig auf der Platte", "Unterer Rücken bleibt am Polster", "Knie oben nicht durchdrücken"],
       ["Feet shoulder-width, centred on the plate", "Lower back stays on the pad", "Don't lock the knees at the top"],
       "Zu tief, sodass sich das Becken einrollt",
       "Going so deep the pelvis tucks under",
     ],
-    "Hip Thrust mit Langhantel": [
+    "str.barbell_hip_thrust": [
       ["Schulterblätter an der Bankkante", "Kinn zur Brust, Rippen unten", "Oben Po fest, Körper waagrecht"],
       ["Shoulder blades on the bench edge", "Chin tucked, ribs down", "Squeeze glutes at the top, body level"],
       "Oben ins Hohlkreuz überstrecken",
       "Overarching the lower back at the top",
     ],
-    "Glute Bridges": [
+    "str.glute_bridges": [
       ["Füße hüftbreit nah am Po", "Becken leicht einrollen, dann heben", "Oben 2 Sekunden Po anspannen"],
       ["Feet hip-width close to the butt", "Tilt the pelvis slightly, then lift", "Squeeze the glutes for 2 seconds"],
       "Druck aus dem Rücken statt aus dem Po",
       "Pushing from the back instead of the glutes",
     ],
-    "Dead Bugs": [
+    "str.dead_bugs": [
       ["Rücken bleibt flach am Boden", "Gegengleich Arm und Bein strecken", "Langsam, mit der Ausatmung"],
       ["Lower back stays flat on the floor", "Extend opposite arm and leg", "Move slowly as you exhale"],
       "Hohlkreuz, wenn das Bein nach unten geht",
       "Back arches as the leg lowers",
     ],
-    "Russian Twists": [
+    "str.russian_twists": [
       [
         "Leicht zurücklehnen, Rücken gerade",
         "Drehung aus dem Oberkörper, nicht nur Arme",
@@ -1100,31 +1100,31 @@
       "Runder Rücken und nur Arme bewegen",
       "Rounded back, moving only the arms",
     ],
-    Ausfallschritte: [
+    "str.lunges": [
       ["Großer Schritt, Oberkörper aufrecht", "Hinteres Knie Richtung Boden", "Vorderes Knie über dem Fuß"],
       ["Long step, upright torso", "Back knee towards the floor", "Front knee over the foot"],
       "Vorderes Knie knickt nach innen",
       "Front knee caves in",
     ],
-    "Bulgarian Split Squats": [
+    "str.bulgarian_split_squats": [
       ["Hinterer Fuß auf der Bank", "Gewicht auf dem vorderen Bein", "Gerade nach unten sinken"],
       ["Back foot on the bench", "Weight on the front leg", "Sink straight down"],
       "Vorderer Fuß zu nah an der Bank",
       "Front foot too close to the bench",
     ],
-    "Step-ups": [
+    "str.step_ups": [
       ["Ganzer Fuß auf die Kiste", "Mit dem oberen Bein hochdrücken", "Langsam wieder absteigen"],
       ["Whole foot on the box", "Drive up with the top leg", "Step down slowly"],
       "Mit dem unteren Bein abstoßen",
       "Pushing off the bottom leg",
     ],
-    "Wadenheben einbeinig": [
+    "str.single_leg_calf_raises": [
       ["Ballen auf der Kante, Ferse frei", "Ganz hoch auf die Zehen", "Unten volle Dehnung"],
       ["Ball of the foot on the edge, heel free", "Rise all the way onto the toes", "Full stretch at the bottom"],
       "Kleine, schnelle Wipp-Bewegungen",
       "Short, bouncy reps",
     ],
-    "Copenhagen Plank": [
+    "str.copenhagen_plank": [
       [
         "Oberes Bein auf der Bank, Ellbogen unter der Schulter",
         "Hüfte hoch, Körper gerade",
@@ -1138,43 +1138,43 @@
       "Hüfte sackt ab",
       "Hips sag",
     ],
-    "Einbeinstand mit Kick-Hold": [
+    "str.single_leg_kick_hold": [
       ["Standbein leicht gebeugt", "Kick auf Hüfthöhe halten, Deckung oben", "Oberkörper ruhig"],
       ["Standing knee soft", "Hold the kick at hip height, guard up", "Keep the torso still"],
       "Deckung fällt beim Halten",
       "Guard drops while holding",
     ],
-    Burpees: [
+    "cond.burpees": [
       ["Hände schulterbreit aufsetzen", "Kurz sauber in den Stütz", "Weich landen, aufrecht abspringen"],
       ["Hands shoulder-width on the floor", "Hit a clean plank briefly", "Land softly, jump up tall"],
       "Hüfte hängt im Stütz durch",
       "Hips sag in the plank",
     ],
-    "Mountain Climbers": [
+    "cond.mountain_climbers": [
       ["Hände unter den Schultern", "Hüfte tief, Rücken gerade", "Knie schnell Richtung Brust"],
       ["Hands under the shoulders", "Hips low, back flat", "Drive the knees fast to the chest"],
       "Po schiebt sich nach oben",
       "Butt pushes up into the air",
     ],
-    "Skater-Sprünge": [
+    "cond.skater_jumps": [
       ["Seitlich abspringen", "Auf einem Bein weich landen", "Knie über dem Fuß halten"],
       ["Push off sideways", "Land softly on one leg", "Keep the knee over the foot"],
       "Landung mit gestrecktem Knie",
       "Landing on a locked knee",
     ],
-    "Bear Crawl": [
+    "cond.bear_crawl": [
       ["Knie knapp über dem Boden", "Rücken flach wie ein Tisch", "Diagonal Hand und Fuß bewegen"],
       ["Knees just off the floor", "Back flat like a table", "Move opposite hand and foot"],
       "Hüfte schaukelt hin und her",
       "Hips sway side to side",
     ],
-    "Band-Schläge": [
+    "cond.band_punches": [
       ["Band hinten fixiert, Kampfstellung", "Schnelle Geraden, sofort zurück zur Deckung", "Hüfte dreht mit"],
       ["Band anchored behind, fight stance", "Fast straights, snap back to guard", "Rotate the hips with each punch"],
       "Hand bleibt nach dem Schlag vorne",
       "Hand stays out after the punch",
     ],
-    "Schatten-Sprints": [
+    "cond.shadow_sprints": [
       [
         "Kampfstellung, locker auf den Ballen",
         "Gerade Schläge so schnell wie möglich",
@@ -1188,44 +1188,44 @@
       "Deckung fällt mit zunehmender Müdigkeit",
       "Guard drops as fatigue sets in",
     ],
-    "Sack-Sprints": [
+    "cond.bag_sprints": [
       ["Nah am Sack, Kampfstellung halten", "Kurze, schnelle Geraden im Wechsel", "Faust fest, Handgelenk gerade"],
       ["Stay close to the bag in fight stance", "Short, fast alternating straights", "Tight fist, straight wrist"],
       "Mit offener Hand oder abgeknicktem Handgelenk schlagen",
       "Hitting with a loose fist or bent wrist",
     ],
-    "Seil-Intervalle": [
+    "cond.rope_intervals": [
       ["Locker auf den Fußballen springen", "Seil aus den Handgelenken drehen", "Ellbogen nah am Körper"],
       ["Bounce lightly on the balls of the feet", "Turn the rope from the wrists", "Elbows close to the body"],
       "Zu hoch springen und schwer landen",
       "Jumping too high and landing hard",
     ],
-    "Kick-Intervalle": [
+    "cond.kick_intervals": [
       ["Auf dem Ballen des Standbeins drehen", "Mit dem Schienbein treffen, Körperhöhe", "Deckung bleibt oben"],
       ["Pivot on the ball of the standing foot", "Strike with the shin at body height", "Keep the guard up"],
       "Arme fallen beim Kick nach unten",
       "Arms drop during the kick",
     ],
-    "Treppen- oder Bankläufe": [
+    "cond.stair_or_bench_runs": [
       ["Ganzer Fuß auf die Stufe", "Arme schwingen aktiv mit", "Runter immer kontrolliert gehen"],
       ["Whole foot on each step", "Swing the arms actively", "Always walk down under control"],
       "Nach unten rennen",
       "Running down the stairs",
     ],
-    "Isometrische Nackenkräftigung – Halteübung": [
+    "str.neck_iso_hold": [
       ["Hand an Stirn, Hinterkopf, dann seitlich", "Kopf und Hand drücken gegeneinander, der Kopf bewegt sich kaum", "Sanft starten, gleichmäßig steigern"],
       ["Hand on forehead, back of head, then the sides", "Head and hand push against each other, the head barely moves", "Start gently, build up steadily"],
       "Ruckartig mit voller Kraft drücken",
       "Pushing jerkily at full force",
     ],
   };
-  const hasSketch = (id) => !!(EX[id] && SKETCH[EX[id].de]);
+  const hasSketch = (id) => !!(EX[id] && SKETCH[EX[id].key]);
   function exInfoHtml(id) {
     const e = EX[id],
-      tp = EXTIPS[e.de],
+      tp = EXTIPS[e.key],
       lg = S.profile.lang,
-      k = SKETCH[e.de];
-    let h = `<div class="skwrap">${sketchSvg(e.de)}${k.hold ? `<span class="skhold">${t("skHold")}</span>` : ""}</div>`;
+      k = SKETCH[e.key];
+    let h = `<div class="skwrap">${sketchSvg(e.key)}${k.hold ? `<span class="skhold">${t("skHold")}</span>` : ""}</div>`;
     if (tp)
       h += `<ul class="cues">${tp[lg === "de" ? 0 : 1].map((c) => `<li>${esc(c)}</li>`).join("")}</ul><div class="note warn"><b>${t("skErr")}</b> ${esc(tp[lg === "de" ? 2 : 3])}</div>`;
     else h += `<p class="sub" style="margin:0">${esc(lg === "de" ? e.dde : e.den)}</p>`;

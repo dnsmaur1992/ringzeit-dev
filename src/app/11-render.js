@@ -274,17 +274,15 @@
     };
   }
   /* Hold exercises are logged in seconds instead of reps (looked up by German name in the library) */
-  const TIMED = new Set(
-    [
-      "Unterarmstütz",
-      "Hollow Hold",
-      "Einbeinstand mit Kick-Hold",
-      "Copenhagen Plank",
-      "Isometrische Nackenkräftigung – Halteübung",
-      "Plank mit Schultertippen",
-      "Dead Hang",
-    ].map((n) => EX.findIndex((e) => e.de === n)),
-  );
+  const TIMED = new Set([
+    "str.plank",
+    "str.hollow_hold",
+    "str.single_leg_kick_hold",
+    "str.copenhagen_plank",
+    "str.neck_iso_hold",
+    "str.plank_shoulder_taps",
+    "str.dead_hang",
+  ]);
   const tracksSets = (id) => EX[id].cat === "str";
   const hasKg = (id) => /weights|kb|bb/.test(EX[id].eq) || (EX[id].eq.includes("studio") && EX[id].cat === "str");
 
