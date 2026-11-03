@@ -1,4 +1,4 @@
-<title>Ringzeit</title>
+<title>Ringzeit Dev</title>
 <meta name="claude:viewport-fit-sides" content="cover" />
 <style>
   /* Layout: quiet premium sports app — near-black ground, hairline panels with soft radius, thin condensed numerals, brass for state and focus, crimson only for kicks. Deliberately dark-only. */
@@ -4615,7 +4615,7 @@
 <div class="loader" id="loader" hidden>
   <svg class="burst" id="burst" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
   <div class="fig" id="loaderFig"></div>
-  <div class="lt" id="loaderTitle">Ringzeit</div>
+  <div class="lt" id="loaderTitle">Ringzeit Dev</div>
   <div class="fact" id="factBox">
     <div class="fk" id="factK"></div>
     <p id="factT"></p>
@@ -5403,7 +5403,7 @@
       imp: "Sicherung laden",
       expHint: "Speichert alle Daten als Datei – für einen Handywechsel oder als Sicherheitskopie.",
       impConfirm: (d) => `Sicherung vom ${d} laden? Deine aktuellen Daten werden dabei ersetzt.`,
-      impBad: "Diese Datei ist keine Ringzeit-Sicherung.",
+      impBad: "Diese Datei ist keine Sicherung von Ringzeit Dev. Sicherungen der stabilen Ringzeit-App werden hier bewusst nicht geladen.",
       impDone: "Sicherung geladen",
       savedFile: "Gespeichert",
       sumTitle: "Übersicht für den Trainer",
@@ -5719,7 +5719,7 @@
         "Ringzeit ersetzt keinen Trainer. Sparring nur mit Aufsicht und kompletter Schutzausrüstung. Bei Schmerzen abbrechen. Regeln: ",
       loadingPlan: "Plan wird erstellt",
       loadingSess: "Einheit wird erstellt",
-      loadingApp: "Ringzeit lädt",
+      loadingApp: "Ringzeit Dev lädt",
       loadingTest: "Test wird ausgewertet",
       nextFact: "Weiter →",
       tapClose: "Tippen zum Schließen",
@@ -6512,7 +6512,7 @@
       imp: "Load backup",
       expHint: "Saves all your data as a file – for a new phone or as a safety copy.",
       impConfirm: (d) => `Load the backup from ${d}? Your current data will be replaced.`,
-      impBad: "This file is not a Ringzeit backup.",
+      impBad: "This file is not a Ringzeit Dev backup. Backups of the stable Ringzeit app are deliberately not loaded here.",
       impDone: "Backup loaded",
       savedFile: "Saved",
       sumTitle: "Summary for your coach",
@@ -6819,7 +6819,7 @@
         "Ringzeit does not replace a coach. Spar only under supervision and in full protective gear. Stop if anything hurts. Rules: ",
       loadingPlan: "Building your plan",
       loadingSess: "Building your session",
-      loadingApp: "Ringzeit is loading",
+      loadingApp: "Ringzeit Dev is loading",
       loadingTest: "Scoring your test",
       nextFact: "Next →",
       tapClose: "Tap to close",
@@ -8470,7 +8470,14 @@
   };
 
   /* ============ Storage ============ */
-  const LS = "ringzeit.v1";
+  /* Development copy (ringzeit-dev): its own app id keeps local data, backups, caches and the installed app
+     apart from the stable Ringzeit, which runs on the same origin (dnsmaur1992.github.io). tools/build_pwa.py
+     reads APP_ID and APP_NAME from here for the cache name, manifest and page title. */
+  const APP_ID = "ringzeit-dev";
+  const APP_NAME = "Ringzeit Dev";
+  /* Data stays in this device's local storage only; the optional cloud copy in a Claude host is switched off */
+  const CLOUD_SYNC = false;
+  const LS = APP_ID + ".v1";
   const store = {
     mode: "local",
     db: null,
@@ -8503,7 +8510,7 @@
     },
     async init() {
       try {
-        if (!window.claude || !window.claude.use) return;
+        if (!CLOUD_SYNC || !window.claude || !window.claude.use) return;
         const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
         if (!db || !user) return;
         const id = await user.id();
@@ -14200,7 +14207,7 @@ ${setupFields(setup, ty)}
             `<button type="button" class="grow" data-tab="${k}"><span class="gico">${ICONS[k]}</span><span class="gtx"><b>${t("view").rows[k][0]}</b><small>${t("view").rows[k][1]}</small></span><span class="chev">›</span></button>`,
         )
         .join("");
-    h += `</div><p class="sub" style="text-align:center">${t("autoSave")}</p><p class="foot" style="text-align:center">Ringzeit · Version ${APP_VER}</p>`;
+    h += `</div><p class="sub" style="text-align:center">${t("autoSave")}</p><p class="foot" style="text-align:center">${APP_NAME} · Version ${APP_VER}</p>`;
     return h;
   }
   const ICONS = {
@@ -18753,7 +18760,7 @@ ${setupFields(setup, ty)}
   function feedbackUrl() {
     const dev = isIOS() ? "iPhone/iPad" : isAndroid() ? "Android" : "Computer",
       mode = isStandalone() ? (S.profile.lang === "de" ? "installiert" : "installed") : "Browser";
-    return `${FEEDBACK_URL}?version=${encodeURIComponent(APP_VER)}&geraet=${encodeURIComponent(`${dev}, ${mode}`)}&sprache=${S.profile.lang}`;
+    return `${FEEDBACK_URL}?version=${encodeURIComponent(`${APP_ID} ${APP_VER}`)}&geraet=${encodeURIComponent(`${dev}, ${mode}`)}&sprache=${S.profile.lang}`;
   }
   const isStandalone = () => {
     try {
@@ -18800,13 +18807,13 @@ ${setupFields(setup, ty)}
   }
   async function exportData() {
     const json = JSON.stringify({
-      app: "ringzeit",
+      app: APP_ID,
       v: 1,
       exported: new Date().toISOString(),
       data: S,
     });
     const ok = await offerFile(
-      `ringzeit-${t("backupName")}-${iso(today())}.json`,
+      `${APP_ID}-${t("backupName")}-${iso(today())}.json`,
       json,
       `<span class="sub">${t("copyHint")}</span><textarea id="showTxt" readonly style="min-height:160px">${esc(json)}</textarea><button type="button" class="btn sec" data-copy="showTxt">${t("copyBtn")}</button>`,
     );
@@ -18826,7 +18833,7 @@ ${setupFields(setup, ty)}
       } catch (e) {
         o = null;
       }
-      if (!o || o.app !== "ringzeit" || !o.data || !o.data.profile) return toast(t("impBad"));
+      if (!o || o.app !== APP_ID || !o.data || !o.data.profile) return toast(t("impBad"));
       const when = o.exported ? fmtDate(iso(new Date(o.exported))) : "?";
       openSheet({
         kind: "confirm",
@@ -19016,7 +19023,7 @@ ${setupFields(setup, ty)}
   }
   function shareImage() {
     const c = summaryCanvas(),
-      name = `ringzeit-${t("sum").file}-${iso(today())}.png`,
+      name = `${APP_ID}-${t("sum").file}-${iso(today())}.png`,
       fallback = `<img src="${c.toDataURL("image/png")}" alt="" style="width:100%;border-radius:14px"><span class="sub">${t("longPress")}</span>`;
     if (c.toBlob) c.toBlob((blob) => offerFile(name, blob, fallback), "image/png");
     else openSheet({ kind: "show", title: name, html: fallback });
