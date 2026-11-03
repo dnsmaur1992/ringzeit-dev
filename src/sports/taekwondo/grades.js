@@ -5,6 +5,24 @@
    Only grades up to the 1st Dan are known; no higher Dan programmes. A grade changes only by an entered exam or a
    manual correction – never by sessions, badges or fitness. WT and ITF are kept apart, there is no transfer. */
 
+/* Catalogue exercises that are about kickboxing technique (shadow boxing, guard, kicks, combinations, bag work): not part of
+   taekwondo units until the taekwondo plans (6b/6c) bring their own technique blocks. Sport-neutral exercises stay. */
+export const NO_EX = new Set([
+  "warm.footwork_drill",
+  "warm.easy_shadowboxing",
+  "cond.shadow_sprints",
+  "cond.bag_sprints",
+  "cond.kick_intervals",
+  "cond.stepping_and_light_footwork",
+  "cond.speed_rounds",
+  "str.cable_woodchop",
+  "str.russian_twists",
+  "str.band_rows",
+  "str.single_leg_kick_hold",
+  "mob.slow_motion_kicks",
+  "mob.kick_holds",
+]);
+
 export const STYLES = ["wt", "itf"];
 export const DEFAULT_STYLE = "wt";
 
