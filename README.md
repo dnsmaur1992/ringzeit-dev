@@ -123,6 +123,7 @@
 - **Gesamtbelastung** aus eigenem Training und Verein (Minuten × Anstrengung, alle Sportarten gemeinsam): Eine zu hohe Woche macht die noch nicht begonnenen Einheiten leichter – Trainingstage bleiben; war der Vortag in einem Bereich hart (z. B. Vereins-Sparring → Beine), ist die Einheit heute etwas leichter
 - **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; zurzeit gibt es nur Kickboxen
 - **Freier Lauf** (Kondition draußen): ohne Timer, danach Minuten, Strecke und Anstrengung eintragen
+- **Text und Timer aus einer Quelle:** Dosierung, Timerphasen und Zeitangaben stammen aus derselben strukturierten Verordnung – was dort steht, läuft der Timer (Seil-Intervalle im 30-s-Wechsel, Kick-Halten ca. 4–5 Min., Einbeinstand links dann rechts, Abhärtung für Full Contact mit passenden Durchgängen)
 - **Einträge bearbeiten und löschen:** die Wochenbelastung und die noch nicht begonnenen Einheiten werden neu berechnet
 - **Full Contact und K1** sind nicht mehr an das Level gebunden, nur an das Mindestalter
 - **Ramadan-Modus:** leichtere Einheiten für alle, die fasten – freiwillig
