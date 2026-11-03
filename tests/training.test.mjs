@@ -2248,8 +2248,8 @@ test("3-U: every built session and every entry carries its sport; a unit can be 
   a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
   assert.equal(a.run("S.sessions[ui.sel].sport"), "kickboxing");
   assert.match(a.run("S.sessions[ui.sel].id"), /^s/);
-  assert.match(a.run("renderSession()"), /data-usport="kickboxing"/, "the sport row is shown, with the one finished sport");
-  assert.equal(a.run("sportChoices().join()"), "kickboxing");
+  assert.match(a.run("renderSession()"), /data-usport="kickboxing"/, "the sport row is shown");
+  assert.equal(a.run("sportChoices().join()"), "kickboxing,boxing", "boxing is released with 4b");
   await a.click({ dataset: { usport: "taekwondo" } });
   assert.equal(a.run("ui.setup.sport"), "taekwondo");
   assert.equal(a.run("setupDirty(ui.sel)"), true, "the change is flagged until rebuilt");
@@ -2641,7 +2641,7 @@ test("4a-U: K.o. ban – boxing 30 days (DBV), kickboxing 4 weeks; solo and cont
 
 test("4a-U: a unit can be set to Boxen (development preview) and back; history is shared; the main profile does not offer it", () => {
   const a = app();
-  assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices())")), ["kickboxing"], "profile: finished sports only");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices())")), ["kickboxing", "boxing"], "profile: both released sports");
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices(true))")), ["kickboxing", "boxing"]);
   a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
   assert.match(a.run("renderSession()"), /data-usport="boxing"[^>]*>Boxen</);
@@ -2677,7 +2677,8 @@ test("4a-U: evasion rounds always name the defence and leave the opponent open; 
   assert.match(h, /Meiden &amp; Kontern|Meiden & Kontern/);
   assert.match(h, /class="dfn"/);
   assert.ok(!/class="pg b"/.test(h.slice(h.indexOf("Meiden &"), h.indexOf("Meiden &") + 700)), "no B frame in the evasion round");
-  assert.match(h, /Entwicklungsvorschau/);
+  assert.match(h, /Boxeinheit nach DBV-Regeln/);
+  assert.doesNotMatch(h, /Entwicklungsvorschau/, "no preview note after the release");
   assert.match(h, /boxverband\.de/);
 });
 
@@ -2732,4 +2733,78 @@ test("4a-U: start page – blue (left) and red (right) boxing outfits only when 
   assert.match(h, /stroke="#FFFFFF" stroke-width="4.5"/, "white waistline");
   a.run("{const d=iso(today());S.sessions[d]=buildSession(d,'T','gym',[],{sport:'kickboxing'});ui.setup=setupOf(S.sessions[d],d);}");
   assert.ok(!BLUE.test(hero()), "back to kickboxing: plain figures again");
+});
+
+test("4b: guide – boxers get boxing topics and no kickbox rule/shin topics; kickboxers keep theirs; WKB link in the rules topic", () => {
+  const a = app();
+  const keys = () => JSON.parse(a.run("JSON.stringify(readsFor().map((r) => r.k))"));
+  assert.ok(keys().includes("shin") && keys().includes("judge") && !keys().includes("bag"), "kickboxing unchanged");
+  assert.match(a.run("guidePanelHtml()"), /rund ums Kickboxen/);
+  a.run("S.profile.sport='boxing';");
+  const kb = keys();
+  for (const k of ["bgear", "bag", "bhist", "brules", "myths", "mind", "sleep"]) assert.ok(kb.includes(k), k);
+  for (const k of ["shin", "judge", "disc", "day", "gloves"]) assert.ok(!kb.includes(k), k + " is kickbox-only");
+  assert.match(a.run("guidePanelHtml()"), /rund ums Boxen/);
+  const hist = a.run("guideSheetHtml({id:'bhist'})");
+  assert.match(hist, /Olympedia/);
+  assert.doesNotMatch(hist, /WAKO/);
+  assert.match(a.run("guideSheetHtml({id:'brules'})"), /DBV-WKB|boxverband\.de/);
+  assert.doesNotMatch(a.run("guideSheetHtml({id:'care'})"), /Schienbein/, "no shin guards in boxing care");
+  assert.doesNotMatch(a.run("guideSheetHtml({id:'aid'})"), /WAKO/);
+  a.run("S.profile.lang='en';");
+  assert.match(a.run("guideSheetHtml({id:'bag'})"), /Heavy-bag work/);
+});
+
+test("4b: packing list, tour text and share text follow the main sport", () => {
+  const a = app();
+  assert.ok(a.run("packItems('c1').some((x) => /Schienbein/.test(x.txt))"));
+  a.run("S.profile.sport='boxing';");
+  const items = a.run("packItems('c1').map((x) => x.txt).join('|')");
+  assert.match(items, /Boxhandschuhe/);
+  assert.doesNotMatch(items, /Schienbein|Kick Light/);
+  assert.match(a.run("t('tourIntroBox')"), /DBV/);
+  assert.match(a.run("t('inst').shareTextBox"), /Boxen/);
+});
+
+test("4b: tips and fun facts are split by sport; kickbox-only tips are flagged, boxing ones carry the trainer note", () => {
+  const a = app();
+  const n = (code) => +a.run(code);
+  assert.ok(n("TIPS.filter((x) => x.b).length") >= 9);
+  assert.ok(n("FACTS.filter((x) => x.b).length") >= 7);
+  assert.equal(n("TIPS.filter((x) => x.b && /Kick|Tritt|Schienbein/i.test(x.de||x.t||'')).length"), 0, "boxing tips mention no kicks");
+  assert.ok(n("TIPS.filter((x) => x.k).length") >= 8);
+  assert.match(a.run("t('tipTrainer')"), /Trainer/);
+});
+
+test("4b: onboarding asks for the sport first (two sports visible); boxers skip the kickbox discipline question", () => {
+  const a = app();
+  a.run("ui.onb={step:0,disc:'lc',days:[0,2,4],minutes:75,birthYear:'',comp:'',clubDays:[],clubMin:90};renderOnb();");
+  let h = a.run("document.getElementById('onb').innerHTML");
+  assert.match(h, /data-osport="boxing"/);
+  assert.match(h, /data-od="k1"/);
+  a.run("ui.onb.sport='boxing';renderOnb();");
+  h = a.run("document.getElementById('onb').innerHTML");
+  assert.doesNotMatch(h, /data-od=/);
+  assert.match(h, /Altersklasse/);
+});
+
+test("4b: technique test – boxing description; technique-only rating for the other sport keeps the fitness values", async () => {
+  const a = app();
+  a.run("S.profile.sport='boxing';ui.tab='test';ui.testOpen=true;ui.testDraft={};");
+  let h = a.run("renderTest()");
+  assert.match(h, /Uppercut, Deckung und Beinarbeit/);
+  assert.match(h, /data-tsport="kickboxing"/);
+  assert.match(h, /id="tStr"/);
+  a.run("ui.testDraft.tsport='kickboxing';");
+  h = a.run("renderTest()");
+  assert.doesNotMatch(h, /id="tStr"/, "no fitness fields when only the technique of the other sport is rated");
+  assert.match(h, /Roundhouse, Sidekick/);
+  a.run(`S.tests=[{id:'t0',date:'2026-10-01',method:'rz-1',raw:{str:30,spd:30,end:700,flx:4,tec:4},scores:{str:4,spd:4,end:4,flx:4,tec:4},techBy:{boxing:4},total:20,complete:true,min:4}];`);
+  const before = a.run("levelFor(S.tests,'kickboxing').needTech");
+  assert.equal(before, true, "kickboxing technique is still missing");
+  a.run("S.tests.push({id:'t1',date:'2026-11-02',method:'rz-1',raw:{str:null,spd:null,end:null,flx:null,tec:4},scores:{str:null,spd:null,end:null,flx:null,tec:4},techBy:{kickboxing:4}});");
+  assert.equal(a.run("levelFor(S.tests,'kickboxing').needTech"), false);
+  assert.ok(+a.run("levelFor(S.tests,'kickboxing').level") >= 1, "shared values + new technique give a level");
+  a.run("ui.testOpen=false;");
+  assert.match(a.run("renderTest()"), /20/, "the last full test is still the one shown");
 });

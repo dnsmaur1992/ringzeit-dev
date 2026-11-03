@@ -348,10 +348,10 @@ test("boxing tasks: all with partner text or solo text; touch sparring needs a p
   assert.ok(BOX_TASKS.filter((t) => t.touch).length === 1);
   for (const t of BOX_TASKS) assert.ok(!/Kick|Tritt/.test(t.de.join(" ")), t.id + " has no kick wording");
 });
-test("sports: boxing is registered but hidden; it is offered only as a development preview", () => {
-  assert.equal(SPORTS.boxing.visible, false);
-  assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing"]);
-  assert.deepEqual(previewSports().map((s) => s.id), ["boxing"]);
+test("sports: boxing is released with 4b and visible next to kickboxing; no preview sports remain", () => {
+  assert.equal(SPORTS.boxing.visible, true);
+  assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing", "boxing"]);
+  assert.deepEqual(previewSports().map((s) => s.id), []);
 });
 
 import { BOX_NO_EX } from "../src/sports/boxing/techniques.js";
