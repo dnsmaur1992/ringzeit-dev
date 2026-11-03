@@ -23,7 +23,7 @@
 | W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
 | W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
-| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (196 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
+| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (198 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -133,8 +133,10 @@ Entscheidungen 1–10 (Vorschläge des Auftragnehmers, vom Betreiber unveränder
 
 Weitere Änderungen:
 - **Fehlerbehebung Mobility**: gewählte Ausrüstung „Widerstandsbänder“ wird in Mobility-Einheiten jeder Sportart bevorzugt (Aufwärmen und Mobility-Block). Dadurch änderte sich die Baseline Kickboxen nur bei Mobility-Einheiten zuhause (zwei Profile); die Baseline wurde neu aufgenommen, sonst identisch.
+- **Sichtung 03.11.2026 20:37**: Unter Turniere wurde bei Eintragssportart Boxen noch „Gürtelprüfung“ angeboten – Boxen hat keine Gürtelprüfung, der Umschalter ist dort ausgeblendet und der Eintrag immer „Turnier“ (Tests 197).
+- **Sichtung 03.11.2026 20:42**: Die Fußzeile der Heute-Seite verlinkte immer die WAKO. Jetzt je Hauptsport: Kickboxen WAKO Deutschland, Boxen DBV-Wettkampfbestimmungen (WKB), Taekwondo WT die DTU-Wettkampfordnung, ITF-D die ITF-D-Wettkampfordnung (Quellen R2, R3b, R4b); der Hinweis „Boxeinheit nach DBV-Regeln. Regelwerk (DBV-WKB)“ in der Boxeinheit entfällt deshalb; der Rechtstext nennt allgemein „Regelwerke deines Verbands“ (Tests 198).
 - Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
-- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 196 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
+- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 198 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
 - **Bekannte Grenzen**: ITF-D-Techniken und Regelprofil (6c); Tipps/Fakten/Ratgeber Taekwondo (6d); WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
 
 ## Nächster Vorschlag (ohne Freigabe)
