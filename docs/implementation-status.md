@@ -19,7 +19,16 @@
 | W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `5484843`, App-Version 03.11.2026 12:27; Sicherungs-Rückladung nicht von Hand getestet, nur automatisch) |
 | W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `e7fb557` inkl. Korrektur „Freier Lauf“, App-Version 03.11.2026 13:50; Altdaten, Full-Contact-Abhärtung und explosive Sätze nur automatisch getestet, auf Wunsch des Betreibers nicht von Hand) |
 | W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026 15:47, Stand `278b269`; `docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
-| W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | WARTET AUF SICHTUNG (U1–U5 umgesetzt, 164 Tests, Kickbox-Baseline unverändert; siehe Abschnitt „4a-U“) |
+| W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a1c2946`, App-Version 03.11.2026 16:32, 164 Tests) |
+| W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | WARTET AUF SICHTUNG (B1–B4 umgesetzt, 169 Tests, Kickbox-Baseline unverändert; Boxen regulär sichtbar; siehe Abschnitt „4b“) |
+
+## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
+
+- **B1 Tipps/Wissenswertes**: dieselbe Anzeige wie beim Kickboxen (Ladebildschirm, Übungshinweise), nach Hauptsport gefiltert. Kickbox-Tipps tragen `k`, Box-Tipps (9) und Box-Fakten (7) `b` (Quellen Olympedia/Wikipedia in den Fakten); Box-Tipps zeigen „Hinweis aus dem Training – im Zweifel mit deinem Trainer abstimmen“ (Trainerprüfung empfohlen).
+- **B2 Kleidung**: blau (links)/rot (rechts) mit weißer Gürtellinie auch im Ladebildschirm und im Onboarding, wenn Hauptsport Boxen.
+- **B3 Ratgeber/Inhalte**: `src/app/34b-guide-box.js` – Themen Handschuhe & Bandagen, Sandsack, Amateurboxen-Geschichte (neutral, mit Quellen), Regeln & Links (DBV-WKB, Stand 01.09.2026, nur verlinkt); Kickbox-/WAKO-Themen (Schienbein, Kampfrichter, Disziplinen, Turniertag, Handschuhe) erscheinen für Boxer nicht, allgemeine Themen bleiben; Materialpflege ohne Schienbeinschutz; Packliste Boxen aus der WKB abgeleitet (eigene Punkte weiter möglich); Tour-Einleitung, Grundlagen-Hinweis und Teilen-Text DE/EN je Sportart; Bandagenvideo des Vereins bleibt für beide Sportarten.
+- **B4 Einstieg und Freigabe**: Onboarding fragt zuerst die Sportart (nur wenn mehr als eine sichtbar), Boxer überspringen die Kickbox-Disziplinfrage; Technik-Test mit Boxbeschreibung (Jab, Cross, Haken, Uppercut, Deckung, Beinarbeit) und reiner Technikbewertung für die andere Sportart ohne Wiederholung des Fitnesstests (`techBy` je Sportart, Verlaufsansicht zeigt weiter den letzten vollständigen Test); Boxen `visible: true`, kein Vorschauhinweis mehr (nur Hinweis „Boxeinheit nach DBV-Regeln“ mit Regel-Link).
+- **Grenzen**: Skizzen für Meiden/Körperhaken noch nicht vorhanden; Boxtipps sind Erinnerungen an bekannte Grundlagen und nicht trainergeprüft; Flexibilitätstest-Beschreibung für Boxer neutraler formuliert (Beinschwung statt Sidekick-Höhe).
 
 ## Entscheidungen
 
@@ -93,4 +102,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 4a-U: Teil 4b – Boxen: Darstellung und Abschluss (Modell laut Plan: Sonnet): Skizzen für Meiden/Körperhaken, Beschriftung statt Entwicklungsvorschau, Tour/News/README. Erst nach Abnahme von 4a-U und ausdrücklichem Auftrag.
+Nach Sichtung von 4b: Teil 5 – Taekwondo (Modell laut Plan: Opus). Erst nach Abnahme von 4b und ausdrücklichem Auftrag.
