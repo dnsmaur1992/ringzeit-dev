@@ -925,6 +925,8 @@
     try {
       localStorage.removeItem(LS);
     } catch (e) {}
+    resumeReady = false;
+    resumeClear();
     if (store.mode === "cloud") {
       clearTimeout(store.timer);
       try {

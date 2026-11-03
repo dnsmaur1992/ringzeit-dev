@@ -753,7 +753,7 @@
         [196, 96],
       ],
     },
-    Nackenstärkung: { a: st({ w: [134, 32], ea: [1, 1] }), hold: true },
+    "Isometrische Nackenkräftigung – Halteübung": { a: st({ w: [134, 32], ea: [1, 1] }), hold: true },
     /* conditioning (round-based, shown in the full-screen timer) */
     Burpees: {
       a: { ...pu, w: [119, 147], ea: [-1, 0] },

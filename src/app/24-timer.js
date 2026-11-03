@@ -280,6 +280,7 @@
   function scheduleTimers() {
     clearTimeout(timerClock);
     timerClock = null;
+    resumeSave();
     const delays = [],
       now = Date.now();
     if (ui.exerciseTimer?.running) {
@@ -337,6 +338,7 @@
     scheduleTimers();
   }
   function clearSessionTimer() {
+    ui.pausedRests = null;
     if (ui.exerciseTimer?.running) pauseExerciseTimer();
     ui.exerciseTimer = null;
     if (ui.timer?.running) ui.timer.running = false;

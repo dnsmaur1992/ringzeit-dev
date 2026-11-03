@@ -172,16 +172,24 @@
     // switching between overview and flow keeps running timers (set rest, exercise, rounds) untouched
     if (!opt.keepTimers) {
       pauseWorkoutTimers();
-      if (ui.exerciseTimer && !ui.exerciseTimer.running) ui.exerciseTimer = null;
+      // a paused set rest keeps its remaining time while paging forward/back; it comes back when its step is shown again
+      const old = ui.exerciseTimer;
+      if (old && !old.running && !old.done && old.restOnly && old.player != null && old.player !== i && old.ds === ui.sel && old.remainingMs > 0)
+        (ui.pausedRests ||= {})[old.player] = old;
+      if (old && !old.running) ui.exerciseTimer = null;
     }
     readFinishDraft();
     const st = steps[i];
+    const kept = ui.pausedRests?.[i];
+    if (kept) delete ui.pausedRests[i];
+    if (kept && !opt.keepTimers && kept.ds === ui.sel && !ui.exerciseTimer && !kept.done) ui.exerciseTimer = kept;
     ui.workout.step = i;
     ui.workout.block = st.bi;
     ui.workout.list = false;
     sess.flow = { ...(sess.flow || {}), block: st.bi, step: i };
     ui.focus = st.kind === "rounds";
     store.save();
+    resumeSave(true);
     render();
     const el = document.getElementById("workout");
     if (el) el.scrollTop = 0;
@@ -655,13 +663,13 @@
       phases = it.zone === 3 ? interval(it.reps, it.on * 60, it.off * 60) : [phase(it.min * 60, t("run"))];
     else if (b.key === "warm" && name && EX[it.id]?.cat !== "pre")
       seconds = Math.max(2, Math.round(b.min / Math.max(1, b.items.length))) * 60;
-    else if (tracked && ["Nackenstärkung", "Einbeinstand mit Kick-Hold"].includes(name)) {
+    else if (tracked && ["Isometrische Nackenkräftigung – Halteübung", "Einbeinstand mit Kick-Hold"].includes(name)) {
       seconds = it.target?.r || 10;
       const n = 4;
       phases = Array.from({ length: n }, (_, i) => [
         phase(
           seconds,
-          name === "Nackenstärkung"
+          name === "Isometrische Nackenkräftigung – Halteübung"
             ? `${S.profile.lang === "de" ? "Richtung" : "Direction"} ${i + 1}/4`
             : `${W.side} ${(i % 2) + 1}/2 · ${W.work} ${Math.floor(i / 2) + 1}/2`,
         ),
@@ -737,7 +745,7 @@
               label: `${W.side} 2 · ${p.label}`,
             })),
           );
-      } else if (name === "Nackenstärkung") {
+      } else if (name === "Isometrische Nackenkräftigung – Halteübung") {
         phases = Array.from({ length: 4 }, (_, i) => [
           phase(10, `${S.profile.lang === "de" ? "Richtung" : "Direction"} ${i + 1}/4`),
           ...(i < 3 ? [phase(5, W.change)] : []),
@@ -911,6 +919,7 @@
       }
     }
     if (tm.running) tm.remainingMs = Math.max(0, tm.endAt - now);
+    if (changed) resumeSave(true);
     playerTimerTick(tm, changed && tm.done);
     if (!timerVisible()) return;
     if (changed && ui.workout?.player && !ui.workout.list) renderWorkout();
@@ -1359,7 +1368,7 @@
     if (canSpeak()) {
       const V = t("vsel"),
         bv = bestVoice();
-      app += `<div class="panel"><div class="field"><span class="lab">${V.lbl}</span><span class="sub">${bv ? esc(V.now(bv.name)) : V.none}</span><span class="sub">${isIOS() ? V.ios : isAndroid() ? V.android : V.other}</span><button type="button" class="btn sec" data-vtest="1">${V.test}</button></div></div>`;
+      app += `<div class="panel"><div class="field"><span class="lab">${V.lbl}</span><span class="sub">${bv ? esc(V.now(bv.name)) : V.none}</span>${speechFail ? `<span class="sub">${esc(V.fail(speechFail.code, speechFail.voice))}</span>` : ""}<span class="sub">${isIOS() ? V.ios : isAndroid() ? V.android : V.other}</span><button type="button" class="btn sec" data-vtest="1">${V.test}</button></div></div>`;
     }
     if (audioSessionOk())
       app += `<div class="panel"><div class="field"><span class="lab">${t("music").lbl}</span><div class="seg">${t(

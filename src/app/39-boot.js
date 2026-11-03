@@ -30,12 +30,16 @@
     prepLoader("loadingApp");
     openLoader(3500).then(() => {
       if (!ui.onb && !S.profile.ackSafe && !S.profile.example) {
+        resumeReady = true;
         ui.onb = { ack: {}, ackOnly: true };
         renderOnb();
         return;
       }
-      if (!ui.onb && needNews()) return showNews();
-      if (!ui.onb && !S.profile.toured) startTour();
+      const next = () => {
+        if (!ui.onb && needNews()) return showNews();
+        if (!ui.onb && !S.profile.toured) startTour();
+      };
+      if (!resumeOffer(next)) next();
     });
     store.init().then(async () => {
       if (await store.loadCloud()) {

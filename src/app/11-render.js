@@ -280,7 +280,7 @@
       "Hollow Hold",
       "Einbeinstand mit Kick-Hold",
       "Copenhagen Plank",
-      "Nackenstärkung",
+      "Isometrische Nackenkräftigung – Halteübung",
       "Plank mit Schultertippen",
       "Dead Hang",
     ].map((n) => EX.findIndex((e) => e.de === n)),

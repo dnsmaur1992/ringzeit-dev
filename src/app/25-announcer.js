@@ -38,13 +38,14 @@
   }
   /* The best installed voice for the app language: premium/enhanced voices first, novelty and online-only voices last
      (the app runs offline in the gym). No voice found: the device default is used. */
-  function bestVoice() {
+  function bestVoice(skip = []) {
     try {
       if (!canSpeak() || !speechSynthesis.getVoices) return null;
+      if (skip.includes("*")) return null; // last resort: no explicit voice, the engine picks one for the language
       const lg = S.profile.lang === "de" ? "de" : "en",
         want = lg === "de" ? "de-de" : "en-gb",
         norm = (v) => String(v.lang || "").toLowerCase().replace("_", "-"),
-        vs = (speechSynthesis.getVoices() || []).filter((v) => norm(v).startsWith(lg));
+        vs = (speechSynthesis.getVoices() || []).filter((v) => norm(v).startsWith(lg) && !skip.includes(v.voiceURI || v.name));
       if (!vs.length) return null;
       const score = (v) => {
         const id = `${v.name} ${v.voiceURI}`.toLowerCase();
@@ -68,21 +69,49 @@
       speechSynthesis.addEventListener("voiceschanged", () => {
         if (ui.tab === "profile" && ui.profSec === "app") render();
       });
+    // Chrome (esp. on Android) loads the voice list lazily: asking once at start makes it available for the first call
+    if (canSpeak() && speechSynthesis.getVoices) speechSynthesis.getVoices();
   } catch (e) {}
-  function applyVoice(u) {
+  /* Android engines report "de_DE"; an utterance needs the BCP-47 form "de-DE", otherwise some engines pick the default (English) voice */
+  const bcp47 = (lang) => {
+    const [a, b] = String(lang || "").replace("_", "-").split("-");
+    return a ? a.toLowerCase() + (b ? "-" + b.toUpperCase() : "") : "";
+  };
+  /* last failed announcement (shown in the profile so a silent device can be diagnosed) */
+  let speechFail = null;
+  function applyVoice(u, skip) {
     u.lang = S.profile.lang === "de" ? "de-DE" : "en-GB";
-    const v = bestVoice();
+    const v = bestVoice(skip);
     if (v) {
       u.voice = v;
-      u.lang = v.lang;
+      u.lang = bcp47(v.lang) || u.lang;
     }
+  }
+  /* A voice that cannot speak (data not installed, engine busy): once more with the next best voice, then with the language alone */
+  const SPEECH_RETRY = ["synthesis-failed", "language-unavailable", "voice-unavailable", "synthesis-unavailable", "audio-busy", "audio-hardware", "network"];
+  function speakUtterance(text, rate, skip, started) {
+    const u = new SpeechSynthesisUtterance(text);
+    applyVoice(u, skip);
+    u.rate = rate;
+    u.onerror = (ev) => {
+      const code = (ev && ev.error) || "error";
+      if (code === "canceled" || code === "interrupted") return;
+      speechFail = { code, voice: u.voice ? u.voice.name : "", at: Date.now() };
+      if (!SPEECH_RETRY.includes(code) || Date.now() - started > 3000 || skip.includes("*")) return;
+      // first failure: next best voice; second failure (or no explicit voice): language only; then give up
+      const next = u.voice && !skip.length ? [u.voice.voiceURI || u.voice.name] : ["*"];
+      setTimeout(() => {
+        try {
+          speechSynthesis.speak(speakUtterance(text, rate, next, started));
+        } catch (e) {}
+      }, 150);
+    };
+    return u;
   }
   function say(text, rate = 1) {
     if (!voiceOn()) return;
     try {
-      const u = new SpeechSynthesisUtterance(text);
-      applyVoice(u);
-      u.rate = rate;
+      const u = speakUtterance(text, rate, [], Date.now());
       // iOS Safari drops an utterance spoken right after cancel() and sometimes leaves the synth paused
       const busy = (speechSynthesis.speaking || speechSynthesis.pending) && !primeU;
       if (busy) speechSynthesis.cancel();

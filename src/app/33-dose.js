@@ -33,7 +33,7 @@
     // strength specials
     Klimmzüge: ["so viele saubere wie möglich", "as many clean reps as possible"],
     "Negative Klimmzüge": ["3–5 Wdh.", "3–5 reps"],
-    Nackenstärkung: ["je Richtung 10 s", "10 s each direction"],
+    "Isometrische Nackenkräftigung – Halteübung": ["je Richtung 10 s", "10 s each direction"],
     "Einbeinstand mit Kick-Hold": ["pro Bein 2 × 10 s", "2 × 10 s per leg"],
     // conditioning with their own pattern (one block per circuit lap)
     "Seil-Intervalle": ["2 Min. im Wechsel", "2 min alternating"],

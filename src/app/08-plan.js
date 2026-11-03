@@ -1229,10 +1229,10 @@
     },
     {
       id: "neck",
-      h: { de: "Isometrisch kräftig gegen die eigene Hand drücken, je 15 s in vier Richtungen, 2 Durchgänge.", en: "Press hard isometrically against your own hand, 15 s in four directions, 2 rounds." },
+      h: { de: "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung 10 s gegeneinander drücken – kontrolliert und gleichmäßig, der Kopf bleibt in Position.", en: "Hand on forehead, back of head and each side of the head, press head and hand against each other for 10 s per direction – controlled and steady, the head stays in place." },
       m: "s",
-      de: ["Nacken stabil", "Isometrisch gegen die eigene Hand drücken, je 10 s in vier Richtungen."],
-      en: ["Stable neck", "Press isometrically against your own hand, 10 s in four directions."],
+      de: ["Isometrische Nackenkräftigung – Halteübung", "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung 10 s gegeneinander drücken – der Kopf bleibt in Position."],
+      en: ["Isometric neck strengthening – hold", "Hand on forehead, back of head and each side of the head, press head and hand against each other for 10 s per direction – the head stays in place."],
     },
   ];
   /* name and text of a hardening item; the harder full-contact dose when the item carries h */

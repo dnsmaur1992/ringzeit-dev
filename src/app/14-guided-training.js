@@ -102,6 +102,7 @@
     ui.workout = { ds: ui.sel, block: steps[step].bi, step, player: true };
     ui.focus = steps[step].kind === "rounds";
     store.save();
+    resumeSave(true);
     render();
     focusWorkout();
   }
@@ -124,6 +125,7 @@
     pauseWorkoutTimers();
     ui.workout = null;
     ui.focus = false;
+    resumeSave(true);
     if (redraw) render();
   }
   function moveWorkout(delta) {
@@ -138,6 +140,7 @@
     if (firstOfBlock >= 0) ui.workout.step = sess.flow.step = firstOfBlock;
     ui.focus = !!sess.blocks[ui.workout.block]?.rounds;
     store.save();
+    resumeSave(true);
     render();
     const el = document.getElementById("workout");
     if (el) el.scrollTop = 0;

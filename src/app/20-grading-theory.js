@@ -1212,9 +1212,9 @@
       "Nach unten rennen",
       "Running down the stairs",
     ],
-    Nackenstärkung: [
-      ["Hand gegen Stirn oder Hinterkopf", "Kopf drückt dagegen, bewegt sich kaum", "Sanft starten, langsam steigern"],
-      ["Hand against forehead or back of head", "Head pushes back, barely moves", "Start gently, build up slowly"],
+    "Isometrische Nackenkräftigung – Halteübung": [
+      ["Hand an Stirn, Hinterkopf, dann seitlich", "Kopf und Hand drücken gegeneinander, der Kopf bewegt sich kaum", "Sanft starten, gleichmäßig steigern"],
+      ["Hand on forehead, back of head, then the sides", "Head and hand push against each other, the head barely moves", "Start gently, build up steadily"],
       "Ruckartig mit voller Kraft drücken",
       "Pushing jerkily at full force",
     ],
