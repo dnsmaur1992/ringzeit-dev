@@ -72,6 +72,31 @@ export const SIDED = new Set(["ap", "dol", "dolh", "yeop", "mireo", "dwi", "nae"
 export const FIXED = { mireo: "L", dwi: "R", dhu: "R", ban: "R", ttdol: "R", ttyeop: "R" };
 export const SIDE_DEF = { ap: "R", dol: "R", dolh: "R", yeop: "L", nae: "L", jir: "R" };
 
+/* Series: fast kick sequences without setting down or resetting the stance, shown as one bracketed chip (7).
+   Parts are [technique, side] with L = lead leg (V), R = rear leg (H); the step has no side. Allowed only when every part is
+   allowed, from level 1, never for children (a series needs several parts at tempo). */
+export const SERIES = {
+  sr1: { p: [["dol", "L"], ["dol", "R"]] }, // Dollyeo lead, then rear
+  sr2: { p: [["ban", "L"], ["dol", "L"]] }, // Ban-dal and Dollyeo, both lead leg
+  sr3: { p: [["yeop", "L"], ["dwi", "R"], ["swch", null]] }, // side kick, back kick, switch with a hop
+  sr4: { p: [["ap", "L"], ["dol", "R"]] },
+  sr5: { p: [["dol", "R"], ["dol", "L"]] },
+};
+const SIDE_TXT = { de: { L: "V", R: "H" }, en: { L: "L", R: "R" } };
+for (const [id, s] of Object.entries(SERIES)) {
+  const nm = (i) => s.p.map(([x, sd]) => TECH[x][i] + (sd ? " " + SIDE_TXT[i === 0 ? "de" : "en"][sd] : "")).join(" → ");
+  TECH[id] = [nm(0), nm(1), s.p.map(([x, sd]) => TECH[x][2] + (sd ? " " + SIDE_TXT.de[sd] : "")).join(" → ")];
+  KICKS.add(id);
+  if (s.p.some(([x]) => HEAD.has(x))) HEAD.add(id);
+}
+
+/* a series inherits the strictest limits of its parts, is level 1 and never basic (no children) */
+for (const [id, s] of Object.entries(SERIES)) {
+  const parts = s.p.map(([x]) => REQ[x]),
+    kups = parts.map((r) => r.kup).filter((k) => k != null);
+  REQ[id] = { lvl: Math.max(1, ...parts.map((r) => r.lvl || 0)), kup: kups.length ? Math.min(...kups) : undefined, noYoung: parts.some((r) => r.noYoung), risky: parts.some((r) => r.risky) };
+}
+
 /* combo pools per level (index = level); every combo is filtered through allowed() */
 export const COMBOS = [
   [
@@ -97,6 +122,11 @@ export const COMBOS = [
     ["stepf", "dol", "dolh", "dwi"],
     ["turn", "dol", "dolh"],
     ["swch", "dol", "dolh"],
+    ["sr1"],
+    ["sr2"],
+    ["sr4", "dolh"],
+    ["stepf", "sr1"],
+    ["sr5", "nae"],
     ["stepf", "swch", "dol"],
   ],
   [
@@ -108,6 +138,8 @@ export const COMBOS = [
     ["ap", "yeop", "dwi", "dolh"],
     ["turn", "dol", "dwi", "dolh"],
     ["swch", "dol", "dolh", "dwi"],
+    ["sr3"],
+    ["sr1", "dolh"],
   ],
 ];
 /* with a wrist or shoulder limit: short light work, no pad or bag load */
