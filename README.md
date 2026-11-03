@@ -197,17 +197,16 @@ Die ausführliche Anleitung mit QR-Code (auch zum Ausdrucken für die Halle): **
 ## Entwicklung und Prüfungen
 
 ```bash
-node --test tests/training.test.mjs
-python3 tools/build_pwa.py
-cp pwa/index.html index.html
-cp pwa/sw.js sw.js
-cp pwa/manifest.webmanifest manifest.webmanifest
+npm install                      # einmalig: esbuild (Build-Werkzeug, keine Laufzeitabhängigkeit der App)
+node --test tests/training.test.mjs tests/core.test.mjs
 node tests/baseline.mjs          # Vergleichsbasis Kickboxen (muss bei reinen Umbauten identisch bleiben)
+python3 tools/build_pwa.py
+cp pwa/index.html pwa/sw.js pwa/manifest.webmanifest .
 # Isolation stabile App ↔ Dev-App im Browser (Playwright/Chromium, Ordner mit den Dateien der stabilen App):
 node tests/isolation.e2e.mjs ../ringzeit
 ```
 
-Der Build braucht für die Komprimierung `esbuild` (z. B. `npm i esbuild@0.24.2`, dann liegt es unter `node_modules/.bin/`); App-Kennung und Name liest er aus `APP_ID`/`APP_NAME` in `src/ringzeit.html`.
+Der Build setzt die App aus `src/` zusammen (siehe Technik) und schreibt die lesbare Gesamtfassung nach `build/ringzeit.html` – genau diese Datei prüfen die Tests. App-Kennung und Name liest er aus `APP_ID`/`APP_NAME` in `src/app/06-storage.js`. `build/`, `pwa/` und `node_modules/` werden nicht hochgeladen.
 
 Die Tests führen die echte Trainingslogik und Ereignisbehandlung in Node aus. Timer-Signale, Musik und die Bildschirmsperre sollten zusätzlich auf echten iPhones und Android-Geräten geprüft werden.
 
@@ -215,10 +214,10 @@ Die Tests führen die echte Trainingslogik und Ereignisbehandlung in Node aus. T
 
 Für den Betreiber des Repositorys:
 
-1. Die neuen Dateien `index.html`, `sw.js` und – falls geändert – `manifest.webmanifest` hochladen (*Add file → Upload files*) und committen – dazu die neue `ringzeit.html` in den Ordner `src`. Die Quelldatei `ringzeit.html` gehört **nur** nach `src`, nicht in den Hauptordner: Dort wäre sie öffentlich als zweite, veraltete App-Version erreichbar.
+1. Die neuen Dateien `index.html`, `sw.js` und – falls geändert – `manifest.webmanifest` hochladen (*Add file → Upload files*) und committen – dazu die geänderten Quelldateien in ihre Ordner unter `src/`. Quelldateien gehören **nur** nach `src`, nicht in den Hauptordner.
 2. GitHub Pages veröffentlicht die neue Version nach ein bis zwei Minuten.
 3. Die App lädt das Update beim nächsten Öffnen im Hintergrund – nach einem Neustart der App ist es aktiv. Die Versionsnummer steht unten im Profil.
-4. **„Was ist neu“ nur bei größeren Updates:** In `src/ringzeit.html` die Zahl `NEWS_V` um eins erhöhen und die drei Punkte unter `news` (Deutsch und Englisch) neu schreiben. Alle, die die App schon nutzen, sehen den Hinweis dann einmal beim nächsten Öffnen. Bei kleinen Korrekturen `NEWS_V` einfach lassen.
+4. **„Was ist neu“ nur bei größeren Updates:** In `src/app/16-onboarding.js` die Zahl `NEWS_V` um eins erhöhen und in `src/app/01-overview-i18n.js` die drei Punkte unter `news` (Deutsch und Englisch) neu schreiben. Alle, die die App schon nutzen, sehen den Hinweis dann einmal beim nächsten Öffnen. Bei kleinen Korrekturen `NEWS_V` einfach lassen.
 
 ---
 
@@ -226,7 +225,7 @@ Für den Betreiber des Repositorys:
 
 | | |
 |---|---|
-| **Aufbau** | Eine einzige HTML-Datei: HTML, CSS und JavaScript ohne Frameworks; für die App komprimiert |
+| **Aufbau** | Quellcode in Teilen unter `src/`, ausgeliefert als eine einzige HTML-Datei: HTML, CSS und JavaScript ohne Frameworks; für die App komprimiert |
 | **Grafiken** | Alle Figuren, Skizzen und Diagramme als SVG im Code gezeichnet |
 | **Offline** | Service Worker (`sw.js`) speichert die App auf dem Gerät |
 | **Speicher** | `localStorage` auf dem Gerät (Schlüssel `ringzeit-dev.v1`, getrennt von der stabilen App) |
@@ -239,9 +238,16 @@ ringzeit-dev/
 ├── manifest.webmanifest   App-Name, Icons, Farben
 ├── installieren.html      Installationsanleitung mit QR-Code
 ├── icon-*.png             App-Icons
-├── src/ringzeit.html      Lesbarer Quellcode
-├── tools/build_pwa.py     Baut aus dem Quellcode index.html und sw.js
-├── tests/                 training.test.mjs (Logik), baseline.mjs (Vergleichsbasis), isolation.e2e.mjs (Browser)
+├── src/
+│   ├── index.html         Markup und CSS
+│   ├── modules.js         Einstieg der gemeinsamen Module (Build: ein Bündel „RZ“)
+│   ├── core/              Gemeinsame Dienste: Format, Datum, Zufall, Speicher
+│   ├── catalog/           Übungskatalog
+│   ├── sports/            Sportarten (bisher: kickboxing) und Register
+│   └── app/               Übrige App in geordneten Teilen 00–39 (Ansichten, Planung, Timer, Ratgeber …)
+├── tools/build_pwa.py     Setzt den Quellcode zusammen und baut index.html, sw.js, manifest
+├── package.json           Build-/Testwerkzeug (esbuild)
+├── tests/                 training (Logik), core (Module), baseline (Vergleichsbasis), isolation.e2e (Browser)
 └── docs/                  Bilder, Architektur, Umsetzungsstand
 ```
 
