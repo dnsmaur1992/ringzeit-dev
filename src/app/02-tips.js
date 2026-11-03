@@ -347,6 +347,7 @@
       en: "Move after every combo: off the line or back into guard – never stand still.",
     },
     {
+      nt: 1,
       de: "Haken: Ellbogen auf Schulterhöhe, die Faust dreht mit – die Kraft kommt aus der Drehung des vorderen Fußes.",
       en: "Hook: elbow at shoulder height, the fist turns with it – power comes from pivoting on the front foot.",
     },
@@ -369,18 +370,22 @@
       en: "Distance is defence: stay just outside range and only step in to hit.",
     },
     {
+      nt: 1,
       de: "Uppercut: Erst leicht in die Knie, dann aus Beinen und Hüfte nach oben – nicht ausholen.",
       en: "Uppercut: dip the knees slightly, then drive up from legs and hips – don't wind up.",
     },
     {
+      nt: 1,
       de: "Jab: Die Schulter schützt das Kinn, und die Hand kommt auf derselben Linie zurück, auf der sie rausging.",
       en: "Jab: your shoulder covers your chin, and the hand returns on the same line it went out.",
     },
     {
+      nt: 1,
       de: "Cross: Die Kraft kommt aus Hüfte und hinterem Fuß – die Ferse dreht mit nach außen.",
       en: "Cross: power comes from the hip and rear foot – turn the heel out with it.",
     },
     {
+      nt: 1,
       de: "Haken: Ellbogen auf Fausthöhe, Rotation aus dem Rumpf. Nicht ausholen, sonst sieht man ihn kommen.",
       en: "Hook: elbow level with the fist, rotate from the trunk. Don't wind up, or they'll see it coming.",
     },
@@ -409,6 +414,7 @@
       en: "Exhale sharply with every strike. It braces your core and keeps you from gassing out in round 3.",
     },
     {
+      nt: 1,
       de: "Beinarbeit: Niemals die Füße kreuzen. Der Fuß in Bewegungsrichtung geht immer zuerst.",
       en: "Footwork: never cross your feet. The foot nearest the direction of travel always moves first.",
     },
