@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://dnsmaur1992.github.io/ringzeit/"><img src="https://img.shields.io/badge/App%20%C3%B6ffnen-dnsmaur1992.github.io%2Fringzeit-C8404A?style=for-the-badge" alt="App öffnen"></a>
+  <a href="https://dnsmaur1992.github.io/ringzeit-dev/"><img src="https://img.shields.io/badge/Dev--App%20%C3%B6ffnen-dnsmaur1992.github.io%2Fringzeit--dev-C8404A?style=for-the-badge" alt="Ringzeit Dev öffnen"></a>
 </p>
 
 <p align="center">
@@ -14,9 +14,11 @@
   <img src="https://img.shields.io/badge/Sprache-DE%20%C2%B7%20EN-8C9099?style=flat-square" alt="Deutsch und Englisch">
 </p>
 
+> **Ringzeit Dev – Entwicklungsversion.** Dieses Repository (`ringzeit-dev`) ist die Entwicklungskopie der stabilen [Ringzeit-App](https://github.com/dnsmaur1992/ringzeit) für die Erweiterung um Boxen und Taekwondo. Sie läuft unter [dnsmaur1992.github.io/ringzeit-dev](https://dnsmaur1992.github.io/ringzeit-dev/) mit eigenen, frischen Daten: eigener Speicher (`ringzeit-dev.v1`), eigene Caches (`ringzeit-dev-…`), eigene installierbare App „Ringzeit Dev“, keine Cloud-Speicherung und kein Import aus der stabilen App. Sicherungen der stabilen App werden hier nicht geladen. Bitte für echtes Training weiter die stabile App nutzen. Details: [docs/architecture.md](docs/architecture.md), Stand: [docs/implementation-status.md](docs/implementation-status.md).
+
 **Ringzeit** plant dein Kickbox-Training neben dem Verein – passend zu deiner Disziplin, deinem Level und deinen Trainingstagen. Runden, Kombinationen und Übungen kommen fertig dosiert aufs Handy, der Rundentimer läutet die Glocke, und am Ende siehst du, was du geschafft hast. Die Regeln richten sich nach der WAKO.
 
-> **Neu hier?** Öffne die [Installationsanleitung](https://dnsmaur1992.github.io/ringzeit/installieren.html) auf deinem Handy – mit QR-Code und Schritt-für-Schritt-Hilfe für iPhone und Android.
+> **Neu hier?** Öffne die [Installationsanleitung](https://dnsmaur1992.github.io/ringzeit-dev/installieren.html) auf deinem Handy – mit QR-Code und Schritt-für-Schritt-Hilfe für iPhone und Android.
 
 **Dein erster Trainingsstart:** Heute → Tagesplan sichten und Ausrüstung bereitlegen → **Training beginnen** (oben oder unter dem Plan). Danach führt dich Ringzeit **Übung für Übung im Vollbild** durch die Einheit – mit 10 Sekunden Vorbereitung, Gong und Ansage, bei Kraft mit Satz-Tabelle – bis zum Abschluss. ✕ führt zurück zur Planübersicht und pausiert die Timer. Die Tour hat nur sechs Schritte; Einrichtung und Tour können übersprungen werden; die Tour ist unter **Profil → App & Daten** erneut erreichbar.
 
@@ -172,14 +174,14 @@ Ringzeit ist eine Web-App (PWA) – sie wird über den Browser installiert und s
 
 | iPhone & iPad (Safari) | Android (Chrome) |
 |---|---|
-| 1. [Ringzeit öffnen](https://dnsmaur1992.github.io/ringzeit/) | 1. [Ringzeit öffnen](https://dnsmaur1992.github.io/ringzeit/) |
+| 1. [Ringzeit Dev öffnen](https://dnsmaur1992.github.io/ringzeit-dev/) | 1. [Ringzeit Dev öffnen](https://dnsmaur1992.github.io/ringzeit-dev/) |
 | 2. Auf **Teilen** tippen | 2. Menü **⋮** oben rechts |
 | 3. **„Zum Home-Bildschirm“** | 3. **„App installieren“** |
 | 4. **„Hinzufügen“** | 4. Bestätigen |
 
 > **Tipp:** Erst installieren, dann einrichten. Auf dem iPhone speichern Safari und die installierte App ihre Daten getrennt.
 
-Die ausführliche Anleitung mit QR-Code (auch zum Ausdrucken für die Halle): **[installieren.html](https://dnsmaur1992.github.io/ringzeit/installieren.html)**
+Die ausführliche Anleitung mit QR-Code (auch zum Ausdrucken für die Halle): **[installieren.html](https://dnsmaur1992.github.io/ringzeit-dev/installieren.html)**
 
 ---
 
@@ -199,7 +201,12 @@ node --test tests/training.test.mjs
 python3 tools/build_pwa.py
 cp pwa/index.html index.html
 cp pwa/sw.js sw.js
+cp pwa/manifest.webmanifest manifest.webmanifest
+# Isolation stabile App ↔ Dev-App im Browser (Playwright/Chromium, Ordner mit den Dateien der stabilen App):
+node tests/isolation.e2e.mjs ../ringzeit
 ```
+
+Der Build braucht für die Komprimierung `esbuild` (z. B. `npm i esbuild@0.24.2`, dann liegt es unter `node_modules/.bin/`); App-Kennung und Name liest er aus `APP_ID`/`APP_NAME` in `src/ringzeit.html`.
 
 Die Tests führen die echte Trainingslogik und Ereignisbehandlung in Node aus. Timer-Signale, Musik und die Bildschirmsperre sollten zusätzlich auf echten iPhones und Android-Geräten geprüft werden.
 
@@ -207,7 +214,7 @@ Die Tests führen die echte Trainingslogik und Ereignisbehandlung in Node aus. T
 
 Für den Betreiber des Repositorys:
 
-1. Die neuen Dateien `index.html` und `sw.js` hochladen (*Add file → Upload files*) und committen – dazu die neue `ringzeit.html` in den Ordner `src`. Die Quelldatei `ringzeit.html` gehört **nur** nach `src`, nicht in den Hauptordner: Dort wäre sie öffentlich als zweite, veraltete App-Version erreichbar.
+1. Die neuen Dateien `index.html`, `sw.js` und – falls geändert – `manifest.webmanifest` hochladen (*Add file → Upload files*) und committen – dazu die neue `ringzeit.html` in den Ordner `src`. Die Quelldatei `ringzeit.html` gehört **nur** nach `src`, nicht in den Hauptordner: Dort wäre sie öffentlich als zweite, veraltete App-Version erreichbar.
 2. GitHub Pages veröffentlicht die neue Version nach ein bis zwei Minuten.
 3. Die App lädt das Update beim nächsten Öffnen im Hintergrund – nach einem Neustart der App ist es aktiv. Die Versionsnummer steht unten im Profil.
 4. **„Was ist neu“ nur bei größeren Updates:** In `src/ringzeit.html` die Zahl `NEWS_V` um eins erhöhen und die drei Punkte unter `news` (Deutsch und Englisch) neu schreiben. Alle, die die App schon nutzen, sehen den Hinweis dann einmal beim nächsten Öffnen. Bei kleinen Korrekturen `NEWS_V` einfach lassen.
@@ -221,11 +228,11 @@ Für den Betreiber des Repositorys:
 | **Aufbau** | Eine einzige HTML-Datei: HTML, CSS und JavaScript ohne Frameworks; für die App komprimiert |
 | **Grafiken** | Alle Figuren, Skizzen und Diagramme als SVG im Code gezeichnet |
 | **Offline** | Service Worker (`sw.js`) speichert die App auf dem Gerät |
-| **Speicher** | `localStorage` auf dem Gerät |
+| **Speicher** | `localStorage` auf dem Gerät (Schlüssel `ringzeit-dev.v1`, getrennt von der stabilen App) |
 | **Ton** | Web Audio (Ringglocke) und Sprachausgabe des Geräts |
 
 ```
-ringzeit/
+ringzeit-dev/
 ├── index.html             Die App
 ├── sw.js                  Service Worker (Offline, Updates)
 ├── manifest.webmanifest   App-Name, Icons, Farben
@@ -233,7 +240,8 @@ ringzeit/
 ├── icon-*.png             App-Icons
 ├── src/ringzeit.html      Lesbarer Quellcode
 ├── tools/build_pwa.py     Baut aus dem Quellcode index.html und sw.js
-└── docs/                  Bilder für diese Seite
+├── tests/                 training.test.mjs (Logik), isolation.e2e.mjs (Browser)
+└── docs/                  Bilder, Architektur, Umsetzungsstand
 ```
 
 ---

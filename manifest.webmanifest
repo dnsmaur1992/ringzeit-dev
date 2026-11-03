@@ -1,7 +1,8 @@
 {
-  "name": "Ringzeit",
-  "short_name": "Ringzeit",
-  "description": "Trainingsplaner für Kickboxen nach WAKO-Regeln",
+  "id": "./",
+  "name": "Ringzeit Dev",
+  "short_name": "Ringzeit Dev",
+  "description": "Entwicklungsversion – Trainingsplaner für Kickboxen nach WAKO-Regeln",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
