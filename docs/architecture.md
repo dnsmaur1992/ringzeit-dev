@@ -63,7 +63,7 @@ src/
     random.js                rnd, shuffle (lesen Math.random beim Aufruf → mit Seed reproduzierbar)
     storage.js               createStore({ key, storage, getState, compact, onFull, cloud, applyCloud, cloudDocs, onCloudLost })
     index.js                 sammelt core/
-    history.js               später: Logzugriff + Belastung – Vertrag 6.4, Umsetzung 3-U
+    history.js               Belastung (Minuten × Anstrengung), Entlastungsauslöser, Wochenprojektion, Bereichsmodell, Level je Sport – nur explizite Eingaben (3-U)
     prescription.js          später: strukturierte Dosierung – Vertrag 6.3, Umsetzung 3-D
   catalog/
     exercises.js             Übungskatalog (88 Zeilen) → EX, AV; Reihenfolge = heutige ID, stabile IDs in 3-D
@@ -107,7 +107,7 @@ und ein neues Test-Harness; zu großer Sprung für eine reine Extraktion.
 | `playerSteps`/`stepDone`/`setsHtml` (12887, 12274) | bleiben, werden von neuen Sportarten mitgenutzt | – |
 | `figure`/`FIGS` (10651), `skFigure`/`SKETCH` (14887) | bleiben; Kleidung als Parameter in 4b/6a | 4b / 6a |
 | `L`/`t()`, `summaryData` (4653, 18857) | bleiben; sportbezogene Texte später je Sportmodul | 4b ff. |
-| `weekLoad`/`computeLoad` (9051) | Grundlage für `core/history.js` | 3-U |
+| `weekLoad`/`computeLoad` (9051) | Regeln jetzt in `core/history.js` (`deloadFor`, `projectWeek`); `app/08-plan.js` sammelt nur die Eingaben und ruft `changeLog()` bei Änderungen | 3-U ✓ |
 | `fmt`/`fmtS` | zu einer Funktion in `core/format.js` | 2 |
 
 Stand nach Schritt 2: erledigt sind `store` → `createStore`, Katalog, Techniken/Kombis, `waFormat`/`STD_FORMAT`,
@@ -217,8 +217,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/data-load-concept.md` | Daten-/Belastungskonzept (3-Q): Schema, Belastungsvertrag, Dosierungsvertrag, Abweichungen, Akzeptanzfälle |
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen) – 113 Tests |
-| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen) – 9 Tests |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 120 Tests |
+| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 15 Tests |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
 

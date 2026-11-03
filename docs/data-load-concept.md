@@ -1,6 +1,6 @@
 # Ringzeit Dev – Daten- und Belastungskonzept (Teil 3-Q)
 
-Status: **Konzept, vom Betreiber gesichtet am 03.11.2026** (Entscheidungen zu Abschnitt 1 und 7 eingearbeitet). Kein Code. Umsetzung: Historie, Belastung und Auswahl in **3-U**, stabile
+Status: **Konzept, abgenommen am 03.11.2026** (Entscheidungen zu Abschnitt 1 und 7 eingearbeitet). 3-U ist umgesetzt, siehe Abschnitt 9. Umsetzung: Historie, Belastung und Auswahl in **3-U**, stabile
 Übungs-IDs und strukturierte Dosierung in **3-D** – jeweils nur nach Sichtung dieses Dokuments und eigenem Auftrag.
 Grundlage: Gesamtauftrag 6A/6B, Antworten des Betreibers vom 03.11.2026, Code-Stand `main` @ `54d7ed2`.
 
@@ -240,3 +240,14 @@ Hinweis zu A6: In 2-B wurden Name und Texte angepasst; die Skizze zeigt bisher n
 - Boxregeln, Taekwondo-Grade/Farben/Prüfungsprogramme (4a-Q, 5): hier nur leere Felder.
 - Neue Belastungsregeln über das Beschriebene hinaus; medizinische Erholungszeiten.
 - Änderung der bestehenden Kickbox-Periodisierung, Kombinationsauswahl oder Abwehrregel (7A).
+
+## 9. Umsetzung 3-U (03.11.2026) – Abweichungen vom Konzept
+
+- **E5 geändert (Betreiber, 03.11.2026):** Vorauswahlen und die vorbelegte Dauer bleiben wie bisher (Vereinstraining „Gemischt“ und Anstrengung 7, eigene Einheit mit geplanter Dauer und Rückfrage beim frühen Beenden). Akzeptanzfall 4 entfällt. Neu eingetragene **Freie Läufe** haben keine Vorauswahl (Dauer und Anstrengung Pflicht).
+- **Schwelle der Bereichsregel:** 0,35 statt 0,4. Mit 0,4 würde hartes Vereins-Sparring (Beine 0,35 / Arme 0,35) die Regel nie auslösen – das widersprach Akzeptanzfall 1. Gilt: RPE ≥ 7 gestern und Bereichsanteil ≥ 0,35 → Beine, Schultern/Arme, Rumpf oder Ausdauer. „Leichter“ = Zielanstrengung −1 und Übungen mit Anteil in dem Bereich werden hinten angestellt; Einzeiler in „Warum diese Einheit?“. Mobility bleibt unberührt.
+- **Eigene Einheiten:** Bereichsanteile aus den Übungen (ohne Aufwärmen, Cool-down, Mobility, Abhärtung), mindestens 3 Übungen; sonst Tabelle nach Einheitsart. Nach 3-D direkt als Feld je Übung.
+- **Sportwahl:** Zeile „Sportart“ unter „Einheit anpassen“, im Vereins-Sheet, beim Freien Lauf und beim Bearbeiten; Hauptsport im Profil (Training → Mehr). Sichtbar sind nur fertige Sportarten, zurzeit nur Kickboxen. Keine interne Testansicht (Betreiber: Dev-App, nicht nötig); die Akzeptanzfälle laufen als automatische Tests. Die Frage nach dem Hauptsport in der Inbetriebnahme kommt, sobald eine zweite Sportart sichtbar ist.
+- **Level je Sport:** `levelFor` (Kern) ist fertig und getestet; neue Tests speichern `techBy` (Sport → Technikwert), alte Tests ohne `techBy` gelten als Kickboxen. Ein reiner Technik-Test für eine neue Sportart hat noch keine Oberfläche (erst mit der zweiten Sportart).
+- **Turniere/Prüfungen:** neue Einträge speichern `sport`; Turniere jeder Sportart steuern die Phasen, Turnierformat nur, wenn die Sportart ein Modul hat; Gürtelprüfungen wirken nur auf ihre Sportart. Eine Auswahl der Sportart beim Eintragen gibt es (Zeile über der Art), ebenfalls nur mit fertigen Sportarten.
+- **Vergleichsbasis:** Baseline unverändert bis auf die dokumentierten Felder `sport` und `id` je Einheit (zufällige ID wird beim Vergleich ausgeblendet; `sport` muss `kickboxing` sein).
+- **Wochenprojektion:** erwartete Woche = Einträge bis heute + geplante Einheiten bis Sonntag (eigene: geplante Minuten × Basis-Anstrengung, Verein: Minuten × 6); über 1,3 × Mittel der drei Vorwochen und > 600 → Entlastungsstufe nur für noch nicht begonnene Einheiten (`why: "proj"`).

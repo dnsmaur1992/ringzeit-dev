@@ -15,7 +15,8 @@
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
 | W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
 | W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
-| W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | GESICHTET, alle Entscheidungen eingearbeitet – Abnahme offen |
+| W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026, Stand 97bf4f1) |
+| W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | GELIEFERT – Abnahme offen |
 
 ## Entscheidungen
 
@@ -61,13 +62,16 @@ Manuelle Abnahmen:
 - 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
+- 03.11.2026, 3-U (Betreiber): Vorauswahlen und vorbelegte Dauer bleiben wie bisher (E5 geändert); Sportwahl wird sichtbar (zurzeit nur Kickboxen); keine interne Testansicht nötig (Dev-App). Umsetzung und Abweichungen: `data-load-concept.md` Abschnitt 9. Schwelle der Bereichsregel 0,35 statt 0,4 (sonst löst hartes Sparring nie aus).
+
 ## Offen
 
 - Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
 - `docs/rules-sources.md` angelegt (3-Q): Trainingsquellen T1/T2 für das Belastungsmodell; Verbandsregeln folgen in 4a-Q/5, WAKO-Fassung weiter unbelegt.
+- 3-U: Technik-Test für eine neue Sportart (nur Technikteil) und die Frage nach dem Hauptsport in der Inbetriebnahme haben noch keine Oberfläche; beides erst sinnvoll, wenn eine zweite Sportart sichtbar ist (Kern `levelFor` ist fertig und getestet).
 - Android-Sprachausgabe: Ursache nicht belegt. Für gezielte Behebung werden Gerät, Android-Version, Browser/installierte App und die Fehlermeldung unter „Stimme der Ansagen“ benötigt.
 - Android-Tonprüfung aus der früheren `docs/todo-bedienung-akku.md` (entfernt) steht jetzt hier.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 3-Q: Teil 3-U – gemeinsame Historie, Belastung und Auswahl (Modell laut Plan Sonnet).
+Nach Abnahme von 3-U: Teil 3-D – stabile Übungs-IDs, strukturierte Dosierung, Timer-Text-Abweichungen A1–A12 (Modell laut Plan Sonnet).
