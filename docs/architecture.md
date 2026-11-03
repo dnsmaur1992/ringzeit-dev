@@ -220,8 +220,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `docs/boxing-concept.md` | Boxen (4a-Q): DBV-Regelmatrix, Trainingskonzept, Aufgabensparring, Beispielprofile, Vorschlag 4a-U |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
-| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 136 Tests (4a-U: Boxprofile, Handgelenkblock, Formate, Touch-Sparring, K.o.-Sperre, Sportwechsel; 3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
-| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 24 Tests (4a-U: DBV-Regeln, Boxdaten, Aufgaben, Register; 3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 138 Tests (4a-U: Boxprofile, Handgelenkblock, Formate, Touch-Sparring, K.o.-Sperre, Sportwechsel; 3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
+| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 25 Tests (4a-U: DBV-Regeln, Boxdaten, Aufgaben, Register; 3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
 
