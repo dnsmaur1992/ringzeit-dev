@@ -21,13 +21,14 @@ export const TECH = {
   ttyeop: ["Gesprungener Seitwärtstritt", "Jumping side kick", "Ttwieo-yeop-chagi"],
   jir: ["Fauststoß Rumpf", "Punch trunk", "Momtong-jireugi"],
   stepf: ["Schritt vor", "Step forward", "Nae-ditgi"],
+  swch: ["Stellungswechsel (kleiner Hüpfer)", "Stance switch (small hop)", "Bal-bakkum"],
   stepb: ["Schritt zurück", "Step back", "Mulleo-ditgi"],
   steps: ["Schritt seitlich", "Step sideways", "Yeop-ditgi"],
   turn: ["Drehschritt", "Turning step", "Dora-ditgi"],
 };
 /* kicks (red chip); punch and steps are not */
 export const KICKS = new Set(["ap", "dol", "dolh", "yeop", "mireo", "dwi", "nae", "ban", "dhu", "ttdol", "ttyeop"]);
-export const STEPS = new Set(["stepf", "stepb", "steps", "turn"]);
+export const STEPS = new Set(["stepf", "stepb", "steps", "turn", "swch"]);
 /* head-height kicks: only after the warm-up rounds */
 export const HEAD = new Set(["dolh", "nae", "dhu"]);
 
@@ -41,6 +42,7 @@ const REQ = {
   mireo: { basic: true },
   jir: { basic: true },
   stepf: { basic: true },
+  swch: { lvl: 1 },
   stepb: { basic: true },
   steps: { basic: true },
   turn: { lvl: 1 },
@@ -64,6 +66,12 @@ export function allowed(id, ctx) {
   return true;
 }
 
+/* Leg (or hand) side: L = lead (vorderes Bein / vordere Hand), R = rear (hinteres), relative to the fighting stance.
+   FIXED = always that side, SIDE_DEF = the side a combo starts with, alternating after that. Hand techniques stay a small part (WT scores punches to the trunk only). */
+export const SIDED = new Set(["ap", "dol", "dolh", "yeop", "mireo", "dwi", "nae", "ban", "dhu", "ttdol", "ttyeop", "jir"]);
+export const FIXED = { mireo: "L", dwi: "R", dhu: "R", ban: "R", ttdol: "R", ttyeop: "R" };
+export const SIDE_DEF = { ap: "R", dol: "R", dolh: "R", yeop: "L", nae: "L", jir: "R" };
+
 /* combo pools per level (index = level); every combo is filtered through allowed() */
 export const COMBOS = [
   [
@@ -73,7 +81,6 @@ export const COMBOS = [
     ["jir", "dol"],
     ["ap", "yeop"],
     ["mireo", "dol"],
-    ["jir", "jir", "dol"],
     ["stepf", "dol", "dol"],
     ["ap", "dol", "yeop"],
     ["stepf", "ap", "dol"],
@@ -87,19 +94,20 @@ export const COMBOS = [
     ["ap", "dol", "nae"],
     ["dol", "ban"],
     ["yeop", "dwi"],
-    ["jir", "dol", "dwi"],
     ["stepf", "dol", "dolh", "dwi"],
     ["turn", "dol", "dolh"],
+    ["swch", "dol", "dolh"],
+    ["stepf", "swch", "dol"],
   ],
   [
     ["dol", "dolh", "dwi"],
     ["ap", "dol", "dhu"],
-    ["jir", "dol", "dolh", "dhu"],
     ["dol", "ttdol"],
     ["dol", "dolh", "ttyeop"],
     ["stepf", "dol", "dolh", "dwi"],
     ["ap", "yeop", "dwi", "dolh"],
     ["turn", "dol", "dwi", "dolh"],
+    ["swch", "dol", "dolh", "dwi"],
   ],
 ];
 /* with a wrist or shoulder limit: short light work, no pad or bag load */
