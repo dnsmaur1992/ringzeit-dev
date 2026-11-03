@@ -3046,7 +3046,7 @@ test("6b: resistance bands chosen for a mobility unit are used – in every spor
 });
 
 /* ---------- 6b: Taekwondo WT plans (technique, technique & conditioning, sparring) ---------- */
-const TKD_IDS = "ap dol dolh yeop mireo dwi nae ban dhu ttdol ttyeop jir stepf stepb steps turn swch".split(" ");
+const TKD_IDS = "ap dol dolh yeop mireo dwi nae ban dhu ttdol ttyeop jir stepf stepb steps turn swch sr1 sr2 sr3 sr4 sr5".split(" ");
 function tkdProfile(a, o = {}) {
   a.run(
     `S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.days=[0,1,2,3];S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.limits || [])};S.profile.tkd.wt='${o.grade || ""}';`,
@@ -3231,4 +3231,30 @@ test("6b: taekwondo kicks say lead (V) or rear (H) leg; hand techniques stay rar
       hands += ids.filter((x) => x === "jir").length;
     }
   assert.ok(hands / total < 0.08, "punches " + hands + "/" + total);
+});
+
+test("6b: kick series are one bracketed chip with explicit V/H, level 1, never for children or under-19 spinning kicks", () => {
+  const a = app();
+  const al = (id, c) => a.run(`TKDT.allowed('${id}',${JSON.stringify(c)})`);
+  const base = { level: 1, kup: null, kid: false, young: false, risky: false };
+  for (const id of ["sr1", "sr2", "sr3", "sr4", "sr5"]) {
+    assert.equal(al(id, { ...base, level: 0 }), false, id + " not for beginners");
+    assert.equal(al(id, { ...base, kid: true }), false, id + " not for children");
+  }
+  assert.equal(al("sr1", base), true);
+  assert.equal(al("sr3", { ...base, young: true }), false, "series with Dwi-chagi not under 19");
+  assert.equal(al("sr3", { ...base, risky: true }), false, "knee/ankle limit");
+  tkdProfile(a, { lvl: 1 });
+  const h = a.run("comboHtml(['sr1','dol'])");
+  assert.match(h, /<span class="ser">/);
+  assert.match(h, /class="arr"/);
+  assert.match(h, /<i>V<\/i>[\s\S]*<i>H<\/i>/, "Dollyeo V then H");
+  assert.equal(a.run("techNm('sr2',true)"), "Halbkreistritt Rumpf vorne, Halbkreistritt Rumpf vorne".replace(/^.*$/, a.run("techNm('ban',true)") + " vorne, " + a.run("techNm('dol',true)") + " vorne"));
+  assert.match(a.run("comboWords(['sr3'])"), /vorne.*hinten/);
+  let seen = 0;
+  for (let i = 0; i < 40; i++) if (/"sr\d"/.test(JSON.stringify(tkdSess(a, "T")))) seen++;
+  assert.ok(seen > 0, "series occur in level 1 technique units");
+  const k = app();
+  tkdProfile(k, { by: 2016, lvl: 0, grade: "k8" });
+  for (let i = 0; i < 20; i++) assert.ok(!/"sr\d"/.test(JSON.stringify(tkdSess(k, "T"))), "kid got a series");
 });
