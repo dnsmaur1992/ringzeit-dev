@@ -393,9 +393,16 @@
   const sideLbl = (s) => (S.profile.lang === "de" ? (s === "L" ? "V" : "H") : s);
   /* one technique chip (kicks red, V/H side mark) – also used inside the partner groups */
   function techChip(x, sd) {
-    const lg = S.profile.lang === "de" ? 0 : 1;
-    return `<span class="${KICKS.has(x) ? "k" : ""}">${esc(TECH[x][lg])}${sd ? `<i>${sideLbl(sd)}</i>` : ""}</span>`;
+    return `<span class="${isKickId(x) ? "k" : ""}">${esc(techNm(x))}${sd ? `<i>${sideLbl(sd)}</i>` : ""}</span>`;
   }
+  /* technique name in the display; taekwondo: Korean (WT transliteration) or the app language by the name switch, speech always app language */
+  function techNm(x, speech) {
+    const lg = S.profile.lang === "de" ? 0 : 1,
+      k = TKDT.TECH[x];
+    if (k) return !speech && tkdNames() === "ko" ? k[2] : k[lg];
+    return TECH[x][lg];
+  }
+  const isKickId = (x) => KICKS.has(x) || TKDT.KICKS.has(x);
   function comboHtml(c) {
     const sd = sides(c);
     return `<div class="combo">${c.map((x, i) => techChip(x, sd[i])).join("")}</div>`;
@@ -527,7 +534,7 @@
     const durs = [...new Set(lowTime() ? [20, 30] : [30, 45, 60, S.profile.minutes])]
       .filter((m) => (ty !== "M" || m <= 45) && (kidAge() == null || m <= (kidAge() <= 9 ? 30 : 45)))
       .sort((a, b) => a - b);
-    h += `<div class="panel">${sportRow("data-usport", setup.sport)}<div class="field"><span class="lab">${t("sessType")}</span><div class="seg g3">${["T", "C", "P", "S", "K", "M"].filter((k) => (setup.sport !== "taekwondo" || "SKM".includes(k)) && (k !== "P" || !simpleView() || ty === "P")).map((k) => `<button type="button" data-stype="${k}" aria-pressed="${ty === k}" ${k === "P" && (koLock(ds) || ageGroup() === "kids") ? "disabled" : ""}>${t("types")[k]}${k === planned ? `<small>${t("suggested")}</small>` : ""}</button>`).join("")}</div>${koLock(ds) ? `<span class="sub">${t("koNote")}</span>` : ""}</div>
+    h += `<div class="panel">${sportRow("data-usport", setup.sport)}<div class="field"><span class="lab">${t("sessType")}</span><div class="seg g3">${["T", "C", "P", "S", "K", "M"].filter((k) => (!(setup.sport === "taekwondo" && tkdStyle() === "itf") || "SKM".includes(k)) && (k !== "P" || !simpleView() || ty === "P")).map((k) => `<button type="button" data-stype="${k}" aria-pressed="${ty === k}" ${k === "P" && (koLock(ds) || ageGroup() === "kids") ? "disabled" : ""}>${t("types")[k]}${k === planned ? `<small>${t("suggested")}</small>` : ""}</button>`).join("")}</div>${koLock(ds) ? `<span class="sub">${t("koNote")}</span>` : ""}</div>
  <div class="field"><span class="lab">${t("dur")}</span><div class="seg">${durs.map((m) => `<button type="button" data-dur="${m}" aria-pressed="${setup.min === m}">${m}</button>`).join("")}</div></div>
  <div class="field"><span class="lab">${t("where")}</span><div class="seg ${ty === "S" || ty === "K" ? "g2" : ""}">${(ty === "S" || ty === "K" ? ["gym", "studio", "home", "out"] : ["gym", "home", "out"]).map((l) => `<button type="button" data-loc="${l}" aria-pressed="${setup.loc === l}">${t("locs")[l]}</button>`).join("")}</div></div>
 ${setupFields(setup, ty)}
@@ -574,7 +581,7 @@ ${setupFields(setup, ty)}
       if (!simpleView()) h += `<details class="note"><summary>${flowText().why}</summary><div>${[...notes, dataLine].filter(Boolean).map(esc).join("<br>")}</div></details>`;
     }
     if (sess.sport === "boxing") h += `<div class="note">${S.profile.lang === "de" ? "Boxeinheit nach DBV-Regeln." : "Boxing session under DBV rules."} <a href="${WKB_URL}" target="_blank" rel="noopener">${S.profile.lang === "de" ? "Regelwerk (DBV-WKB)" : "Rules (DBV WKB)"}</a></div>`;
-    if (sess.sport === "taekwondo") h += `<div class="note">${t("tkd").sessNote}</div>`;
+    if (sess.sport === "taekwondo" && tkdStyle() === "itf") h += `<div class="note">${t("tkd").sessNote}</div>`;
     sess.blocks.forEach((b, bi) => {
       h += sessionBlockHtml(sess, bi, true);
     });
@@ -590,7 +597,7 @@ ${setupFields(setup, ty)}
     let h = "";
     h += `<div class="block" data-block="${bi}">${blockHead(b, sess)}`;
     if (b.items.some((it) => it.combo))
-      h += `<div class="legend">${t("legend")}${b.items.some((it) => it.react) ? `<br>${t("legendReact")}` : ""}${b.items.some((it) => PARTNER_K.has(it.k)) ? `<br>${esc(t("partnerNote"))}` : ""}${(() => { const g = b.items.map(guardCue).find(Boolean); return g ? `<br>${esc(g)}` : ""; })()}</div>`;
+      h += `<div class="legend">${[sess.sport === "taekwondo" ? "" : t("legend"), b.items.some((it) => it.react) ? t("legendReact") : "", b.items.some((it) => PARTNER_K.has(it.k)) ? esc(t("partnerNote")) : "", (() => { const g = b.items.map(guardCue).find(Boolean); return g ? esc(g) : ""; })()].filter(Boolean).join("<br>")}</div>`;
     b.items.forEach((it, n) => {
       const checked = itemDone(sess, bi, n),
         itemAttr = `data-item="${bi}.${n}"`;
@@ -616,7 +623,7 @@ ${setupFields(setup, ty)}
         if (x)
           h += `<div class="ex${checked ? " past" : ""}" ${itemAttr}>${checkButton(sess, bi, n, pad(n + 1), preview)}<div class="tx">${preview ? `<b>${esc(x[S.profile.lang])}</b>` : examRow(x, n, sess.eq)}</div></div>`;
       } else if (it.kind === "round") {
-        const r = RT[it.k];
+        const r = rtOf(it);
         h += `<div class="ex${checked ? " past" : ""}" ${itemAttr} ${preview ? "" : `data-rd="${n + 1}"`}>${checkButton(sess, bi, n, t("roundAbbr") + (n + 1), preview)}<div class="tx">${it.mine ? `<span class="last mine">★ ${t("myc").lbl}</span><br>` : ""}<b>${esc(r[lg])}</b>${PARTNER_K.has(it.k) ? "" : `<div>${esc(roundDesc(it, lg))}</div>`}${it.six ? `<div class="last">${esc(t("sixPartner"))}</div>` : ""}${paceTxt(it) ? `<div class="last">${paceTxt(it)}</div>` : ""}${it.combo ? reactHtml(it) : ""}</div></div>`;
       } else {
         const x = exText(it.id),

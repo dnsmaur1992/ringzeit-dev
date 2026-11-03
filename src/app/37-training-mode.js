@@ -22,7 +22,7 @@
         label: t("sparMode")[it.m],
       };
     }
-    const r = RT[it.k] || ["", "", "", ""];
+    const r = rtOf(it) || ["", "", "", ""];
     return {
       title: r[lg],
       // partner rounds: no long text, only the short rule (the A/B frames show the rest)

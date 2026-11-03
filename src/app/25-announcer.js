@@ -28,7 +28,7 @@
       sp = SPEAK[lg];
     return c
       .map((x, i) => {
-        const w = sp[x] || TECH[x][lg === "de" ? 0 : 1];
+        const w = sp[x] || techNm(x, true);
         // the side is only spoken where it isn't obvious (jab and cross are always lead and rear)
         return sd[i] && !FIXED[x]
           ? `${w} ${lg === "de" ? (sd[i] === "L" ? "vorne" : "hinten") : sd[i] === "L" ? "lead" : "rear"}`

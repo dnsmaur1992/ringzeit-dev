@@ -8,7 +8,8 @@
   function dayTypes(bk) {
     const p = S.profile,
       days = p.days.slice().sort((a, b) => a - b),
-      pat = sportFor(p.sport).dayPattern[days.length] || [];
+      sp0 = sportFor(p.sport),
+      pat = ((sp0.id === "taekwondo" && tkdStyle() === "itf" && sp0.dayPatternItf) || sp0.dayPattern)[days.length] || [];
     const m = {};
     days.forEach((d, i) => {
       let ty = pat[i];
@@ -99,7 +100,10 @@
   const isTkd = () => sportNow() === "taekwondo";
   const discOf = () => (isBox() ? "box" : isTkd() ? "tkd" : S.profile.disc);
   /* Protection ban after a KO: kickboxing 4 weeks (WAKO), boxing 30 days (DBV §89) */
-  const koDays = () => sportFor(sportNow()).rules.koDays || 28;
+  const koDays = () => {
+    const k = sportFor(sportNow()).rules.koDays;
+    return typeof k === "function" ? (tkdStyle() === "itf" ? 30 : k(ageAt(today()))) : k || 28;
+  };
   const koLock = (ds) => !!S.ko && ds >= S.ko && daysBetween(parse(S.ko), parse(ds)) < koDays();
   /* Weekly suggestion; no sparring during a KO suspension or the day after club sparring */
   function suggestOn(ds) {
@@ -216,7 +220,7 @@
       nc = (S.profile.comps || []).find((c) => (c.kind || "comp") === "comp" && c.date === next),
       // a tournament of a sport without its own module has no known format yet; its date still drives the phases
       csp = SPORTS[(nc && nc.sport) || "kickboxing"],
-      fmtNext = csp ? csp.rules.format((nc && nc.disc) || ctx.profile.disc, ageAt(parse(next))) : null;
+      fmtNext = csp ? csp.rules.format(csp === SPORTS.taekwondo ? tkdStyle() : (nc && nc.disc) || ctx.profile.disc, ageAt(parse(next))) : null;
     const base = {
       days: n,
       comp: next,
@@ -415,6 +419,7 @@
   }
   const kneeAnk = () => S.profile.limits.some((l) => l === "knee" || l === "ankle");
   function chooseTheme() {
+    if (isTkd()) return null; // taekwondo has no hidden themes yet
     if (isBox()) {
       const lv = S.profile.level,
         recent = Object.values(S.sessions)
@@ -447,6 +452,7 @@
   }
   function combo(kind, theme) {
     if (isBox()) return boxCombo(kind, theme);
+    if (isTkd()) return tkdCombo(kind);
     const p = S.profile,
       lim = p.limits,
       ka = kneeAnk(),
@@ -774,18 +780,19 @@
       en: ["Free technical sparring", "Everything the rules allow, 50 % power, coach watching.", null],
     },
   ];
-  TASKS.push(...BOX_TASKS);
+  TASKS.push(...BOX_TASKS, ...TKDT.TASKS);
   const LIGHT_TASKS = ["hands", "kicks", "lead", "counter", "bodyhead", "control", "attdef"];
   function sparRounds(n, loc, eq, light) {
     const p = S.profile,
       ka = kneeAnk(),
       box = isBox(),
+      tkd = isTkd(),
       kid = ageGroup() === "kids",
       // boxing: children never spar with a partner (solo work with an imagined opponent)
       mode = eq.includes("partner") && !(box && kid) ? "p" : eq.includes("bag") && loc !== "out" ? "b" : "s";
     const ok = TASKS.filter(
       (x) =>
-        (box ? x.sport === "boxing" : x.sport !== "boxing") &&
+        (box ? x.sport === "boxing" : tkd ? x.sport === "taekwondo" : x.sport !== "boxing" && x.sport !== "taekwondo") &&
         !(x.touch && (kid || light)) &&
         (mode === "p" || x.de[2]) &&
         (!x.disc || x.disc.includes(discOf())) &&
@@ -842,6 +849,7 @@
     check: ["Checken (Schienbein-Block)", "Check (shin block)"],
     lift: ["Fuß anheben", "Lift the foot"],
   };
+  Object.assign(DEFS, TKDT.DEFS); // taekwondo defences (Zurückweichen, Ausweichen, Abblocken, Eindrehen)
   const COUNTER_ATT = {
     jab: { lvl: 0, d: [["cover", 0], ["step", 0], ["parry", 1], ["slip", 1]] },
     cross: { lvl: 0, d: [["cover", 0], ["step", 0], ["parry", 1], ["slip", 1]] },
@@ -973,12 +981,77 @@
   const guardCue = (it) =>
     PARTNER_K.has(it.k) ? (discOf() === "fc" ? t("fcGuard") : discOf() === "lc" ? t("lcControl") : "") : "";
   // round text; the heavy bag reads differently in Full Contact (impact) and Leichtkontakt (speed)
-  const roundDesc = (it, lg) => (it.k === "bag" && t("bagDisc")[discOf()]) || (RT[it.k] || [])[lg + 2] || "";
+  /* taekwondo rounds carry sp: "t" and read their own texts */
+  const rtOf = (it) => (it.sp === "t" && TKDT.RT[it.k]) || RT[it.k];
+  const roundDesc = (it, lg) => (it.k === "bag" && it.sp !== "t" && t("bagDisc")[discOf()]) || (rtOf(it) || [])[lg + 2] || "";
   /* rough difficulty of a combo: length, kicks, head kicks and advanced techniques */
   const comboLevel = (c) =>
     c.length + 0.5 * c.filter((x) => KICKS.has(x)).length + c.filter((x) => HIGHK.has(x)).length + 1.5 * c.filter((x) => ADV.has(x)).length;
   /* Boxing technique/conditioning rounds: shadow, bag, partner drills plus a larger share of footwork rounds and
      evasion rounds (always an opponent action first, imagined or real – never a random defence) */
+  /* taekwondo (WT): kicks released by level and grade (sports/taekwondo/techniques.js); a wrist or shoulder limit drops the
+     punch; children up to 3 techniques; head-height kicks never in the opening rounds (noHead) */
+  function tkdCombo(kind, noHead) {
+    const p = S.profile,
+      ctx = tkdCtx(),
+      lim = p.limits;
+    let pool = TKDT.COMBOS.slice(0, (p.level || 0) + 1).flat();
+    pool = pool.filter((c) => c.every((x) => TKDT.allowed(x, ctx)));
+    if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.includes("jir"));
+    if (noHead) pool = pool.filter((c) => !c.some((x) => TKDT.HEAD.has(x)));
+    if (ctx.kid) pool = pool.filter((c) => c.length <= 3);
+    if (!pool.length) pool = TKDT.LIGHT.filter((c) => c.every((x) => TKDT.allowed(x, ctx)));
+    if (!pool.length) pool = [["ap", "dol"]];
+    return rnd(pool).slice();
+  }
+  /* taekwondo technique and conditioning rounds: shadow kicks, bag, pad drills, footwork and evade & counter rounds */
+  function tkdRounds(type, n, loc, eq, easy) {
+    const p = S.profile,
+      partner = eq.includes("partner"),
+      ka = kneeAnk(),
+      lvl = p.level || 0,
+      kid = ageGroup() === "kids",
+      ctx = tkdCtx(),
+      bag = eq.includes("bag") && loc !== "out" && !p.limits.includes("shoulder"),
+      cyc = partner ? ["partner", "foot", "partner", "evade"] : bag ? ["shadow", "foot", "bag", "evade"] : ["shadow", "foot", "evade"],
+      kinds = [];
+    for (let i = 0; i < n; i++) {
+      let k = cyc[i % cyc.length];
+      if (type === "C" && eq.includes("rope") && i === n - 1 && !ka) k = "rope";
+      kinds.push(k);
+    }
+    const counters = TKDT.COUNTER.filter((c) => c.lvl <= lvl && c.c.every((x) => TKDT.allowed(x, ctx)) && (!kid || (TKDT.KID_DEFS.has(c.d) && c.c.length <= 2)));
+    const used = new Set(),
+      warm = Math.max(1, easy);
+    const out = kinds.map((k, i) => {
+      const r = { kind: "round", k, sp: "t" };
+      if (k === "shadow" || k === "bag" || k === "partner") r.combo = tkdCombo(k === "partner" ? "pads" : k, i < warm);
+      if (k === "evade") {
+        const fresh = counters.filter((c) => !used.has(c.d + c.att)),
+          pickC = rnd(fresh.length ? fresh : counters.length ? counters : TKDT.COUNTER.slice(0, 2));
+        used.add(pickC.d + pickC.att);
+        r.combo = pickC.c.slice();
+        r.evade = { d: pickC.d };
+      }
+      return r;
+    });
+    // no combo twice in one session
+    const seen = new Set();
+    for (const r of out) {
+      if (!r.combo || r.k === "evade") continue;
+      for (let t = 0; t < 6 && seen.has(r.combo.join()); t++) r.combo = tkdCombo(r.k === "partner" ? "pads" : r.k, out.indexOf(r) < warm);
+      seen.add(r.combo.join());
+    }
+    // partner rounds build up from short to long
+    if (partner) {
+      const pr = out.filter((r) => r.k === "partner" && r.combo),
+        sorted = pr.map((r) => r.combo).sort((x, y) => x.length - y.length);
+      pr.forEach((r, i) => (r.combo = sorted[i]));
+    }
+    // ease into it: the first round(s) at 70 %
+    for (let i = 0; i < Math.min(easy, out.length - 1); i++) out[i].ease = 1;
+    return out;
+  }
   function boxRounds(type, n, loc, eq, theme, easy) {
     const p = S.profile,
       partner = eq.includes("partner"),
@@ -1048,6 +1121,7 @@
   }
   function fightRounds(type, n, loc, eq, theme, easy = 1) {
     if (isBox()) return boxRounds(type, n, loc, eq, theme, easy);
+    if (isTkd()) return tkdRounds(type, n, loc, eq, easy);
     const p = S.profile,
       partner = eq.includes("partner"),
       ka = kneeAnk();
@@ -1431,6 +1505,39 @@
       de: ["Isometrische Nackenkräftigung – Halteübung", "Hand an Stirn, Hinterkopf und beide Kopfseiten legen, je Richtung {s} s gegeneinander drücken – der Kopf bleibt in Position."],
       en: ["Isometric neck strengthening – hold", "Hand on forehead, back of head and each side of the head, press head and hand against each other for {s} s per direction – the head stays in place."],
     },
+    /* taekwondo only (hardening of hand edge, fingertips and foot, docs/taekwondo-concept.md T10): gentle, never until it hurts */
+    {
+      id: "tkEdge",
+      tkdOnly: true,
+      m: "s",
+      strike: true,
+      adult: true,
+      de: ["Handkante klopfen", "Mit der Handkante locker auf eine dick gepolsterte Fläche klopfen (Matte, gefaltetes Handtuch), von weich zu etwas fester – nie bis es schmerzt, {rx}."],
+      en: ["Hand-edge tapping", "Tap a thickly padded surface (mat, folded towel) with the edge of your hand, from soft to a little firmer – never until it hurts, {rx}."],
+    },
+    {
+      id: "tkTips",
+      tkdOnly: true,
+      m: "s",
+      de: ["Fingerspitzen-Druck", "Die Fingerspitzen beider Hände gegeneinander pressen, kurz halten, locker lassen, {rx}."],
+      en: ["Fingertip press", "Press the fingertips of both hands against each other, hold briefly, let go, {rx}."],
+    },
+    {
+      id: "tkFoot",
+      tkdOnly: true,
+      m: "s",
+      de: ["Fußballen und Spann abklopfen", "Fußballen, Spann und Außenkante des Fußes mit der Faust oder flachen Hand leicht abklopfen, {rx}."],
+      en: ["Foot ball and instep tapping", "Lightly tap the ball, instep and outer edge of the foot with a fist or flat hand, {rx}."],
+    },
+    {
+      id: "tkBall",
+      tkdOnly: true,
+      m: "b",
+      strike: true,
+      adult: true,
+      de: ["Fußballen am Sack", "Mit dem Fußballen locker und kontrolliert gegen den Sack treten (Frontkick), nicht durchziehen, {rx}."],
+      en: ["Foot ball on the bag", "Kick the bag lightly and with control with the ball of the foot (front kick), do not follow through, {rx}."],
+    },
     /* boxing only (block "Handgelenk & Griff", docs/boxing-concept.md §3.4) */
     {
       id: "wristCurl",
@@ -1457,6 +1564,31 @@
     // numbers of the text come from the prescription the timer runs (core/prescription.js)
     return [hd[lg][0], rx ? rxFill(text, rx, lg) : text];
   }
+  /* Taekwondo: one hand area (fist, hand edge, fingers) and one leg area (shin, foot), alternating from session to session;
+     children and youth only the gentle solo items, taper/recovery weeks without impact (docs/taekwondo-concept.md T10, T12, T13) */
+  function tkdHardBlock(eq, loc, soft) {
+    const p = S.profile,
+      yg = young(),
+      kid = ageGroup() === "kids",
+      modes = ["s"];
+    if (!soft && !kid) {
+      if (eq.includes("partner")) modes.unshift("p");
+      else if (eq.includes("bag") && loc !== "out") modes.unshift("b");
+    }
+    const ok = (x) => modes.includes(x.m) && !(x.adult && yg) && !(soft && x.strike) && !(x.wr && p.limits.includes("wrist")) && (!x.lvl || p.level >= x.lvl);
+    const byId = (ids) => HARD.filter((x) => ids.includes(x.id) && ok(x));
+    const hand = [byId(["fTap"]), byId(["tkEdge"]), byId(["tkTips", "fFinger", "fWring"])].filter((g) => g.length),
+      leg = [byId(["shintap", "shinbag"]), byId(["tkFoot", "tkBall"])].filter((g) => g.length);
+    // the areas alternate: a random area first, the group with the equipment at hand (m != "s") preferred inside it
+    const pick = (groups) => {
+      const g = rnd(groups) || [],
+        eqPref = g.filter((x) => x.m !== "s");
+      return rnd(eqPref.length ? eqPref : g);
+    };
+    const a = pick(hand),
+      b = pick(leg);
+    return { key: "hard", min: 6, items: [a, b].filter(Boolean).map((x) => ({ kind: "hard", id: x.id })) };
+  }
   /* Boxing: no hardening with hits, a fixed 6-minute block for wrists and grip instead (docs/boxing-concept.md §3.4).
      Towel and grip every time; the rest by age, level, limits and equipment; taper/recovery weeks: only the gentle ones. */
   function wristBlock(eq, soft, blocks = []) {
@@ -1479,6 +1611,7 @@
   }
   function hardBlock(eq, loc, soft, blocks = []) {
     if (isBox()) return wristBlock(eq, soft, blocks);
+    if (isTkd()) return tkdHardBlock(eq, loc, soft);
     const p = S.profile,
       // harder only for full-contact adults and never in taper/recovery weeks (soft)
       full = (discOf() === "fc" || discOf() === "k1") && !young() && !soft,
@@ -1492,6 +1625,7 @@
         modes.includes(x.m) &&
         (!x.disc || x.disc.includes(discOf())) &&
         !x.boxOnly &&
+        !x.tkdOnly &&
         !(x.risky && ka) &&
         !(x.lim && p.limits.includes("shoulder")) &&
         !(x.adult && young()) &&
@@ -1542,8 +1676,8 @@
   }
   function buildSessionCore(dateStr, type, loc, eqIn, opts = {}) {
     loadCache = {};
-    // taekwondo: technique, fight and partner units come with the plans of 6b/6c – until then only the sport-neutral types
-    if (isTkd() && ["T", "C", "P"].includes(type)) type = "S";
+    // taekwondo ITF-D: technique, fight and partner units come with 6c – until then only the sport-neutral types
+    if (isTkd() && tkdStyle() === "itf" && ["T", "C", "P"].includes(type)) type = "S";
     // the fitness gym only exists for strength and conditioning; it brings its standard equipment along
     if (loc === "studio" && type !== "S" && type !== "K") loc = "gym";
     const studio = loc === "studio",
@@ -1629,6 +1763,7 @@
           loc,
           eq.filter((x) => x !== "rope"),
           used,
+          machines, // equipment that was brought along (resistance bands) is used first
         ),
       });
       blocks.push({
@@ -1640,7 +1775,7 @@
           loc,
           eq,
           used,
-          bk === "mob" ? byName(BLK_MOB[bi.st]) : null,
+          bk === "mob" ? byName(BLK_MOB[bi.st], machines) : machines,
         ),
         sets: t("holdNote"),
       });

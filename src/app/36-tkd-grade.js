@@ -25,6 +25,13 @@
       g = o && o.tgrade != null ? o.tgrade : tkdGradeOf(st);
     return { tkd: TKDT.beltOf(g) };
   }
+  /* number of the Kup of the worn grade of the current style: 0 = Dan/Poom (above all Kup), null = no grade entered */
+  const tkdKup = (style = tkdStyle()) => {
+    const g = tkdGradeOf(style);
+    return g ? (g[0] === "k" ? +g.slice(1) : 0) : null;
+  };
+  /* context of the technique release (sports/taekwondo/techniques.js allowed()) */
+  const tkdCtx = () => ({ level: S.profile.level || 0, kup: tkdKup(), kid: ageGroup() === "kids", young: young(), risky: kneeAnk() });
   const tkdAge = (p = S.profile) => (ageAt(today(), p) != null ? ageAt(today(), p) : null);
 
   function tkdHistPush(e) {
