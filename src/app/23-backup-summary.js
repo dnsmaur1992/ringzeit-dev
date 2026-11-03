@@ -139,7 +139,7 @@
       T = t("sum"),
       age = ageAt();
     const out = {
-      head: `${T.period(fmtDate(d.from), fmtDate(d.to))} · ${t("disc")[p.disc]} · ${t("levels")[p.level]}${age != null ? ` · ${age} ${T.years}` : ""}`,
+      head: `${T.period(fmtDate(d.from), fmtDate(d.to))} · ${discLabel(p)} · ${t("levels")[p.level]}${age != null ? ` · ${age} ${T.years}` : ""}`,
       test: d.test
         ? `${d.test.total}/25 · ${TCATS.map((k) => `${t("cats")[k]} ${d.test.scores[k] ?? "–"}`).join(", ")} (${fmtDate(d.test.date)})`
         : T.none,

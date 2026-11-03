@@ -1,7 +1,9 @@
   /* ============ Render ============ */
+  /* what the plan is called in headers: the discipline, or the sport when it has none (boxing) */
+  const discLabel = (p = S.profile) => (p.sport === "boxing" ? t("sportNames").boxing : t("disc")[p.disc]);
   function eyebrow() {
     const p = S.profile,
-      label = t("disc")[p.disc];
+      label = discLabel(p);
     const dl = weekLoad().deload;
     return `<div class="eyebrow"><i></i>${esc(label)} · ${t("phases")[phaseInfo().phase]}${dl ? ` · <em>${t("deload")}</em>` : ""}</div>`;
   }
@@ -12,6 +14,7 @@
   }
   function ruleTags() {
     const p = S.profile;
+    if (p.sport === "boxing") return ""; // boxing: rules are linked in the session, not shown as kickboxing tags
     const r = t("rules")[p.disc];
     return `<div class="tags"><span class="tg ok">${r[0]}</span>${r[1].map((x) => `<span class="tg no">${x}</span>`).join("")}${r[2].map((x) => `<span class="tg">${x}</span>`).join("")}</div>`;
   }

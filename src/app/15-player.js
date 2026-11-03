@@ -1112,7 +1112,7 @@
   }
   /* main sport of the plan (profile draft): same choice row, written to the profile with the other plan settings */
   const sportRowP = (p) =>
-    `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices().map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${t("sportNames")[k] || k}</button>`).join("")}</div></div>`;
+    `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices(true).map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${sportLabel(k)}</button>`).join("")}</div></div>`;
   function renderLog() {
     let h = header(t("logTitle"));
     const mon = monday(today()),
@@ -1234,8 +1234,8 @@
       life = "",
       app = "";
     more += `<div class="panel">${sportRowP(p)}<div class="field"><span class="lab">${t("level")}</span><div class="seg">${[0, 1, 2].map((k) => (k > ml ? `<button type="button" class="locked" data-lock="level" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("levels")[k]}</button>` : `<button type="button" data-p="level" data-v="${k}" aria-pressed="${p.level === k}">${t("levels")[k]}</button>`)).join("")}</div>${ml < 2 ? `<span class="sub">${t("levelLock")}</span>` : ""}</div>
- <div class="field"><span class="lab">${t("discipline")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => ((ageAt(today(), p) != null && ageAt(today(), p) < 15) && (k === "fc" || k === "k1") ? `<button type="button" class="locked" data-lock="age" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-p="disc" data-v="${k}" aria-pressed="${p.disc === k}">${t("disc")[k]}</button>`)).join("")}</div></div>
- <div class="field"><span class="lab">${t("focus")}</span><div class="seg">${["box", "bal", "kick"].map((k) => `<button type="button" data-p="focus" data-v="${k}" aria-pressed="${(p.level === 0 ? "bal" : p.focus) === k}" ${p.level === 0 && k !== "bal" ? "disabled" : ""}>${t("focusOpt")[k]}</button>`).join("")}</div>${p.level === 0 ? `<span class="sub">${t("focusLock")}</span>` : ""}</div>
+ ${p.sport === "boxing" ? "" : `<div class="field"><span class="lab">${t("discipline")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => ((ageAt(today(), p) != null && ageAt(today(), p) < 15) && (k === "fc" || k === "k1") ? `<button type="button" class="locked" data-lock="age" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-p="disc" data-v="${k}" aria-pressed="${p.disc === k}">${t("disc")[k]}</button>`)).join("")}</div></div>
+ <div class="field"><span class="lab">${t("focus")}</span><div class="seg">${["box", "bal", "kick"].map((k) => `<button type="button" data-p="focus" data-v="${k}" aria-pressed="${(p.level === 0 ? "bal" : p.focus) === k}" ${p.level === 0 && k !== "bal" ? "disabled" : ""}>${t("focusOpt")[k]}</button>`).join("")}</div>${p.level === 0 ? `<span class="sub">${t("focusLock")}</span>` : ""}</div>`}
  <div class="field"><label class="lab" for="pBirth">${t("birth")}</label><input id="pBirth" type="number" inputmode="numeric" min="1950" max="${today().getFullYear() - 8}" placeholder="2001" value="${p.birthYear || ""}"><span class="sub">${t("birthHint")}${ageAt(today(), p) != null ? ` · ${ageAt(today(), p)} · ${t("ages")[ageGroup(p)]}` : ""}</span>${ageGroup(p) === "kids" ? `<span class="sub">${t("kidsNote")}</span>` : ""}</div>
  <div class="field"><span class="lab">${t("sex")}</span><div class="seg g3">${["m", "f", "d"].map((k) => `<button type="button" data-p="sex" data-v="${k}" aria-pressed="${p.sex === k}">${t("sexes")[k]}</button>`).join("")}</div><span class="sub">${t("sexHint")}</span></div></div>`;
     const cl = p.club || { days: [], minutes: 90 },
@@ -1345,7 +1345,7 @@
       bs = blockState(),
       L = t("life"),
       sum = {
-        train: `${t("disc")[p.disc]} · ${(p.club && p.club.days.length ? PS.club(p.club.days.length) + " + " : "") + PS.days(p.days.length)}`,
+        train: `${discLabel(p)} · ${(p.club && p.club.days.length ? PS.club(p.club.days.length) + " + " : "") + PS.days(p.days.length)}`,
         goals:
           [
             nc ? (nc.kind === "grade" ? PS.nextGrade : PS.nextComp)(fmtDate(nc.date)) : "",
