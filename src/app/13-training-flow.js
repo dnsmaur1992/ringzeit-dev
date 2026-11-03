@@ -438,7 +438,7 @@
     if (fight)
       h += `<div class="field"><span class="lab">${t("pbQ")}</span><div class="seg">${["partner", "bag", "none"].map((k) => `<button type="button" data-pb="${k}" aria-pressed="${k === "none" ? !has("partner") && !has("bag") : has(k)}">${t("pb")[k]}</button>`).join("")}</div></div>`;
     if (ty === "K" && setup.loc === "out")
-      h += `<div class="field"><span class="lab">${t("runQ")}</span><div class="seg">${["iv", "run", "free"].map((k) => `<button type="button" data-run="${k}" aria-pressed="${k === "free" ? setup.run === "free" : (k === "run") === (!!setup.run && setup.run !== "free" && !kneeAnk())}" ${k !== "iv" && kneeAnk() ? "disabled" : ""}>${t("runOpt")[k]}</button>`).join("")}</div>${setup.run === "free" ? `<span class="sub">${t("freeRunHint")}</span>` : ""}${kneeAnk() ? `<span class="sub">${t("runLock")}</span>` : ""}</div>`;
+      h += `<div class="field"><span class="lab">${t("runQ")}</span><div class="seg">${["iv", "run", "free"].map((k) => `<button type="button" data-run="${k}" aria-pressed="${k === "free" ? setup.run === "free" : setup.run !== "free" && (k === "run") === (!!setup.run && !kneeAnk())}" ${k !== "iv" && kneeAnk() ? "disabled" : ""}>${t("runOpt")[k]}</button>`).join("")}</div>${setup.run === "free" ? `<span class="sub">${t("freeRunHint")}</span>` : ""}${kneeAnk() ? `<span class="sub">${t("runLock")}</span>` : ""}</div>`;
     const runOnly = !!setup.run && setup.run !== "free" && canRun(ty, setup.loc),
       studio = setup.loc === "studio" && (ty === "S" || ty === "K");
     if (studio) h += `<div class="field"><span class="sub">${t("studioNote")}</span></div>`;
