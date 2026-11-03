@@ -2954,14 +2954,56 @@ test("6a: technique test – taekwondo description, technique level kept per sty
   assert.equal(a.run("levelFor(S.tests,'taekwondo','wt').needTech"), false);
   assert.equal(a.run("levelFor(S.tests,'taekwondo','itf').needTech"), true, "ITF technique is rated separately");
 });
-test("6a: loader – taekwondo main sport shows general tips only (no kickboxing or boxing items)", () => {
+test("6d: loader – tips and facts by sport × style × language (no foreign items, tk items only in taekwondo)", () => {
   const a = app();
-  a.run("S.profile.sport='taekwondo';loadIdx=0;");
-  a.run("document.getElementById('factNext');showCard();");
-  const k = a.run("document.getElementById('factK').textContent");
-  assert.equal(k, a.run("t('tipK')"), "even index shows a tip, not a fact");
+  const seenBy = (sport, style, lg) => {
+    a.run(`S.profile.sport='${sport}';S.profile.lang='${lg}';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${style}'});`);
+    const out = [];
+    for (let i = 0; i < 80; i++) {
+      a.run(`loadIdx=${i};showCard();`);
+      out.push(a.run("document.getElementById('factT').textContent"));
+    }
+    return new Set(out);
+  };
+  const items = (name) => JSON.parse(a.run(`JSON.stringify(${name})`));
+  const TIPS = items("TIPS"), FACTS = items("FACTS");
+  const find = (txt, lg) => [...TIPS, ...FACTS].filter((x) => x[lg] === txt);
+  for (const lg of ["de", "en"])
+    for (const style of ["wt", "itf"]) {
+      const seen = seenBy("taekwondo", style, lg);
+      let tk = 0, facts = 0;
+      for (const txt of seen) {
+        const hit = find(txt, lg);
+        assert.ok(hit.length, "a known item: " + txt);
+        const x = hit[0];
+        assert.ok(!x.k && !x.b && !x.d || x.tk, "no kickboxing/boxing item in taekwondo: " + txt);
+        if (x.tk) {
+          tk++;
+          assert.ok(x.tk === true || x.tk === style, "only this style: " + txt);
+        }
+        if (FACTS.includes(x)) facts++;
+      }
+      assert.ok(tk >= 8, "tk items shown " + style + lg);
+      assert.ok(facts >= 3, "facts shown " + style + lg);
+      const other = style === "wt" ? "itf" : "wt";
+      for (const txt of seen) assert.notEqual(find(txt, lg)[0].tk, other, "no " + other + " item for " + style);
+    }
+  for (const sport of ["kickboxing", "boxing"])
+    for (const lg of ["de", "en"])
+      for (const txt of seenBy(sport, "wt", lg)) assert.ok(!find(txt, lg)[0].tk, sport + " never shows tk: " + txt);
 });
-
+test("6d: all taekwondo tips and facts have both languages; facts carry a source; flags valid", () => {
+  const a = app();
+  for (const name of ["TIPS", "FACTS"]) {
+    const L = JSON.parse(a.run(`JSON.stringify(${name}.filter((x) => x.tk))`));
+    assert.ok(L.length >= (name === "TIPS" ? 14 : 7));
+    for (const x of L) {
+      assert.ok([true, "wt", "itf"].includes(x.tk));
+      assert.ok(x.de.length > 20 && x.en.length > 20);
+      if (name === "FACTS") assert.ok(x.s, "source");
+    }
+  }
+});
 test("6a: no kickboxing/boxing technique exercises in taekwondo units (all types, many builds); neutral exercises stay", () => {
   const a = app();
   a.run("S.profile.sport='taekwondo';S.profile.days=[0,1,2,3,4,5,6];S.profile.birthYear=1995;");
@@ -3410,4 +3452,105 @@ test("6c: unit style and unit discipline are chosen in the settings form without
   // children under 15 are not offered the ring disciplines
   k.run("S.profile.birthYear=2016;ui.setup=setupOf(S.sessions['2026-11-03'],'2026-11-03');");
   assert.doesNotMatch(k.run("renderSession()"), /data-udisc="fc"/);
+});
+
+test("6d: guide – taekwondo reads by style and language; no kickboxing/boxing topics; each sheet renders", () => {
+  const a = app();
+  for (const lg of ["de", "en"])
+    for (const style of ["wt", "itf"]) {
+      a.run(`S.profile.sport='taekwondo';S.profile.lang='${lg}';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${style}'});`);
+      const keys = JSON.parse(a.run("JSON.stringify(readsFor().map((r)=>r.k))"));
+      for (const k of ["tbelt", "tgrade", "tterms", "thist", "myths", "sleep"]) assert.ok(keys.includes(k), k);
+      for (const k of ["gloves", "shin", "judge", "disc", "day", "mistakes", "bgear"]) assert.ok(!keys.includes(k), k + " hidden");
+      const panel = a.run("guidePanelHtml()");
+      assert.doesNotMatch(panel, /data-guide="wrap"/, "no hand-wrap row");
+      assert.match(panel, /data-guide="care"/);
+      assert.match(panel, /data-guide="tgrade"/);
+      for (const k of keys) {
+        const h = a.run(`guideSheetHtml({id:'${k}'})`);
+        assert.doesNotMatch(h, /undefined|NaN|\[object/, k);
+        const bad = h.match(/WAKO|Kickbox|kickbox|Handschuh|glove|Bandag|wrap|Thai/i);
+        assert.ok(!bad, `no kickboxing words in ${k} ${style}${lg}: ${bad && h.slice(Math.max(0, bad.index - 60), bad.index + 60)}`);
+        if (["tbelt", "tgrade"].includes(k)) assert.match(h, /class="vlink" href="https:\/\/www\.(dtu|itf-d)\.de/, "publisher link " + k);
+      }
+      const g = a.run("guideSheetHtml({id:'tgrade'})");
+      if (style === "itf") {
+        assert.match(g, /Chon-Ji/);
+        assert.doesNotMatch(g, /Taegeuk/);
+      } else {
+        assert.match(g, /Taegeuk Il Jang/);
+        assert.doesNotMatch(g, /Chon-Ji/);
+      }
+      const care = a.run("guideSheetHtml({id:'care'})") + a.run("guideSheetHtml({id:'aid'})");
+      const cb = care.match(/WAKO|Namman|Bandagen|Handschuhe|wraps|gloves/);
+      assert.ok(!cb, "care/aid neutral: " + (cb && care.slice(Math.max(0, cb.index - 80), cb.index + 60)));
+      assert.match(care, /Mundschutz|Mouth ?guard/);
+    }
+  a.run("S.profile.lang='de';S.profile.sport='kickboxing';");
+  assert.match(a.run("guidePanelHtml()"), /data-guide="wrap"/);
+  assert.ok(!JSON.parse(a.run("JSON.stringify(readsFor().map((r)=>r.k))")).some((k) => /^t(belt|grade|terms|hist)$/.test(k)));
+  a.run("S.profile.sport='boxing';");
+  assert.ok(!JSON.parse(a.run("JSON.stringify(readsFor().map((r)=>r.k))")).some((k) => /^t(belt|grade|terms|hist)$/.test(k)));
+});
+test("6d: guide – waiting times and forms come from the module data (no drift)", () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.lang='de';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'wt'});");
+  let g = a.run("guideSheetHtml({id:'tgrade'})");
+  assert.match(g, new RegExp(`${a.run("TKDT.gradeText('k4','de')").replace(".", "\\.")} ${a.run("TKDT.WAIT.wt.k4")}( ·|\\.|<)`));
+  a.run("S.profile.tkd.style='itf';");
+  g = a.run("guideSheetHtml({id:'tgrade'})");
+  assert.match(g, new RegExp(`${a.run("TKDT.gradeText('k5','de')").replace(".", "\\.")} ${a.run("TKDT.WAIT.itf.k5")}( ·|\\.|<)`));
+  for (const n of Object.values(JSON.parse(a.run("JSON.stringify(TKDT.ITF_TUL)")))) assert.ok(g.includes(n), n);
+  const terms = a.run("guideSheetHtml({id:'tterms'})");
+  assert.match(terms, /Dollyo Chagi/);
+  assert.doesNotMatch(terms, /Dollyeo/);
+});
+test("6d: packing list by style; note by style; others unchanged", () => {
+  const a = app();
+  a.run("S.profile.comps=[{id:'c1',date:'2026-11-05',kind:'comp',name:'X'}];");
+  const items = (sport, style) => {
+    a.run(`S.profile.sport='${sport}';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${style}'});S.profile.lang='de';`);
+    return JSON.parse(a.run("JSON.stringify(packItems('c1').map((x)=>x.txt))"));
+  };
+  const wt = items("taekwondo", "wt"), itf = items("taekwondo", "itf"), kb = items("kickboxing", "wt"), bx = items("boxing", "wt");
+  assert.ok(wt.includes("Rumpfschutz (Weste)") && wt.includes("Dobok") && wt.includes("Gürtel"));
+  assert.ok(itf.includes("Geschlossene Handschuhe") && itf.includes("Armbinden rot und blau"));
+  assert.ok(!wt.includes("Geschlossene Handschuhe") && !itf.includes("Rumpfschutz (Weste)"));
+  assert.ok(kb.includes("Coach-Lizenz") && !kb.includes("Dobok") && !bx.includes("Dobok"));
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';");
+  assert.match(a.run("packSheetHtml({id:'c1'})"), /WT-Wettkampfregeln/);
+  a.run("S.profile.tkd.style='itf';");
+  assert.match(a.run("packSheetHtml({id:'c1'})"), /ITF-Turnierregeln/);
+  a.run("S.profile.lang='en';");
+  assert.match(a.run("packSheetHtml({id:'c1'})"), /ITF tournament rules/);
+  assert.ok(items("taekwondo", "wt").length >= 12);
+});
+test("6d: tour, share and profile texts have a taekwondo variant (DE and EN) without WAKO/boxing wording", () => {
+  const a = app();
+  for (const lg of ["de", "en"]) {
+    a.run(`S.profile.lang='${lg}';S.profile.sport='taekwondo';`);
+    for (const k of ["tourIntroTkd", "tourBasicsTkd", "tourProfTkd"]) {
+      const v = a.run(`t('${k}')`);
+      assert.ok(v.length > 60, k);
+      assert.doesNotMatch(v, /WAKO|Kickbox|DBV|Jab|Haken|Bandag|wrap|hooks/i, k);
+    }
+    assert.match(a.run("t('inst').shareTextTkd || ''"), /Taekwondo|taekwondo/);
+    assert.ok(a.run("t('psec').guideTkd").length > 10);
+    assert.ok(a.run("t('guide').hintTkd").length > 10);
+  }
+});
+test("6d: style change loses nothing (grades, history, exams, names stay); the whole profile is part of the backup", async () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;draft=null;");
+  a.run("S.profile.tkd={style:'wt',names:'app',wt:'k5',itf:'k7',hist:[{date:'2026-09-01',style:'wt',to:'k5'}],exams:[{id:'e1',date:'2026-12-01'}]};");
+  const before = a.run("JSON.stringify({wt:S.profile.tkd.wt,itf:S.profile.tkd.itf,hist:S.profile.tkd.hist,exams:S.profile.tkd.exams,names:S.profile.tkd.names})");
+  await tk(a, { tk: "style", tv: "itf" });
+  await tk(a, { tk: "style", tv: "wt" });
+  assert.equal(a.run("JSON.stringify({wt:S.profile.tkd.wt,itf:S.profile.tkd.itf,hist:S.profile.tkd.hist,exams:S.profile.tkd.exams,names:S.profile.tkd.names})"), before);
+  // guide and loader follow the switch at once
+  await tk(a, { tk: "style", tv: "itf" });
+  assert.match(a.run("guideSheetHtml({id:'tgrade'})"), /Chon-Ji/);
+  await tk(a, { tk: "style", tv: "wt" });
+  assert.match(a.run("guideSheetHtml({id:'tgrade'})"), /Taegeuk/);
+  assert.match(a.run("JSON.stringify(S)"), /"tkd":\{"style":"wt","names":"app"/);
 });
