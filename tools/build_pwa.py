@@ -1,12 +1,38 @@
-import json, time, os, re
-"""Ringzeit Dev build: turns the readable source (src/ringzeit.html) into the installable app in pwa/
-(index.html with app meta tags, manifest, service worker sw.js; CSS/JS minified when esbuild is available).
-App id and name come from APP_ID / APP_NAME in the source, so storage key, cache names, manifest and title
+import json, time, os, re, sys, glob, subprocess
+"""Ringzeit Dev build.
+1. Assembles the readable app: src/index.html (markup + CSS) with, in place of its /*@@APP@@*/ line, the core
+   modules bundled by esbuild (src/modules.js: src/core, src/catalog, src/sports -> one global `RZ`) followed by
+   the ordered app parts src/app/*.js.  ->  build/ringzeit.html (readable; the tests run exactly this file)
+2. Turns it into the installable app in pwa/ (index.html with app meta tags, manifest, service worker sw.js;
+   CSS/JS minified with esbuild).
+App id and name come from APP_ID / APP_NAME in the app source, so storage key, cache names, manifest and title
 stay separate from the stable Ringzeit app on the same origin.
-Usage: python3 tools/build_pwa.py [path/to/ringzeit.html]  ->  upload pwa/index.html, pwa/sw.js, pwa/manifest.webmanifest"""
-import sys
-SRC=next(p for p in (sys.argv[1:]+['src/ringzeit.html','/home/claude/ringzeit.html']) if os.path.exists(p))
-src=open(SRC).read()
+Usage: python3 tools/build_pwa.py              ->  upload pwa/index.html, pwa/sw.js, pwa/manifest.webmanifest
+       python3 tools/build_pwa.py --readable   ->  only build/ringzeit.html"""
+ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(ROOT)
+ESB=next((p for p in [os.path.join(ROOT,'node_modules','.bin','esbuild'),os.path.join(ROOT,'tools','fmt','node_modules','.bin','esbuild')] if os.path.exists(p)),'')
+MARK='/*@@APP@@*/\n'
+def esbuild(args,code=None):
+    if not ESB: raise SystemExit('esbuild missing: run "npm install" in the repository folder')
+    r=subprocess.run([ESB,*args],input=code,capture_output=True,text=True)
+    if r.returncode: raise SystemExit(r.stderr)
+    return r.stdout
+def assemble():
+    shell=open('src/index.html').read()
+    if shell.count(MARK)!=1: raise SystemExit('src/index.html needs exactly one '+MARK.strip()+' line')
+    core=''
+    if os.path.exists('src/modules.js'):
+        core=esbuild(['src/modules.js','--bundle','--format=iife','--global-name=RZ','--target=safari15','--charset=utf8','--legal-comments=none'])
+    app=''.join(open(f).read() for f in sorted(glob.glob('src/app/*.js')))
+    out=shell.replace(MARK,core+app)
+    os.makedirs('build',exist_ok=True)
+    open('build/ringzeit.html','w').write(out)
+    return out
+src=assemble()
+if '--readable' in sys.argv:
+    print('assembled build/ringzeit.html'); sys.exit(0)
+SRC='build/ringzeit.html'
 def const(name):
     m=re.search(r'const '+name+r' = "([^"]+)";',src)
     if not m: raise SystemExit(name+' not found in '+SRC)
@@ -45,12 +71,8 @@ tail=f'''
 </html>
 '''
 # minify the app's CSS and JS for a smaller, faster download (the source stays readable)
-import subprocess
-ESB=next((p for p in [os.path.join(os.path.dirname(os.path.abspath(__file__)),'fmt','node_modules','.bin','esbuild'),'node_modules/.bin/esbuild'] if os.path.exists(p)),'')
 def mini(code,loader):
-    r=subprocess.run([ESB,'--minify','--loader='+loader,'--target=safari15'],input=code,capture_output=True,text=True)
-    if r.returncode: raise SystemExit(r.stderr)
-    return r.stdout.strip()
+    return esbuild(['--minify','--loader='+loader,'--target=safari15'],code).strip()
 if ESB:
     cs=body.index('<style>')+7; ce=body.index('</style>')
     body=body[:cs]+mini(body[cs:ce],'css')+body[ce:]
