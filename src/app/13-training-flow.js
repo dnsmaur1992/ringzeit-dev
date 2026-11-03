@@ -393,12 +393,16 @@
   const sideLbl = (s) => (S.profile.lang === "de" ? (s === "L" ? "V" : "H") : s);
   /* one technique chip (kicks red, V/H side mark) – also used inside the partner groups */
   function techChip(x, sd) {
+    const sr = TKDT.SERIES[x];
+    // series: one bracketed chip around the parts, arrows between them (fast sequence without setting down)
+    if (sr) return `<span class="ser">${sr.p.map(([y, s]) => techChip(y, s)).join('<b class="arr">›</b>')}</span>`;
     return `<span class="${isKickId(x) ? "k" : ""}">${esc(techNm(x))}${sd ? `<i>${sideLbl(sd)}</i>` : ""}</span>`;
   }
   /* technique name in the display; taekwondo: Korean (WT transliteration) or the app language by the name switch, speech always app language */
   function techNm(x, speech) {
     const lg = S.profile.lang === "de" ? 0 : 1,
       k = TKDT.TECH[x];
+    if (k && TKDT.SERIES[x] && speech) return TKDT.SERIES[x].p.map(([y, s]) => techNm(y, true) + (s ? (lg === 0 ? (s === "L" ? " vorne" : " hinten") : s === "L" ? " lead" : " rear") : "")).join(", ");
     if (k) return !speech && tkdNames() === "ko" ? k[2] : k[lg];
     return TECH[x][lg];
   }
