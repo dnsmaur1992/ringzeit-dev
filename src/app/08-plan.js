@@ -570,8 +570,8 @@
     evade: [
       "Meiden & Kontern",
       "Slip & counter",
-      "Stell dir die Aktion des Gegners (B) vor, weiche aus (A) und kontere mit der Kombination. Kopf bewegen, Hände oben.",
-      "Picture the opponent's action (B), evade (A) and counter with the combination. Move your head, hands up.",
+      "Stell dir einen Angriff vor, weiche aus und kontere sofort mit der Kombination. Kopf bewegen, Hände oben.",
+      "Picture an attack, evade it and counter straight away with the combination. Move your head, hands up.",
     ],
     rope: [
       "Seil-Runde",
@@ -946,6 +946,11 @@
   function reactHtml(it) {
     const R = it.react,
       c = it.combo;
+    // boxing evasion round: the defence, then the counter – nothing is said about the opponent
+    if (it.evade && c) {
+      const sd0 = sides(c);
+      return `<div class="combo pseq"><span class="dfn">${esc(DEFS[it.evade.d][S.profile.lang === "de" ? 0 : 1])}</span>${c.map((x, i) => techChip(x, sd0[i])).join("")}</div>`;
+    }
     if (!R) return c ? comboHtml(c) : "";
     const sd = sides(c),
       lg = S.profile.lang === "de" ? 0 : 1,
@@ -996,7 +1001,8 @@
           c = rnd(fresh.length ? fresh : counters);
         used.add(c.d + c.att);
         r.combo = c.c.slice();
-        r.react = { pre: { a: c.att, d: c.d } };
+        // only the defence is named, what the opponent does stays open (Betreiber, 03.11.2026)
+        r.evade = { d: c.d };
       }
       return r;
     });
@@ -1512,7 +1518,8 @@
   const mainSport = () => S.profile.sport || "kickboxing";
   /* preview = also the sports in development (labelled); the main sport in the profile never offers them */
   const sportChoices = (preview = false) => [...visibleSports(), ...(preview ? previewSports() : [])].map((x) => x.id);
-  const sportLabel = (k) => (t("sportNames")[k] || k) + (SPORTS[k] && !SPORTS[k].visible && SPORTS[k].preview ? " · " + t("previewTag") : "");
+  /* the preview is marked inside the session (note with rules link), not in the label of the choice */
+  const sportLabel = (k) => t("sportNames")[k] || k;
   function sportRow(attr, cur) {
     return `<div class="field"><span class="lab">${t("sportL")}</span><div class="seg">${sportChoices(true)
       .map((k) => `<button type="button" ${attr}="${k}" aria-pressed="${(cur || mainSport()) === k}">${sportLabel(k)}</button>`)

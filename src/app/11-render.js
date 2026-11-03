@@ -113,8 +113,12 @@
     }
     // the fighters trade blows on training days; on rest days and once done they wait calmly in guard
     const calm = !!pz || !((tty && !doneOn(td)) || (cl && !clubDone(td)));
+    // boxing outfits (blue/red corner) only when the shown session is set to boxing: setup choice first, then the built session, then the main sport
+    const shownDs = tty && !doneOn(td) ? td : nty && nd !== td ? nd : td,
+      shownSport = (ui.setup && ui.setup.ds === shownDs && ui.setup.sport) || (S.sessions[shownDs] && S.sessions[shownDs].sport) || mainSport(),
+      boxHero = shownSport === "boxing" && !pz && !(cl && !tty);
     const greet = (season() || { greet: [] }).greet;
-    return `<div class="today" style="--tc:var(--c-${ty || "S"})">${heroScene(pose, ty, calm)}${greet.length ? `<div class="greet">${esc(greet.join(" · "))}</div>` : ""}<div class="tbody"><div style="min-width:0"><small>${esc(small)}</small><b>${esc(title)}</b>${meta ? `<div class="sub">${esc(meta)}</div>` : ""}</div>${btn}</div></div>`;
+    return `<div class="today" style="--tc:var(--c-${ty || "S"})">${heroScene(boxHero ? "box" : pose, ty, calm, boxHero)}${greet.length ? `<div class="greet">${esc(greet.join(" · "))}</div>` : ""}<div class="tbody"><div style="min-width:0"><small>${esc(small)}</small><b>${esc(title)}</b>${meta ? `<div class="sub">${esc(meta)}</div>` : ""}</div>${btn}</div></div>`;
   }
   /* Things that need an answer: break, KO suspension, club attendance, missed sessions, results, weight class */
   function promptsHtml() {

@@ -156,6 +156,25 @@
     const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - 70}" y="${waist.toFixed(1)}" width="140" height="80" fill="url(#trunksP)"/><rect x="${b.cx - 70}" y="${waist.toFixed(1)}" width="140" height="4" fill="#138895"/></g><path d="M${mid - 3} ${(waist + 3).toFixed(1)} l-3 9 M${mid + 3} ${(waist + 3).toFixed(1)} l3 9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`;
     return { legs, body };
   }
+  /* boxing corners: shirt and shorts in one colour with a white waistline (blue corner left, red corner right).
+     Shirt = the whole body, shorts = the thighs and the part of the body below the waistline (a darker tone). */
+  const BOX_BLUE = { top: "#2F6FD0", shorts: "#1F4FA3" },
+    BOX_RED = { top: "#D2343F", shorts: "#A5232E" };
+  function boxOutfit(o, c) {
+    const b = o.body,
+      n = (o.belly.match(/-?[\d.]+/g) || []).map(Number),
+      id = "bo" + figN++;
+    let legs = "";
+    o.legs.forEach((l) => {
+      const [h, k, f] = l,
+        e = [k[0] + (f[0] - k[0]) * 0.22, k[1] + (f[1] - k[1]) * 0.22],
+        pts = `${h.join(",")} ${k.join(",")} ${e.map((v) => v.toFixed(1)).join(",")}`;
+      legs += `<polyline points="${pts}" fill="none" stroke="${FIG.BG}" stroke-width="35" stroke-linecap="butt" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="${c.shorts}" stroke-width="29" stroke-linecap="butt" stroke-linejoin="round"/>`;
+    });
+    const below = n.length >= 6 ? `M${n[0]} ${n[1]} Q${n[2]} ${n[3]} ${n[4]} ${n[5]} L${n[4] + 20} ${n[5] + 60} L${n[0] - 20} ${n[1] + 60} Z` : `M${b.cx - 60} ${b.cy + b.ry * 0.4} H${b.cx + 60} V${b.cy + b.ry + 5} H${b.cx - 60} Z`;
+    const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - b.rx - 4}" y="${b.cy - b.ry - 4}" width="${b.rx * 2 + 8}" height="${b.ry * 2 + 8}" transform="rotate(${b.rot} ${b.cx} ${b.cy})" fill="${c.top}"/><path d="${below}" fill="${c.shorts}"/></g><path d="${o.belly}" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>`;
+    return { legs, body };
+  }
   function hatSvg(kind, x, y) {
     if (kind === "jester")
       return `<path d="M${x - 20} ${y - 12} Q${x - 30} ${y - 40} ${x - 40} ${y - 30} Q${x - 22} ${y - 30} ${x - 12} ${y - 14} Z" fill="#2E86DE" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><path d="M${x - 12} ${y - 15} Q${x} ${y - 52} ${x + 10} ${y - 15} Z" fill="#FFD23F" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><path d="M${x + 12} ${y - 14} Q${x + 22} ${y - 30} ${x + 40} ${y - 30} Q${x + 30} ${y - 40} ${x + 20} ${y - 12} Z" fill="#E8445A" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><rect x="${x - 23}" y="${y - 19}" width="46" height="9" rx="4" fill="#58D68D" stroke="${FIG.BG}" stroke-width="3"/><circle cx="${x - 41}" cy="${y - 30}" r="4.5" fill="#FFD23F" stroke="${FIG.BG}" stroke-width="2"/><circle cx="${x}" cy="${y - 50}" r="4.5" fill="#E8445A" stroke="${FIG.BG}" stroke-width="2"/><circle cx="${x + 41}" cy="${y - 30}" r="4.5" fill="#2E86DE" stroke="${FIG.BG}" stroke-width="2"/>`;
@@ -163,15 +182,15 @@
       return `<path d="M${x - 19} ${y - 13} L${x + 19} ${y - 13} Q${x + 21} ${y - 40} ${x + 2} ${y - 49} Q${x - 15} ${y - 51} ${x - 29} ${y - 31} Q${x - 21} ${y - 27} ${x - 19} ${y - 13} Z" fill="#D42F3A" stroke="${FIG.BG}" stroke-width="3.5" stroke-linejoin="round"/><rect x="${x - 23}" y="${y - 20}" width="46" height="11" rx="5.5" fill="#F7F4EE" stroke="${FIG.BG}" stroke-width="3"/><circle cx="${x - 29}" cy="${y - 31}" r="6.5" fill="#F7F4EE" stroke="${FIG.BG}" stroke-width="3"/>`;
     return `<path d="M${x - 21} ${y - 9} Q${x - 22} ${y - 38} ${x} ${y - 39} Q${x + 22} ${y - 38} ${x + 21} ${y - 9} Z" fill="#2F6FB0" stroke="${FIG.BG}" stroke-width="3.5"/><path d="M${x - 14} ${y - 30} h28 M${x - 18} ${y - 22} h36" stroke="#F7F4EE" stroke-width="3" stroke-linecap="round" opacity=".85"/><rect x="${x - 23}" y="${y - 15}" width="46" height="10" rx="4" fill="#24578C" stroke="${FIG.BG}" stroke-width="3"/><circle cx="${x}" cy="${y - 42}" r="7" fill="#F7F4EE" stroke="${FIG.BG}" stroke-width="3"/>`;
   }
-  function figure(o) {
+  function figure(o, outfit) {
     let s = "";
     const arm = (a) => {
       const e = a[a.length - 1];
       s += limb(a, 17) + glove(e[0], e[1]);
     };
     const se = season(),
-      tr = se && se.trunks ? trunks(o) : null;
-    if (tr) s += TRUNKS_DEF;
+      tr = outfit ? boxOutfit(o, outfit) : se && se.trunks ? trunks(o) : null;
+    if (tr && !outfit) s += TRUNKS_DEF;
     o.back.forEach(arm);
     o.legs.forEach((l) => (s += limb(l, 23)));
     if (tr) s += tr.legs;
@@ -341,9 +360,12 @@
     return best;
   }
   /* two fighters trading: the attacker strikes every few seconds, the defender slips or takes it on the guard */
-  function fightPairLive(scene, calm, y = 14) {
+  function fightPairLive(scene, calm, y = 14, box = false) {
+    // boxing: blue corner left, red corner right (only when the shown session is a boxing session)
+    const L = box ? BOX_BLUE : null,
+      R = box ? BOX_RED : null;
     if (calm)
-      return `<g transform="translate(362 ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS.guard)}</g></g><g transform="translate(40 ${y})"><g class="bob">${figure(FIGS.guard)}</g></g>`;
+      return `<g transform="translate(362 ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS.guard, R)}</g></g><g transform="translate(40 ${y})"><g class="bob">${figure(FIGS.guard, L)}</g></g>`;
     const kick = scene === "kick",
       atk = kick ? "kick" : "jab",
       xa = kick ? 34 : 50,
@@ -358,11 +380,11 @@
         })
         .join("");
     const def = kick
-      ? `<g class="kb">${figure(FIGS.guard)}</g>`
-      : `<g class="pa">${figure(FIGS.guard)}</g><g class="pb">${figure(FIGS.slip)}</g>`;
-    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob def" style="animation-delay:.4s">${def}</g></g><g transform="translate(${xa} ${y})"><g class="bob"><g class="pa">${figure(FIGS.guard)}</g><g class="pb">${figure(FIGS[atk])}</g></g></g><g transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)})"><g class="hitfx" stroke="#F3EEE4" stroke-width="3" stroke-linecap="round"><circle r="5" fill="#F3EEE4" stroke="none"/>${rays}</g></g>`;
+      ? `<g class="kb">${figure(FIGS.guard, R)}</g>`
+      : `<g class="pa">${figure(FIGS.guard, R)}</g><g class="pb">${figure(FIGS.slip, R)}</g>`;
+    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob def" style="animation-delay:.4s">${def}</g></g><g transform="translate(${xa} ${y})"><g class="bob"><g class="pa">${figure(FIGS.guard, L)}</g><g class="pb">${figure(FIGS[atk], L)}</g></g></g><g transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)})"><g class="hitfx" stroke="#F3EEE4" stroke-width="3" stroke-linecap="round"><circle r="5" fill="#F3EEE4" stroke="none"/>${rays}</g></g>`;
   }
-  function heroScene(pose, ty, calm) {
+  function heroScene(pose, ty, calm, box = false) {
     seed = 11;
     const sky = todSky(),
       floorC = TYPE_HEX[ty] || "#C9A86A";
@@ -524,7 +546,7 @@
  <rect width="400" height="220" fill="url(#sky)"/>${tint ? `<rect width="400" height="220" fill="${tint}" opacity=".07"/>` : ""}${orb}${stars}${extra}<rect class="glow" width="400" height="220" fill="url(#glow)"/>
  <polygon points="170,0 230,0 330,220 70,220" fill="url(#beam)"/>${dust}
  <ellipse cx="200" cy="208" rx="150" ry="24" fill="url(#floor)"/>
- ${fightPairLive(pose, calm)}</svg>`;
+ ${fightPairLive(pose, calm, 14, box)}</svg>`;
   }
   function burst() {
     let s = "";
