@@ -13,7 +13,8 @@
 |---|---|---|---|
 | W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
-| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Sonnet laut Plan, Opus empfohlen | nicht beauftragt |
+| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | WARTET AUF MANUELLEN TEST |
+| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet | nicht beauftragt |
 
 ## Entscheidungen
 
@@ -22,6 +23,8 @@
 - 03.11.2026, Schritt 0: Sicherungen der stabilen App werden in der Dev-App abgelehnt (Durchsetzung „kein Altimport“); eigene Dev-Sicherungen lassen sich speichern und zurückladen.
 - Kontingent: Wochenlimit setzt dienstags 04:00 zurück.
 - 03.11.2026, Schritt 1: Ordnerstruktur `core/`, `catalog/`, `sports/`, `app/` vom Betreiber als nachvollziehbar bestätigt. Schritt 2 als ein Umbau mit einer Abnahme (2.1–2.3 nur interne Zwischenstände mit Prüfung), weil es eine Entwicklungsversion ist und Rückfallmechanismen vorhanden sind. Übergang über `RZ`-Naht empfohlen (Verträge: `architecture.md` Abschnitt 6).
+- 03.11.2026, Schritt 1: Satzpause, die beim Vor-/Zurückblättern verworfen wird, bleibt in Schritt 2 unverändert; mögliche Korrektur in 2-B.
+- 03.11.2026, Schritt 2: `RT`, `okEx`/`pickEx` bleiben vorerst in `app/08-plan.js` (mit Planlogik bzw. Profilgrenzen verwoben); Umzug, wenn 3-U/4a sie ohnehin anpassen.
 - 03.11.2026, Schritt 1: Vergleichsbasis um vier Profile (Schulter/Rücken, wenig Zeit, 5 Tage, Gürtelprüfung) und zwei Abläufe „Navigieren während des Trainings und Fortsetzen“ erweitert.
 
 ## Prüfungen
@@ -35,8 +38,15 @@ Schritt 1 (03.11.2026, automatisch):
 - `node tests/baseline.mjs`: Vergleichsbasis Kickboxen aufgenommen (12 Profile × ohne/mit Historie × 9 Einheiten + 2 Navigationsabläufe), reproduziert, Empfindlichkeit gegen geänderte Dosierung, Rundenregel und nicht pausierenden Timer geprüft.
 - Bestandstests unverändert 105/105.
 
+Schritt 2 (03.11.2026, automatisch; Zwischenstände lokal geprüft):
+- 2.1 Aufteilung: zusammengesetztes `build/ringzeit.html` byte-gleich zur früheren `src/ringzeit.html`; komprimierte `index.html` bis auf den Versionsstempel byte-gleich zur veröffentlichten; Bestandstests 105/105; Vergleichsbasis identisch; Isolationstest 12/12.
+- 2.2 Kerndienste (`core/format`, `dates`, `random`, `storage`, `fmt`/`fmtS` zusammengeführt): Bestandstests 105/105; neue Modultests 9/9 (u. a. Speicher voll → einmal verdichten, Cloud aus, Cloud-Spiegel mit Testhost, Modulgrenzen); Vergleichsbasis identisch; Isolationstest 12/12.
+- 2.3 Katalog und Kickboxmodul (`catalog/exercises.js`, `sports/kickboxing/*`, `sports/index.js`, `planContext`): Bestandstests 105/105; Modultests 9/9; Vergleichsbasis identisch (24 Profilläufe × 9 Einheiten + 2 Navigationsabläufe); Isolationstest 12/12.
+- Browser-Rauchtest der komprimierten App (Chromium, 390 × 844): Start ohne Konsolenfehler, Speicher lokal unter `ringzeit-dev.v1`, Einheit starten, Aufwärm-Timer läuft.
+- Nicht geprüft: echte Geräte (iOS/Android), Ton/Sprachausgabe, Bildschirmsperre.
+
 Manuelle Abnahmen:
-- 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis 12 Profile × 2 × 9 Einheiten + 2 Navigationsabläufe). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau, Satzpause beim Blättern bleibt in Schritt 2 unverändert (mögliche Korrektur in 2-B). **Wochenpaket 1/8 abgeschlossen.**
+- 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
 ## Offen
@@ -46,4 +56,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von Schritt 1: Schritt 2 – gemeinsamer Kern und Kickboxmodul als ein Umbau (Zwischenstände 2.1–2.3), Modell Sonnet.
+Nach Abnahme von Schritt 2: Schritt 2-B – Wiederaufnahme nach Neuladen/Beenden, Android-Sprachausgabe, Nackenhalte-Texte (Modell laut Plan Sonnet). Vor Code: offene Timerfragen und Android-Reproduktionsdaten klären.

@@ -1,8 +1,8 @@
 # Ringzeit Dev – Architektur
 
-Stand: Schritt 1 (Konzept zur Sichtung), 03.11.2026, Code-Stand `main` @ `b8b6443`.
-Zeilenangaben beziehen sich auf `src/ringzeit.html` in diesem Stand (gegenüber der Codeprüfung in `914ed7d` ab Zeile 8473 um 7 verschoben).
-Abschnitte 4–8 sind **Vorschlag**; erst nach deiner Sichtung gelten sie als beschlossen.
+Stand: Schritt 2 umgesetzt (wartet auf Abnahme), 03.11.2026. Konzept (Abschnitte 3–8) in Schritt 1 abgenommen.
+Zeilenangaben in Abschnitt 2 und 5 beziehen sich auf die frühere Einzeldatei `src/ringzeit.html` @ `b8b6443`;
+seit Schritt 2 liegt der Code in `src/` (Abschnitt 4).
 
 ## 1. Isolation stabile App ↔ Dev-App (Schritt 0, abgenommen)
 
@@ -51,37 +51,47 @@ Cloud-Schalter, Sicherungskennung und Build geändert. Am Code nachgeprüft:
   für Dienste mit Lebenszyklus (Speicher, Timer). Keine Vererbungshierarchie für Sportarten.
 - Eine HTML-Datei für die Auslieferung bleibt (Offline-Cache, Pages-Unterpfad und Service Worker unverändert).
 
-## 4. Zielstruktur (Vorschlag)
+## 4. Struktur (umgesetzt in Schritt 2; „später“ = noch nicht vorhanden)
 
 ```
 src/
-  index.html                 Markup + CSS (heutiger Kopf/Body von ringzeit.html), Platzhalter für das Script
-  core/                      ES-Module, ohne Zugriff auf S/ui/DOM, direkt mit node --test testbar
-    format.js                Zeit-/Zahlenformat (fmt/fmtS zusammengeführt, numF)
-    dates.js                 iso, parse, monday, addDays, daysBetween, wd (mit übergebenem "heute")
-    random.js                rnd/shuffle mit austauschbarer Zufallsquelle (für Seeds)
-    storage.js               createStore({ key, storage, cloud:false }) – heutiges store, Kennung von außen
-    history.js               Logzugriff + Belastung (logRange, weekLoad, computeLoad) – Vertrag 6.4, Umsetzung 3-U
-    prescription.js          strukturierte Dosierung → Text, Phasen, Zeitschätzung – Vertrag 6.3, Umsetzung 3-D
+  index.html                 Markup + CSS; die Zeile /*@@APP@@*/ im <script> ersetzt der Build durch das Script
+  modules.js                 Einstieg der gemeinsamen Module → Bundle mit dem globalen Namen RZ
+  core/                      ES-Module ohne Zugriff auf S/ui/DOM, direkt mit node --test testbar
+    format.js                pad, fmtTime (früher fmt und fmtS – identisch, jetzt eine Funktion)
+    dates.js                 iso, parse (mit Cache), monday, addDays, today, daysBetween, wd
+    random.js                rnd, shuffle (lesen Math.random beim Aufruf → mit Seed reproduzierbar)
+    storage.js               createStore({ key, storage, getState, compact, onFull, cloud, applyCloud, cloudDocs, onCloudLost })
+    index.js                 sammelt core/
+    history.js               später: Logzugriff + Belastung – Vertrag 6.4, Umsetzung 3-U
+    prescription.js          später: strukturierte Dosierung – Vertrag 6.3, Umsetzung 3-D
   catalog/
-    exercises.js             Übungsdefinitionen (heute X) mit stabilen IDs + Abbildung alter Indizes (3-D)
+    exercises.js             Übungskatalog (88 Zeilen) → EX, AV; Reihenfolge = heutige ID, stabile IDs in 3-D
   sports/
-    index.js                 Register: sportFor(id), sichtbare/versteckte Sportarten
-    kickboxing/              definition.js (Disziplinen, Formate, Typen), techniques.js (TECH/COMBOS/EXTRA), drills.js
-    boxing/                  ab 4a-U
-    taekwondo/               common.js, wt.js, itf.js – ab 6a/6b/6c
-  app/                       bestehender App-Code als geordnete Teildateien in gemeinsamem Scope
-    00-i18n.js … 90-boot.js  Schnitt entlang der vorhandenen Abschnittsköpfe (i18n, Inhalte, Zustand, Plan, Render,
-                             Player, Timer, Figuren, Ratgeber, Ereignisse, Boot)
-tools/build_pwa.py           baut core/catalog/sports mit esbuild zu einem Bundle (global `RZ`), hängt app/*.js an,
-                             setzt beides in index.html ein → pwa/index.html (+ lesbar: build/ringzeit.html für Tests)
+    index.js                 Register: SPORTS, sportFor(id) (ohne/unbekannt → kickboxing), visibleSports()
+    kickboxing/index.js      SportDefinition: id, visible, rules, dayPattern (früher PATTERN), techniques
+    kickboxing/rules.js      RULE_PROFILE (WAKO): DISCIPLINES, waFormat, STD_FORMAT; Fassung noch nicht belegt
+    kickboxing/techniques.js TECH, KICKS, STRIKE, RISKY, ADV, COMBOS, EXTRA, KICK_ONLY, HAND_ONLY, THEMES
+    boxing/, taekwondo/      später (4a-U, 6a–6c)
+  app/                       übriger App-Code als geordnete Teile in gemeinsamem Scope (Reihenfolge = Dateiname)
+    00-imports.js            die einzige Stelle, die Namen aus RZ übernimmt
+    01-overview-i18n.js … 39-boot.js   Schnitt entlang der bisherigen Abschnittsköpfe (03/04 sind nach catalog/ bzw.
+                             sports/ umgezogen; die Nummern der übrigen Teile blieben, um Verwechslungen zu vermeiden)
+tools/build_pwa.py           esbuild bündelt src/modules.js (IIFE, global RZ), hängt app/*.js an, setzt beides in
+                             index.html ein → build/ringzeit.html (lesbar, von allen Tests genutzt) → pwa/ (komprimiert)
+package.json                 nur Werkzeug: esbuild 0.24.2 (`npm install`)
 ```
+
+`planContext(ds)` (in `app/08-plan.js`) liefert `{ profile, sport, history, date, today, rng }`. Die Turnierphase
+(`compPhase`) und die Tagesverteilung (`dayTypes`) holen Format und Wochenmuster jetzt über die Sportdefinition statt
+über feste Kickboxwerte; Profile ohne `sport` gelten als Kickboxen.
 
 **Naht zwischen neuem Kern und Bestandscode:** Die Module werden mit esbuild als ein IIFE-Bundle mit genau einem
 globalen Namen `RZ` gebaut. `src/app/00-imports.js` holt daraus *explizit* die genutzten Namen
 (`const { fmtTime, createStore, sportFor } = RZ;`). So bleibt der Bestandscode lauffähig, die Tests behalten ihren
 Zugriff auf `S`, `buildSession` usw., und jede Abhängigkeit vom Kern steht an einer Stelle. Der Bestandscode in
-`app/` schrumpft mit jedem Teil; Kernmodule importieren nie aus `app/` (keine Zyklen, prüfbar per Skript).
+`app/` schrumpft mit jedem Teil; Kernmodule importieren nie aus `app/` – `tests/core.test.mjs` prüft, dass
+`core/`, `catalog/` und `sports/` weder `S`, `ui`, `t()`, `render()` noch DOM/`window`/`localStorage` verwenden.
 
 Alternative (nicht empfohlen): alles sofort als ES-Module – erfordert Import-Listen für rund 590 gemeinsam genutzte Namen der obersten Ebene (davon ~450 Funktionen) auf einmal
 und ein neues Test-Harness; zu großer Sprung für eine reine Extraktion.
@@ -99,6 +109,10 @@ und ein neues Test-Harness; zu großer Sprung für eine reine Extraktion.
 | `L`/`t()`, `summaryData` (4653, 18857) | bleiben; sportbezogene Texte später je Sportmodul | 4b ff. |
 | `weekLoad`/`computeLoad` (9051) | Grundlage für `core/history.js` | 3-U |
 | `fmt`/`fmtS` | zu einer Funktion in `core/format.js` | 2 |
+
+Stand nach Schritt 2: erledigt sind `store` → `createStore`, Katalog, Techniken/Kombis, `waFormat`/`STD_FORMAT`,
+Wochenmuster und `fmt`/`fmtS`. `RT` (Rundentypen-Texte) bleibt bis 4a im Plan-Teil, weil es mit den Rundenbausteinen
+in `08-plan.js` verwoben ist; `okEx`/`pickEx` bleiben dort, weil sie Profilgrenzen lesen.
 
 ## 6. Verträge
 
@@ -141,7 +155,7 @@ Belastung = Minuten × RPE wie heute (Session-RPE), über alle Quellen; fehlende
 benannt, nicht geschätzt. Überschneidungen (Beine/Tritte, Schulter, Kraft, Intervalle, Beweglichkeit) und
 Planaktualisierung legt 3-Q fest. Einträge ohne `sport` gelten als Kickboxen (betrifft nur eigene Dev-Daten).
 
-## 7. Umfang Schritt 2 (Vorschlag: drei einzeln abnehmbare Unterteile)
+## 7. Umfang Schritt 2
 
 Allen gemeinsam: **keine** Änderung an Training, Dosierung, Bedienung oder Texten; Vergleichsbasis muss identisch bleiben.
 
@@ -156,6 +170,10 @@ nach jedem laufen Bestandstests, Vergleichsbasis und Isolationstest. Fällt ein 
 
 Nicht in 2: stabile IDs/Dosierung (3-D), Belastungsmodell (3-U), Timer-Zustandsmaschine, UI-Vereinheitlichung,
 Entfernen der Fitnesssperre, Bedienkorrekturen (2-B).
+
+Ergebnis (03.11.2026): 2.1 zusammengesetztes HTML byte-gleich zur früheren `src/ringzeit.html`, komprimierte App bis
+auf den Versionsstempel byte-gleich; 2.2 und 2.3 je mit 105/105 Bestandstests, neuen Modultests, identischer
+Vergleichsbasis und bestandenem Isolationstest. Details: `implementation-status.md`.
 
 ## 8. Vergleichsbasis
 
@@ -191,17 +209,19 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 
 | Datei | Rolle |
 |---|---|
-| `src/ringzeit.html` | lesbare Quelle (bis 2.1), einzige Quelle für App-Logik und Kennungen |
-| `tools/build_pwa.py` | Build: `pwa/index.html` (esbuild-komprimiert), `pwa/sw.js`, `pwa/manifest.webmanifest` |
+| `src/` | Quelle (Abschnitt 4); Kennungen `APP_ID`/`APP_NAME` in `src/app/06-storage.js` |
+| `tools/build_pwa.py` | Build: `build/ringzeit.html` (lesbar), `pwa/index.html` (komprimiert), `pwa/sw.js`, `pwa/manifest.webmanifest`; `--readable` baut nur die lesbare Fassung |
 | `index.html`, `sw.js`, `manifest.webmanifest` | generiert, veröffentlicht (Kopie aus `pwa/`) – nicht von Hand ändern |
 | `installieren.html` | Installationsseite, QR-Code auf die Dev-Adresse |
-| `tests/training.test.mjs` | echtes Inline-Script in Node-VM (Logik, Ereignisse, Speicherung) – 105 Tests |
+| `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
+| `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung) – 105 Tests |
+| `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen) – 9 Tests |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
 
 ```bash
-npm i esbuild@0.24.2            # einmalig; build_pwa.py sucht node_modules/.bin/esbuild
-node --test tests/training.test.mjs
+npm install                     # einmalig; esbuild nach node_modules/
+node --test tests/training.test.mjs tests/core.test.mjs
 node tests/baseline.mjs
 python3 tools/build_pwa.py && cp pwa/index.html pwa/sw.js pwa/manifest.webmanifest .
 node tests/isolation.e2e.mjs <Ordner der stabilen App>
