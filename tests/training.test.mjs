@@ -2883,7 +2883,7 @@ test("6a/6b: taekwondo WT unit types, ITF only sport-neutral types, own labels",
   assert.ok(types.every((x) => ["T", "S", "P", "K"].includes(x)), "WT pattern: " + types);
   a.run("S.profile.tkd.style='itf';");
   const itf = JSON.parse(a.run("JSON.stringify(Object.values(dayTypes()))"));
-  assert.ok(itf.every((x) => ["S", "K", "M"].includes(x)), "ITF pattern: " + itf);
+  assert.ok(itf.every((x) => ["T", "S", "P", "K"].includes(x)) && itf.includes("T"), "ITF pattern like WT since 6c: " + itf);
   a.run("S.profile.tkd.style='wt';");
   assert.equal(a.run("(()=>{buildSport='taekwondo';const d=discOf();buildSport=null;return d})()"), "tkd");
   const s = JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','S','gym',['bag','rope'],{sport:'taekwondo'}))"));
@@ -2894,7 +2894,7 @@ test("6a/6b: taekwondo WT unit types, ITF only sport-neutral types, own labels",
   assert.equal(a.run("discLabel()"), "Taekwondo ITF-D");
   assert.equal(a.run("ruleTags()"), "", "no kickboxing rule tags");
   a.run("ui.sel='2026-11-03';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'S','gym',[],{sport:'taekwondo'});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
-  assert.match(a.run("renderSession()"), /Technik und Partnerübungen folgen/, "ITF note until 6c");
+  assert.doesNotMatch(a.run("renderSession()"), /Technik und Partnerübungen folgen/, "no placeholder note since 6c");
   assert.match(a.run("renderSession()"), /data-usport="taekwondo"[^>]*>Taekwondo</);
 });
 test("6a: figures wear the white dobok with the belt of the grade (taekwondo only); a swimsuit never replaces it; kickboxing and boxing unchanged", async () => {
@@ -2999,23 +2999,18 @@ test("6a: dobok stands out – pure white dobok, skin-tone head and fists, no gl
   assert.ok(!h.includes('r="11" fill="#C8404A"'), "no kickboxing gloves on the dobok figures");
 });
 
-test("6a/6b: taekwondo WT offers technique, technique & conditioning and sparring; ITF only strength, conditioning, mobility", async () => {
+test("6a/6c: taekwondo WT and ITF-D both offer technique, technique & conditioning and sparring", async () => {
   const a = app();
   a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;S.profile.days=[0,1,2,3,4,5,6];S.profile.tkd.style='wt';");
   a.run("{const d='2026-11-03';S.sessions[d]=buildSession(d,'S','gym',[],{sport:'taekwondo'});ui.sel=d;ui.tab='session';ui.setup=setupOf(S.sessions[d],d);}");
   assert.match(a.run("renderSession()"), /data-stype="T"[\s\S]*data-stype="C"[\s\S]*data-stype="P"/);
   a.run("S.profile.tkd.style='itf';");
-  const h = a.run("renderSession()");
-  assert.doesNotMatch(h, /data-stype="T"|data-stype="C"|data-stype="P"/);
-  assert.match(h, /data-stype="S"/);
+  assert.match(a.run("renderSession()"), /data-stype="T"[\s\S]*data-stype="C"[\s\S]*data-stype="P"/);
   for (const ty of ["T", "C", "P"]) {
     const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-03','${ty}','gym',['bag','pads','partner','weights'],{sport:'taekwondo'}))`));
-    assert.equal(s.type, "S", "ITF: " + ty + " -> S");
+    assert.equal(s.type, ty, "ITF keeps " + ty);
+    assert.equal(s.tstyle, "itf");
   }
-  // switching the unit from kickboxing technique to taekwondo ITF moves the type to a neutral one
-  a.run("ui.setup.sport='kickboxing';ui.setup.type='T';");
-  await a.click({ dataset: { usport: "taekwondo" } });
-  assert.equal(a.run("ui.setup.type"), "S");
   a.run("ui.setup.sport='kickboxing';");
   assert.match(a.run("renderSession()"), /data-stype="T"/, "kickboxing keeps all types");
 });
@@ -3137,24 +3132,13 @@ test("6b: sparring tasks of taekwondo exist only in taekwondo; free sparring is 
 test("6b: WT bout format by age class, concussion ban by age, ITF unchanged", () => {
   const a = app();
   const f = (age) => JSON.parse(a.run(`JSON.stringify(TKDT.wtFormat('wt',${age}))`));
-  assert.deepEqual([f(8).r, f(8).w, f(8).b, f(8).cls], [3, 90, 60, "d"]);
-  assert.deepEqual([f(13).w, f(13).cls], [90, "b"]);
-  assert.deepEqual([f(16).w, f(16).cls], [120, "a"]);
+  assert.deepEqual([f(8).r, f(8).w, f(8).b, f(8).cls], [3, 90, 60, "td"]);
+  assert.deepEqual([f(13).w, f(13).cls], [90, "tb"]);
+  assert.deepEqual([f(16).w, f(16).cls], [120, "ta"]);
   assert.deepEqual([f(30).w, f(30).cls], [120, "s"]);
-  assert.deepEqual([f(40).w, f(40).cls], [90, "m"]);
+  assert.deepEqual([f(40).w, f(40).cls], [90, "v"]);
   assert.equal(f(5), null);
   assert.deepEqual([10, 16, 25, null].map((x) => a.run(`TKDT.koDaysFor(${x})`)), [50, 40, 30, 30]);
-});
-
-test("6b: ITF-D offers only S/K/M and builds no technique/sparring units", () => {
-  const a = app();
-  tkdProfile(a);
-  a.run("S.profile.tkd.style='itf';");
-  for (const type of ["T", "C", "P"]) {
-    const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-03','${type}','gym',['bag','partner'],{sport:'taekwondo'}))`));
-    assert.equal(s.type, "S", "ITF " + type + " becomes S");
-  }
-  assert.equal(a.run("koDays()"), 30);
 });
 
 test("6b: taekwondo hardening = one hand area + one leg area, gentle for children, none of it in boxing", () => {
@@ -3257,4 +3241,173 @@ test("6b: kick series are one bracketed chip with explicit V/H, level 1, never f
   const k = app();
   tkdProfile(k, { by: 2016, lvl: 0, grade: "k8" });
   for (let i = 0; i < 20; i++) assert.ok(!/"sr\d"/.test(JSON.stringify(tkdSess(k, "T"))), "kid got a series");
+});
+test("6b: kick chains get longer with the level", () => {
+  const maxKicks = (lvl) => {
+    const a = app();
+    tkdProfile(a, { lvl });
+    let m = 0,
+      sum = 0,
+      n = 0;
+    for (let i = 0; i < 60; i++)
+      for (const x of JSON.stringify(tkdSess(a, "T")).matchAll(/"combo":\[([^\]]*)\]/g)) {
+        const k = a.run(`TKDT.kickCount(${JSON.stringify((x[1].match(/[a-z0-9]+/g) || []))})`);
+        m = Math.max(m, k);
+        sum += k;
+        n++;
+      }
+    return { m, avg: sum / n };
+  };
+  const l0 = maxKicks(0),
+    l1 = maxKicks(1),
+    l2 = maxKicks(2);
+  assert.ok(l0.m <= 3, "beginner chains stay short: " + l0.m);
+  assert.ok(l2.m >= 5, "competition level reaches 5+ kicks: " + l2.m);
+  assert.ok(l0.avg < l1.avg && l1.avg < l2.avg, `average grows: ${l0.avg} ${l1.avg} ${l2.avg}`);
+});
+/* ---------- 6c: ITF-D plans ---------- */
+const itfSess = (a, type, o = {}) =>
+  JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-03','${type}','gym',${JSON.stringify(o.eq || ["bag", "partner", "rope"])},{sport:'taekwondo',tstyle:'itf'}))`));
+function itfProfile(a, o = {}) {
+  a.run(
+    `S.profile.sport='taekwondo';S.profile.tkd.style='itf';S.profile.tkd.itf='${o.grade || ""}';S.profile.days=[0,1,2,3];S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.limits || [])};`,
+  );
+}
+const TKD_ALL = "ap dol dolh yeop mireo dwi nae ban dhu ttdol ttyeop jir dung stepf stepb steps turn swch slide".split(" ");
+const comboIds = (s) => [...JSON.stringify(s).matchAll(/"combo":\[([^\]]*)\]/g)].map((m) => m[1].match(/[a-z]+/g) || []);
+
+test("6c: ITF release by Kup, level, age and limits (own module, not the WT rules)", () => {
+  const a = app();
+  const al = (id, c) => a.run(`ITFT.allowed('${id}',${JSON.stringify(c)})`);
+  const base = { level: 1, kup: null, kid: false, young: false, risky: false };
+  assert.equal(al("jir", { ...base, level: 0 }), true, "punch from the start");
+  assert.equal(al("dolh", { ...base, level: 0 }), false);
+  assert.equal(al("ttdol", { ...base, kup: 3 }), false, "jump kicks from the 2nd Kup");
+  assert.equal(al("ttdol", { ...base, kup: 2 }), true);
+  assert.equal(al("ttdol", { ...base, young: true, kup: 2 }), true, "teens may jump (only spinning kicks are age-limited)");
+  assert.equal(al("ttdol", { ...base, kid: true, kup: 2 }), false, "no jump kicks for children");
+  assert.equal(al("dwi", { ...base, young: true, kup: 2 }), false, "no spinning kicks under 19");
+  assert.equal(al("dwi", { ...base, risky: true }), false);
+  assert.equal(al("sr1", base), false, "no WT series in ITF");
+});
+
+test("6c: ITF units have ITF names, hand-foot combos, only allowed techniques, ITF tasks only for ITF", () => {
+  for (const [name, o] of [["adult 5th Kup", { grade: "k5" }], ["child 9y", { by: 2017, lvl: 0, grade: "k9" }], ["teen 16y 4th Kup", { by: 2010, grade: "k4" }], ["knee limit", { grade: "k2", limits: ["knee"] }]]) {
+    const a = app();
+    itfProfile(a, o);
+    a.run("S.profile.tkd.names='ko';");
+    for (const type of ["T", "C", "P"]) {
+      for (let i = 0; i < 6; i++) {
+        const s = itfSess(a, type);
+        a.run("unitStyle='itf'");
+        const ctx = JSON.parse(a.run("JSON.stringify(tkdCtx())"));
+        for (const ids of comboIds(s)) for (const id of ids) assert.ok(a.run(`ITFT.allowed('${id}',${JSON.stringify(ctx)})`), `${name} ${type}: ${id}`);
+        a.run("unitStyle=null");
+        assert.ok(!/"tk_(kicks|step|pad|free)"/.test(JSON.stringify(s)), name + ": WT-only task in ITF");
+        assert.ok(!/"sr\d"/.test(JSON.stringify(s)), name + ": series in ITF");
+      }
+    }
+  }
+  const a = app();
+  itfProfile(a);
+  a.run("S.profile.tkd.names='ko';unitStyle='itf';");
+  assert.equal(a.run("techNm('ap')"), "Ap Chagi");
+  assert.equal(a.run("techNm('dwi')"), "Dwit Chagi");
+  assert.equal(a.run("techNm('dhu')"), "Bandae Dollyo Chagi");
+  assert.equal(a.run("techNm('nae')"), "Axttritt", "not in the PO: no invented Korean term");
+  a.run("unitStyle='wt'");
+  assert.equal(a.run("techNm('ap')"), "Ap-chagi", "WT spelling unchanged");
+  // hand-foot weighting about 40 / 60
+  a.run("unitStyle='itf'");
+  let hands = 0, all = 0;
+  for (let i = 0; i < 40; i++) for (const ids of comboIds(itfSess(a, "T"))) for (const x of ids) { all++; if (x === "jir" || x === "dung") hands++; }
+  assert.ok(hands / all > 0.2 && hands / all < 0.5, "hand share " + (hands / all).toFixed(2));
+});
+
+test("6c: ITF partner tasks – Matsogi by Kup and age, children only pad and semi-contact, Jayu Matsogi touch only", () => {
+  const ids = (a, type, n) => {
+    const seen = new Set();
+    for (let i = 0; i < n; i++) for (const m of JSON.stringify(itfSess(a, type)).matchAll(/"id":"(it_[a-z]+)"/g)) seen.add(m[1]);
+    return seen;
+  };
+  const kid = app();
+  itfProfile(kid, { by: 2016, lvl: 0, grade: "k8" });
+  const k = ids(kid, "P", 25);
+  for (const x of ["it_sambo", "it_ibo", "it_ilbo", "it_jayu", "it_hosin"]) assert.ok(!k.has(x), "child got " + x);
+  assert.ok(k.has("it_pad") || k.has("it_semi"), "child gets pad or semi-contact");
+  const a = app();
+  itfProfile(a, { grade: "k8" });
+  const n = ids(a, "P", 40);
+  assert.ok(n.has("it_sambo"));
+  assert.ok(!n.has("it_ibo") || true);
+  const b = app();
+  itfProfile(b, { grade: "k8", lvl: 1 });
+  const hi = ids(b, "P", 60);
+  assert.ok(!hi.has("it_ilbo"), "Ilbo only from the 3rd Kup");
+  const c = app();
+  itfProfile(c, { grade: "k2", lvl: 1 });
+  const top = ids(c, "P", 80);
+  assert.ok(top.has("it_ilbo") && top.has("it_hosin") && top.has("it_jayu"), "advanced: " + [...top]);
+  // Jayu Matsogi at most once per session
+  for (let i = 0; i < 40; i++) assert.ok((JSON.stringify(itfSess(c, "P")).match(/"id":"it_jayu"/g) || []).length <= 1);
+});
+
+test("6c: ITF bout format by age, class labels exist", () => {
+  const a = app();
+  const f = (age) => JSON.parse(a.run(`JSON.stringify(TKDT.itfFormat('itf',${age}))`));
+  assert.deepEqual([f(25).r, f(25).w, f(25).b], [2, 120, 60]);
+  assert.deepEqual([f(15).r, f(15).w, f(15).b], [2, 120, 60]);
+  assert.deepEqual([f(12).r, f(12).w, f(12).b], [2, 90, 45]);
+  assert.deepEqual([f(8).r, f(8).w, f(8).b], [2, 60, 30]);
+  assert.equal(f(5), null);
+  assert.equal(a.run("sportFor('taekwondo').rules.format('itf',25).w"), 120);
+  assert.equal(a.run("sportFor('taekwondo').rules.format('wt',25).r"), 3);
+  for (const c of ["td", "tc", "tb", "ta", "s", "v", "u13", "u15", "u17", "u19", "a"]) assert.ok(a.run(`!!t('cls').${c}`), "class label " + c);
+});
+
+test("6c: a unit can carry another style than the profile; its grade, names and plan follow the unit, the profile stays", () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.tkd.wt='k4';S.profile.tkd.itf='k9';S.profile.birthYear=1995;S.profile.level=1;S.profile.tkd.names='ko';");
+  const w = JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','T','gym',['bag'],{sport:'taekwondo'}))"));
+  const i = JSON.parse(a.run("JSON.stringify(buildSession('2026-11-04','T','gym',['bag'],{sport:'taekwondo',tstyle:'itf'}))"));
+  assert.equal(w.tstyle, "wt");
+  assert.equal(i.tstyle, "itf");
+  assert.equal(a.run("S.profile.tkd.style"), "wt", "profile untouched");
+  assert.equal(a.run("unitStyle"), null, "no style leaks after the build");
+  // ITF unit with a 9th Kup: no spinning or jump kicks although the WT grade (4th Kup) would allow it
+  for (let n = 0; n < 12; n++) for (const ids of comboIds(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-04','T','gym',['bag'],{sport:'taekwondo',tstyle:'itf'}))")))) for (const x of ids) assert.ok(!["dwi", "dhu", "ttdol", "ttyeop"].includes(x) || a.run("tkdKup('itf')") <= 4, "kup of the unit style: " + x);
+  // rendering takes the unit's style for names
+  a.run("S.sessions['2026-11-04']=" + JSON.stringify(i) + ";ui.sel='2026-11-04';ui.tab='session';ui.setup=setupOf(S.sessions['2026-11-04'],'2026-11-04');");
+  const h = a.run("renderSession()");
+  assert.match(h, /Chagi/);
+  assert.doesNotMatch(h, /-chagi/, "no WT spelling in an ITF unit");
+  assert.match(h, /data-ustyle="wt"[^>]*aria-pressed="false"[\s\S]*data-ustyle="itf"[^>]*aria-pressed="true"/);
+});
+
+test("6c: unit style and unit discipline are chosen in the settings form without touching the profile", async () => {
+  const a = app();
+  a.run("loading=async()=>{};S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.birthYear=1995;S.profile.days=[0,1,2,3];");
+  a.run("{const d='2026-11-03';S.sessions[d]=buildSession(d,'T','gym',['bag'],{sport:'taekwondo'});ui.sel=d;ui.tab='session';ui.setup=setupOf(S.sessions[d],d);}");
+  assert.equal(a.run("setupDirty('2026-11-03')"), false);
+  await a.click({ dataset: { ustyle: "itf" } });
+  assert.equal(a.run("ui.setup.tstyle"), "itf");
+  assert.equal(a.run("setupDirty('2026-11-03')"), true);
+  assert.equal(a.run("S.profile.tkd.style"), "wt");
+  await a.run("rebuildFromSetup('2026-11-03')");
+  assert.equal(a.run("S.sessions['2026-11-03'].tstyle"), "itf");
+  assert.equal(a.run("S.profile.tkd.style"), "wt");
+  // kickboxing discipline
+  const k = app();
+  k.run("loading=async()=>{};S.profile.sport='kickboxing';S.profile.disc='lc';S.profile.birthYear=1995;S.profile.days=[0,1,2,3];");
+  k.run("{const d='2026-11-03';S.sessions[d]=buildSession(d,'T','gym',['bag'],{sport:'kickboxing'});ui.sel=d;ui.tab='session';ui.setup=setupOf(S.sessions[d],d);}");
+  assert.match(k.run("renderSession()"), /data-udisc="fc"/);
+  await k.click({ dataset: { udisc: "fc" } });
+  assert.equal(k.run("ui.setup.disc"), "fc");
+  await k.run("rebuildFromSetup('2026-11-03')");
+  assert.equal(k.run("S.sessions['2026-11-03'].disc"), "fc");
+  assert.equal(k.run("S.profile.disc"), "lc", "profile discipline stays");
+  assert.equal(k.run("discOf()"), "lc", "no discipline leaks after the build");
+  // children under 15 are not offered the ring disciplines
+  k.run("S.profile.birthYear=2016;ui.setup=setupOf(S.sessions['2026-11-03'],'2026-11-03');");
+  assert.doesNotMatch(k.run("renderSession()"), /data-udisc="fc"/);
 });
