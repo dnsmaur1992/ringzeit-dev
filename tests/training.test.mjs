@@ -2350,3 +2350,15 @@ test("3-U case 11: a backup round trip restores exactly the exported state – n
   assert.equal(a.run("S.v"), 2);
   assert.equal(a.run("new Set(S.log.map(e=>e.id)).size"), 12);
 });
+
+test("3-U: levels above the tested one show a lock; tapping it explains the fitness test", async () => {
+  const a = app();
+  a.run("S.profile.level=0;S.tests=[];draft=null;ui.profSec='train';");
+  const h = a.run("renderProfile()");
+  assert.equal((h.match(/data-lock="level"/g) || []).length, 2, "Fortgeschritten and Wettkampf are locked");
+  assert.match(h, /data-p="level" data-v="0"/);
+  assert.doesNotMatch(h, /data-p="level" data-v="1"/);
+  a.run("toast=(m)=>{globalThis.__t=m}");
+  await a.click({ dataset: { lock: "level" } });
+  assert.match(a.run("globalThis.__t"), /Fitnesstest/);
+});
