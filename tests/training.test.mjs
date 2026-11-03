@@ -2679,3 +2679,41 @@ test("4a-U: evasion rounds always carry an opponent action; a larger share of fo
   assert.match(h, /Entwicklungsvorschau/);
   assert.match(h, /boxverband\.de/);
 });
+
+test("4a-U fix: no kick exercise (Kick-Intervalle, Kick-Halten, …) in any boxing block – all types, levels, equipment", () => {
+  const a = app();
+  const bad = new Set(JSON.parse(a.run("JSON.stringify([...BOXT.BOX_NO_EX])")));
+  for (const lvl of [0, 1, 2]) {
+    a.run(`S.profile.level=${lvl};S.profile.birthYear=1995;S.profile.limits=[];`);
+    for (let i = 0; i < 25; i++)
+      for (const type of ["T", "C", "P", "S", "K", "M"]) {
+        const s = boxSess(a, type, ["partner", "bag", "rope", "weights", "kb", "bands", "bar"]);
+        for (const it of boxItems(s)) assert.ok(!bad.has(it.id), `${type} lvl${lvl}: ${it.id}`);
+      }
+  }
+  // kickboxing still gets them
+  let seen = false;
+  a.run("S.profile.level=1;");
+  for (let i = 0; i < 60 && !seen; i++) seen = JSON.stringify(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','K','gym',['rope'],{sport:'kickboxing'}))"))).includes("cond.kick_intervals");
+  assert.ok(seen, "kickboxing keeps its kick intervals");
+});
+
+test("4a-U: main sport Boxen (development preview) in the profile – no discipline/focus, plan sessions are boxing, label says Boxen", () => {
+  const a = app();
+  a.run("draft=null;ui.profSec='train';");
+  let h = a.run("renderProfile()");
+  assert.match(h, /data-p="sport" data-v="boxing"[^>]*>Boxen · Entwicklungsvorschau/);
+  assert.match(h, /data-p="disc"/, "kickboxing: discipline row");
+  a.run("S.profile.sport='boxing';draft=null;");
+  h = a.run("renderProfile()");
+  assert.ok(!/data-p="disc"/.test(h) && !/data-p="focus"/.test(h), "boxing has no discipline and no kick/punch focus");
+  assert.match(h, /data-p="sport" data-v="boxing" aria-pressed="true"/);
+  assert.match(a.run("eyebrow()"), /Boxen/);
+  assert.equal(a.run("ruleTags()"), "");
+  a.run("S.sessions={};S.sessions['2026-11-03']=buildSession('2026-11-03','T','gym',['bag']);");
+  assert.equal(a.run("S.sessions['2026-11-03'].sport"), "boxing", "default = main sport");
+  assert.ok(!JSON.stringify(a.run("S.sessions['2026-11-03'].blocks")).includes("cond.kick_intervals"));
+  a.run("S.profile.sport='kickboxing';draft=null;");
+  assert.match(a.run("renderProfile()"), /data-p="disc"/);
+  assert.match(a.run("eyebrow()"), /Light Contact|Kick Light|Full Contact|K1/);
+});
