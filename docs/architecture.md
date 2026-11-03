@@ -217,6 +217,7 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `installieren.html` | Installationsseite, QR-Code auf die Dev-Adresse |
 | `docs/data-load-concept.md` | Daten-/Belastungskonzept (3-Q): Schema, Belastungsvertrag, Dosierungsvertrag, Abweichungen, Akzeptanzfälle |
 | `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
+| `docs/boxing-concept.md` | Boxen (4a-Q): DBV-Regelmatrix, Trainingskonzept, Aufgabensparring, Beispielprofile, Vorschlag 4a-U |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
 | `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 128 Tests (3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |
 | `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 19 Tests (3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |

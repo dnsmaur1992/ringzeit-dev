@@ -17,7 +17,8 @@
 | W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
 | W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026, Stand 97bf4f1) |
 | W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `5484843`, App-Version 03.11.2026 12:27; Sicherungs-Rückladung nicht von Hand getestet, nur automatisch) |
-| W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ZUR SICHTUNG (nicht veröffentlicht) |
+| W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `e7fb557` inkl. Korrektur „Freier Lauf“, App-Version 03.11.2026 13:50; Altdaten, Full-Contact-Abhärtung und explosive Sätze nur automatisch getestet, auf Wunsch des Betreibers nicht von Hand) |
+| W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | WARTET AUF SICHTUNG (`docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
 
 ## Entscheidungen
 
@@ -59,11 +60,13 @@ Schritt 2 (03.11.2026, automatisch; Zwischenstände lokal geprüft):
 - Android-Sprachausgabe: **nicht reproduziert** (kein Gerät, keine Gerätedaten). Es wurden nur begründete Absicherungen eingebaut, kein Fehler als „behoben“ gemeldet: (1) Sprachcode `de_DE` → `de-DE` (Android meldet Unterstriche; manche Engines wählen sonst die Standardstimme), (2) Stimmenliste beim Start einmal anfordern (Chrome lädt sie verzögert), (3) bei Fehlern (`synthesis-failed`, `language-unavailable` …) bis zu zwei Wiederholungen: nächstbeste Stimme, dann nur Sprache, (4) letzter Fehler erscheint unter Profil → App & Daten → „Stimme der Ansagen“ zur Diagnose. Unverändert: Offline-Stimmen bevorzugt, Online-Stimmen abgewertet, kein Cloud-TTS.
 
 Manuelle Abnahmen:
+- 03.11.2026: 3-D vom Betreiber abgenommen („Ich nehme 3d hiermit ab“; drei Prüfpunkte bewusst nicht von Hand) – Stand `main` @ `e7fb557`, App-Version 03.11.2026 13:50. Korrektur nach Test: bei „Freier Lauf“ war „Intervalle“ mitmarkiert (Fehler aus 3-U), behoben und getestet. **Wochenpaket 3/8 abgeschlossen.**
 - 03.11.2026: 2-B vom Betreiber auf dem Handy (App-Version 03.11.2026 08:34) getestet und abgenommen – Stand `main` @ `a7e29d1` (inkl. Entfernen von `docs/todo-bedienung-akku.md` und `src/core/text.txt`). **Wochenpaket 2/8 abgeschlossen.**
 - 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
 - 03.11.2026, 3-U (Betreiber): Vorauswahlen und vorbelegte Dauer bleiben wie bisher (E5 geändert); Sportwahl wird sichtbar (zurzeit nur Kickboxen); keine interne Testansicht nötig (Dev-App). Umsetzung und Abweichungen: `data-load-concept.md` Abschnitt 9. Schwelle der Bereichsregel 0,35 statt 0,4 (sonst löst hartes Sparring nie aus).
+- 03.11.2026, 4a-Q (Betreiber): B1 Regeln in der App nur verlinkt (WKB-PDF), keine Unzen/Gewichtstabellen · B2 Partnertage = Aufgabensparring, höchstens eine Runde „Freies Touch-Sparring“ (30–40 % Schlaghärte, Partner + Schutz, ab Fortgeschritten, Hinweis „nur nach Absprache mit Trainer“) · B3 keine Abhärtung, dafür Handgelenk & Griff; mehr Beinarbeit und Meiden mit dem Kopf · B4 über 40: 3 × 2 Min., „kein offizielles DBV-Format“. Details `docs/boxing-concept.md`.
 - 03.11.2026, 3-D (Betreiber): A10 nach Vorschlag (in explosiven Blöcken ohne Gewichte nur Schnellkraftübungen mit 3–5 Wdh.; „langsam (3 s ab)“ nur in langsamen Blöcken). Umsetzung und Abweichungen: `docs/data-load-concept.md` §10 (stabile Text-IDs mit Migration in `hydrate`, `core/prescription.js`, A1–A12 und neu A13 Schienbein-Checks). Vergleichsbasis neu aufgezeichnet.
 
 ## Offen
@@ -76,4 +79,4 @@ Manuelle Abnahmen:
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Abnahme von 3-D (Wochenpaket 3/8 abgeschlossen): Wochenpaket 4/8, Teil 4a-Q – Box-Regeln und Fachkonzept (Modell laut Plan: Opus).
+Nach Sichtung von 4a-Q: Teil 4a-U – Boxpläne (Modell laut Plan: Sonnet), in Unterteilen U1–U5 laut `docs/boxing-concept.md` §6.
