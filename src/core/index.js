@@ -4,3 +4,4 @@ export * from "./format.js";
 export * from "./dates.js";
 export * from "./random.js";
 export * from "./storage.js";
+export * from "./history.js";
