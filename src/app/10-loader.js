@@ -4,10 +4,14 @@
     const lg = S.profile.lang,
       box = document.getElementById("factBox");
     // tips and facts follow the main sport: boxing only gets boxing items, kickboxing keeps its own (k = kickboxing only, b = boxing only)
+    // taekwondo: general tips only until its own items come with the WT/ITF plans and guides (all facts are kickboxing or boxing history)
     const isBoxMain = mainSport() === "boxing",
-      tips = TIPS.filter((x) => (isBoxMain ? !x.k && !x.d : !x.b && (!x.d || x.d.includes(S.profile.disc)))),
-      facts = FACTS.filter((x) => (isBoxMain ? x.b : !x.b));
-    if (loadIdx % 2) {
+      isTkdMain = mainSport() === "taekwondo",
+      tips = TIPS.filter((x) =>
+        isTkdMain ? !x.k && !x.b && !x.d : isBoxMain ? !x.k && !x.d : !x.b && (!x.d || x.d.includes(S.profile.disc)),
+      ),
+      facts = isTkdMain ? [] : FACTS.filter((x) => (isBoxMain ? x.b : !x.b));
+    if (loadIdx % 2 || !facts.length) {
       const x = tips[Math.floor(loadIdx / 2) % tips.length];
       box.className = "fact tip";
       document.getElementById("factK").textContent = t("tipK");
@@ -56,7 +60,7 @@
   function prepLoader(titleKey) {
     document.getElementById("burst").innerHTML = burst();
     document.getElementById("loaderFig").innerHTML =
-      `<svg viewBox="0 0 400 220" role="img" aria-label=""><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(mainSport() === "boxing" ? "box" : loadIdx % 2 ? "box" : "kick", 14, mainSport() === "boxing")}</svg>`;
+      `<svg viewBox="0 0 400 220" role="img" aria-label=""><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(mainSport() === "boxing" ? "box" : mainSport() === "taekwondo" ? "kick" : loadIdx % 2 ? "box" : "kick", 14, outfitFor(mainSport()))}</svg>`;
     document.getElementById("loaderTitle").textContent = t(titleKey);
     document.getElementById("loaderHint").textContent = t("tapClose");
     showCard();

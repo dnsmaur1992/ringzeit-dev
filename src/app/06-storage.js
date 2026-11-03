@@ -76,6 +76,15 @@
     delete p.arcStart;
     if (!p.focus) p.focus = "bal";
     if (!["lc", "fc", "kl", "k1"].includes(p.disc)) p.disc = "lc";
+    // taekwondo grades per style (6a): only known grade codes survive, the lists are bounded
+    const T = p.tkd && typeof p.tkd === "object" ? p.tkd : {};
+    p.tkd = {
+      style: T.style === "itf" ? "itf" : "wt",
+      wt: TKDT.isGrade("wt", T.wt) ? T.wt : "",
+      itf: TKDT.isGrade("itf", T.itf) ? T.itf : "",
+      hist: (Array.isArray(T.hist) ? T.hist : []).filter((x) => x && TKDT.STYLES.includes(x.style) && typeof x.date === "string").slice(-200),
+      exams: (Array.isArray(T.exams) ? T.exams : []).filter((x) => x && TKDT.STYLES.includes(x.style) && TKDT.isGrade(x.style, x.target) && typeof x.date === "string").slice(-50),
+    };
     return p;
   }
 

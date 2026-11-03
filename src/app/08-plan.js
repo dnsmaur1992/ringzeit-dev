@@ -96,7 +96,8 @@
   let buildSport = null;
   const sportNow = () => buildSport || S.profile.sport || "kickboxing";
   const isBox = () => sportNow() === "boxing";
-  const discOf = () => (isBox() ? "box" : S.profile.disc);
+  const isTkd = () => sportNow() === "taekwondo";
+  const discOf = () => (isBox() ? "box" : isTkd() ? "tkd" : S.profile.disc);
   /* Protection ban after a KO: kickboxing 4 weeks (WAKO), boxing 30 days (DBV §89) */
   const koDays = () => sportFor(sportNow()).rules.koDays || 28;
   const koLock = (ds) => !!S.ko && ds >= S.ko && daysBetween(parse(S.ko), parse(ds)) < koDays();
@@ -1944,7 +1945,7 @@
       if (prep && les) notes.push(t("lastLesson")(les));
     }
     if (ramp) notes.unshift(t("rampNote")(ramp.left));
-    if (ko) notes.unshift(t(box ? "koNoteBox" : "koNote"));
+    if (ko) notes.unshift(t(box ? "koNoteBox" : isTkd() ? "koNoteTkd" : "koNote"));
     if (box) {
       if (!prep && bf.official === false && bf.cls === "m") notes.push(t("boxMasters"));
       if (type === "P" && eq.includes("partner")) notes.push(t("boxGear"));

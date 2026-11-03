@@ -682,6 +682,17 @@
       renderOnb();
       return;
     }
+    if (ds.otstyle) {
+      ui.onb.tstyle = ds.otstyle;
+      if (ui.onb.tgrade && !TKDT.isGrade(ds.otstyle, ui.onb.tgrade)) ui.onb.tgrade = "";
+      renderOnb();
+      return;
+    }
+    if (ds.otgrade != null) {
+      ui.onb.tgrade = ds.otgrade;
+      renderOnb();
+      return;
+    }
     if (ds.osport) {
       ui.onb.sport = ds.osport;
       renderOnb();
@@ -881,7 +892,7 @@
         date: iso(today()),
         method: "rz-1",
         raw,
-        ...(raw.tec != null ? { techBy: { [techKey(tsp)]: raw.tec } } : {}),
+        ...(raw.tec != null ? { techBy: { [tsp === "taekwondo" ? techKey(tsp, tkdStyle()) : techKey(tsp)]: raw.tec } } : {}),
         ...r,
       });
       ui.testOpen = false;
@@ -897,6 +908,11 @@
       } else blockAfterTest();
       return;
     }
+    if (ds.tk === "open") {
+      ui.tkdOpen = true;
+      return render();
+    }
+    if (ds.tk) return tkdAction(ds);
     // profile
     if (ds.p) {
       draft[ds.p] = ds.p === "level" ? +ds.v : ds.v;

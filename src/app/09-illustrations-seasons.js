@@ -175,6 +175,36 @@
     const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - b.rx - 4}" y="${b.cy - b.ry - 4}" width="${b.rx * 2 + 8}" height="${b.ry * 2 + 8}" transform="rotate(${b.rot} ${b.cx} ${b.cy})" fill="${c.top}"/><path d="${below}" fill="${c.shorts}"/></g><path d="${o.belly}" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>`;
     return { legs, body };
   }
+  /* taekwondo: white dobok (long trousers, V-neck) with the belt of the grade; a swimsuit never replaces it */
+  const DOBOK = "#EFEBDF";
+  function tkdOutfit(o, belt) {
+    const b = o.body,
+      n = (o.belly.match(/-?[\d.]+/g) || []).map(Number),
+      id = "td" + figN++;
+    let legs = "";
+    o.legs.forEach((l) => {
+      const [h, k, f] = l,
+        pts = `${h.join(",")} ${k.join(",")} ${f.join(",")}`;
+      legs += `<polyline points="${pts}" fill="none" stroke="${FIG.BG}" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="${DOBOK}" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>`;
+    });
+    // belt along the belly line: dark outline, belt colour, tip colour on the first part of the curve
+    let belly = "",
+      knot = "";
+    if (n.length >= 6) {
+      const d = o.belly,
+        kx = (n[0] + 2 * n[2] + n[4]) / 4,
+        ky = (n[1] + 2 * n[3] + n[5]) / 4;
+      belly = `<path d="${d}" fill="none" stroke="${FIG.BG}" stroke-width="11" stroke-linecap="butt"/><path d="${d}" fill="none" stroke="${belt.base}" stroke-width="7.5" stroke-linecap="butt"/>`;
+      if (belt.half) belly += `<path d="${d}" pathLength="100" fill="none" stroke="${belt.tip}" stroke-width="7.5" stroke-dasharray="0 50 50"/>`;
+      else if (belt.tip) belly += `<path d="${d}" pathLength="100" fill="none" stroke="${belt.tip}" stroke-width="7.5" stroke-dasharray="0 62 7 31"/>`;
+      knot = `<path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${FIG.BG}" stroke-width="7" stroke-linecap="round"/><path d="M${kx - 3} ${ky + 3} l-5 15 M${kx + 3} ${ky + 3} l6 14" stroke="${belt.base}" stroke-width="4" stroke-linecap="round"/><rect x="${kx - 5}" y="${ky - 5}" width="10" height="10" rx="2.5" fill="${belt.base}" stroke="${FIG.BG}" stroke-width="2.5"/>`;
+    }
+    const hx = o.head.x,
+      hy = o.head.y,
+      collar = `<path d="M${hx - 11} ${hy + 22} L${hx + 1} ${hy + 40} L${hx + 12} ${hy + 22}" fill="none" stroke="#8C8576" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - b.rx - 4}" y="${b.cy - b.ry - 4}" width="${b.rx * 2 + 8}" height="${b.ry * 2 + 8}" fill="${DOBOK}"/></g>${collar}${belly}${knot}`;
+    return { legs, body };
+  }
   function hatSvg(kind, x, y) {
     if (kind === "jester")
       return `<path d="M${x - 20} ${y - 12} Q${x - 30} ${y - 40} ${x - 40} ${y - 30} Q${x - 22} ${y - 30} ${x - 12} ${y - 14} Z" fill="#2E86DE" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><path d="M${x - 12} ${y - 15} Q${x} ${y - 52} ${x + 10} ${y - 15} Z" fill="#FFD23F" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><path d="M${x + 12} ${y - 14} Q${x + 22} ${y - 30} ${x + 40} ${y - 30} Q${x + 30} ${y - 40} ${x + 20} ${y - 12} Z" fill="#E8445A" stroke="${FIG.BG}" stroke-width="3" stroke-linejoin="round"/><rect x="${x - 23}" y="${y - 19}" width="46" height="9" rx="4" fill="#58D68D" stroke="${FIG.BG}" stroke-width="3"/><circle cx="${x - 41}" cy="${y - 30}" r="4.5" fill="#FFD23F" stroke="${FIG.BG}" stroke-width="2"/><circle cx="${x}" cy="${y - 50}" r="4.5" fill="#E8445A" stroke="${FIG.BG}" stroke-width="2"/><circle cx="${x + 41}" cy="${y - 30}" r="4.5" fill="#2E86DE" stroke="${FIG.BG}" stroke-width="2"/>`;
@@ -189,7 +219,7 @@
       s += limb(a, 17) + glove(e[0], e[1]);
     };
     const se = season(),
-      tr = outfit ? boxOutfit(o, outfit) : se && se.trunks ? trunks(o) : null;
+      tr = outfit ? (outfit.dobok ? tkdOutfit(o, outfit.belt) : boxOutfit(o, outfit)) : se && se.trunks ? trunks(o) : null;
     if (tr && !outfit) s += TRUNKS_DEF;
     o.back.forEach(arm);
     o.legs.forEach((l) => (s += limb(l, 23)));
@@ -330,10 +360,13 @@
     },
   };
   /* "kick" = kickboxing scene (high kick against a guard), "box" = boxing scene (jab against a slip) */
+  /* outfit per fighter: boxing corners (true) or the dobok with the belt of the grade ({ tkd: belt }), see outfitFor */
+  const cornerOf = (box, side) =>
+    !box ? null : box === true ? (side === "L" ? BOX_BLUE : BOX_RED) : box.tkd ? { dobok: true, belt: box.tkd } : null;
   function fightPair(scene, y = 14, box = false) {
     const [a, b, xa, xb] = scene === "kick" ? ["kick", "guard", 34, 362] : ["jab", "slip", 50, 352];
     // boxing: blue corner left, red corner right
-    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS[b], box ? BOX_RED : null)}</g></g><g transform="translate(${xa} ${y})"><g class="bob">${figure(FIGS[a], box ? BOX_BLUE : null)}</g></g>`;
+    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS[b], cornerOf(box, "R"))}</g></g><g transform="translate(${xa} ${y})"><g class="bob">${figure(FIGS[a], cornerOf(box, "L"))}</g></g>`;
   }
   let seed = 7;
   const srand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -363,8 +396,8 @@
   /* two fighters trading: the attacker strikes every few seconds, the defender slips or takes it on the guard */
   function fightPairLive(scene, calm, y = 14, box = false) {
     // boxing: blue corner left, red corner right (only when the shown session is a boxing session)
-    const L = box ? BOX_BLUE : null,
-      R = box ? BOX_RED : null;
+    const L = cornerOf(box, "L"),
+      R = cornerOf(box, "R");
     if (calm)
       return `<g transform="translate(362 ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS.guard, R)}</g></g><g transform="translate(40 ${y})"><g class="bob">${figure(FIGS.guard, L)}</g></g>`;
     const kick = scene === "kick",

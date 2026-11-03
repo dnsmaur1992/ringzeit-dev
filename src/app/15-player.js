@@ -969,7 +969,7 @@
         .map((x, i) => `<button type="button" data-tf="${i + 1}" aria-pressed="${d.flx === i + 1}">${x}</button>`)
         .join("")}</div></div>`;
       }
-      h += `<div class="field"><span class="lab">${t("cats").tec}</span><span class="how">${t("tDesc")[tsp === "boxing" ? "tecBox" : "tec"]}</span><div class="seg g5">${t(
+      h += `<div class="field"><span class="lab">${t("cats").tec}</span><span class="how">${t("tDesc")[tsp === "boxing" ? "tecBox" : tsp === "taekwondo" ? "tecTkd" : "tec"]}</span><div class="seg g5">${t(
         "tecOpt",
       )
         .map(
@@ -1242,7 +1242,7 @@
       life = "",
       app = "";
     more += `<div class="panel">${sportRowP(p)}<div class="field"><span class="lab">${t("level")}</span><div class="seg">${[0, 1, 2].map((k) => (k > ml ? `<button type="button" class="locked" data-lock="level" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("levels")[k]}</button>` : `<button type="button" data-p="level" data-v="${k}" aria-pressed="${p.level === k}">${t("levels")[k]}</button>`)).join("")}</div>${ml < 2 ? `<span class="sub">${t("levelLock")}</span>` : ""}</div>
- ${p.sport === "boxing" ? "" : `<div class="field"><span class="lab">${t("discipline")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => ((ageAt(today(), p) != null && ageAt(today(), p) < 15) && (k === "fc" || k === "k1") ? `<button type="button" class="locked" data-lock="age" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-p="disc" data-v="${k}" aria-pressed="${p.disc === k}">${t("disc")[k]}</button>`)).join("")}</div></div>
+ ${p.sport === "boxing" || p.sport === "taekwondo" ? "" : `<div class="field"><span class="lab">${t("discipline")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => ((ageAt(today(), p) != null && ageAt(today(), p) < 15) && (k === "fc" || k === "k1") ? `<button type="button" class="locked" data-lock="age" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-p="disc" data-v="${k}" aria-pressed="${p.disc === k}">${t("disc")[k]}</button>`)).join("")}</div></div>
  <div class="field"><span class="lab">${t("focus")}</span><div class="seg">${["box", "bal", "kick"].map((k) => `<button type="button" data-p="focus" data-v="${k}" aria-pressed="${(p.level === 0 ? "bal" : p.focus) === k}" ${p.level === 0 && k !== "bal" ? "disabled" : ""}>${t("focusOpt")[k]}</button>`).join("")}</div>${p.level === 0 ? `<span class="sub">${t("focusLock")}</span>` : ""}</div>`}
  <div class="field"><label class="lab" for="pBirth">${t("birth")}</label><input id="pBirth" type="number" inputmode="numeric" min="1950" max="${today().getFullYear() - 8}" placeholder="2001" value="${p.birthYear || ""}"><span class="sub">${t("birthHint")}${ageAt(today(), p) != null ? ` · ${ageAt(today(), p)} · ${t("ages")[ageGroup(p)]}` : ""}</span>${ageGroup(p) === "kids" ? `<span class="sub">${t("kidsNote")}</span>` : ""}</div>
  <div class="field"><span class="lab">${t("sex")}</span><div class="seg g3">${["m", "f", "d"].map((k) => `<button type="button" data-p="sex" data-v="${k}" aria-pressed="${p.sex === k}">${t("sexes")[k]}</button>`).join("")}</div><span class="sub">${t("sexHint")}</span></div></div>`;
@@ -1254,6 +1254,13 @@
     train += `<div class="panel"><div class="field"><span class="lab">${t("days")} · ${p.days.length}</span><div class="chips">${[0, 1, 2, 3, 4, 5, 6].map((i) => `<button type="button" class="chip${(p.club || { days: [] }).days.includes(i) ? " clubday" : ""}" data-day="${i}" aria-pressed="${p.days.includes(i)}">${t("dayNames")[i]}</button>`).join("")}</div><span class="sub">${t("ownHint")}</span></div>
  <div class="field"><label class="lab" for="pMin">${t("minutes")}: <span id="pMinV">${mv}</span></label><input id="pMin" type="range" min="30" max="${cap}" step="15" value="${mv}"><span class="sub">${t("minCap")}</span></div>
  </div>`;
+    {
+      const T = tkdOf(),
+        show = p.sport === "taekwondo" || ui.tkdOpen || T.wt || T.itf || T.hist.length || T.exams.length;
+      goals += show
+        ? tkdPanelHtml()
+        : `<div class="panel"><button type="button" class="btn sec" data-tk="open">${t("tkd").title}</button></div>`;
+    }
     goals += `<div class="panel"><div class="field"><span class="lab">${t("comps")}</span>${(p.comps || []).length ? "" : `<span class="sub">${t("compNone")}</span>`}</div>${(
       p.comps || []
     )
