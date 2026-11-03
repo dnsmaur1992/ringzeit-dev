@@ -303,3 +303,53 @@ test("prescriptions A6/A7/A9/A11: neck names the four hand positions, kick holds
   assert.deepEqual(alt.phases.map((p) => p.seconds), [30, 30, 30, 30]);
   assert.equal(rxSeconds(RX["cond.rope_intervals"])[0], 120);
 });
+
+/* ---------- boxing (4a-U, U1/U2) ---------- */
+import { dbvClass, dbvFormat, standardFormat, KO_DAYS, WKB_URL } from "../src/sports/boxing/rules.js";
+import { BOX_COMBOS, BOX_LIGHT, BOX_COUNTER, BOX_ATT, BOX_THEMES } from "../src/sports/boxing/techniques.js";
+import { BOX_TASKS } from "../src/sports/boxing/tasks.js";
+import { KICKS, TECH } from "../src/sports/kickboxing/techniques.js";
+import { SPORTS, visibleSports, previewSports } from "../src/sports/index.js";
+
+test("boxing rules: DBV age classes by calendar year and the round lengths of §46/§47", () => {
+  assert.deepEqual([9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 40, 41].map(dbvClass), [null, "u13", "u13", "u15", "u15", "u17", "u17", "u19", "u19", "a", "a", null]);
+  assert.equal(dbvClass(null), "a", "nothing entered: adult");
+  assert.deepEqual(dbvFormat("lc", 11), { r: 3, w: 60, b: 60, cls: "u13" });
+  assert.deepEqual([13, 15, 17, 25].map((a) => dbvFormat(null, a).w), [90, 120, 180, 180]);
+  assert.equal(dbvFormat(null, 45), null, "over 40: no official format");
+  assert.equal(dbvFormat("fc", 30).r, 3);
+});
+test("boxing rules: training standard without a tournament, over-40 format, ban duration, link", () => {
+  assert.equal(standardFormat(null).w, 180);
+  assert.equal(standardFormat(22).w, 180);
+  assert.equal(standardFormat(14).w, 90);
+  assert.equal(standardFormat(9).w, 60);
+  const m = standardFormat(45);
+  assert.deepEqual([m.r, m.w, m.b, m.official], [3, 120, 60, false]);
+  assert.equal(KO_DAYS, 30);
+  assert.match(WKB_URL, /^https:\/\/www\.boxverband\.de\/.*WKB.*\.pdf$/);
+});
+test("boxing techniques: punches only, every name exists, defence only where it has a reason", () => {
+  const all = [...BOX_COMBOS.flat(), ...BOX_LIGHT];
+  for (const c of all) for (const x of c) assert.ok(TECH[x] && !KICKS.has(x), `${x} is a punch or a shared move`);
+  for (const t of BOX_THEMES) for (const c of BOX_COMBOS.flat().slice(0, 6)) for (const x of t.ap(c.slice(), {})) assert.ok(!KICKS.has(x));
+  for (const c of BOX_COUNTER) {
+    assert.ok(BOX_ATT.has(c.att));
+    c.c.forEach((x) => assert.ok(!KICKS.has(x) && TECH[x]));
+  }
+  assert.ok(BOX_COMBOS.every((l) => l.length >= 6), "enough combos per level");
+});
+test("boxing tasks: all with partner text or solo text; touch sparring needs a partner and gear and is from level 1", () => {
+  assert.ok(BOX_TASKS.every((t) => t.sport === "boxing" && t.de[0] && t.en[0] && t.de[1] && t.en[1]));
+  const free = BOX_TASKS.find((t) => t.touch);
+  assert.ok(free.gear && free.lvl >= 1 && free.de[2] === null);
+  assert.match(free.de[1], /30–40 %/);
+  assert.match(free.de[1], /nur nach Absprache mit deinem Trainer und unter Aufsicht/);
+  assert.ok(BOX_TASKS.filter((t) => t.touch).length === 1);
+  for (const t of BOX_TASKS) assert.ok(!/Kick|Tritt/.test(t.de.join(" ")), t.id + " has no kick wording");
+});
+test("sports: boxing is registered but hidden; it is offered only as a development preview", () => {
+  assert.equal(SPORTS.boxing.visible, false);
+  assert.deepEqual(visibleSports().map((s) => s.id), ["kickboxing"]);
+  assert.deepEqual(previewSports().map((s) => s.id), ["boxing"]);
+});

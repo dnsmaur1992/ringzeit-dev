@@ -2250,12 +2250,12 @@ test("3-U: every built session and every entry carries its sport; a unit can be 
   assert.match(a.run("S.sessions[ui.sel].id"), /^s/);
   assert.match(a.run("renderSession()"), /data-usport="kickboxing"/, "the sport row is shown, with the one finished sport");
   assert.equal(a.run("sportChoices().join()"), "kickboxing");
-  await a.click({ dataset: { usport: "boxing" } });
-  assert.equal(a.run("ui.setup.sport"), "boxing");
+  await a.click({ dataset: { usport: "taekwondo" } });
+  assert.equal(a.run("ui.setup.sport"), "taekwondo");
   assert.equal(a.run("setupDirty(ui.sel)"), true, "the change is flagged until rebuilt");
   assert.equal(a.run("entrySport({date:'2026-10-01',minutes:60,rpe:5})"), "kickboxing");
-  a.run("S.profile.sport='boxing';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);");
-  assert.equal(a.run("S.sessions[ui.sel].sport"), "boxing", "default = main sport");
+  a.run("S.profile.sport='taekwondo';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);");
+  assert.equal(a.run("S.sessions[ui.sel].sport"), "taekwondo", "default = main sport");
   assert.equal(a.run("S.sessions[ui.sel] && planContext(ui.sel).sport.id"), "kickboxing", "unfinished sport falls back to the finished module");
 });
 
@@ -2320,10 +2320,10 @@ test("3-U case 12: free run – no timer, minutes + km + effort; load 240, pace 
 
 test("3-U case 8: a tournament of another sport drives the phases; a belt exam only acts on its own sport", () => {
   const a = app();
-  a.run("S.profile.comps=[{id:'c1',kind:'comp',sport:'boxing',date:iso(addDays(today(),20))}];");
+  a.run("S.profile.comps=[{id:'c1',kind:'comp',sport:'taekwondo',date:iso(addDays(today(),20))}];");
   assert.equal(a.run("phaseInfo().phase"), "peak");
   assert.equal(a.run("phaseInfo().official"), false, "no kickboxing format is applied to a sport without module");
-  a.run("S.profile.comps=[{id:'g1',kind:'grade',sport:'boxing',date:iso(addDays(today(),10))}];");
+  a.run("S.profile.comps=[{id:'g1',kind:'grade',sport:'taekwondo',date:iso(addDays(today(),10))}];");
   assert.equal(a.run("phaseInfo().phase"), "base", "exam of another sport: no effect");
   a.run("S.profile.comps=[{id:'g2',kind:'grade',date:iso(addDays(today(),10))}];");
   assert.equal(a.run("phaseInfo().phase"), "grade", "no sport = kickboxing");
@@ -2499,4 +2499,183 @@ test("session setup: with 'Freier Lauf' only that option is pressed (not 'Interv
   assert.deepEqual(pressed("free"), ["free"]);
   assert.deepEqual(pressed(true), ["run"]);
   assert.deepEqual(pressed(false), ["iv"]);
+});
+
+/* ---------- Boxing (4a-U) ---------- */
+const boxSess = (a, type, eq, opts = {}) =>
+  JSON.parse(a.run(`JSON.stringify(buildSession('${opts.ds || "2026-11-03"}','${type}','gym',${JSON.stringify(eq)},{sport:'boxing'${opts.min ? ",min:" + opts.min : ""}}))`));
+const boxItems = (s) => s.blocks.flatMap((b) => b.items.map((it) => ({ ...it, bk: b.key })));
+const KICKTOK = /^(front|round|roundh|side|back|hookk|axe|brazil|shook|tornado|jknee|sweep|lowk|knee)$/;
+const tokensOf = (s) =>
+  boxItems(s).flatMap((it) => [...(it.combo || []), ...(it.react ? Object.values(it.react).flatMap((r) => [r.a, r.c].filter(Boolean)) : [])]);
+
+test("4a-U: boxing sessions hold only punches, no kick round, no kickbox hardening – for every level, age and limit", () => {
+  const a = app();
+  for (const [lvl, by, lim] of [[0, 2010, []], [1, 1995, []], [2, 1995, ["wrist"]], [1, 1995, ["knee"]], [0, 2015, []], [2, 1981, ["shoulder"]]]) {
+    a.run(`S.profile.level=${lvl};S.profile.birthYear=${by};S.profile.limits=${JSON.stringify(lim)};S.profile.disc='fc';`);
+    for (let i = 0; i < 12; i++)
+      for (const type of ["T", "C", "P", "S", "K"]) {
+        const s = boxSess(a, type, ["partner", "bag", "rope", "bands"]);
+        assert.equal(s.sport, "boxing");
+        assert.ok(!tokensOf(s).some((x) => KICKTOK.test(x)), `${type} lvl${lvl} ${by} ${lim}: no kick`);
+        assert.ok(!boxItems(s).some((it) => it.k === "sixkick" || it.bk === "hard"), "no six-kick round, no kickbox hardening");
+        assert.ok(!boxItems(s).some((it) => it.kind === "round" && it.k === "task" && /^(hands|kicks|free|lowfocus|sixkick|knee)$/.test(it.id)), "only boxing tasks");
+        assert.ok(!boxItems(s).some((it) => it.kind === "hard" && /^(fGlove|fWraps|fBare|fPads|fTap|checks|shinbag|shintap|bodybag|abs|arms)$/.test(it.id)), "no hardening with hits");
+      }
+  }
+});
+
+test("4a-U: Handgelenk & Griff – fixed block (towel + grip) instead of hardening, graded by age, level, limits, equipment", () => {
+  const a = app();
+  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];");
+  let s = boxSess(a, "T", ["bands"]);
+  const w = s.blocks.find((b) => b.key === "wrist");
+  assert.equal(w.min, 6);
+  assert.ok(w.items.some((it) => it.id === "fWring") && w.items.some((it) => it.id === "fFinger"));
+  assert.equal(s.blocks.filter((b) => b.key === "hard").length, 0);
+  a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bands'],{sport:'boxing'});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+  assert.match(a.run("renderSession()"), /Handgelenk &amp; Griff|Handgelenk & Griff/);
+  // children: only towel and grip, no neck, no fist load
+  a.run("S.profile.level=0;S.profile.birthYear=2015;");
+  for (let i = 0; i < 15; i++) assert.deepEqual(boxSess(a, "T", ["partner"], { min: 60 }).blocks.find((b) => b.key === "wrist").items.map((it) => it.id).sort(), ["fFinger", "fWring"]);
+  // wrist limit: no fist or wrist load; taper weeks gentle
+  a.run("S.profile.level=2;S.profile.birthYear=1995;S.profile.limits=['wrist'];");
+  const seen = new Set();
+  for (let i = 0; i < 40; i++) boxSess(a, "T", ["weights", "bands"]).blocks.find((b) => b.key === "wrist").items.forEach((it) => seen.add(it.id));
+  assert.ok(![...seen].some((id) => ["fPlank", "fPush", "wristCurl"].includes(id)), [...seen].join());
+  // equipment: the band exercise only with a band, the dumbbell curl only with weights/band
+  a.run("S.profile.limits=[];");
+  const noEq = new Set();
+  for (let i = 0; i < 40; i++) boxSess(a, "T", []).blocks.find((b) => b.key === "wrist").items.forEach((it) => noEq.add(it.id));
+  assert.ok(!noEq.has("fingerExt") && !noEq.has("wristCurl"), [...noEq].join());
+  // no exercise twice: the neck hold of the strength block is not repeated in the wrist block
+  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];");
+  for (let i = 0; i < 40; i++) {
+    const ids = boxItems(boxSess(a, "S", ["bands"])).filter((it) => it.kind === "ex" || it.kind === "hard").map((it) => it.id);
+    assert.equal(ids.filter((x) => x === "str.neck_iso_hold" || x === "neck").length <= 1, true);
+  }
+  // the kickboxing hardening never contains the boxing-only items
+  for (let i = 0; i < 20; i++) assert.ok(!JSON.stringify(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','T','gym',['bands'],{sport:'kickboxing'}))")).blocks).match(/wristCurl|fingerExt/));
+});
+
+test("4a-U: round formats – DBV age class, standard without tournament, 3 × 2 min over 40, tournament format in preparation", () => {
+  const a = app();
+  const main = (s) => s.blocks.find((b) => b.key === "main");
+  a.run("S.profile.level=0;S.profile.limits=[];S.profile.birthYear=2010;"); // 16 → U17
+  assert.deepEqual([main(boxSess(a, "T", [], { min: 45 })).w, main(boxSess(a, "T", [], { min: 45 })).b], [120, 60]);
+  a.run("S.profile.birthYear=2015;"); // 11 → U13
+  assert.equal(main(boxSess(a, "T", [], { min: 30 })).w, 60);
+  a.run("S.profile.birthYear='';S.profile.level=1;"); // nothing entered: adult
+  assert.equal(main(boxSess(a, "T", [])).w, 180);
+  assert.ok(!boxSess(a, "T", []).notes.some((n) => /Geburtsjahr/.test(n)));
+  a.run("S.profile.birthYear=1981;"); // 45
+  const m = boxSess(a, "T", []);
+  assert.equal(main(m).w, 120);
+  assert.ok(m.notes.some((n) => /kein offizielles DBV-Format/.test(n)));
+  // tournament in 4 weeks, adult: 3 × 3 min; tournament of the age class U17: 2 min
+  a.run("S.profile.birthYear=1995;S.profile.comps=[{id:'c1',kind:'comp',sport:'boxing',date:iso(addDays(today(),28))}];");
+  assert.equal(a.run("phaseInfo().format.w"), 180);
+  assert.equal(main(boxSess(a, "T", [])).w, 180);
+  assert.equal(a.run("phaseInfo().official"), true);
+  a.run("S.profile.birthYear=2010;");
+  assert.equal(a.run("phaseInfo().format.w"), 120);
+  assert.equal(main(boxSess(a, "T", [])).w, 120);
+  // kickboxing stays on its own format
+  a.run("S.profile.birthYear=1995;S.profile.comps=[];");
+  assert.equal(main(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','T','gym',[],{sport:'kickboxing'}))"))).w, 180);
+});
+
+test("4a-U: partner days – Aufgabensparring only; touch sparring max once, never for beginners, kids, taper/recovery or after a KO", () => {
+  const a = app();
+  const tasksOf = (s) => boxItems(s).filter((it) => it.k === "task");
+  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];S.profile.comps=[];");
+  let free = 0;
+  for (let i = 0; i < 60; i++) {
+    const t = tasksOf(boxSess(a, "P", ["partner"], { min: 90 }));
+    assert.ok(t.length && t.every((x) => x.id.startsWith("bx_") && x.m === "p"));
+    const n = t.filter((x) => x.id === "bx_free").length;
+    assert.ok(n <= 1, "at most one touch-sparring round");
+    free += n;
+  }
+  assert.ok(free > 0, "touch sparring does occur from Fortgeschritten");
+  // beginners and children: none
+  for (const [lvl, by] of [[0, 1995], [1, 2015]]) {
+    a.run(`S.profile.level=${lvl};S.profile.birthYear=${by};`);
+    for (let i = 0; i < 30; i++) assert.ok(!tasksOf(boxSess(a, "P", ["partner"], { min: 90 })).some((x) => x.id === "bx_free"));
+  }
+  // children never spar with a partner
+  for (let i = 0; i < 15; i++) assert.ok(tasksOf(boxSess(a, "P", ["partner"], { min: 90 })).every((x) => x.m !== "p"));
+  // taper week: only light tasks, no touch sparring
+  a.run("S.profile.level=2;S.profile.birthYear=1995;S.profile.comps=[{id:'c1',kind:'comp',sport:'boxing',date:iso(addDays(today(),5))}];");
+  assert.equal(a.run("phaseInfo().phase"), "taper");
+  for (let i = 0; i < 30; i++) {
+    const t = tasksOf(boxSess(a, "P", ["partner"], { min: 90 }));
+    assert.ok(t.every((x) => ["bx_lead", "bx_attdef", "bx_counter", "bx_bodyhead", "bx_first"].includes(x.id)), t.map((x) => x.id).join());
+  }
+  // text with the notice is shown
+  a.run("S.profile.comps=[];S.profile.level=2;");
+  let shown = "";
+  for (let i = 0; i < 80 && !/Absprache mit deinem Trainer/.test(shown); i++) {
+    a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'P','gym',['partner'],{sport:'boxing',min:90});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+    shown = a.run("renderSession()");
+  }
+  assert.match(shown, /Freies Touch-Sparring/);
+  assert.match(shown, /30–40 % Schlaghärte/);
+  assert.match(shown, /Absprache mit deinem Trainer und unter Aufsicht/);
+});
+
+test("4a-U: K.o. ban – boxing 30 days (DBV), kickboxing 4 weeks; solo and contactless; hint to the escalation", () => {
+  const a = app();
+  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];S.ko='2026-10-05';"); // 29 days before 2026-11-03
+  const b = boxSess(a, "P", ["partner", "bag"], { min: 90 });
+  assert.ok(!boxItems(b).some((it) => it.k === "task" && it.m === "p") && b.type === "T", "boxing: still locked after 29 days");
+  assert.ok(b.notes.some((n) => /mindestens 30 Tage/.test(n) && /§89/.test(n)));
+  assert.ok(!boxItems(b).some((it) => it.k === "partner"), "no partner rounds");
+  const k = JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','P','gym',['partner','bag'],{sport:'kickboxing',min:90}))"));
+  assert.equal(k.type, "P", "kickboxing: 4 weeks are over");
+  a.run("S.ko='2026-10-04';"); // 30 days
+  const c = boxSess(a, "P", ["partner", "bag"], { min: 90 });
+  assert.equal(c.type, "P");
+  assert.ok(boxItems(c).some((it) => it.k === "task"));
+});
+
+test("4a-U: a unit can be set to Boxen (development preview) and back; history is shared; the main profile does not offer it", () => {
+  const a = app();
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices())")), ["kickboxing"], "profile: finished sports only");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices(true))")), ["kickboxing", "boxing"]);
+  a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+  assert.match(a.run("renderSession()"), /data-usport="boxing"[^>]*>Boxen · Entwicklungsvorschau/);
+  a.run("S.log.push({id:'k1',date:'2026-11-02',src:'own',type:'T',sport:'kickboxing',minutes:60,rpe:8,tHi:8});");
+  const wk = a.run("weekLoadSum(S.log,'2026-11-02')");
+  a.run("S.log.push({id:'b1',date:'2026-11-02',src:'own',type:'T',sport:'boxing',minutes:60,rpe:8,tHi:8});");
+  const wk2 = a.run("weekLoadSum(S.log,'2026-11-02')");
+  assert.ok(wk2 > wk && wk > 0, "a boxing entry counts in the same week load as a kickboxing entry");
+  const s = boxSess(a, "T", ["bag"]);
+  assert.equal(s.sport, "boxing");
+  const back = JSON.parse(a.run("JSON.stringify(buildSession('2026-11-03','T','gym',['bag'],{sport:'kickboxing'}))"));
+  assert.equal(back.sport, "kickboxing");
+  assert.ok(boxItems(back).some((it) => it.combo && it.combo.some((x) => KICKTOK.test(x))) || boxItems(back).length, "kickboxing session is built again");
+});
+
+test("4a-U: evasion rounds always carry an opponent action; a larger share of footwork and evasion; rendered with A/B frames", () => {
+  const a = app();
+  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];");
+  let foot = 0, evade = 0, total = 0;
+  for (let i = 0; i < 20; i++) {
+    const s = boxSess(a, "T", ["bag"], { min: 60 });
+    const rr = boxItems(s).filter((it) => it.kind === "round" && it.bk === "main");
+    total += rr.length;
+    foot += rr.filter((r) => r.k === "foot").length;
+    for (const r of rr.filter((x) => x.k === "evade")) {
+      evade++;
+      assert.ok(r.react && r.react.pre && r.react.pre.a && r.react.pre.d, "opponent action and defence");
+    }
+  }
+  assert.ok((foot + evade) / total >= 0.4, `footwork + evasion share ${(foot + evade) / total}`);
+  a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{sport:'boxing',min:60});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+  const h = a.run("renderSession()");
+  assert.match(h, /Meiden &amp; Kontern|Meiden & Kontern/);
+  assert.match(h, /class="pg b"/);
+  assert.match(h, /Entwicklungsvorschau/);
+  assert.match(h, /boxverband\.de/);
 });
