@@ -2644,7 +2644,7 @@ test("4a-U: a unit can be set to Boxen (development preview) and back; history i
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices())")), ["kickboxing"], "profile: finished sports only");
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(sportChoices(true))")), ["kickboxing", "boxing"]);
   a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
-  assert.match(a.run("renderSession()"), /data-usport="boxing"[^>]*>Boxen · Entwicklungsvorschau/);
+  assert.match(a.run("renderSession()"), /data-usport="boxing"[^>]*>Boxen</);
   a.run("S.log.push({id:'k1',date:'2026-11-02',src:'own',type:'T',sport:'kickboxing',minutes:60,rpe:8,tHi:8});");
   const wk = a.run("weekLoadSum(S.log,'2026-11-02')");
   a.run("S.log.push({id:'b1',date:'2026-11-02',src:'own',type:'T',sport:'boxing',minutes:60,rpe:8,tHi:8});");
@@ -2657,7 +2657,7 @@ test("4a-U: a unit can be set to Boxen (development preview) and back; history i
   assert.ok(boxItems(back).some((it) => it.combo && it.combo.some((x) => KICKTOK.test(x))) || boxItems(back).length, "kickboxing session is built again");
 });
 
-test("4a-U: evasion rounds always carry an opponent action; a larger share of footwork and evasion; rendered with A/B frames", () => {
+test("4a-U: evasion rounds always name the defence and leave the opponent open; a larger share of footwork and evasion; rendered with A/B frames", () => {
   const a = app();
   a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];");
   let foot = 0, evade = 0, total = 0;
@@ -2668,14 +2668,15 @@ test("4a-U: evasion rounds always carry an opponent action; a larger share of fo
     foot += rr.filter((r) => r.k === "foot").length;
     for (const r of rr.filter((x) => x.k === "evade")) {
       evade++;
-      assert.ok(r.react && r.react.pre && r.react.pre.a && r.react.pre.d, "opponent action and defence");
+      assert.ok(r.evade && r.evade.d && !r.react, "defence named, the opponent's action stays open");
     }
   }
   assert.ok((foot + evade) / total >= 0.4, `footwork + evasion share ${(foot + evade) / total}`);
   a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{sport:'boxing',min:60});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
   const h = a.run("renderSession()");
   assert.match(h, /Meiden &amp; Kontern|Meiden & Kontern/);
-  assert.match(h, /class="pg b"/);
+  assert.match(h, /class="dfn"/);
+  assert.ok(!/class="pg b"/.test(h.slice(h.indexOf("Meiden &"), h.indexOf("Meiden &") + 700)), "no B frame in the evasion round");
   assert.match(h, /Entwicklungsvorschau/);
   assert.match(h, /boxverband\.de/);
 });
@@ -2702,7 +2703,7 @@ test("4a-U: main sport Boxen (development preview) in the profile – no discipl
   const a = app();
   a.run("draft=null;ui.profSec='train';");
   let h = a.run("renderProfile()");
-  assert.match(h, /data-p="sport" data-v="boxing"[^>]*>Boxen · Entwicklungsvorschau/);
+  assert.match(h, /data-p="sport" data-v="boxing"[^>]*>Boxen</);
   assert.match(h, /data-p="disc"/, "kickboxing: discipline row");
   a.run("S.profile.sport='boxing';draft=null;");
   h = a.run("renderProfile()");
@@ -2716,4 +2717,19 @@ test("4a-U: main sport Boxen (development preview) in the profile – no discipl
   a.run("S.profile.sport='kickboxing';draft=null;");
   assert.match(a.run("renderProfile()"), /data-p="disc"/);
   assert.match(a.run("eyebrow()"), /Light Contact|Kick Light|Full Contact|K1/);
+});
+
+test("4a-U: start page – blue (left) and red (right) boxing outfits only when the shown session is set to boxing", () => {
+  const a = app();
+  const hero = () => a.run("todayCard(nextTrainingDate(), typeOn(nextTrainingDate()), 'kick')");
+  const BLUE = /#2F6FD0/, RED = /#D2343F/;
+  a.run("S.sessions={};");
+  assert.ok(!BLUE.test(hero()) && !RED.test(hero()), "kickboxing: plain figures");
+  a.run("{const d=iso(today());S.sessions[d]=buildSession(d,'T','gym',[],{sport:'boxing'});ui.setup=setupOf(S.sessions[d],d);}");
+  const h = hero();
+  assert.ok(BLUE.test(h) && RED.test(h), "boxing: both corners");
+  assert.ok(h.indexOf("#2F6FD0") < h.indexOf("#D2343F") || h.indexOf("#2F6FD0") > -1, "blue fighter present");
+  assert.match(h, /stroke="#FFFFFF" stroke-width="4.5"/, "white waistline");
+  a.run("{const d=iso(today());S.sessions[d]=buildSession(d,'T','gym',[],{sport:'kickboxing'});ui.setup=setupOf(S.sessions[d],d);}");
+  assert.ok(!BLUE.test(hero()), "back to kickboxing: plain figures again");
 });
