@@ -1,6 +1,8 @@
 /* Exercise catalogue shared by all sports. Each row: cat, de, en, dDE, dEN, equip, locs, avoid, minLevel.
-   EX[i].id is still the row position – stable ids follow in step 3-D (see docs/architecture.md 6.3),
-   so rows must not be reordered or removed. AV maps profile limits to the avoid codes of a row. */
+   Row i has the stable id EX_KEYS[i] (ids.js): EX[i].id === EX[i].key is that text id, and the row can be reached as
+   EX[id] with the text id (old numeric ids still work for reading old data). Rows must not be reordered or removed.
+   AV maps profile limits to the avoid codes of a row. */
+import { EX_KEYS } from "./ids.js";
 const X = [
   [
     "warm",
@@ -923,7 +925,8 @@ const X = [
   ],
 ];
 export const EX = X.map((r, i) => ({
-  id: i,
+  id: EX_KEYS[i],
+  key: EX_KEYS[i],
   cat: r[0],
   de: r[1],
   en: r[2],
@@ -934,4 +937,6 @@ export const EX = X.map((r, i) => ({
   avoid: r[7],
   lvl: r[8],
 }));
+for (const row of EX) EX[row.key] = row;
+if (EX.length !== EX_KEYS.length) throw new Error("catalogue and id table differ in length");
 export const AV = { knee: "k", shoulder: "s", wrist: "w", back: "b", ankle: "a" };
