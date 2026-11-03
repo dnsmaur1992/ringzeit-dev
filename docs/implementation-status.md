@@ -23,7 +23,7 @@
 | W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
 | W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
-| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (199 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
+| W5 | 6b – WT-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (200 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -137,8 +137,9 @@ Weitere Änderungen:
 - **Sichtung 03.11.2026 20:42**: Die Fußzeile der Heute-Seite verlinkte immer die WAKO. Jetzt je Hauptsport: Kickboxen WAKO Deutschland, Boxen DBV-Wettkampfbestimmungen (WKB), Taekwondo WT die DTU-Wettkampfordnung, ITF-D die ITF-D-Wettkampfordnung (Quellen R2, R3b, R4b); der Hinweis „Boxeinheit nach DBV-Regeln. Regelwerk (DBV-WKB)“ in der Boxeinheit entfällt deshalb; der Rechtstext nennt allgemein „Regelwerke deines Verbands“ (Tests 198).
 - **Sichtung 03.11.2026 20:57**: Taekwondo-Tritte tragen jetzt V/H (vorderes/hinteres Bein) wie beim Kickboxen: Mireo-chagi vorderes Bein; Dwi-chagi, Dwi-huryeo, Ban-dal und Sprungtritte hinteres Bein; bei den übrigen wechselt die Seite in der Folge. Eigene Legende. Handtechniken (Jireugi) sind bei WT bewusst selten (unter 8 % der Techniken, WT wertet nur Faust zum Rumpf); die volle Handtechnik kommt mit ITF-D in 6c (Tests 199).
 - **Sichtung 03.11.2026 20:59**: Neues Element „Stellungswechsel (kleiner Hüpfer)“, koreanisch Bal-bakkum (Quelle: nbtkda.com/footwork, US-Verband; nicht durch WT/DTU belegt), ab Level 1, in Kombis und Fußarbeit. Ein echter Sprung ohne Bodenkontakt ist in der Quelle nicht beschrieben; das Element bleibt deshalb ein flacher Wechsel mit kleinem Hüpfer.
+- **Sichtung 03.11.2026 21:11**: Serien (schnelle Tritte ohne Absetzen) erscheinen als ein gestrichelt umrandeter Chip mit Pfeilen und festem V/H je Tritt: Dollyeo V → H, Ban-dal V → Dollyeo V, Yeop V → Dwi H → Bal-bakkum, Ap V → Dollyeo H, Dollyeo H → V. Ab Level 1, nie für Kinder, Freischaltung = strengste Grenze der Teile (z. B. kein Dwi-chagi unter 19, nicht mit Knie-/Sprunggelenkbeschwerden). Die Ansage nennt die Teile am Stück mit „vorne/hinten“. Daten `SERIES` in `techniques.js` (Tests 200).
 - Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
-- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 199 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
+- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 200 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
 - **Bekannte Grenzen**: ITF-D-Techniken und Regelprofil (6c); Tipps/Fakten/Ratgeber Taekwondo (6d); WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
 
 ## Nächster Vorschlag (ohne Freigabe)
