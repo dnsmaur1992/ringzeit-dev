@@ -194,7 +194,7 @@ function snapshot() {
           const items = s.blocks.map((b, bi) => b.items.map((it, ni) => {
             const tm = exerciseTiming(s, bi, ni);
             return {
-              dose: it.kind === "ex" || it.id != null && typeof it.id === "number" ? doseTxt(it.id, b) : null,
+              dose: it.kind === "ex" || (it.id != null && EX[it.id]) ? doseTxt(it.id, b) : null,
               timer: tm && { phases: tm.phases?.length || 0, seconds: (tm.phases || []).reduce((x, p) => x + p.seconds, 0), choices: tm.choices, perSet: tm.seconds },
             };
           }));
@@ -204,6 +204,8 @@ function snapshot() {
           if (copy.sport !== "kickboxing" || !copy.id) throw new Error("session without sport/id");
           delete copy.sport;
           delete copy.id;
+          // 3-D: exercises carry text ids now; the baseline keeps the old row number (legacyIndex) so it stays comparable
+          for (const b of copy.blocks) for (const it of b.items) if (typeof it.id === "string" && EX[it.id]) it.id = EX.indexOf(EX[it.id]);
           return { session: copy, items };
         })()`);
         r.sessions[`${ty}-${loc}${opts.run ? "-run" : ""}`] = sess;

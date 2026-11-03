@@ -110,6 +110,8 @@ function app() {
   });
   // Boot was deliberately not run (see script replacement below).
   const run = (code) => vm.runInContext(code, context, { timeout: 3000 });
+  // 3-D: exercises are found by their text id; exKey(fn) returns the id of the first exercise matching fn
+  run(`globalThis.exKey=(f)=>{const e=EX.find(f);return e?e.key:-1};`);
   run(
     `S = hydrate({profile:{...DEFAULT_PROFILE, level:1, example:false, planStart:'2026-08-31'}}); ui.onb = null;`,
   );
@@ -248,7 +250,7 @@ test("pause/resume and long background catch-up do not require another start or 
 test("exercise checks, legacy rounds and entered sets survive backup round trip", () => {
   const a = app();
   a.run(
-    `const id=EX.findIndex(e=>e.cat==='str'); S.sessions.x={date:'2026-11-02',rdone:1,checked:{'0.0':true,'2.0':true},blocks:[{key:'warm',items:[{id}]},{key:'main',rounds:true,items:[{},{}]},{key:'hard',items:[{kind:'hard',id:'fPush'}]},{key:'str',sets:'2× 8–12',items:[{id}]}],perf:{'3.0':[{r:0},{r:8}]}};`,
+    `const id=exKey(e=>e.cat==='str'); S.sessions.x={date:'2026-11-02',rdone:1,checked:{'0.0':true,'2.0':true},blocks:[{key:'warm',items:[{id}]},{key:'main',rounds:true,items:[{},{}]},{key:'hard',items:[{kind:'hard',id:'fPush'}]},{key:'str',sets:'2× 8–12',items:[{id}]}],perf:{'3.0':[{r:0},{r:8}]}};`,
   );
   assert.equal(a.run("sessionCompletion(S.sessions.x).open"), 1);
   a.run(
@@ -371,7 +373,7 @@ test("wave increases density within time budget and preserves deload, children, 
 test("strength targets use actual same-exercise data, advance one variable per closed cycle and survive backup", () => {
   const a = app();
   history(a, { type: "S" });
-  a.run(`const id=EX.findIndex(e=>e.cat==='str' && /weights/.test(e.eq) && !DOSE_FIX[e.de]);
+  a.run(`const id=exKey(e=>e.cat==='str' && /weights/.test(e.eq) && !DOSE_FIX[e.de]);
     const sess={date:'2026-11-02',type:'S',loc:'gym',eq:['weights'],progression:progressionState('2026-11-02','S',false)},
       b={key:'str',sets:'3× 8–12',items:[{id}]};
     const initial=strengthTarget(sess,b,b.items[0]);
@@ -921,7 +923,7 @@ test("basic strength movements recur, respect limits, and unrelated equipment do
   assert.ok(
     a.run("one.blocks.flatMap(b=>b.items.filter(it=>it.basic)).length") >= 2,
   );
-  a.run(`globalThis.id=EX.findIndex(e=>e.de==='Goblet Squats')`);
+  a.run(`globalThis.id=exKey(e=>e.de==='Goblet Squats')`);
   assert.equal(
     a.run('relevantEquipment(id,["weights"])'),
     a.run('relevantEquipment(id,["weights","rope","bag"])'),
@@ -943,7 +945,7 @@ test("old unconfirmed defaults are not evidence; optional hard exercise feedback
   a.run("S.log.forEach(e=>delete e.inputConfirmed)");
   assert.equal(a.run(`progressionState('2026-11-02','T',false).step`), 0);
   history(a, { type: "S" });
-  a.run(`const id=EX.findIndex(e=>e.de==='Goblet Squats'),sess={date:'2026-11-02',type:'S',loc:'gym',eq:['weights'],progression:progressionState('2026-11-02','S',false)},b={key:'str',sets:'3× 8–12',items:[{id}]};
+  a.run(`const id=exKey(e=>e.de==='Goblet Squats'),sess={date:'2026-11-02',type:'S',loc:'gym',eq:['weights'],progression:progressionState('2026-11-02','S',false)},b={key:'str',sets:'3× 8–12',items:[{id}]};
     const initial=strengthTarget(sess,b,b.items[0]);S.log.forEach(e=>e.perf=[{id,effort:'hard',sets:[{r:8,kg:20},{r:8,kg:20},{r:8,kg:20}],target:{...initial,kg:20,cycle:e.progression.id}}]);
     sess.progression=progressionState('2026-11-02','S',false);globalThis.feedbackTarget=strengthTarget(sess,b,b.items[0])`);
   assert.equal(a.run("feedbackTarget.kg"), 19);
@@ -964,7 +966,7 @@ test("one minute of the free timer needs only second-aligned callbacks and pause
 test("legacy exercise histories remain comparable when only unrelated equipment changes", () => {
   const a = app();
   history(a, { type: "S" });
-  a.run(`const id=EX.findIndex(e=>e.de==='Goblet Squats'),sess={date:'2026-11-02',type:'S',loc:'gym',eq:['weights'],progression:progressionState('2026-11-02','S',false)},b={key:'str',sets:'3× 8–12',items:[{id}]};
+  a.run(`const id=exKey(e=>e.de==='Goblet Squats'),sess={date:'2026-11-02',type:'S',loc:'gym',eq:['weights'],progression:progressionState('2026-11-02','S',false)},b={key:'str',sets:'3× 8–12',items:[{id}]};
     const initial=strengthTarget(sess,b,b.items[0]),parts=initial.kind.split(':');parts[parts.length-4]='bag,rope,weights';
     S.log.forEach(e=>e.perf=[{id,sets:[{r:8,kg:20},{r:8,kg:20},{r:8,kg:20}],target:{...initial,kg:20,kind:parts.join(':'),cycle:e.progression.id}}]);
     sess.progression=progressionState('2026-11-02','S',false);globalThis.carriedTarget=strengthTarget(sess,b,b.items[0]);`);
@@ -1026,7 +1028,7 @@ test("the day plan is a read-only preview; starting opens the saved section with
 test("warm-up timers follow the displayed minutes, pause precisely, and only complete after the full duration", () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
   );
   assert.equal(a.run("ui.exerciseTimer.phases[0].seconds"), 120);
   a.advance(1500);
@@ -1047,7 +1049,7 @@ test("warm-up timers follow the displayed minutes, pause precisely, and only com
 test("per-side cool-down holds include both sides and a changeover; ranges never fabricate a fixed duration", () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'M',eq:[],blocks:[{key:'cool',min:6,items:[{id:EX.findIndex(e=>e.de==='Hüftbeuger dehnen')},{id:EX.findIndex(e=>e.de==='Adduktoren & Spagat')}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
+    `ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'M',eq:[],blocks:[{key:'cool',min:6,items:[{id:exKey(e=>e.de==='Hüftbeuger dehnen')},{id:exKey(e=>e.de==='Adduktoren & Spagat')}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
   );
   assert.deepEqual(
     Array.from(a.run("ui.exerciseTimer.phases.map(p=>p.seconds)")),
@@ -1068,7 +1070,7 @@ test("per-side cool-down holds include both sides and a changeover; ranges never
 test("finishing a timed strength set fills only that set; set rests do not complete an exercise", () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id,target:{r:30}}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0',setIndex:'1'});`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id,target:{r:30}}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0',setIndex:'1'});`,
   );
   a.advance(30000);
   assert.deepEqual(
@@ -1088,7 +1090,7 @@ test("finishing a timed strength set fills only that set; set rests do not compl
 test("conditioning intervals catch up quietly, circuit laps remain distinct, and closing pauses without marking", () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Sack-Sprints');S.sessions.x={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'cond',min:12,sets:'3×',items:[{id}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Sack-Sprints');S.sessions.x={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'cond',min:12,sets:'3×',items:[{id}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};exerciseTimerAction('start',{key:'0.0'});`,
   );
   assert.equal(a.run("ui.exerciseTimer.phases.length"), 8);
   a.elapse(130000);
@@ -1122,7 +1124,7 @@ test("exercise timers share the central clock and cannot run alongside round tim
 
 test("mobility time frames and hardening holds use their existing prescription", () => {
  const a=app();
- a.run(`ui.sel='x';S.sessions.x={blocks:[{key:'mob',min:12,items:[{id:EX.findIndex(e=>e.de==='90/90 Hüftwechsel')},{id:EX.findIndex(e=>e.de==='Taube')}]}]};`);
+ a.run(`ui.sel='x';S.sessions.x={blocks:[{key:'mob',min:12,items:[{id:exKey(e=>e.de==='90/90 Hüftwechsel')},{id:exKey(e=>e.de==='Taube')}]}]};`);
  assert.equal(a.run('exerciseTiming(S.sessions.x,0,0).phases[0].seconds'),360);
  assert.deepEqual(Array.from(a.run('exerciseTiming(S.sessions.x,0,1,90).phases.map(p=>p.seconds)')),[90,5,90]);
  a.run("S.sessions.x.blocks=[{key:'hard',min:6,items:[{kind:'hard',id:'fPlank'}]}]");
@@ -1150,7 +1152,7 @@ test("empty set fields show the target as a hint, and single timed exercises are
   assert.match(sets, /placeholder="Ziel \d+"/);
   assert.doesNotMatch(sets, /value="\d+"/);
   a.run(
-    `ui.sel='x';const id=EX.findIndex(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};`,
+    `ui.sel='x';const id=exKey(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};`,
   );
   assert.equal(a.run("exerciseTiming(S.sessions.x,0,0).phases[0].label"), "Läuft");
 });
@@ -1237,7 +1239,7 @@ test("player: one step per exercise, rounds as one step, circuits lap by lap, fi
 test("player: a timed step starts with 10 s get-ready, rings, completes and moves on by itself", async () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};startWorkout();`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Einlaufen');S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'warm',min:4,items:[{id},{id}]}]};startWorkout();`,
   );
   assert.equal(a.run("ui.workout.player"), true);
   assert.equal(a.run("playerStep().kind"), "timed");
@@ -1257,7 +1259,7 @@ test("player: a timed step starts with 10 s get-ready, rings, completes and move
 test("player: steps without a fixed time are finished with Done; skipping leaves them open", async () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'cond',min:6,sets:'',items:[]}]};const b=S.sessions.x.blocks[0];const id=EX.findIndex((e,i)=>e.cat==='cond'&&(b.items=[{id:i},{id:i}],!exerciseTiming(S.sessions.x,0,0)));b.items=[{id},{id}];startWorkout();`,
+    `ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'T',min:30,eq:[],blocks:[{key:'cond',min:6,sets:'',items:[]}]};const b=S.sessions.x.blocks[0];const id=exKey((e,i)=>e.cat==='cond'&&(b.items=[{id:i},{id:i}],!exerciseTiming(S.sessions.x,0,0)));b.items=[{id},{id}];startWorkout();`,
   );
   assert.equal(a.run("playerStep().kind"), "manual");
   await a.click({ dataset: { player: "next" } });
@@ -1350,7 +1352,7 @@ test("player: opening the overview and going back to the flow keeps a running se
 test("player: timed strength runs set → rest → set with gong like rounds, fills each set and moves on", async () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]},{key:'cool',min:4,items:[{id:EX.findIndex(e=>e.de==='Atmung')}]}]};startWorkout();`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]},{key:'cool',min:4,items:[{id:exKey(e=>e.de==='Atmung')}]}]};startWorkout();`,
   );
   assert.equal(a.run("playerStep().kind"), "sets");
   await a.click({ dataset: { player: "toggle" } });
@@ -1373,7 +1375,7 @@ test("player: timed strength runs set → rest → set with gong like rounds, fi
 test("player: 10 seconds before a hold ends and before the next set starts there is a beep and a call", async () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]}]};startWorkout();globalThis.said=[];say=(x)=>said.push(x);`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Unterarmstütz');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]}]};startWorkout();globalThis.said=[];say=(x)=>said.push(x);`,
   );
   await a.click({ dataset: { player: "toggle" } });
   const hold = a.run("ui.exerciseTimer.phases[1].seconds");
@@ -1388,13 +1390,13 @@ test("one-legged exercises say 'pro Bein' in dose, target and timer; two-sided o
   a.run(
     `ui.sel='2026-11-02';S.sessions[ui.sel]=buildSession(ui.sel,'S','gym',[],{min:60});globalThis.blk={key:'str',min:20,sets:'3× 8–12',items:[]};`,
   );
-  const lunge = a.run("EX.findIndex(e=>e.de==='Ausfallschritte')"),
-    twist = a.run("EX.findIndex(e=>e.de==='Russian Twists')"),
-    hold = a.run("EX.findIndex(e=>e.de==='Einbeinstand mit Kick-Hold')");
-  assert.match(a.run(`doseTxt(${lunge},blk)`), /pro Bein/);
-  assert.match(a.run(`doseTxt(${twist},blk)`), /je Seite/);
-  assert.match(a.run(`targetText({n:3,r:8,kg:null,timed:false,reason:'initial'},${lunge})`), /Ziel: 3 × 8 pro Bein/);
-  a.run(`S.sessions.y={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id:${hold}}]}]};`);
+  const lunge = a.run("exKey(e=>e.de==='Ausfallschritte')"),
+    twist = a.run("exKey(e=>e.de==='Russian Twists')"),
+    hold = a.run("exKey(e=>e.de==='Einbeinstand mit Kick-Hold')");
+  assert.match(a.run(`doseTxt('${lunge}',blk)`), /pro Bein/);
+  assert.match(a.run(`doseTxt('${twist}',blk)`), /je Seite/);
+  assert.match(a.run(`targetText({n:3,r:8,kg:null,timed:false,reason:'initial'},'${lunge}')`), /Ziel: 3 × 8 pro Bein/);
+  a.run(`S.sessions.y={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id:'${hold}'}]}]};`);
   const labels = a.run("JSON.stringify((exerciseTiming(S.sessions.y,0,0)||{phases:[]}).phases.map(p=>p.label))");
   if (labels !== "[]") assert.match(labels, /Bein/);
 });
@@ -1419,7 +1421,7 @@ test("player: the set rest can be paused and resumed (e.g. a toilet break)", asy
 test("one-legged exercises are entered per leg; the set counts once both legs are in (weaker leg)", async () => {
   const a = app();
   a.run(
-    `ui.sel='x';ui.tab='session';const id=EX.findIndex(e=>e.de==='Ausfallschritte');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]}]};startWorkout();`,
+    `ui.sel='x';ui.tab='session';const id=exKey(e=>e.de==='Ausfallschritte');S.sessions.x={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{id}]}]};startWorkout();`,
   );
   const html = a.run("workoutHtml()");
   assert.match(html, /data-f="rL"/);
@@ -1436,7 +1438,7 @@ test("one-legged exercises are entered per leg; the set counts once both legs ar
   assert.equal(a.run("S.sessions.x.perf['0.0'][0].r"), 9);
   // timed one-legged hold: the chain has one phase per leg and fills both
   a.run(
-    `const hid=EX.findIndex(e=>e.de==='Einbeinstand mit Kick-Hold');S.sessions.y={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'2× 8–12',items:[{id:hid}]}]};ui.sel='y';ui.workout=null;startWorkout();playerStartSets();`,
+    `const hid=exKey(e=>e.de==='Einbeinstand mit Kick-Hold');S.sessions.y={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'2× 8–12',items:[{id:hid}]}]};ui.sel='y';ui.workout=null;startWorkout();playerStartSets();`,
   );
   const legs = JSON.parse(a.run("JSON.stringify(ui.exerciseTimer.phases.filter(p=>p.leg).map(p=>p.leg))"));
   assert.deepEqual(legs, ["rL", "rR", "rL", "rR"]);
@@ -1626,7 +1628,7 @@ test("profile change: open sessions are rebuilt, a started one keeps its entries
 
 test("circuit: skipped laps stay open – confirming only lap 3 completes lap 3 alone", async () => {
   const a = app();
-  a.run(`const id=EX.findIndex(e=>e.de==='Burpees');ui.sel='c';ui.tab='session';
+  a.run(`const id=exKey(e=>e.de==='Burpees');ui.sel='c';ui.tab='session';
     S.sessions.c={date:'2026-11-02',type:'K',min:30,eq:[],blocks:[{key:'cond',min:12,sets:'3×',items:[{kind:'ex',id}]}]};startWorkout();`);
   const laps = a.run("circN(S.sessions.c.blocks[0])");
   assert.ok(laps >= 3);
@@ -1648,7 +1650,7 @@ test("circuit: skipped laps stay open – confirming only lap 3 completes lap 3 
 
 test("rep prescription: burpees with '10 reps' are confirmed with ✓, no 40/20 work timer", () => {
   const a = app();
-  a.run(`S.profile.level=1;const id=EX.findIndex(e=>e.de==='Burpees');S.sessions.b={date:'2026-11-02',type:'K',min:30,eq:[],blocks:[{key:'cond',min:10,sets:'',items:[{kind:'ex',id}]}]};`);
+  a.run(`S.profile.level=1;const id=exKey(e=>e.de==='Burpees');S.sessions.b={date:'2026-11-02',type:'K',min:30,eq:[],blocks:[{key:'cond',min:10,sets:'',items:[{kind:'ex',id}]}]};`);
   assert.match(a.run("doseTxt(S.sessions.b.blocks[0].items[0].id,S.sessions.b.blocks[0])"), /10 Wdh\./);
   assert.equal(a.run("exerciseTiming(S.sessions.b,0,0)"), null);
   assert.equal(a.run("playerSteps(S.sessions.b)[0].kind"), "manual");
@@ -1656,7 +1658,7 @@ test("rep prescription: burpees with '10 reps' are confirmed with ✓, no 40/20 
 
 test("one-legged set: deleting one side reopens the set; old shared values stay readable", async () => {
   const a = app();
-  a.run(`const id=EX.findIndex(e=>DOSE_LEG.has(e.de)&&e.cat==='str'&&!TIMED.has(EX.indexOf(e)));ui.sel='l';ui.tab='session';
+  a.run(`const id=exKey(e=>DOSE_LEG.has(e.de)&&e.cat==='str'&&!TIMED.has(e.key));ui.sel='l';ui.tab='session';
     S.sessions.l={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'2× 8–12',items:[{kind:'ex',id}]}]};
     perfRows(S.sessions.l,'0.0',S.sessions.l.blocks[0]);`);
   const inp = (f, v) => a.emit("input", { classList: { contains: (c) => c === "si", toggle() {} }, dataset: { k: "0.0", i: "0", f }, value: v });
@@ -1770,7 +1772,7 @@ test("simple view: pictures instead of codes, no sparring choice, club logging o
 
 test("set step: arriving by itself says to enter reps, › on an empty set notes that it stays open", async () => {
   const a = app();
-  a.run(`globalThis.spoken=[];say=(x)=>spoken.push(x);const tid=EX.findIndex(e=>e.de==='Einlaufen'),gid=EX.findIndex(e=>e.de==='Goblet Squats');
+  a.run(`globalThis.spoken=[];say=(x)=>spoken.push(x);const tid=exKey(e=>e.de==='Einlaufen'),gid=exKey(e=>e.de==='Goblet Squats');
     ui.sel='g';ui.tab='session';S.sessions.g={date:'2026-11-02',type:'S',min:30,eq:['kb'],blocks:[{key:'warm',min:3,items:[{id:tid}]},{key:'str',min:10,sets:'2× 8–12',items:[{kind:'ex',id:gid}]}]};startWorkout();`);
   const si = a.run("playerSteps(S.sessions.g).findIndex(s=>s.kind==='sets')");
   a.run(`playerGo(${si},{auto:true})`);
@@ -2014,7 +2016,7 @@ test("as a pair: circuits are offset so no device is needed by both, set work al
       s.eq = s.eq || ["partner", "kb", "bar", "weights", "bag", "rope"];
       s.blocks.forEach((b) => { if (isDuo(s, b)) { duo++; clash += duoOff(s, b).clash; if (!html) html = blockHead(b, s); }
         else if (!b.rounds && blockHead(b, s).includes("Satzpause ist der Satz")) sets++; }); }
-    const kb = EX.findIndex((e) => e.cat === "str" && e.eq && e.eq.includes("kb"));
+    const kb = exKey((e) => e.cat === "str" && e.eq && e.eq.includes("kb"));
     sets = blockHead({ key: "str", sets: "3× 8–10", min: 12, items: [{ id: kb }] }, { eq: ["partner", "kb"] }).includes("Satzpause ist der Satz") ? 1 : 0;
     const solo = buildSession("2026-11-04", "S", "gym", ["kb", "bar"], { min: 60 });
     return { duo, clash, html, sets, soloDuo: solo.blocks.some((b) => isDuo(solo, b)) }; })())`));
@@ -2167,11 +2169,11 @@ test("neck hold exercise: one name, texts that match the timer (4 directions × 
   const a = app();
   const name = "Isometrische Nackenkräftigung – Halteübung";
   assert.equal(a.run("EX.filter(e=>e.de==='Nackenstärkung').length"), 0);
-  const id = a.run(`EX.findIndex(e=>e.de==='${name}')`);
-  assert.ok(id >= 0);
-  assert.match(a.run(`EX[${id}].desc`) || a.run(`EX[${id}].dde`) || "", /10 s/);
+  const id = a.run(`exKey(e=>e.de==='${name}')`);
+  assert.equal(typeof id, 'string');
+  assert.match(a.run(`EX['${id}'].desc`) || a.run(`EX['${id}'].dde`) || "", /10 s/);
   // hardening item (normal and full-contact text) and the tracked strength item both run 4 × 10 s with changes in between
-  for (const item of [`{kind:'hard',id:'neck'}`, `{kind:'hard',id:'neck',h:1}`, `{id:${id},target:{r:10}}`]) {
+  for (const item of [`{kind:'hard',id:'neck'}`, `{kind:'hard',id:'neck',h:1}`, `{id:'${id}',target:{r:10}}`]) {
     a.run(`ui.sel='x';ui.tab='session';S.sessions.x={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'${item.includes("hard") ? "hard" : "str"}',min:5,sets:'3×',items:[${item}]}]};ui.workout={ds:'x',block:0};S.sessions.x.flow={block:0};`);
     const secs = Array.from(a.run("exerciseTiming(S.sessions.x,0,0,undefined,0).phases.map(p=>p.seconds)"));
     assert.deepEqual(secs, [10, 5, 10, 5, 10, 5, 10], item);
@@ -2182,7 +2184,7 @@ test("neck hold exercise: one name, texts that match the timer (4 directions × 
     assert.match(text, /10 s/);
     assert.doesNotMatch(text, /15 s|2 Durchg/);
   }
-  assert.ok(a.run("SKETCH['Isometrische Nackenkräftigung – Halteübung'] != null"));
+  assert.ok(a.run("SKETCH['str.neck_iso_hold'] != null"));
 });
 
 // ---- 2-B: announcer on Android-like engines ----
@@ -2361,4 +2363,129 @@ test("3-U: levels above the tested one show a lock; tapping it explains the fitn
   a.run("toast=(m)=>{globalThis.__t=m}");
   await a.click({ dataset: { lock: "level" } });
   assert.match(a.run("globalThis.__t"), /Fitnesstest/);
+});
+
+// ---- 3-D: stable exercise ids, prescriptions, deviations A1–A13 ----
+test("3-D ids: old data with numeric exercise ids is migrated in sessions and in the log (hydrate)", () => {
+  const a = app();
+  const st = JSON.parse(
+    a.run(`JSON.stringify(hydrate({profile:{...DEFAULT_PROFILE,example:false},
+      sessions:{'2026-11-02':{date:'2026-11-02',type:'S',eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{kind:'ex',id:23},{kind:'hard',id:'neck'},{kind:'round',k:'ex',id:7}]}]}},
+      log:[{date:'2026-11-01',type:'S',minutes:30,rpe:5,perf:[{id:23,kind:'x',sets:[]}]}]}))`),
+  );
+  const items = st.sessions["2026-11-02"].blocks[0].items;
+  assert.equal(items[0].id, "str.plank");
+  assert.equal(items[1].id, "neck", "hardening ids are untouched");
+  assert.equal(items[2].id, "cond.rope_intervals");
+  assert.equal(st.log[0].perf[0].id, "str.plank");
+  // running it twice changes nothing
+  const again = JSON.parse(a.run(`JSON.stringify(hydrate(${JSON.stringify(st)}))`));
+  assert.deepEqual(again.sessions, st.sessions);
+});
+
+test("3-D ids: every sketch and tip is found by id; sketch label shows the display name", () => {
+  const a = app();
+  assert.equal(a.run("Object.keys(SKETCH).filter(k => /^(warm|cond|str|mob|cool|pow|pre)\\./.test(k) && !EX[k]).join()"), "");
+  assert.equal(a.run("Object.keys(EXTIPS).filter(k => !EX[k]).join()"), "");
+  assert.match(a.run("sketchSvg('str.neck_iso_hold')"), /aria-label="Isometrische Nackenkräftigung – Halteübung"/);
+  assert.match(a.run("sketchSvg('str.neck_iso_hold')"), /stroke="#C9A86A"/, "four direction marks are drawn");
+});
+
+test("3-D text and timer from one prescription: every exercise with a prescription says what its timer runs", () => {
+  const a = app();
+  for (const k of Object.keys(JSON.parse(a.run("JSON.stringify(RX)")))) {
+    if (!k.includes(".")) continue;
+    const r = JSON.parse(
+      a.run(`JSON.stringify((() => { const rx = RX[${JSON.stringify(k)}];
+        const secs = rxPlan(rx, {}).phases.reduce((n, p) => n + p.seconds, 0);
+        return { de: rxText(rx, 'de'), en: rxText(rx, 'en'), secs, fix: DOSE_FIX[${JSON.stringify(k)}] }; })())`),
+    );
+    assert.deepEqual(r.fix, [r.de, r.en], k);
+    assert.ok(r.secs > 0, k);
+  }
+});
+
+test("3-D A5: timed one-leg hold = sets of left then right; text says so; no '3 × pro Bein 2 × 10 s'", () => {
+  const a = app();
+  a.run(`ui.sel='x';S.profile.level=1;S.sessions.y={date:'2026-11-02',type:'S',min:30,eq:[],blocks:[{key:'str',min:10,sets:'3× 8–12',items:[{kind:'ex',id:'str.single_leg_kick_hold'}]}]};`);
+  const txt = a.run("doseTxt('str.single_leg_kick_hold', S.sessions.y.blocks[0])");
+  assert.match(txt, /^3 × 30–45 s pro Bein halten/);
+  assert.match(txt, /erst links, dann rechts/);
+  assert.doesNotMatch(txt, /2 × 10 s/);
+  const labels = JSON.parse(a.run("JSON.stringify(exerciseTiming(S.sessions.y,0,0).phases)"));
+  assert.deepEqual(labels.map((p) => p.seconds), [30, 5, 30]);
+  assert.match(labels[0].label, /Bein 1\/2/);
+  assert.match(labels[2].label, /Bein 2\/2/);
+});
+
+test("3-D A7/A8/A9/A11/A12: kick holds ≈4 min with derived text, mobility header, totals from the timer, rope alternates, sprint sets", () => {
+  const a = app();
+  const mob = { key: "mob", min: 12, items: [] };
+  assert.match(a.run("doseTxt('mob.kick_holds', {key:'mob',min:12,items:[]})"), /je Seite 5 × 3–5 s · im Wechsel links\/rechts, ca\. 4–5 Min\./);
+  assert.match(a.run("doseTxt('mob.pigeon_stretch', {key:'mob',min:12,items:[]})"), /je Seite 60–90 s · insgesamt ca\. 2–3 Min\./);
+  assert.match(a.run("doseTxt('mob.frog_stretch', {key:'mob',min:12,items:[]})"), /60–90 s halten · insgesamt ca\. 1–2 Min\./);
+  assert.match(a.run("blockHead({key:'mob',min:12,items:[]})"), /je Übung ca\. 3–4 Min\., Halteübungen 60–90 s/);
+  const kt = a.run("(() => { S.sessions.k={date:'2026-11-02',type:'M',eq:[],blocks:[{key:'mob',min:12,items:[{kind:'ex',id:'mob.kick_holds'}]}]}; const p = exerciseTiming(S.sessions.k,0,0).phases; return p.reduce((n,x)=>n+x.seconds,0); })()");
+  assert.ok(kt >= 230 && kt <= 290, String(kt));
+  assert.match(a.run("doseTxt('cond.rope_intervals', {key:'cond',min:12,sets:'3×',items:[]})"), /2 Min\. im Wechsel \(30 s zügig \/ 30 s locker\)/);
+  a.run("S.sessions.r={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'cond',min:12,sets:'3×',items:[{kind:'ex',id:'cond.rope_intervals'}]}]}");
+  assert.equal(a.run("exerciseTiming(S.sessions.r,0,0).phases.length"), 4);
+  assert.equal(a.run("doseTxt('cond.hill_sprints', {key:'cond',min:12,sets:'3× 30 s',items:[]})"), "3 × 4 Sprints");
+  assert.equal(a.run("doseTxt('cond.strides', {key:'cond',min:12,sets:'3× 30 s',items:[]})"), "3 × (2 × 80 m)");
+  assert.equal(a.run("doseTxt('cond.hill_sprints', {key:'cond',min:12,sets:'3×',items:[]})"), "4 Sprints", "circuit laps keep the single dose");
+});
+
+test("3-D A1–A4, A6, A13: hardening text and timer of the harder full-contact dose agree (all items)", () => {
+  const a = app();
+  for (const [id, re, n, secs] of [
+    ["fPlank", /3× 30–45 s/, 3, [30, 45]],
+    ["fTap", /3× 45 s pro Hand/, 6, [45]],
+    ["fBare", /3× 20 s/, 3, [20]],
+    ["fWraps", /3× 30 s/, 3, [30]],
+    ["checks", /3× 30 s/, 3, [30]],
+  ]) {
+    assert.match(a.run(`hardTxt('${id}', 1)[1]`), re, id);
+    a.run(`ui.sel='x';S.sessions.x={date:'2026-11-02',type:'K',eq:[],blocks:[{key:'hard',min:5,items:[{kind:'hard',id:'${id}',h:1}]}]}`);
+    const p = JSON.parse(a.run("JSON.stringify(exerciseTiming(S.sessions.x,0,0))"));
+    const work = p.phases.filter((x) => !/Wechsel|Change|change/i.test(x.label) && x.seconds !== 5);
+    assert.equal(work.length, n, id);
+    assert.ok(secs.includes(work[0].seconds), id);
+  }
+  // every hardening item with a prescription: the number of work seconds in the text is the timer's
+  const ids = JSON.parse(a.run("JSON.stringify(Object.keys(RX).filter(k => !k.includes('.')))"));
+  for (const id of ids) for (const h of [0, 1]) {
+    const txt = a.run(`hardTxt('${id}', ${h})[1]`);
+    assert.doesNotMatch(txt, /\{(rx|n|s|r)\}/, id);
+  }
+  assert.match(a.run("hardTxt('neck', 0)[1]"), /Stirn, Hinterkopf und beide Kopfseiten/);
+});
+
+test("3-D A10: explosive sets without weights use explosive exercises; slow wording only in slow blocks", () => {
+  const a = app();
+  // slow wording: a heavy block with a bodyweight exercise says "langsam", an explosive one does not
+  a.run("S.profile.level=1");
+  assert.match(a.run("doseTxt('str.push_ups', {key:'str',min:10,sets:'4× 5–8',items:[]})"), /langsam/);
+  assert.doesNotMatch(a.run("doseTxt('str.push_ups', {key:'str',min:10,sets:'3× 3–5 explosiv',items:[]})"), /langsam/);
+  assert.match(a.run("doseTxt('pow.jump_squats', {key:'pow',min:10,sets:'3× 3–5 explosiv',items:[]})"), /^3 × 3–5 Wdh\./);
+  // plan: tournament preparation (build phase), strength session
+  a.run("globalThis.__ph = phaseInfo; phaseInfo = (d) => ({ ...__ph(d), phase: 'build' }); ui.sel = '2026-11-02';");
+  const pick = (loc, eq) =>
+    JSON.parse(
+      a.run(`JSON.stringify((() => {
+        const out = [];
+        for (let i = 0; i < 10; i++) {
+          const s = buildSessionCore('2026-11-02', 'S', ${JSON.stringify(loc)}, ${JSON.stringify(eq)}, { min: 60 });
+          const b = s.blocks.find((x) => x.key === 'str');
+          out.push({ sets: b.sets, cats: b.items.map((it) => EX[it.id].cat), dose: b.items.map((it) => doseTxt(it.id, b)) });
+        }
+        return out; })())`),
+    );
+  const noW = pick("home", ["bands"]);
+  assert.ok(noW.every((r) => /explosiv/.test(r.sets)), "build phase = explosive sets");
+  assert.ok(noW.every((r) => r.cats.every((c) => c === "pow" || c === "str")), "only power (or the strength fallback)");
+  assert.ok(noW.some((r) => r.cats.includes("pow")), "power exercises are chosen");
+  assert.ok(noW.every((r) => r.dose.every((d) => !/langsam/.test(d))), "no slow wording in an explosive block");
+  // with weights the pick stays as before: strength basics
+  const withW = pick("gym", ["weights", "bb"]);
+  assert.ok(withW.every((r) => r.cats.every((c) => c === "str")));
 });

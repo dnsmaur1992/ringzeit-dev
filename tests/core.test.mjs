@@ -242,3 +242,64 @@ test("history: level per sport – shared values 42 days, technique part per spo
   assert.equal(levelFor([legacy, part], "kickboxing").level, 2, "the kickboxing level does not move");
   assert.equal(levelFor([], "kickboxing").level, 0);
 });
+
+/* ---------- 3-D: stable exercise ids and prescriptions (docs/data-load-concept.md §3, §6) ---------- */
+import { EX_KEYS, keyOfLegacy, legacyIndex } from "../src/catalog/ids.js";
+import { EX } from "../src/catalog/exercises.js";
+import { RX, RX_HARD, rxOf, rxText, rxPlan, rxSeconds, rxMinutes } from "../src/core/prescription.js";
+
+test("ids: 88 unique text ids, row order = legacy index, EX reachable by id and by old number", () => {
+  assert.equal(EX_KEYS.length, 88);
+  assert.equal(new Set(EX_KEYS).size, 88);
+  EX_KEYS.forEach((k, i) => {
+    assert.match(k, /^(warm|cond|str|mob|cool|pow|pre)\.[a-z0-9_]+$/);
+    assert.equal(keyOfLegacy(i), k);
+    assert.equal(legacyIndex(k), i);
+    assert.equal(EX[k], EX[i]);
+    assert.equal(EX[i].id, k);
+    assert.equal(EX[i].cat, k.split(".")[0], k);
+  });
+  assert.equal(keyOfLegacy(9999), 9999); // unknown values stay as they are
+});
+
+test("prescriptions: every key exists in the catalogue; text, timer and estimate come from the same numbers", () => {
+  for (const k of Object.keys(RX)) if (k.includes(".")) assert.ok(EX[k], k);
+  // sets: "3× 20–30 s" ↔ 3 work phases with the first choice
+  const sets = rxPlan(RX.fPlank);
+  assert.deepEqual(sets.choices, [20, 30]);
+  assert.equal(sets.phases.filter((p) => p.role === "set").length, 3);
+  assert.equal(rxText(RX.fPlank, "de"), "3× 20–30 s");
+  // every prescription: text has the numbers of the timer
+  assert.equal(rxText(RX["cond.shadow_sprints"], "de"), "3 × (20 s Vollgas / 10 s locker)");
+  assert.equal(rxPlan(RX["cond.shadow_sprints"]).phases.reduce((a, p) => a + p.seconds, 0), 3 * 30);
+  assert.equal(rxText(RX["cool.hip_flexor_stretch"], "en"), "45 s per side");
+  assert.equal(rxPlan(RX["cool.hip_flexor_stretch"]).phases.map((p) => p.seconds).join(), "45,5,45");
+});
+
+test("prescriptions A1–A4, A13: the harder full-contact dose changes text AND timer together", () => {
+  assert.equal(rxText(rxOf("fPlank", true), "de"), "3× 30–45 s");
+  assert.deepEqual(rxPlan(rxOf("fPlank", true)).choices, [30, 45]); // A1
+  assert.equal(rxText(rxOf("fTap", true), "de"), "3× 45 s pro Hand");
+  assert.ok(rxPlan(rxOf("fTap", true)).phases.filter((p) => p.role === "sideset").every((p) => p.seconds === 45)); // A2
+  assert.equal(rxPlan(rxOf("fBare", true)).phases.filter((p) => p.role === "set").length, 3); // A3
+  assert.equal(rxPlan(rxOf("fWraps", true)).phases.filter((p) => p.role === "set").length, 3); // A4
+  assert.equal(rxPlan(rxOf("checks", true)).phases.filter((p) => p.role === "set").length, 3); // A13
+  // normal dose unchanged
+  assert.equal(rxPlan(rxOf("fBare", false)).phases.filter((p) => p.role === "set").length, 2);
+  assert.ok(Object.keys(RX_HARD).every((k) => RX[k]));
+});
+
+test("prescriptions A6/A7/A9/A11: neck names the four hand positions, kick holds fill ≈4 min, holds state their total, rope alternates", () => {
+  assert.match(rxText(RX["str.neck_iso_hold"], "de"), /je Richtung 10 s \(Stirn, Hinterkopf, links, rechts\)/);
+  assert.equal(rxPlan(RX["str.neck_iso_hold"]).phases.filter((p) => p.role === "dir").length, 4);
+  const kick = rxPlan(RX["mob.kick_holds"], { choice: 3 }),
+    tot = kick.phases.reduce((a, p) => a + p.seconds, 0);
+  assert.ok(tot >= 200 && tot <= 290, String(tot));
+  assert.ok(kick.phases.some((p) => p.side === 1) && kick.phases.some((p) => p.side === 2));
+  assert.equal(rxMinutes(RX["mob.pigeon_stretch"]), "2–3");
+  assert.equal(rxMinutes(RX["mob.frog_stretch"]), "1–2");
+  const alt = rxPlan(RX["cond.rope_intervals"]);
+  assert.equal(alt.phases.length, 4);
+  assert.deepEqual(alt.phases.map((p) => p.seconds), [30, 30, 30, 30]);
+  assert.equal(rxSeconds(RX["cond.rope_intervals"])[0], 120);
+});
