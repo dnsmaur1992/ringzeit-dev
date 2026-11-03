@@ -14,7 +14,7 @@
 | W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
 | W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
-| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | WARTET AUF MANUELLEN TEST |
+| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
 
 ## Entscheidungen
 
@@ -54,6 +54,7 @@ Schritt 2 (03.11.2026, automatisch; Zwischenstände lokal geprüft):
 - Android-Sprachausgabe: **nicht reproduziert** (kein Gerät, keine Gerätedaten). Es wurden nur begründete Absicherungen eingebaut, kein Fehler als „behoben“ gemeldet: (1) Sprachcode `de_DE` → `de-DE` (Android meldet Unterstriche; manche Engines wählen sonst die Standardstimme), (2) Stimmenliste beim Start einmal anfordern (Chrome lädt sie verzögert), (3) bei Fehlern (`synthesis-failed`, `language-unavailable` …) bis zu zwei Wiederholungen: nächstbeste Stimme, dann nur Sprache, (4) letzter Fehler erscheint unter Profil → App & Daten → „Stimme der Ansagen“ zur Diagnose. Unverändert: Offline-Stimmen bevorzugt, Online-Stimmen abgewertet, kein Cloud-TTS.
 
 Manuelle Abnahmen:
+- 03.11.2026: 2-B vom Betreiber auf dem Handy (App-Version 03.11.2026 08:34) getestet und abgenommen – Stand `main` @ `a7e29d1` (inkl. Entfernen von `docs/todo-bedienung-akku.md` und `src/core/text.txt`). **Wochenpaket 2/8 abgeschlossen.**
 - 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
 - 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
 
