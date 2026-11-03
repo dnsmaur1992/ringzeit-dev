@@ -120,6 +120,11 @@
 - **Abzeichen, Wochenserie und Trainingskalender**
 - **Turnier-Packliste** zum Abhaken, eine Woche vor dem Wettkampf
 - Automatische **Entlastungswochen** und Pausen bei Krankheit, Verletzung oder Urlaub
+- **Gesamtbelastung** aus eigenem Training und Verein (Minuten × Anstrengung, alle Sportarten gemeinsam): Eine zu hohe Woche macht die noch nicht begonnenen Einheiten leichter – Trainingstage bleiben; war der Vortag in einem Bereich hart (z. B. Vereins-Sparring → Beine), ist die Einheit heute etwas leichter
+- **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; zurzeit gibt es nur Kickboxen
+- **Freier Lauf** (Kondition draußen): ohne Timer, danach Minuten, Strecke und Anstrengung eintragen
+- **Einträge bearbeiten und löschen:** die Wochenbelastung und die noch nicht begonnenen Einheiten werden neu berechnet
+- **Full Contact und K1** sind nicht mehr an das Level gebunden, nur an das Mindestalter
 - **Ramadan-Modus:** leichtere Einheiten für alle, die fasten – freiwillig
 
 ### ✅ Übungen und Einheiten abhaken
