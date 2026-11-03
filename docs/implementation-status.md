@@ -24,7 +24,8 @@
 | W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
 | W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
-| W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | WARTET AUF SICHTUNG (206 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
+| W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:59, Stand `58224bd`, App-Version 03.11.2026 21:47, 206 Tests) |
+| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | WARTET AUF SICHTUNG (212 Tests, Baseline Kickboxen identisch, Isolationstest 12/12) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -142,7 +143,7 @@ Weitere Änderungen:
 - **Sichtung 03.11.2026 21:37**: Kickketten wachsen mit dem Level: Anfänger höchstens 3 Tritte, Fortgeschritten bevorzugt ab 3, Wettkampf bevorzugt ab 4 und bis 6 Tritte (Serien zählen mit ihren Teilen); Kinder höchstens 3 Elemente. Verband/Disziplin je Einheit: laut Betreiber mit 6c (Tests 201).
 - Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
 - **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 201 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
-- **Bekannte Grenzen**: ITF-D-Techniken und Regelprofil (6c); Tipps/Fakten/Ratgeber Taekwondo (6d); WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
+- **Bekannte Grenzen**: WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
 
 ## 6c – ITF-D-Pläne (Umsetzung)
 
@@ -166,6 +167,23 @@ Weitere Änderungen:
 - `src/sports/taekwondo/itf.js` (neu), `rules.js` (itfFormat), `index.js` (Muster), `08-plan.js`, `13-training-flow.js`, `14-guided-training.js`, `25-announcer.js`, `36-everyday.js`, `36-tkd-grade.js`, `37-training-mode.js`, `38-events.js`, `07-fitness-test.js`, `01-overview-i18n.js`, `src/modules.js`, `src/app/00-imports.js`.
 - **Bekannte Grenzen**: Tul-Ablauf und Hosinsul-Inhalte (nur Namen/Hinweis); die Zuordnung Tul/Partnerform je Kup (D3) ist nicht am Original geprüft; ITF-Tipps, Fakten und Ratgeber folgen mit 6d.
 
+## 6d – Stilbezogene Inhalte (Umsetzung)
+
+Entscheidungen 1–9 (Vorschläge des Auftragnehmers, vom Betreiber am 03.11.2026 unverändert übernommen):
+
+1. **Tipps und Fakten**: neue Markierung `tk` (`true` = beide Stile, `"wt"` / `"itf"` = nur dieser Stil) in `02-tips.js`: 6 gemeinsame, 4 WT- und 4 ITF-Tipps; 2 gemeinsame, 3 WT- und 2 ITF-Fakten mit Quelle. Taekwondo zeigt die allgemeinen Tipps plus `tk` des gewählten Stils; Kickboxen und Boxen zeigen nie `tk`-Einträge (Filter in `10-loader.js`).
+2. **Faktenquellen**: Namensbedeutung und Grade (Wikipedia „Taekwondo“); WT: Gründung 1973, erste WM Seoul, Umbenennung 2017, IOC-Anerkennung 1980, Demonstrationssport 1988/1992, Medaillensport seit 2000 (taekwondonation.com, Olympedia), DTU-Mitgliedschaften (Wikipedia); ITF: 22.03.1966 Seoul, Choi Hong-hi, Sitz Wien seit 1985, ITF-D vertritt sie in Deutschland (Wikipedia). Keine Regelquellen, geprüft am 03.11.2026 per Suche.
+3. **Ratgeber** (`34c-guide-tkd.js`, stilabhängig, aus den Sportmodulen gebaut): Gürtel binden & Dobok, Grade & Prüfung (Wartezeiten, Formen/Tul aus `TKDT.WAIT`/`WT_FORM`/`ITF_TUL`, kein Doppelstand), Begriffe (nur Techniken mit belegtem Namen aus `TKDT.TECH` / `ITFT.TECH`), Geschichte & Verbände (neutral, mit Quellen). Dazu die gemeinsamen Themen (Mythen, Runde, Mentales, Schlaf); ohne Kickbox-Themen (Schienbein, Kampfgericht, Disziplinen, Turniertag, Handschuhe, Anfängerfehler) und ohne Bandagieren.
+4. **Verbandslinks**: Ratgeberseiten können `links` tragen (DTU-Regelwerke, ITF-D PO und WO); sie öffnen außerhalb der App.
+5. **Pflege und Erste Hilfe** für Taekwondo ohne Handschuhe, Bandagen und Thai-Öl; K.o.-Zeile ohne „WAKO-Sperre“. Die Chip-Verknüpfung „Bandagieren“ in der Einheit und die Ratgeberzeile entfallen bei Taekwondo; Kickboxen und Boxen unverändert.
+6. **Packliste** je Stil (`itemsWt`, `itemsItf` mit Hinweis): aus WT-Wettkampfregeln Art. 4 / DTU WOZ 2.4–2.5 und ITF-Turnierregeln / ITF-D WO 5.2.
+7. **Tour, Teilen, Profilhinweis**: eigene Taekwondo-Texte (`tourIntroTkd`, `tourBasicsTkd`, `tourProfTkd`, `shareTextTkd`, `psec.guideTkd`, `guide.hintTkd`); keine WAKO-Formulierung in Taekwondo.
+8. **Sicherung**: der Export enthält das ganze Profil (Stil, Grade, Historie, Prüfungen, Namensart); Stilwechsel verliert nichts (Test).
+9. **Tests** (212): Tipps/Fakten nach Sport × Stil × Sprache, Ratgeber je Stil und Sprache ohne Kickbox-Wörter, Quellenlinks, Wartezeiten/Formen aus den Moduldaten, Packliste je Stil, Tour-/Share-Texte, Stilwechsel, 390-px-Ansicht (von Hand mit Playwright geprüft).
+
+Weitere Änderungen: `02-tips.js`, `10-loader.js`, `34-guide.js`, `34b-guide-box.js`, `34c-guide-tkd.js` (neu), `35-packing.js`, `13-training-flow.js`, `15-player.js`, `18-tour.js`, `31-install-share.js`, `01-overview-i18n.js`, Tests.
+- **Bekannte Grenzen**: Gürtelbinden und Dobok-Pflege sind allgemeine Praxis (Trainerprüfung empfohlen); die Namensbildung 1950er-Jahre ist bewusst ohne genaues Jahr; Tul-/Partnerform je Kup (D3) weiter nicht am Original geprüft.
+
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 6c: Teil 6d – Stilbezogene Inhalte vervollständigen (Tipps, Fakten, Ratgeber für WT und ITF-D; Modell laut Plan: Sonnet). Erst nach Abnahme von 6c und ausdrücklichem Auftrag.
+Nach Sichtung von 6d: Teil 7 – Gesamtprüfung (Modell laut Plan: Opus; keine neuen Funktionen, Endlieferung, kein automatisches Veröffentlichen). Erst nach Abnahme von 6d und ausdrücklichem Auftrag.

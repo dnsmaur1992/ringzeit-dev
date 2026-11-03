@@ -37,3 +37,5 @@ Hinweis: Das Bereichsmodell (Beine/Tritte, Schultern/Arme, Rumpf, Ausdauer, Bewe
 eigene Festlegung aus den vorhandenen Übungsdaten (Meidecodes, Kategorien), keine Quelle mit Muskel- oder Erholungswerten.
 
 Box-Geschichte und Wissenswertes (4b, nicht als Regelquelle): Olympedia (olympedia.org, Sportseite Boxen) und Wikipedia „Boxing at the Summer Olympics“; geprüft am 03.11.2026 per Suche; Verwendung: kurze Fakten im Ratgeber „Amateurboxen – kurze Geschichte“ und in den Box-Fakten (`src/app/02-tips.js`, Quellenzeile je Eintrag).
+
+Taekwondo-Geschichte und Wissenswertes (6d, nicht als Regelquelle): Wikipedia „Taekwondo“, „International Taekwon-Do Federation“, „Deutsche Taekwondo Union“; taekwondonation.com (WT-Geschichte); Olympedia (olympische Einordnung); geprüft am 03.11.2026 per Suche; Verwendung nur für Fakten und Geschichte im Ratgeber.
