@@ -560,6 +560,9 @@
         restShort: "Pause",
         pre: {
           wako: "WAKO",
+          fbox: "Amateur",
+          fwt: "WT-Kampf",
+          fitf: "ITF-Kampf",
           k1: "K1",
           spar: "Sparring",
           pads: "Pratzen",
@@ -1833,6 +1836,9 @@
         restShort: "rest",
         pre: {
           wako: "WAKO",
+          fbox: "Amateur",
+          fwt: "WT bout",
+          fitf: "ITF bout",
           k1: "K1",
           spar: "Sparring",
           pads: "Pads",

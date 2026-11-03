@@ -185,7 +185,7 @@
       return ftStepper(k, +d);
     }
     if (ds.ftp) {
-      const p = FT_PRESETS.find((x) => x.id === ds.ftp);
+      const p = ftPresets().find((x) => x.id === ds.ftp);
       Object.assign(ui.ft.cfg, { r: p.r, w: p.w, b: p.b });
       return renderFt();
     }

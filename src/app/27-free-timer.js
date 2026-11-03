@@ -7,15 +7,30 @@
     { id: "hiit", r: 8, w: 40, b: 20 },
     { id: "pro", r: 12, w: 180, b: 60 },
   ];
-  const ftCfg = () => ({
-    r: 3,
-    w: 120,
-    b: 60,
-    prep: true,
-    warn: true,
-    coach: false,
-    ...(S.profile.ft || {}),
-  });
+  /* presets follow the main sport (and the taekwondo style): the fight format of its rules first, then training formats */
+  function ftPresets() {
+    const sp = mainSport(),
+      age = ageAt(today());
+    if (sp === "boxing") {
+      const f = boxStandard(age);
+      return [{ id: "fbox", r: f.r, w: f.w, b: f.b }, ...FT_PRESETS.filter((p) => ["spar", "pads", "hiit", "pro"].includes(p.id))];
+    }
+    if (sp === "taekwondo") {
+      const itf = tkdStyle() === "itf",
+        f = (itf ? TKDT.itfFormat(null, age) : TKDT.wtFormat(null, age)) || (itf ? { r: 2, w: 120, b: 60 } : TKDT.STD_FORMAT);
+      return [
+        { id: itf ? "fitf" : "fwt", r: f.r, w: f.w, b: f.b },
+        { id: "spar", r: 5, w: 120, b: 60 },
+        { id: "pads", r: 6, w: 120, b: 45 },
+        { id: "hiit", r: 8, w: 40, b: 20 },
+      ];
+    }
+    return FT_PRESETS;
+  }
+  const ftCfg = () => {
+    const f = ftPresets()[0];
+    return { r: f.r, w: f.w, b: f.b, prep: true, warn: true, coach: false, ...(S.profile.ft || {}) };
+  };
   function openFt() {
     pauseOtherTimer("free");
     if (!ui.ft) ui.ft = { phase: "setup", cfg: ftCfg() };
@@ -45,7 +60,7 @@
           `<div class="ftstep"><span>${lbl}</span><div><button type="button" data-fts="${k}:-1" aria-label="−">−</button><b>${v}</b><button type="button" data-fts="${k}:1" aria-label="+">+</button></div></div>`;
       el.className = "ftimer setup";
       el.innerHTML = `<div class="fbar"><button type="button" class="x" data-ftx="close" aria-label="×">✕</button><span>${L.title}</span>${canSpeak() ? `<button type="button" class="x vo" data-voice="1" aria-pressed="${voiceOn()}" aria-label="${t("voice")}">${voiceOn() ? "🔊" : "🔈"}</button>` : `<span style="width:40px"></span>`}</div>
-          <div class="ftpre">${FT_PRESETS.map((p) => `<button type="button" data-ftp="${p.id}" aria-pressed="${p.r === c.r && p.w === c.w && p.b === c.b}"><b>${L.pre[p.id]}</b><small>${p.r} × ${fmt(p.w)} · ${fmt(p.b)}</small></button>`).join("")}</div>
+          <div class="ftpre">${ftPresets().map((p) => `<button type="button" data-ftp="${p.id}" aria-pressed="${p.r === c.r && p.w === c.w && p.b === c.b}"><b>${L.pre[p.id]}</b><small>${p.r} × ${fmt(p.w)} · ${fmt(p.b)}</small></button>`).join("")}</div>
           <div class="ftcard">${step("r", c.r, L.rounds)}${step("w", fmt(c.w), L.work)}${step("b", fmt(c.b), L.rest)}
             <button type="button" class="setrow2" data-ftt="prep"><span>${L.prep}</span><span class="tog ${c.prep ? "on" : ""}"></span></button>
             <button type="button" class="setrow2" data-ftt="warn"><span>${L.warn}</span><span class="tog ${c.warn ? "on" : ""}"></span></button>
@@ -166,7 +181,7 @@
       if (!f.lastCall || f.lastCall - f.left >= gap) {
         f.lastCall = f.left;
         const c = combo(Math.random() < 0.5 ? "shadow" : "bag", null);
-        f.callTxt = c.map((x) => TECH[x][S.profile.lang === "de" ? 0 : 1]).join(" · ");
+        f.callTxt = c.map((x) => techNm(x)).join(" · ");
         if (!changed) say(comboWords(c), 1.05);
       }
     }
