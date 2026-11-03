@@ -806,14 +806,12 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -1814,7 +1812,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -1834,7 +1832,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -2378,7 +2376,7 @@
       ],
       [
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -2723,11 +2721,11 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -2948,10 +2946,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -2978,7 +2976,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -4712,7 +4710,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -4732,7 +4730,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -5216,7 +5214,7 @@
       ],
       [
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -5511,11 +5509,11 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -5736,10 +5734,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -5766,7 +5764,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -7667,11 +7665,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -7713,7 +7711,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -8231,7 +8229,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -8574,11 +8572,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -8590,7 +8588,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -8804,10 +8802,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -8834,7 +8832,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -9654,14 +9652,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -10313,14 +10309,12 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -10607,11 +10601,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -10637,7 +10631,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -11115,7 +11109,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -11396,11 +11390,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -11412,7 +11406,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -11626,10 +11620,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -11656,7 +11650,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -12500,12 +12494,15 @@
         "timer": null
        },
        {
-        "dose": "pro Bein 2 × 10 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        }
       ],
@@ -12844,7 +12841,7 @@
         }
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -13499,7 +13496,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -13507,7 +13504,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -13549,7 +13546,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -14019,7 +14016,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -14306,7 +14303,7 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -14517,10 +14514,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -14547,7 +14544,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -15679,7 +15676,7 @@
         }
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -16288,7 +16285,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -16296,7 +16293,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -16326,7 +16323,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -16797,7 +16794,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -17085,7 +17082,7 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -17296,10 +17293,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -17326,7 +17323,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -17896,14 +17893,12 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -18358,12 +18353,15 @@
         "timer": null
        },
        {
-        "dose": "pro Bein 2 × 10 s",
+        "dose": "45–60 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45,
+          60
+         ],
+         "perSet": 45
         }
        }
       ],
@@ -18371,8 +18369,8 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 100,
          "choices": [
           30
          ],
@@ -19476,11 +19474,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -19522,7 +19520,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -19544,12 +19542,12 @@
         "dose": null,
         "timer": {
          "phases": 5,
-         "seconds": 70,
+         "seconds": 100,
          "choices": [
-          20,
-          30
+          30,
+          45
          ],
-         "perSet": 20
+         "perSet": 30
         }
        },
        {
@@ -19996,7 +19994,7 @@
         "timer": null
        },
        {
-        "dose": "3 × 12–15 Wdh., langsam (3 s ab)",
+        "dose": "3 × 3–5 Wdh.",
         "timer": null
        },
        {
@@ -20018,7 +20016,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -20296,11 +20294,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -20312,7 +20310,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -20521,10 +20519,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -20551,7 +20549,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -21488,7 +21486,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -21501,8 +21499,8 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 100,
          "choices": [
           30
          ],
@@ -22498,11 +22496,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -22528,7 +22526,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -22550,12 +22548,12 @@
         "dose": null,
         "timer": {
          "phases": 5,
-         "seconds": 70,
+         "seconds": 100,
          "choices": [
-          20,
-          30
+          30,
+          45
          ],
-         "perSet": 20
+         "perSet": 30
         }
        },
        {
@@ -22973,7 +22971,7 @@
         "timer": null
        },
        {
-        "dose": "3 × 12–15 Wdh., langsam (3 s ab)",
+        "dose": "3 × 3–5 Wdh.",
         "timer": null
        },
        {
@@ -22995,7 +22993,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -23274,11 +23272,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -23290,7 +23288,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -23499,10 +23497,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -23529,7 +23527,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -24045,7 +24043,7 @@
         }
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -24454,8 +24452,8 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 100,
          "choices": [
           30
          ],
@@ -26151,7 +26149,7 @@
         "dose": null,
         "timer": {
          "phases": 11,
-         "seconds": 205,
+         "seconds": 295,
          "choices": [],
          "perSet": 0
         }
@@ -26492,7 +26490,7 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -26513,7 +26511,7 @@
         "dose": null,
         "timer": {
          "phases": 11,
-         "seconds": 205,
+         "seconds": 295,
          "choices": [],
          "perSet": 0
         }
@@ -29203,7 +29201,7 @@
         "dose": null,
         "timer": {
          "phases": 11,
-         "seconds": 205,
+         "seconds": 295,
          "choices": [],
          "perSet": 0
         }
@@ -29482,7 +29480,7 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -29503,7 +29501,7 @@
         "dose": null,
         "timer": {
          "phases": 11,
-         "seconds": 205,
+         "seconds": 295,
          "choices": [],
          "perSet": 0
         }
@@ -31146,14 +31144,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -31409,7 +31405,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -31417,7 +31413,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -31459,7 +31455,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -31838,7 +31834,7 @@
       ],
       [
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -32086,7 +32082,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -32278,10 +32274,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -32308,7 +32304,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -33868,7 +33864,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -33876,7 +33872,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -33906,7 +33902,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -34286,7 +34282,7 @@
       ],
       [
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -34535,7 +34531,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -34727,10 +34723,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -34757,7 +34753,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -36579,11 +36575,11 @@
         "timer": null
        },
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        },
        {
@@ -36621,7 +36617,7 @@
       ],
       [
        {
-        "dose": "10 s each direction",
+        "dose": "10 s each direction (forehead, back of head, left, right)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -37144,7 +37140,7 @@
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        },
        {
@@ -37488,11 +37484,11 @@
       ],
       [
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
@@ -37504,7 +37500,7 @@
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        }
       ],
@@ -37718,10 +37714,10 @@
         }
        },
        {
-        "dose": "5 × 3–5 s per side · about 4 min in total",
+        "dose": "5 × 3–5 s per side · alternating left/right, about 4–5 min",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -37748,7 +37744,7 @@
         }
        },
        {
-        "dose": "hold 60–90 s · about 4 min in total",
+        "dose": "hold 60–90 s · about 1–2 min in total",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -38191,7 +38187,7 @@
         "timer": null
        },
        {
-        "dose": "10 s each direction",
+        "dose": "10 s each direction (forehead, back of head, left, right)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -38200,12 +38196,15 @@
         }
        },
        {
-        "dose": "2 × 10 s per leg",
+        "dose": "30–45 s per leg hold · one set = left first, then right",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        }
       ],
@@ -39167,14 +39166,12 @@
         }
        },
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -39470,11 +39467,11 @@
         "timer": null
        },
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        },
        {
@@ -39500,7 +39497,7 @@
       ],
       [
        {
-        "dose": "10 s each direction",
+        "dose": "10 s each direction (forehead, back of head, left, right)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -39982,7 +39979,7 @@
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        },
        {
@@ -40263,11 +40260,11 @@
       ],
       [
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
-        "dose": "2 min alternating",
+        "dose": "2 min alternating (30 s fast / 30 s easy)",
         "timer": null
        },
        {
@@ -40279,7 +40276,7 @@
         "timer": null
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "3 × 4 runs of 20 m",
         "timer": null
        }
       ],
@@ -40493,10 +40490,10 @@
         }
        },
        {
-        "dose": "5 × 3–5 s per side · about 4 min in total",
+        "dose": "5 × 3–5 s per side · alternating left/right, about 4–5 min",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -40523,7 +40520,7 @@
         }
        },
        {
-        "dose": "hold 60–90 s · about 4 min in total",
+        "dose": "hold 60–90 s · about 1–2 min in total",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -41020,7 +41017,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -41395,12 +41392,15 @@
         "timer": null
        },
        {
-        "dose": "pro Bein 2 × 10 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        }
       ],
@@ -42411,11 +42411,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -42453,7 +42453,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -42977,7 +42977,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -43317,11 +43317,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -43581,10 +43581,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -44043,12 +44043,15 @@
         }
        },
        {
-        "dose": "pro Bein 2 × 10 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        }
       ],
@@ -44388,7 +44391,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -45026,14 +45029,12 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -45326,11 +45327,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -45356,7 +45357,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -45840,7 +45841,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -46118,11 +46119,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -46382,10 +46383,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -48215,7 +48216,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -48235,7 +48236,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -48245,7 +48246,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -49135,7 +49136,7 @@
         "timer": null
        },
        {
-        "dose": "3 × je Richtung 10 s",
+        "dose": "3 × je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 135,
@@ -49146,7 +49147,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -49363,10 +49364,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -49375,7 +49376,7 @@
         }
        },
        {
-        "dose": "je Seite 60–90 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 60–90 s · insgesamt ca. 2–3 Min.",
         "timer": {
          "phases": 3,
          "seconds": 125,
@@ -49396,7 +49397,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -50215,12 +50216,15 @@
         "timer": null
        },
        {
-        "dose": "pro Bein 2 × 10 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        }
       ],
@@ -50867,14 +50871,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        }
       ],
@@ -51139,7 +51141,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -51159,7 +51161,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -51169,7 +51171,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -51934,7 +51936,7 @@
         "timer": null
        },
        {
-        "dose": "2 × je Richtung 10 s",
+        "dose": "2 × je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -51945,7 +51947,7 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -52162,10 +52164,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -52174,7 +52176,7 @@
         }
        },
        {
-        "dose": "je Seite 60–90 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 60–90 s · insgesamt ca. 2–3 Min.",
         "timer": {
          "phases": 3,
          "seconds": 125,
@@ -52195,7 +52197,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -52855,7 +52857,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -53602,11 +53604,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -53616,7 +53618,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -54378,11 +54380,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        }
       ],
@@ -54564,10 +54566,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 3 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -55209,7 +55211,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -55941,17 +55943,17 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -56611,11 +56613,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        }
       ],
@@ -56797,10 +56799,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 3 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -57293,14 +57295,12 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -58049,7 +58049,7 @@
         }
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -58428,14 +58428,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        }
       ],
@@ -58737,11 +58735,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -58783,7 +58781,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -59303,7 +59301,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -59647,11 +59645,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -59663,7 +59661,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -59877,10 +59875,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -59907,7 +59905,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -61071,7 +61069,7 @@
         }
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -61692,11 +61690,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -61722,7 +61720,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -62200,7 +62198,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -62481,11 +62479,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -62497,7 +62495,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -62711,10 +62709,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -62741,7 +62739,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -63643,14 +63641,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -64382,14 +64378,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -64691,11 +64685,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -64737,7 +64731,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -65243,7 +65237,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -65522,11 +65516,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -65538,7 +65532,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -65752,10 +65746,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -65782,7 +65776,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
@@ -66628,14 +66622,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -66996,7 +66988,7 @@
         "timer": null
        },
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -67340,14 +67332,12 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 1,
+         "phases": 4,
          "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -67635,11 +67625,11 @@
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -67665,7 +67655,7 @@
       ],
       [
        {
-        "dose": "je Richtung 10 s",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
          "phases": 7,
          "seconds": 55,
@@ -68142,7 +68132,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        },
        {
@@ -68422,11 +68412,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
-        "dose": "2 Min. im Wechsel",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": null
        },
        {
@@ -68438,7 +68428,7 @@
         "timer": null
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "3 × 4 Läufe à 20 m",
         "timer": null
        }
       ],
@@ -68652,10 +68642,10 @@
         }
        },
        {
-        "dose": "je Seite 5 × 3–5 s · insgesamt ca. 4 Min.",
+        "dose": "je Seite 5 × 3–5 s · im Wechsel links/rechts, ca. 4–5 Min.",
         "timer": {
-         "phases": 21,
-         "seconds": 65,
+         "phases": 87,
+         "seconds": 275,
          "choices": [
           3,
           5
@@ -68682,7 +68672,7 @@
         }
        },
        {
-        "dose": "60–90 s halten · insgesamt ca. 4 Min.",
+        "dose": "60–90 s halten · insgesamt ca. 1–2 Min.",
         "timer": {
          "phases": 1,
          "seconds": 60,
