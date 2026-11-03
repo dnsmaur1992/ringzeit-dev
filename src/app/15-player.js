@@ -951,17 +951,25 @@
     const tv = ui.testView || (phaseInfo().phase === "grade" ? "exam" : "fit");
     let h = header(!ui.testOpen && tv === "exam" ? t("tview").exam : t("testTitle"));
     if (ui.testOpen) {
-      const d = ui.testDraft;
+      const d = ui.testDraft,
+        tsp = d.tsport || mainSport(),
+        techOnly = tsp !== mainSport();
       h += `<div class="note">${t("testEvery")}</div><div class="panel">`;
+      if (sportChoices().length > 1)
+        h += `<div class="field"><span class="lab">${t("tecSportL")}</span><div class="seg">${sportChoices()
+          .map((k) => `<button type="button" data-tsport="${k}" aria-pressed="${tsp === k}">${sportLabel(k)}</button>`)
+          .join("")}</div>${techOnly ? `<span class="sub">${t("tecOnlyH")(sportLabel(tsp))}</span>` : ""}</div>`;
+      if (!techOnly) {
       h += `<div class="field"><span class="lab">${t("cats").str}</span><span class="how">${t("tDesc").str}</span><div class="inline"><input id="tStr" type="number" inputmode="numeric" min="0" max="200" value="${d.str ?? ""}"><span class="u">${t("tUnit").str}</span></div></div>`;
       h += `<div class="field"><span class="lab">${t("cats").spd}</span><span class="how">${t("tDesc").spd}</span><div class="inline"><input id="tSpd" type="number" inputmode="numeric" min="0" max="100" value="${d.spd ?? ""}"><span class="u">${t("tUnit").spd}</span></div></div>`;
       h += `<div class="field"><span class="lab">${t("cats").end}</span><span class="how">${t("tDesc").end}</span><div class="inline"><input id="tEndM" type="number" inputmode="numeric" min="5" max="40" placeholder="12" value="${d.endM ?? ""}"><span class="u">:</span><input id="tEndS" type="number" inputmode="numeric" min="0" max="59" placeholder="30" value="${d.endS ?? ""}"><span class="u">${t("tUnit").end}</span></div></div>`;
-      h += `<div class="field"><span class="lab">${t("cats").flx}</span><span class="how">${t("tDesc").flx}</span><div class="seg g5">${t(
+      h += `<div class="field"><span class="lab">${t("cats").flx}</span><span class="how">${t("tDesc")[mainSport() === "boxing" ? "flxBox" : "flx"]}</span><div class="seg g5">${t(
         "flxOpt",
       )
         .map((x, i) => `<button type="button" data-tf="${i + 1}" aria-pressed="${d.flx === i + 1}">${x}</button>`)
         .join("")}</div></div>`;
-      h += `<div class="field"><span class="lab">${t("cats").tec}</span><span class="how">${t("tDesc").tec}</span><div class="seg g5">${t(
+      }
+      h += `<div class="field"><span class="lab">${t("cats").tec}</span><span class="how">${t("tDesc")[tsp === "boxing" ? "tecBox" : "tec"]}</span><div class="seg g5">${t(
         "tecOpt",
       )
         .map(
@@ -975,7 +983,7 @@
     const view = ui.testView || (phaseInfo().phase === "grade" ? "exam" : "fit");
     h += `<div class="seg tview">${["fit", "exam"].map((k) => `<button type="button" data-tview="${k}" aria-pressed="${view === k}">${t("tview")[k]}</button>`).join("")}</div>`;
     if (view === "exam") return h + renderExam();
-    const tests = S.tests,
+    const tests = S.tests.filter((x) => !x.raw || [x.raw.str, x.raw.spd, x.raw.end, x.raw.flx].some((v) => v != null)),
       last = tests[tests.length - 1],
       prev = tests.length > 1 ? tests[tests.length - 2] : null,
       ml = maxLevel();

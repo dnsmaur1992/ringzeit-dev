@@ -7,16 +7,21 @@
     }
     if (ui.onb.ack) {
       const A = t("ack");
-      el.innerHTML = `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair("box")}</svg><h1>${A.h}</h1><ul class="ackl">${A.pts.map((x) => `<li>${x}</li>`).join("")}</ul><div class="sub">${A.priv}</div><div class="acts"><button type="button" class="btn" data-onb="ack">${A.ok}</button></div>`;
+      el.innerHTML = `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair("box", 14, (ui.onb.sport || mainSport()) === "boxing")}</svg><h1>${A.h}</h1><ul class="ackl">${A.pts.map((x) => `<li>${x}</li>`).join("")}</ul><div class="sub">${A.priv}</div><div class="acts"><button type="button" class="btn" data-onb="ack">${A.ok}</button></div>`;
       el.hidden = false;
       return;
     }
     const o = ui.onb,
       step = o.step;
     let h = `<button type="button" class="btn ghost skip" data-onb="skip">${t("onbSkip")}</button><div class="dots">${[0, 1, 2, 3, 4].map((i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}</div>${step === 0 ? installHtml(true) : ""}`;
-    h += `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(step === 1 || step === 3 ? "box" : "kick")}</svg>`;
+    h += `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(step === 1 || step === 3 ? "box" : "kick", 14, (o.sport || mainSport()) === "boxing")}</svg>`;
     if (step === 0) {
-      h += `<h1>${t("onbQ1")}</h1><div class="sub">${t("onbQ1s")}</div><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => `<button type="button" data-od="${k}" aria-pressed="${o.disc === k}">${t("disc")[k]}</button>`).join("")}</div>`;
+      const osp = o.sport || mainSport();
+      if (sportChoices().length > 1)
+        h += `<h1>${t("onbSportQ")}</h1><div class="seg">${sportChoices().map((k) => `<button type="button" data-osport="${k}" aria-pressed="${osp === k}">${sportLabel(k)}</button>`).join("")}</div>`;
+      if (osp === "boxing") h += `<div class="sub">${t("onbBoxS")}</div>`;
+      else
+        h += `<h1>${t("onbQ1")}</h1><div class="sub">${t("onbQ1s")}</div><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => `<button type="button" data-od="${k}" aria-pressed="${o.disc === k}">${t("disc")[k]}</button>`).join("")}</div>`;
     } else if (step === 1) {
       h += `<h1>${t("onbClubQ")}</h1><div class="sub">${t("onbClubS")}</div><div class="chips">${[0, 1, 2, 3, 4, 5, 6].map((i) => `<button type="button" class="chip cday" data-ocday="${i}" aria-pressed="${o.clubDays.includes(i)}">${t("dayNames")[i]}</button>`).join("")}</div>${o.clubDays.length ? `<span class="lab">${t("onbClubMin")}</span><div class="seg">${[60, 75, 90, 120].map((m) => `<button type="button" data-ocmin="${m}" aria-pressed="${o.clubMin === m}">${m} ${t("min")}</button>`).join("")}</div>` : ""}`;
     } else if (step === 2) {
@@ -68,6 +73,7 @@
       S.profile = {
         ...S.profile,
         disc: o.disc,
+        sport: o.sport || S.profile.sport || "kickboxing",
         days: o.days.slice().sort((a, b) => a - b),
         minutes: o.minutes,
         club: { days: (o.clubDays || []).slice(), minutes: o.clubMin || 90 },

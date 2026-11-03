@@ -330,9 +330,10 @@
     },
   };
   /* "kick" = kickboxing scene (high kick against a guard), "box" = boxing scene (jab against a slip) */
-  function fightPair(scene, y = 14) {
+  function fightPair(scene, y = 14, box = false) {
     const [a, b, xa, xb] = scene === "kick" ? ["kick", "guard", 34, 362] : ["jab", "slip", 50, 352];
-    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS[b])}</g></g><g transform="translate(${xa} ${y})"><g class="bob">${figure(FIGS[a])}</g></g>`;
+    // boxing: blue corner left, red corner right
+    return `<g transform="translate(${xb} ${y}) scale(-1 1)"><g class="bob" style="animation-delay:.4s">${figure(FIGS[b], box ? BOX_RED : null)}</g></g><g transform="translate(${xa} ${y})"><g class="bob">${figure(FIGS[a], box ? BOX_BLUE : null)}</g></g>`;
   }
   let seed = 7;
   const srand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;

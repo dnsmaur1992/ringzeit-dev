@@ -61,7 +61,7 @@
   }
   function showTour() {
     const st = TOUR[ui.tour],
-      tx0 = t("tour")[st.k],
+      tx0 = st.k === "intro" && isBoxMain() ? [t("tour").intro[0], t("tourIntroBox")] : t("tour")[st.k],
       // the simple view has no test/history tabs – they live in the profile then
       tx =
         st.k === "prof" && simpleView()
@@ -84,7 +84,7 @@
     if (target && st.up) target = target.closest(st.up) || target;
     const last = ui.tour === TOUR.length - 1,
       basics =
-        st.k === "intro" ? `<div class="tbasic"><b>${t("tourBasicsT")}</b><span>${t("tourBasics")}</span></div>` : "";
+        st.k === "intro" ? `<div class="tbasic"><b>${t("tourBasicsT")}</b><span>${t(isBoxMain() ? "tourBasicsBox" : "tourBasics")}</span></div>` : "";
     el.innerHTML = `<div class="tspot"></div><div class="tcard" role="dialog" aria-modal="true" aria-labelledby="tourT"><div class="tstep">${ui.tour + 1} / ${TOUR.length}</div><h3 id="tourT">${tx[0]}</h3><p>${tx[1]}</p>${basics}<div class="tacts">${last ? "" : `<button type="button" class="btn ghost" data-tour="skip">${t("tourSkip")}</button>`}<span></span>${ui.tour ? `<button type="button" class="btn sec" data-tour="back">${t("onbBack")}</button>` : ""}<button type="button" class="btn" data-tour="${last ? "done" : "next"}">${last ? t("onbGo") : t("onbNext")}</button></div></div>`;
     el.hidden = false;
     el.classList.toggle("dim", !target);

@@ -35,15 +35,16 @@
         st = Math.max(0, Math.min(n - 1, o.step || 0));
       return `<h3>${G.wrap}</h3>${st === 0 ? `<p class="sub">${G.wrapIntro}</p>` : ""}<div class="wrapbox">${wrapSvg(st)}</div><div class="wstep"><small>${G.step(st + 1, n)}</small><p>${esc(G.wrapSteps[st])}</p></div><a class="vlink" href="${WRAP_VIDEO}" target="_blank" rel="noopener">▶ ${G.video}</a><div class="acts2"><button type="button" class="btn sec" data-wstep="${st - 1}" ${st === 0 ? "disabled" : ""}>${G.prev}</button>${st < n - 1 ? `<button type="button" class="btn" data-wstep="${st + 1}">${G.next}</button>` : `<button type="button" class="btn" data-wstep="0">${G.again}</button>`}</div>`;
     }
-    const rd = READS.findIndex((r) => r.k === o.id);
+    const RL = readsFor(),
+      rd = RL.findIndex((r) => r.k === o.id);
     if (rd >= 0) {
-      const R = READS[rd][S.profile.lang === "de" ? "de" : "en"],
-        nx = READS[(rd + 1) % READS.length];
-      return `<h3>${esc(R.t)}</h3><p class="sub">${esc(R.sub)}</p>${secs(R.secs)}<p class="sub gsrc">${t("src")}: ${esc(R.src)}</p><div class="acts2"><button type="button" class="btn sec" data-sx="close">${t("close")}</button><button type="button" class="btn" data-guide="${nx.k}">${G.nextRead}</button></div>`;
+      const R = RL[rd][S.profile.lang === "de" ? "de" : "en"],
+        nx = RL[(rd + 1) % RL.length];
+      return `<h3>${esc(R.t)}</h3><p class="sub">${esc(R.sub)}</p>${secs(R.secs)}<p class="sub gsrc">${t("src")}: ${esc(R.src)}</p>${R.link ? `<a class="vlink" href="${WKB_URL}" target="_blank" rel="noopener">▶ ${S.profile.lang === "de" ? "DBV-Wettkampfbestimmungen (PDF, Stand 01.09.2026)" : "DBV competition rules (PDF, version 01.09.2026)"}</a>` : ""}<div class="acts2"><button type="button" class="btn sec" data-sx="close">${t("close")}</button><button type="button" class="btn" data-guide="${nx.k}">${G.nextRead}</button></div>`;
     }
     if (o.id === "care")
-      return `<h3>${G.care}</h3>${secs(G.careSecs)}<div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
-    return `<h3>${G.aid}</h3>${secs(G.aidSecs)}<div class="note warn">${G.aidNote}</div><div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
+      return `<h3>${G.care}</h3>${secs(guideSecs("care"))}<div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
+    return `<h3>${G.aid}</h3>${secs(guideSecs("aid"))}<div class="note warn">${G.aidNote}</div><div class="acts2"><button type="button" class="btn" data-sx="close">${t("close")}</button></div>`;
   }
   /* ============ Guide: articles to read (short sections, readable in a set rest) ============
      Rules: WAKO Ring Sports General Rules (ch. 2), WAKO K1 Style rules (ch. 10), WAKO Deutschland Ringsport Low Kick and
@@ -176,6 +177,7 @@
     },
     {
       k: "shin",
+      only: "k",
       ico: '<path d="M10 3c-.6 4-.6 8 0 12l-1.5 5h7l-1.5-5c.6-4 .6-8 0-12"/><path d="M9.6 8h4.8"/>',
       de: {
         t: "Warum Schienbeine härter werden",
@@ -242,6 +244,7 @@
     },
     {
       k: "judge",
+      only: "k",
       ico: '<path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 6h6z"/><path d="M8 20h8"/>',
       de: {
         t: "Wie Punktrichter werten",
@@ -300,6 +303,7 @@
     },
     {
       k: "disc",
+      only: "k",
       ico: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
       de: {
         t: "Die Disziplinen im Vergleich",
@@ -382,6 +386,7 @@
     },
     {
       k: "day",
+      only: "k",
       ico: '<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><path d="M8 14.5h3"/>',
       de: {
         t: "Der Turniertag von innen",
@@ -630,6 +635,7 @@
     },
     {
       k: "gloves",
+      only: "k",
       ico: '<path d="M7 20h9v-3c2.2-.9 3.5-2.9 3.5-5.3V9.5A5.5 5.5 0 0 0 14 4h-3.5A5.5 5.5 0 0 0 5 9.5v3.2c0 1.7.7 3.2 2 4.1z"/><path d="M7 16.8h9"/>',
       de: {
         t: "Handschuhe erklärt",
@@ -707,5 +713,5 @@
     const lg = S.profile.lang === "de" ? "de" : "en",
       read = (r) =>
         `<button type="button" class="grow" data-guide="${r.k}"><span class="gico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${r.ico}</svg></span><span class="gtx"><b>${esc(r[lg].t)}</b><small>${esc(r[lg].sub)}</small></span><span class="chev">›</span></button>`;
-    return `<div class="panel"><div class="field"><span class="lab">${G.title}</span><span class="sub">${G.hint}</span></div><span class="glab">${G.practical}</span><div class="glist">${row("wrap")}${row("care")}${row("aid")}</div><span class="glab">${G.reads}</span><div class="glist">${READS.map(read).join("")}</div></div>`;
+    return `<div class="panel"><div class="field"><span class="lab">${G.title}</span><span class="sub">${isBoxMain() ? G.hintBox : G.hint}</span></div><span class="glab">${G.practical}</span><div class="glist">${row("wrap")}${row("care")}${row("aid")}</div><span class="glab">${G.reads}</span><div class="glist">${readsFor().map(read).join("")}</div></div>`;
   }

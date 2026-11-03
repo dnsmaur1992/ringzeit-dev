@@ -6,7 +6,7 @@
   function packItems(id) {
     const p = packFor(id);
     return [
-      ...t("pack").items.map((x, i) => ({ k: "i" + i, txt: x })),
+      ...(isBoxMain() ? t("pack").itemsBox : t("pack").items).map((x, i) => ({ k: "i" + i, txt: x })),
       ...p.extra.map((x, i) => ({ k: "x" + i, txt: x })),
     ];
   }
@@ -25,7 +25,7 @@
       c = (S.profile.comps || []).find((x) => x.id === o.id),
       p = packFor(o.id),
       items = packItems(o.id);
-    return `<h3>${P.title}${c ? ` · ${esc(fmtDate(c.date))}` : ""}</h3><p class="sub">${P.hint}</p><div class="packl">${items
+    return `<h3>${P.title}${c ? ` · ${esc(fmtDate(c.date))}` : ""}</h3><p class="sub">${P.hint}${isBoxMain() ? ` ${P.boxNote}` : ""}</p><div class="packl">${items
       .map(
         (x) =>
           `<button type="button" class="strow${p.done[x.k] ? " done" : ""}" data-pack="${x.k}"><i>${p.done[x.k] ? "✓" : ""}</i><span><b>${esc(x.txt)}</b></span></button>`,

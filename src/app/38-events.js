@@ -682,6 +682,11 @@
       renderOnb();
       return;
     }
+    if (ds.osport) {
+      ui.onb.sport = ds.osport;
+      renderOnb();
+      return;
+    }
     if (ds.od) {
       ui.onb.disc = ds.od;
       renderOnb();
@@ -841,6 +846,12 @@
       render();
       return;
     }
+    if (ds.tsport) {
+      readTestInputs();
+      ui.testDraft.tsport = ds.tsport;
+      render();
+      return;
+    }
     if (ds.tt) {
       readTestInputs();
       ui.testDraft.tec = +ds.tt;
@@ -858,6 +869,9 @@
         flx: d.flx ?? null,
         tec: d.tec ?? null,
       };
+      const tsp = d.tsport || mainSport(),
+        techOnly = tsp !== mainSport();
+      if (techOnly) Object.assign(raw, { str: null, spd: null, end: null, flx: null });
       if (Object.values(raw).every((v) => v == null)) return;
       const before = maxLevel(),
         r = scoreTest(raw);
@@ -867,7 +881,7 @@
         date: iso(today()),
         method: "rz-1",
         raw,
-        ...(raw.tec != null ? { techBy: { [techKey(mainSport())]: raw.tec } } : {}),
+        ...(raw.tec != null ? { techBy: { [techKey(tsp)]: raw.tec } } : {}),
         ...r,
       });
       ui.testOpen = false;

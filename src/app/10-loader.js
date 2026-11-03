@@ -3,15 +3,18 @@
   function showCard() {
     const lg = S.profile.lang,
       box = document.getElementById("factBox");
-    const tips = TIPS.filter((x) => !x.d || x.d.includes(S.profile.disc));
+    // tips and facts follow the main sport: boxing only gets boxing items, kickboxing keeps its own (k = kickboxing only, b = boxing only)
+    const isBoxMain = mainSport() === "boxing",
+      tips = TIPS.filter((x) => (isBoxMain ? !x.k && !x.d : !x.b && (!x.d || x.d.includes(S.profile.disc)))),
+      facts = FACTS.filter((x) => (isBoxMain ? x.b : !x.b));
     if (loadIdx % 2) {
       const x = tips[Math.floor(loadIdx / 2) % tips.length];
       box.className = "fact tip";
       document.getElementById("factK").textContent = t("tipK");
       document.getElementById("factT").textContent = x[lg];
-      document.getElementById("factS").textContent = "";
+      document.getElementById("factS").textContent = x.b ? t("tipTrainer") : "";
     } else {
-      const f = FACTS[Math.floor(loadIdx / 2) % FACTS.length];
+      const f = facts[Math.floor(loadIdx / 2) % facts.length];
       box.className = "fact";
       document.getElementById("factK").textContent = t("factK");
       document.getElementById("factT").textContent = f[lg];
@@ -53,7 +56,7 @@
   function prepLoader(titleKey) {
     document.getElementById("burst").innerHTML = burst();
     document.getElementById("loaderFig").innerHTML =
-      `<svg viewBox="0 0 400 220" role="img" aria-label=""><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(loadIdx % 2 ? "box" : "kick")}</svg>`;
+      `<svg viewBox="0 0 400 220" role="img" aria-label=""><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(mainSport() === "boxing" ? "box" : loadIdx % 2 ? "box" : "kick", 14, mainSport() === "boxing")}</svg>`;
     document.getElementById("loaderTitle").textContent = t(titleKey);
     document.getElementById("loaderHint").textContent = t("tapClose");
     showCard();

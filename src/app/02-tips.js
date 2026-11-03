@@ -250,9 +250,53 @@
       en: "How fast your pulse drops in the first minute of rest shows your endurance: the faster it falls, the better you recover between rounds.",
       s: "Sportmedizin",
     },
+    // boxing (b: 1)
+    {
+      b: 1,
+      de: "Boxen gehörte schon zu den antiken Olympischen Spielen. Der erste bekannte Sieger war Onomastos von Smyrna im Jahr 688 v. Chr.",
+      en: "Boxing was part of the ancient Olympic Games. The first known champion was Onomastos of Smyrna in 688 BCE.",
+      s: "Olympedia",
+    },
+    {
+      b: 1,
+      de: "Bei den modernen Olympischen Spielen war Boxen erstmals 1904 in St. Louis dabei – alle Teilnehmer waren Amerikaner.",
+      en: "Boxing first appeared at the modern Olympic Games in 1904 in St. Louis – all entrants were American.",
+      s: "Olympedia",
+    },
+    {
+      b: 1,
+      de: "1912 in Stockholm fehlte Boxen, weil der Sport in Schweden damals eine Sondergenehmigung brauchte. Seit Antwerpen 1920 ist es bei jeder Austragung dabei.",
+      en: "Boxing was missing in Stockholm in 1912 because the sport needed special permits in Sweden at that time. It has been on the programme at every Games since Antwerp 1920.",
+      s: "Olympedia",
+    },
+    {
+      b: 1,
+      de: "Olympisches Frauenboxen gab es erstmals 2012 in London.",
+      en: "Women's boxing was first contested at the Olympic Games in London in 2012.",
+      s: "Olympedia",
+    },
+    {
+      b: 1,
+      de: "Die Amateur Boxing Association of England wurde 1880 von zwölf Vereinen gegründet, die ersten Meisterschaften folgten 1881.",
+      en: "The Amateur Boxing Association of England was formed in 1880 by twelve clubs; its first championships followed in 1881.",
+      s: "Wikipedia",
+    },
+    {
+      b: 1,
+      de: "Seit 2009 boxen Männer im internationalen Amateurboxen drei Runden zu je drei Minuten, vorher waren es vier Runden zu je zwei Minuten.",
+      en: "Since 2009 men in international amateur boxing fight three rounds of three minutes; before that it was four rounds of two minutes.",
+      s: "Wikipedia",
+    },
+    {
+      b: 1,
+      de: "Die ersten Amateurbox-Weltmeisterschaften fanden 1974 statt.",
+      en: "The first World Amateur Boxing Championships were held in 1974.",
+      s: "Wikipedia",
+    },
   ];
   const TIPS = [
     {
+      k: 1,
       de: "Low Kick: Mit dem Schienbein treffen, nicht mit dem Fuß – und die Hüfte ganz durchdrehen.",
       en: "Low kick: hit with the shin, not the foot – and turn the hip all the way through.",
     },
@@ -265,10 +309,12 @@
       en: "Hook: elbow at shoulder height, the fist turns with it – power comes from pivoting on the front foot.",
     },
     {
+      k: 1,
       de: "Atmen nicht vergessen: Bei jedem Schlag und Kick kurz und scharf ausatmen.",
       en: "Don't forget to breathe: a short, sharp exhale with every punch and kick.",
     },
     {
+      k: 1,
       de: "Sidekick: Ferse führt, Fußkante zeigt zum Ziel – und das Knie erst hoch anziehen, dann strecken.",
       en: "Side kick: heel leads, the edge of the foot points at the target – chamber the knee high first, then extend.",
     },
@@ -297,18 +343,22 @@
       en: "Hook: elbow level with the fist, rotate from the trunk. Don't wind up, or they'll see it coming.",
     },
     {
+      k: 1,
       de: "Roundhouse: Standfuß eindrehen, bis die Ferse zum Gegner zeigt – sonst fehlt die Hüfte.",
       en: "Roundhouse: pivot the standing foot until the heel points at your opponent – otherwise the hip is missing.",
     },
     {
+      k: 1,
       de: "Sidekick: Erst das Knie hoch zur Brust ziehen, dann die Ferse auf gerader Linie rausstoßen.",
       en: "Side kick: chamber the knee to your chest first, then drive the heel out in a straight line.",
     },
     {
+      k: 1,
       de: "Frontkick: Knie anheben, Hüfte nach vorn schieben, mit dem Ballen treffen und schnell zurückziehen.",
       en: "Front kick: lift the knee, push the hip forward, hit with the ball of the foot and retract fast.",
     },
     {
+      k: 1,
       de: "Nach jedem Kick sofort die Hände zurück ans Kinn – die meisten Treffer kassiert man beim Absetzen.",
       en: "After every kick, hands straight back to the chin – most hits land while you're putting the foot down.",
     },
@@ -321,10 +371,12 @@
       en: "Footwork: never cross your feet. The foot nearest the direction of travel always moves first.",
     },
     {
+      k: 1,
       de: "Gedrehter Backkick: Erst dreht der Kopf, der Blick geht über die Schulter – dann löst du den Kick.",
       en: "Spinning back kick: turn your head first and look over your shoulder – then release the kick.",
     },
     {
+      k: 1,
       de: "Fußfeger klappen über Timing, nicht über Kraft: fegen, wenn der Gegner das Gewicht auf den vorderen Fuß verlagert.",
       en: "Sweeps are about timing, not power: sweep as your opponent shifts weight onto the front foot.",
     },
@@ -347,6 +399,52 @@
       de: "Knie: Hüfte nach vorn schieben, Oberkörper aufrecht, beide Hände bleiben am Kopf.",
       en: "Knee: drive the hip forward, stay upright, both hands stay at your head.",
       d: ["k1"],
+    },
+    // boxing (b: 1): reminders of known basics, always with a reason for every defence; coach check recommended
+    {
+      b: 1,
+      de: "Nach jedem Schlag die Hand auf demselben Weg zurück ans Kinn – die meisten Treffer fängt man beim Zurückziehen.",
+      en: "After every punch bring the hand back to your chin along the same path – most hits land while you pull back.",
+    },
+    {
+      b: 1,
+      de: "Kopfbewegung braucht einen Grund: Stell dir den Jab des Gegners vor, dann erst abtauchen oder wegpendeln.",
+      en: "Head movement needs a reason: picture the opponent's jab first, then slip or roll away.",
+    },
+    {
+      b: 1,
+      de: "Der Jab misst die Distanz. Triff mit ihm, bevor du eine Kombination startest, und geh danach seitlich aus der Linie.",
+      en: "The jab measures the distance. Land it before you start a combination, then step off the line.",
+    },
+    {
+      b: 1,
+      de: "Wer meidet, kontert: Nach dem Abtauchen sofort mit Cross oder Körperhaken antworten und wieder aus der Linie gehen.",
+      en: "Slip, then counter: after the slip answer straight away with a cross or body hook and leave the line again.",
+    },
+    {
+      b: 1,
+      de: "Bandagen: erst die Daumenschlaufe, dann das Handgelenk – fest, aber nicht abschnürend. Sie stützen das Handgelenk am Sandsack.",
+      en: "Hand wraps: thumb loop first, then the wrist – firm, but not cutting off the blood. They support the wrist on the bag.",
+    },
+    {
+      b: 1,
+      de: "Sandsack wie Partner: Nach jeder Serie zurück in die Deckung und raus aus der Linie – kein Dauerfeuer ohne Rückkehr.",
+      en: "Treat the bag like a partner: after every set back into your guard and off the line – no non-stop firing without returning.",
+    },
+    {
+      b: 1,
+      de: "Schultern locker lassen, bis du schlägst: Verspannte Schultern kosten Tempo und lassen dich in Runde 3 früher müde werden.",
+      en: "Keep your shoulders loose until you punch: tight shoulders cost speed and tire you out sooner in round 3.",
+    },
+    {
+      b: 1,
+      de: "Körperhaken zuerst, dann zum Kopf: Der Körper zieht die Deckung des Gegners nach unten – das öffnet den Weg nach oben.",
+      en: "Body hook first, then the head: the body pulls the opponent's guard down and opens the way upstairs.",
+    },
+    {
+      b: 1,
+      de: "Der Treffer kommt auf den ersten beiden Knöcheln, das Handgelenk bleibt gerade – locker bis zum Aufprall, dann fest schließen.",
+      en: "Land on the first two knuckles with a straight wrist – relaxed until impact, then close the fist firmly.",
     },
   ];
 

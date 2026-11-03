@@ -573,7 +573,7 @@ ${setupFields(setup, ty)}
       if (critical.length) h += `<div class="note warn">${critical.map(esc).join("<br>")}</div>`;
       if (!simpleView()) h += `<details class="note"><summary>${flowText().why}</summary><div>${[...notes, dataLine].filter(Boolean).map(esc).join("<br>")}</div></details>`;
     }
-    if (sess.sport === "boxing") h += `<div class="note">${esc(t("boxPreview"))} <a href="${WKB_URL}" target="_blank" rel="noopener">${S.profile.lang === "de" ? "Regelwerk (DBV-WKB)" : "Rules (DBV WKB)"}</a></div>`;
+    if (sess.sport === "boxing") h += `<div class="note">${S.profile.lang === "de" ? "Boxeinheit nach DBV-Regeln." : "Boxing session under DBV rules."} <a href="${WKB_URL}" target="_blank" rel="noopener">${S.profile.lang === "de" ? "Regelwerk (DBV-WKB)" : "Rules (DBV WKB)"}</a></div>`;
     sess.blocks.forEach((b, bi) => {
       h += sessionBlockHtml(sess, bi, true);
     });
