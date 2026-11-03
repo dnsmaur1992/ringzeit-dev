@@ -2814,7 +2814,7 @@ const tk = (a, o) => a.click({ dataset: o });
 test("6a: profile.tkd is normalised on load (unknown grades dropped, styles separate)", () => {
   const a = app();
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(migrate({tkd:{style:'xx',wt:'k99',itf:'p1',hist:[1,{style:'wt',date:'2026-01-01',to:'k5'}],exams:[{style:'wt',date:'2026-02-01',target:'k4'},{style:'itf',date:'2026-02-01',target:'p1'}]}}).tkd)")),
-    { style: "wt", wt: "", itf: "", hist: [{ style: "wt", date: "2026-01-01", to: "k5" }], exams: [{ style: "wt", date: "2026-02-01", target: "k4" }] });
+    { style: "wt", names: "ko", wt: "", itf: "", hist: [{ style: "wt", date: "2026-01-01", to: "k5" }], exams: [{ style: "wt", date: "2026-02-01", target: "k4" }] });
   assert.equal(a.run("S.profile.tkd.style"), "wt");
 });
 test("6a: grade is set only by an entry, a confirmed exam or a correction – sessions, log and tests never move it", async () => {
@@ -2902,16 +2902,16 @@ test("6a: figures wear the white dobok with the belt of the grade (taekwondo onl
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(outfitFor('taekwondo'))")), { tkd: JSON.parse(a.run("JSON.stringify(TKDT.beltOf('k4'))")) });
   const hero = a.run("heroScene('kick','S',false,outfitFor('taekwondo'))");
   assert.ok(hero.includes(BELT("k4")), "blue belt for the 4th Kup");
-  assert.ok(hero.includes("#EFEBDF"), "dobok colour");
+  assert.ok(hero.includes("#FEFEFC"), "dobok colour");
   assert.ok(!hero.includes("#2F6FD0") && !hero.includes("#D2343F"), "no boxing corners");
   const none = a.run("heroScene('kick','S',false,outfitFor('taekwondo',{tgrade:'',tstyle:'wt'}))");
   assert.ok(none.includes(a.run("TKDT.COLORS.white")), "no grade: white belt as the standard drawing");
   // swim trunks season: the dobok stays
   a.run("ui.seasonDate='2026-07-15';S.profile.seasonOff=false;");
-  assert.ok(a.run("heroScene('kick','S',false,outfitFor('taekwondo'))").includes("#EFEBDF"));
+  assert.ok(a.run("heroScene('kick','S',false,outfitFor('taekwondo'))").includes("#FEFEFC"));
   assert.equal(a.run("outfitFor('kickboxing')"), false);
   assert.equal(a.run("outfitFor('boxing')"), true);
-  assert.ok(!a.run("fightPair('kick',14,false)").includes("#EFEBDF"), "kickboxing figures unchanged");
+  assert.ok(!a.run("fightPair('kick',14,false)").includes("#FEFEFC"), "kickboxing figures unchanged");
   assert.ok(a.run("fightPair('kick',14,true)").includes("#2F6FD0"), "boxing corners unchanged");
 });
 test("6a: start page shows the dobok only when the shown unit is a taekwondo unit", () => {
@@ -2919,9 +2919,9 @@ test("6a: start page shows the dobok only when the shown unit is a taekwondo uni
   a.run("S.profile.sport='taekwondo';S.profile.days=[0,1,2,3,4,5,6];ui.tab='week';");
   a.run("{const d=iso(today());S.sessions[d]=buildSession(d,'S','gym',[],{sport:'taekwondo'});ui.setup=setupOf(S.sessions[d],d);}");
   const h = a.run("todayCard()");
-  assert.ok(h.includes("#EFEBDF"));
+  assert.ok(h.includes("#FEFEFC"));
   a.run("{const d=iso(today());S.sessions[d]=buildSession(d,'T','gym',[],{sport:'kickboxing'});ui.setup=setupOf(S.sessions[d],d);}");
-  assert.ok(!a.run("todayCard()").includes("#EFEBDF"), "a kickboxing unit: no dobok");
+  assert.ok(!a.run("todayCard()").includes("#FEFEFC"), "a kickboxing unit: no dobok");
 });
 test("6a: onboarding – taekwondo asks style and grade, skips the kickboxing discipline, stores the grade as an entry", async () => {
   const a = app();
@@ -2930,7 +2930,7 @@ test("6a: onboarding – taekwondo asks style and grade, skips the kickboxing di
   assert.match(h, /data-otstyle="itf"/);
   assert.match(h, /data-otgrade="k4"/);
   assert.doesNotMatch(h, /data-od=/);
-  assert.ok(h.includes("#EFEBDF"), "the figures wear the dobok");
+  assert.ok(h.includes("#FEFEFC"), "the figures wear the dobok");
   await a.click({ dataset: { otstyle: "itf" } });
   await a.click({ dataset: { otgrade: "k7" } });
   assert.equal(a.run("ui.onb.tgrade"), "k7");
@@ -2957,4 +2957,43 @@ test("6a: loader – taekwondo main sport shows general tips only (no kickboxing
   a.run("document.getElementById('factNext');showCard();");
   const k = a.run("document.getElementById('factK').textContent");
   assert.equal(k, a.run("t('tipK')"), "even index shows a tip, not a fact");
+});
+
+test("6a: no kickboxing technique exercises in taekwondo units (all types, many builds); neutral exercises stay", () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.days=[0,1,2,3,4,5,6];S.profile.birthYear=1995;");
+  const bad = JSON.parse(a.run("JSON.stringify([...TKDT.NO_EX])"));
+  assert.ok(bad.length >= 10);
+  const seen = new Set();
+  for (const ty of ["S", "K", "M"])
+    for (let i = 0; i < 25; i++) {
+      const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-0${(i % 6) + 2}','${ty}',['gym','home','outdoor'][${i} % 3],['weights','bag','rope','band','kb'],{sport:'taekwondo'}))`));
+      JSON.stringify(s.blocks).match(/"(?:key|ex|id)":"([a-z]+\.[a-z_]+)"/g)?.forEach((m) => seen.add(m.split('"')[3]));
+    }
+  assert.ok(seen.size > 8, "found exercise keys");
+  for (const k of bad) assert.ok(!seen.has(k), k + " must not appear");
+  const html = (() => { a.run("{const d='2026-11-03';S.sessions[d]=buildSession(d,'K','gym',['weights'],{sport:'taekwondo'});ui.sel=d;ui.tab='session';ui.setup=setupOf(S.sessions[d],d);}"); return a.run("renderSession()"); })();
+  assert.doesNotMatch(html, /Schattenbox|Kick-|Speed-Runden|Kampfstellung|Roundhouse/);
+  // kickboxing keeps them
+  assert.equal(a.run("(()=>{S.profile.sport='kickboxing';return okEx(EX['mob.kick_holds']||{key:'mob.kick_holds',locs:'hgf',avoid:'',eq:''},'gym',[])})()"), true);
+});
+test("6a: the association (WT/ITF) and the name language are switched under Hauptsport and take effect at once", async () => {
+  const a = app();
+  a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;draft=null;");
+  const h = a.run("sportRowP(S.profile)");
+  assert.match(h, /data-tk="style" data-tv="itf"/);
+  assert.match(h, /data-tk="names" data-tv="app"/);
+  assert.equal(a.run("tkdNames()"), "ko", "default Korean");
+  await tk(a, { tk: "names", tv: "app" });
+  assert.equal(a.run("tkdNames()"), "app");
+  await tk(a, { tk: "style", tv: "itf" });
+  assert.equal(a.run("discLabel()"), "Taekwondo ITF-D");
+  a.run("S.profile.sport='kickboxing';");
+  assert.doesNotMatch(a.run("sportRowP(S.profile)"), /data-tk="style"/, "only for taekwondo");
+});
+test("6a: dobok stands out – pure white dobok, skin-tone head and fists, no gloves", () => {
+  const a = app();
+  const h = a.run("heroScene('kick','S',false,outfitFor('taekwondo',{tgrade:'k4',tstyle:'wt'}))");
+  assert.ok(h.includes("#FEFEFC") && h.includes("#E3B48F"));
+  assert.ok(!h.includes('r="11" fill="#C8404A"'), "no kickboxing gloves on the dobok figures");
 });
