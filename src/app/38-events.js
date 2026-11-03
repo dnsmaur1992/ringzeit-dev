@@ -316,9 +316,11 @@
       }
       return;
     }
-    if (ds.sck || ds.rp || ds.rpl || ds.pw) {
+    if (ds.sck || ds.rp || ds.rpl || ds.pw || ds.ssp || ds.edt) {
       readSheet();
       const o = ui.sheet;
+      if (ds.ssp) o.sport = ds.ssp;
+      if (ds.edt) o.type = ds.edt;
       if (ds.sck) o.ck = ds.sck;
       if (ds.rp) o.r.passed = ds.rp;
       if (ds.rpl) o.r.place = ds.rpl;
@@ -346,6 +348,7 @@
       openSheet({
         kind: "club",
         ds: d,
+        sport: mainSport(),
         ck: "X",
         min: (clubOn(d) || {}).min || (S.profile.club && S.profile.club.minutes) || 90,
         rpe: 7,
@@ -563,8 +566,37 @@
       render();
       return;
     }
+    if (ds.usport) {
+      ui.setup.sport = ds.usport;
+      render();
+      return;
+    }
+    if (ds.csport) {
+      ui.csport = ds.csport;
+      render();
+      return;
+    }
+    if (ds.edit) {
+      const e = S.log.find((x) => x.id === ds.edit);
+      if (!e) return;
+      openSheet({
+        kind: "edit",
+        id: e.id,
+        ds: e.date,
+        src: e.src,
+        run: e.run,
+        sport: entrySport(e),
+        type: e.type,
+        ck: e.ck,
+        min: e.minutes,
+        rpe: e.rpe,
+        kmRaw: e.km != null ? String(e.km).replace(".", S.profile.lang === "de" ? "," : ".") : "",
+        note: e.note || "",
+      });
+      return;
+    }
     if (ds.run) {
-      ui.setup.run = ds.run === "run";
+      ui.setup.run = ds.run === "free" ? "free" : ds.run === "run";
       render();
       return;
     }
@@ -576,8 +608,10 @@
       return;
     }
     if (b.id === "buildSess") {
-      const d = ui.sel,
-        go = () => rebuildFromSetup(d);
+      const d = ui.sel;
+      if (freeRunSel(ui.setup, ui.setup.type))
+        return openSheet({ kind: "freerun", ds: d, sport: ui.setup.sport, min: null, rpe: null, kmRaw: "", note: "" });
+      const go = () => rebuildFromSetup(d);
       // an own session on a club day needs a confirmation (once per day)
       if (clubOn(d) && !S.sessions[d] && !(ui.okClub || {})[d])
         return openSheet({
@@ -768,9 +802,10 @@
       return;
     }
     if (ds.del) {
-      S.log = S.log.filter((e) => e.id !== ds.del);
+      const replanned = changeLog(() => (S.log = S.log.filter((e) => e.id !== ds.del)));
       store.save();
       render();
+      if (replanned) toast(t("replanned"));
       return;
     }
     if (ds.tdel) {
@@ -830,7 +865,9 @@
       S.tests.push({
         id: "t" + Date.now().toString(36),
         date: iso(today()),
+        method: "rz-1",
         raw,
+        ...(raw.tec != null ? { techBy: { [techKey(mainSport())]: raw.tec } } : {}),
         ...r,
       });
       ui.testOpen = false;
@@ -849,10 +886,8 @@
     // profile
     if (ds.p) {
       draft[ds.p] = ds.p === "level" ? +ds.v : ds.v;
-      if (draft.level === 0) {
-        if (draft.disc === "fc" || draft.disc === "k1") draft.disc = "lc";
-        draft.focus = "bal";
-      }
+      // full contact and K1 are no longer tied to the level; only the age limit applies (pBirth)
+      if (draft.level === 0) draft.focus = "bal";
       applyPlan();
       render();
       return;
@@ -883,6 +918,7 @@
         id: "c" + Date.now().toString(36),
         date: v,
         kind: ui.ckind || "comp",
+        sport: ui.csport || mainSport(),
       });
       applyPlan();
       render();
@@ -896,7 +932,7 @@
     }
   });
   /* Profile changes take effect at once: the plan settings are copied over and planned sessions from today on are rebuilt */
-  const PLAN_KEYS = ["level", "disc", "focus", "birthYear", "sex", "days", "minutes", "club", "comps", "limits"];
+  const PLAN_KEYS = ["level", "sport", "disc", "focus", "birthYear", "sex", "days", "minutes", "club", "comps", "limits"];
   /* Open sessions from `from` on are dropped and rebuilt with the new settings when they are next shown.
      A session that was already started (player progress, ticks or logged sets) is kept with its entries. */
   function dropOpenSessions(from) {

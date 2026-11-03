@@ -53,7 +53,7 @@
   async function exportData() {
     const json = JSON.stringify({
       app: APP_ID,
-      v: 1,
+      v: 2,
       exported: new Date().toISOString(),
       data: S,
     });
@@ -86,6 +86,7 @@
         lines: [t("impConfirm")(when)],
         run: () => {
           S = hydrate(o.data);
+          resumeClear();
           ui.sel = null;
           ui.setup = null;
           clearSessionTimer();

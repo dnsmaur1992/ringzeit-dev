@@ -16,7 +16,7 @@
     let h = `<button type="button" class="btn ghost skip" data-onb="skip">${t("onbSkip")}</button><div class="dots">${[0, 1, 2, 3, 4].map((i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}</div>${step === 0 ? installHtml(true) : ""}`;
     h += `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair(step === 1 || step === 3 ? "box" : "kick")}</svg>`;
     if (step === 0) {
-      h += `<h1>${t("onbQ1")}</h1><div class="sub">${t("onbQ1s")}</div><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => (k === "fc" || k === "k1" ? `<button type="button" class="locked" data-lock="disc" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-od="${k}" aria-pressed="${o.disc === k}">${t("disc")[k]}</button>`)).join("")}</div>`;
+      h += `<h1>${t("onbQ1")}</h1><div class="sub">${t("onbQ1s")}</div><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => `<button type="button" data-od="${k}" aria-pressed="${o.disc === k}">${t("disc")[k]}</button>`).join("")}</div>`;
     } else if (step === 1) {
       h += `<h1>${t("onbClubQ")}</h1><div class="sub">${t("onbClubS")}</div><div class="chips">${[0, 1, 2, 3, 4, 5, 6].map((i) => `<button type="button" class="chip cday" data-ocday="${i}" aria-pressed="${o.clubDays.includes(i)}">${t("dayNames")[i]}</button>`).join("")}</div>${o.clubDays.length ? `<span class="lab">${t("onbClubMin")}</span><div class="seg">${[60, 75, 90, 120].map((m) => `<button type="button" data-ocmin="${m}" aria-pressed="${o.clubMin === m}">${m} ${t("min")}</button>`).join("")}</div>` : ""}`;
     } else if (step === 2) {
@@ -50,7 +50,7 @@
   }
   /* "What's new": shown once per big update to people who already used the app.
      Raise NEWS_V (and update the texts under "news") only for updates worth telling about. */
-  const NEWS_V = 4;
+  const NEWS_V = 5;
   const needNews = () => !S.profile.example && !!S.profile.toured && (S.profile.newsSeen || 0) < NEWS_V;
   const showNews = () => openSheet({ kind: "news" });
   async function finishOnb(skip, test) {

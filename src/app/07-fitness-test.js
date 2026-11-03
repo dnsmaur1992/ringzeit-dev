@@ -37,13 +37,9 @@
       min: complete ? Math.min(...vals) : 0,
     };
   }
-  function maxLevel() {
-    const tt = S.tests.filter((x) => x.complete);
-    if (!tt.length) return 0;
-    const b = tt[tt.length - 1];
-    if (b.total >= 20 && b.min >= 3) return 2;
-    if (b.total >= 15 && b.min >= 2) return 1;
-    return 0;
+  /* Level from the latest tests, per sport: shared values + the technique part of THIS sport (core/history.js levelFor) */
+  function maxLevel(sport = mainSport(), style) {
+    return levelFor(S.tests, sport, style).level;
   }
   /* Effort with five faces instead of numbers; each face stands for a value on the 1–10 scale the planning uses */
   const effortFaces = () =>

@@ -3,7 +3,7 @@
      Rules moved into src/sports read from here instead of reaching into S themselves. */
   function planContext(ds) {
     const profile = S.profile;
-    return { profile, sport: sportFor(profile.sport), history: S.log, date: ds, today: today(), rng: Math.random };
+    return { profile, sport: sportFor((ds && S.sessions[ds] && S.sessions[ds].sport) || profile.sport), history: S.log, date: ds, today: today(), rng: Math.random };
   }
   function dayTypes(bk) {
     const p = S.profile,
@@ -204,7 +204,10 @@
       weeks = Math.ceil(window / 7),
       week = Math.min(weeks, Math.max(1, weeks - Math.ceil(n / 7) + 1));
     const ctx = planContext(ds),
-      fmtNext = ctx.sport.rules.format(ctx.profile.disc, ageAt(parse(next)));
+      nc = (S.profile.comps || []).find((c) => (c.kind || "comp") === "comp" && c.date === next),
+      // a tournament of a sport without its own module has no known format yet; its date still drives the phases
+      csp = SPORTS[(nc && nc.sport) || "kickboxing"],
+      fmtNext = csp ? csp.rules.format((nc && nc.disc) || ctx.profile.disc, ageAt(parse(next))) : null;
     const base = {
       days: n,
       comp: next,
@@ -222,8 +225,9 @@
     const r = compPhase(ds);
     if (r.phase !== "base") return r;
     const d = ds ? parse(ds) : today(),
+      sp = (ds && S.sessions[ds] && S.sessions[ds].sport) || mainSport(),
       g = (S.profile.comps || [])
-        .filter((c) => c.kind === "grade")
+        .filter((c) => c.kind === "grade" && (c.sport || "kickboxing") === sp)
         .map((c) => c.date)
         .sort()
         .find((x) => parse(x) >= d);
@@ -273,31 +277,59 @@
     if (loadCache[key]) return loadCache[key];
     return (loadCache[key] = computeLoad(mon));
   }
+  /* The rules live in core/history.js (explicit inputs); this only gathers the inputs from the app state.
+     For the current week the expected total (entries so far + sessions still to come) is passed along too. */
   function computeLoad(mon) {
-    if (["taper", "recover"].includes(phaseInfo(iso(mon)).phase)) return { deload: false };
-    if (rampOn(iso(mon)) || rampOn(iso(addDays(mon, 3)))) return { deload: false };
-    const start = S.profile.planStart ? monday(parse(S.profile.planStart)) : null;
-    if (start) {
-      const w = Math.round(daysBetween(start, mon) / 7);
-      if (w > 0 && (w + 1) % 5 === 0) return { deload: true, why: "plan" };
+    const ds = iso(mon),
+      cur = ds === iso(monday(today()));
+    return deloadFor({
+      log: S.log,
+      mon,
+      phase: phaseInfo(ds).phase,
+      ramp: !!(rampOn(ds) || rampOn(iso(addDays(mon, 3)))),
+      planStart: S.profile.planStart ? iso(monday(parse(S.profile.planStart))) : "",
+      projected: cur ? projectWeek({ log: S.log, monISO: ds, plannedDays: plannedAhead(mon) }) : null,
+    });
+  }
+  /* Planned own and club sessions from today to Sunday that have no entry yet. Planned values only – never entries.
+     Own: planned minutes × middle of the base target effort; club: planned minutes × 6. */
+  function plannedAhead(mon) {
+    const td = iso(today()),
+      out = [];
+    for (let i = 0; i < 7; i++) {
+      const ds = iso(addDays(mon, i));
+      if (ds < td) continue;
+      const ty = planOn(ds);
+      if (ty && !doneOn(ds)) out.push({ minutes: sessDur(ds, ty), rpe: baseRpe(typeOn(ds) || ty, ds) });
+      const cl = clubOn(ds);
+      if (cl && !clubDone(ds)) out.push({ minutes: cl.min, rpe: 6 });
     }
-    const from = iso(addDays(mon, -7)),
-      to = iso(addDays(mon, -1));
-    const prev = logRange(from, to).filter((e) => e.tHi);
-    const over = prev.filter((e) => e.rpe >= e.tHi + 2).length;
-    const avgOver = prev.length ? prev.reduce((a, e) => a + (e.rpe - e.tHi), 0) / prev.length : 0;
-    if (prev.length >= 2 && (over >= 2 || avgOver > 1)) return { deload: true, why: "rpe" };
-    // acute vs. chronic load (minutes × RPE, own + club): a jump of more than 30 % triggers a lighter week
-    const wl = (m) => {
-      const a = iso(m),
-        b = iso(addDays(m, 6));
-      return logRange(a, b).reduce((x, e) => x + (e.minutes || 0) * (e.rpe || 0), 0);
-    };
-    const last = wl(addDays(mon, -7)),
-      base = [14, 21, 28].map((d) => wl(addDays(mon, -d))),
-      avg = base.reduce((a, b) => a + b, 0) / 3;
-    if (base.filter((x) => x > 0).length >= 2 && last > 600 && last > avg * 1.3) return { deload: true, why: "acwr" };
-    return { deload: false };
+    return out;
+  }
+  /* What the not-begun sessions of this week depend on from the history: the deload state and the regions that were
+     hard the day before. If it changes after a new, corrected or deleted entry, those sessions are rebuilt. */
+  function loadSig() {
+    const td = iso(today()),
+      mon = monday(today()),
+      parts = [];
+    loadCache = {};
+    for (let i = 0; i < 7; i++) {
+      const ds = iso(addDays(mon, i));
+      if (ds < td) continue;
+      parts.push((weekLoad(ds).deload ? 1 : 0) + lightRegions({ log: S.log, date: ds }).join(","));
+    }
+    return parts.join("|");
+  }
+  /* Runs a change of the log; if it alters what open sessions depend on, they are dropped (started ones stay).
+     Returns true when sessions were reset, so the caller can say so once. */
+  function changeLog(fn) {
+    const before = loadSig();
+    fn();
+    const after = loadSig();
+    loadCache = {};
+    if (before === after) return false;
+    dropOpenSessions(iso(today()));
+    return true;
   }
   function rpeRange(type, ds) {
     let r = baseRpe(type, ds);
@@ -305,6 +337,8 @@
     if (type !== "M" && weekMood(ds) === "hard") r -= 1;
     if (type !== "M") r -= [1.5, 0.5, 0][formOn(ds || iso(today()))];
     if (type !== "M" && weekLoad(ds).deload) r -= 1.5;
+    // a hard day before in a region (e.g. club sparring → legs): a little easier today (core/history.js lightRegions)
+    if (type !== "M" && lightRegions({ log: S.log, date: ds || iso(today()) }).length) r -= 1;
     const rp = rampOn(ds || iso(today()));
     if (rp && type !== "M") r -= rp.rpe;
     const cap = ageGroup() === "kids" ? 6 : young() ? 7 : 10,
@@ -324,8 +358,21 @@
     return true;
   }
   /* prefer: optional scoring function – higher scores are picked first (shuffled within equal scores) */
+  let buildLight = [];
+  const lightPenalty = (e) => {
+    const r = exRegions(e);
+    return buildLight.reduce((a, k) => a + (r[k] || 0), 0);
+  };
+  /* Regions that were hard yesterday on a date, and whether club training was part of it (for the explanation) */
+  function lightInfo(ds) {
+    const regions = lightRegions({ log: S.log, date: ds }),
+      prev = iso(addDays(parse(ds), -1));
+    return { regions, club: S.log.some((e) => e.date === prev && e.src === "club" && e.rpe >= 7) };
+  }
   function pickEx(cat, n, loc, eq, used, prefer) {
     let pool = shuffle(EX.filter((e) => e.cat === cat && okEx(e, loc, eq) && !used.has(e.id)));
+    // regions that were hard the day before: exercises that load them come later (below every explicit preference)
+    if (buildLight.length) pool.sort((a, b) => lightPenalty(a) - lightPenalty(b));
     if (prefer) pool.sort((a, b) => prefer(b) - prefer(a));
     if (pool.length < n)
       pool = pool.concat(shuffle(EX.filter((e) => e.cat === cat && okEx(e, loc, eq) && !pool.includes(e))));
@@ -1278,7 +1325,22 @@
       items: [fistPick, other].filter(Boolean).map((x) => (full && x.h ? { kind: "hard", id: x.id, h: 1 } : { kind: "hard", id: x.id })),
     };
   }
+  /* Sport of the main setting and the choice offered per unit (only finished sports are visible) */
+  const mainSport = () => S.profile.sport || "kickboxing";
+  const sportChoices = () => visibleSports().map((x) => x.id);
+  function sportRow(attr, cur) {
+    return `<div class="field"><span class="lab">${t("sportL")}</span><div class="seg">${sportChoices()
+      .map((k) => `<button type="button" ${attr}="${k}" aria-pressed="${(cur || mainSport()) === k}">${t("sportNames")[k] || k}</button>`)
+      .join("")}</div></div>`;
+  }
+  /* A built session carries its sport (default: main sport) and a stable id that links it to its log entry */
   function buildSession(dateStr, type, loc, eqIn, opts = {}) {
+    const s = buildSessionCore(dateStr, type, loc, eqIn, opts);
+    s.sport = opts.sport || mainSport();
+    s.id = s.id || "s" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36);
+    return s;
+  }
+  function buildSessionCore(dateStr, type, loc, eqIn, opts = {}) {
     loadCache = {};
     // the fitness gym only exists for strength and conditioning; it brings its standard equipment along
     if (loc === "studio" && type !== "S" && type !== "K") loc = "gym";
@@ -1330,6 +1392,8 @@
       return n;
     };
     const rpe = rpeRange(type, dateStr);
+    buildLight = type === "M" ? [] : lightRegions({ log: S.log, date: dateStr });
+    if (buildLight.length) notes.push(t("lightNote")(buildLight, lightInfo(dateStr).club));
     if (fasting) notes.push(t("fast").note);
     {
       const N = t("life").notes;

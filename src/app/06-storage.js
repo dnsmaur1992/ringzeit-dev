@@ -63,6 +63,7 @@
   /* Upgrades profiles saved by older versions of the app */
   function migrate(p) {
     delete p.mode;
+    if (!p.sport) p.sport = "kickboxing";
     if (!Array.isArray(p.comps)) p.comps = [];
     if (p.comp) p.comps.push({ id: "c" + Date.now().toString(36), date: p.comp });
     delete p.comp;
@@ -95,6 +96,7 @@
   function hydrate(d) {
     const log = d.log || [];
     return {
+      v: 2,
       profile: migrate({ ...DEFAULT_PROFILE, ...(d.profile || {}) }),
       sessions: slimSessions(d.sessions || {}, log),
       log,

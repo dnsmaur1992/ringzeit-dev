@@ -23,7 +23,7 @@
     renderSheet.last = o;
     let h = `<div class="sheet${again ? " still" : ""}" role="dialog" aria-modal="true"><div class="grab"></div>`;
     if (o.kind === "club") {
-      h += `<h3>${t("club")} · ${esc(dayLbl(o.ds))}</h3><div class="lab">${t("clubWhat")}</div><div class="seg g3">${["T", "P", "K", "S", "X"].map((k) => `<button type="button" data-sck="${k}" aria-pressed="${o.ck === k}">${t("clubKinds")[k]}</button>`).join("")}</div>
+      h += `<h3>${t("club")} · ${esc(dayLbl(o.ds))}</h3>${sportRow("data-ssp", o.sport)}<div class="lab">${t("clubWhat")}</div><div class="seg g3">${["T", "P", "K", "S", "X"].map((k) => `<button type="button" data-sck="${k}" aria-pressed="${o.ck === k}">${t("clubKinds")[k]}</button>`).join("")}</div>
  <label class="lab" for="scMin">${t("duration")}</label><input id="scMin" type="number" inputmode="numeric" min="10" max="300" value="${o.min}">
  <span class="lab" id="scRpeL">${t("rpe")}</span><div class="effort-faces" role="group" aria-labelledby="scRpeL">${effortFaces()
    .map(
@@ -33,6 +33,21 @@
    .join("")}</div><input id="scRpe" type="hidden" value="${o.rpe}">
  <label class="lab" for="scNote">${t("note")}</label><textarea id="scNote">${esc(o.note || "")}</textarea>
  <div class="acts2">${cancel}${save("clubsave")}</div>`;
+    } else if (o.kind === "freerun" || o.kind === "edit") {
+      const free = o.kind === "freerun" || o.run === "free",
+        own = o.kind === "freerun" || o.src !== "club";
+      h += `<h3>${o.kind === "freerun" ? t("freeRunTitle") : t("edit")} · ${esc(dayLbl(o.ds))}</h3>${sportRow("data-ssp", o.sport)}`;
+      if (o.kind === "edit")
+        h += own
+          ? `<div class="lab">${t("sessType")}</div><div class="seg g3">${["T", "C", "P", "S", "K", "M"].map((k) => `<button type="button" data-edt="${k}" aria-pressed="${o.type === k}">${t("types")[k]}</button>`).join("")}</div>`
+          : `<div class="lab">${t("clubWhat")}</div><div class="seg g3">${["T", "P", "K", "S", "X"].map((k) => `<button type="button" data-sck="${k}" aria-pressed="${o.ck === k}">${t("clubKinds")[k]}</button>`).join("")}</div>`;
+      h += `<label class="lab" for="scMin">${t("duration")}</label><input id="scMin" type="number" inputmode="numeric" min="1" max="300" value="${o.min ?? ""}">`;
+      if (free) h += `<label class="lab" for="scKm">${t("freeRunKm")}</label><input id="scKm" type="text" inputmode="decimal" value="${esc(o.kmRaw ?? "")}">`;
+      h += `<span class="lab" id="scRpeL">${t("rpe")}</span><div class="effort-faces" role="group" aria-labelledby="scRpeL">${effortFaces()
+        .map(([n, f, l]) => `<button type="button" data-scface="${n}" aria-pressed="${faceOf(o.rpe) === n}" aria-label="${esc(l)}"><span aria-hidden="true">${f}</span><small>${esc(l)}</small></button>`)
+        .join("")}</div><input id="scRpe" type="hidden" value="${o.rpe ?? ""}">
+ <label class="lab" for="scNote">${t("note")}</label><textarea id="scNote">${esc(o.note || "")}</textarea>${o.err ? `<div class="note warn" role="alert">${esc(o.err)}</div>` : ""}
+ <div class="acts2">${cancel}${save(o.kind === "freerun" ? "freerunsave" : "editsave")}</div>`;
     } else if (o.kind === "move") {
       const rows = [];
       for (let i = 0; i < 14; i++) {
@@ -112,7 +127,12 @@
         return isNaN(x) ? null : x;
       };
     if (!o) return;
-    if (o.kind === "club") {
+    if (o.kind === "freerun" || o.kind === "edit") {
+      o.min = n("scMin");
+      o.rpe = n("scRpe");
+      if (v("scKm") != null) o.kmRaw = v("scKm");
+      if (v("scNote") != null) o.note = v("scNote");
+    } else if (o.kind === "club") {
       o.min = n("scMin") || o.min;
       o.rpe = n("scRpe") || o.rpe;
       if (v("scNote") != null) o.note = v("scNote");
@@ -152,22 +172,85 @@
       return;
     }
     if (a === "clubsave") {
-      S.log.push({
-        id: "e" + Date.now().toString(36),
-        date: o.ds,
-        src: "club",
-        type: "V",
-        ck: o.ck,
-        minutes: Math.max(5, Math.min(300, o.min || 90)),
-        rpe: o.rpe || 7,
-        note: (o.note || "").slice(0, 300),
-      });
+      const replanned = changeLog(() =>
+        S.log.push({
+          id: "e" + Date.now().toString(36),
+          date: o.ds,
+          src: "club",
+          type: "V",
+          ck: o.ck,
+          sport: o.sport || mainSport(),
+          minutes: Math.max(5, Math.min(300, o.min || 90)),
+          rpe: o.rpe || 7,
+          note: (o.note || "").slice(0, 300),
+        }),
+      );
       if (S.cov[o.ds] && S.cov[o.ds].off === "miss") delete S.cov[o.ds];
       store.save();
       closeSheet();
       ui.win = true;
       render();
       showWin(S.log[S.log.length - 1]);
+      if (replanned) toast(t("replanned"));
+      return;
+    }
+    if (a === "freerunsave" || a === "editsave") {
+      const km = String(o.kmRaw ?? "").trim() === "" ? undefined : parseFloat(String(o.kmRaw).replace(",", ".")),
+        free = a === "freerunsave" || o.run === "free";
+      if (!(o.min >= 1 && o.min <= 300) || !(o.rpe >= 1 && o.rpe <= 10) || (free && km !== undefined && !(km > 0 && km <= 200))) {
+        o.err = t("freeRunNeed");
+        return renderSheet();
+      }
+      const kmv = km === undefined ? undefined : Math.round(km * 10) / 10,
+        note = (o.note || "").slice(0, 300);
+      let replanned, entry;
+      if (a === "freerunsave") {
+        const sess = S.sessions[o.ds];
+        replanned = changeLog(() =>
+          S.log.push(
+            (entry = {
+              id: "e" + Date.now().toString(36),
+              date: o.ds,
+              src: "own",
+              type: "K",
+              run: "free",
+              sport: o.sport || mainSport(),
+              sid: sess?.id,
+              minutes: o.min,
+              rpe: o.rpe,
+              km: kmv,
+              completed: true,
+              inputConfirmed: true,
+              tHi: rpeRange("K", o.ds).hi,
+              note,
+            }),
+          ),
+        );
+      } else {
+        entry = S.log.find((x) => x.id === o.id);
+        if (!entry) return closeSheet();
+        replanned = changeLog(() => {
+          if (entry.src === "club") entry.ck = o.ck;
+          else {
+            if (entry.type !== o.type) delete entry.reg;
+            entry.type = o.type;
+          }
+          entry.sport = o.sport || mainSport();
+          entry.minutes = o.min;
+          entry.rpe = o.rpe;
+          entry.note = note;
+          if (free) entry.km = kmv;
+          entry.edited = new Date().toISOString();
+        });
+      }
+      store.save();
+      closeSheet();
+      if (a === "freerunsave") {
+        ui.win = true;
+        render();
+        showWin(entry);
+      } else render();
+      if (replanned) toast(t("replanned"));
       return;
     }
     if (a === "ressave") {

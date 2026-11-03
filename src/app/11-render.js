@@ -230,7 +230,7 @@
       h += `<div class="note warn">${esc(prepText(ph, "P"))}${extra}</div>`;
     }
     if (load.deload)
-      h += `<div class="note warn">${load.why === "rpe" ? t("deloadRpe") : load.why === "acwr" ? t("deloadAcwr") : t("deloadPlan")}</div>`;
+      h += `<div class="note warn">${load.why === "rpe" ? t("deloadRpe") : load.why === "acwr" ? t("deloadAcwr") : load.why === "proj" ? t("deloadProj") : t("deloadPlan")}</div>`;
     const ts = simple ? null : testStatus();
     if (ts)
       h += `<div class="note act"><span>${t({ due: "testDue", first: "testFirst", pre: "testPre", post: "testPost" }[ts])}</span><button type="button" class="btn ghost" data-tab="test">${t("toTest")}</button></div>`;

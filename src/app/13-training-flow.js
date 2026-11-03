@@ -212,7 +212,7 @@
     ui.focus = false;
     const completion = sessionCompletion(sess),
       minutes = actual.minutes;
-    S.log.push({
+    const replanned = changeLog(() => S.log.push({
       id: "e" + Date.now().toString(36),
       date: ui.sel,
       src: "own",
@@ -231,12 +231,38 @@
       inputConfirmed: true,
       tHi: sess ? sess.tHi : rpeRange(ty, ui.sel).hi,
       note: actual.note,
-    });
+      sport: sess?.sport || mainSport(),
+      sid: sess?.id,
+      reg: sessionRegions(sess),
+    }));
     store.save();
     ui.win = true;
     render();
     showWin(S.log[S.log.length - 1]);
+    if (replanned) toast(t("replanned"));
   }
+  /* Shares of an own session from its exercises (warm-up, cool-down, mobility and hardening blocks do not count);
+     without enough exercises the entry falls back to the table of its type (core/history.js) */
+  function sessionRegions(sess) {
+    const list = [];
+    (sess?.blocks || []).forEach((b) => {
+      if (!["warm", "cool", "mob", "hard"].includes(b.key))
+        b.items.forEach((it) => {
+          if (it.kind === "ex" && EX[it.id]) list.push(exRegions(EX[it.id]));
+        });
+    });
+    return list.length >= 3 ? meanRegions(list) || undefined : undefined;
+  }
+  /* free run: km and pace shown behind minutes */
+  const runInfo = (e) =>
+    e.run === "free" && e.km > 0
+      ? ` · ${numF(e.km)} km · ${paceOf(e.minutes, e.km)} /km`
+      : "";
+  function paceOf(min, km) {
+    const sec = Math.round((min * 60) / km);
+    return `${Math.floor(sec / 60)}:${pad(sec % 60)}`;
+  }
+  const freeRunSel = (setup, ty) => ty === "K" && setup.loc === "out" && setup.run === "free";
 
   function lastPerf(id, before) {
     const logs = S.log.filter((e) => e.perf && e.date < before).sort((a, b) => b.date.localeCompare(a.date));
@@ -385,6 +411,7 @@
     ),
     type: sess.type,
     run: !!sess.run,
+    sport: sess.sport || mainSport(),
     min: sess.min || sessMin(sess.type),
   });
   function setupDirty(ds) {
@@ -399,6 +426,7 @@
       su.type !== base.type ||
       su.loc !== base.loc ||
       su.min !== base.min ||
+      (su.sport || mainSport()) !== base.sport ||
       !!su.run !== base.run ||
       eqKey(su.eq, su.type, su.loc) !== eqKey(base.eq, base.type, base.loc)
     );
@@ -411,8 +439,8 @@
     if (fight)
       h += `<div class="field"><span class="lab">${t("pbQ")}</span><div class="seg">${["partner", "bag", "none"].map((k) => `<button type="button" data-pb="${k}" aria-pressed="${k === "none" ? !has("partner") && !has("bag") : has(k)}">${t("pb")[k]}</button>`).join("")}</div></div>`;
     if (ty === "K" && setup.loc === "out")
-      h += `<div class="field"><span class="lab">${t("runQ")}</span><div class="seg">${["iv", "run"].map((k) => `<button type="button" data-run="${k}" aria-pressed="${(k === "run") === (!!setup.run && !kneeAnk())}" ${k === "run" && kneeAnk() ? "disabled" : ""}>${t("runOpt")[k]}</button>`).join("")}</div>${kneeAnk() ? `<span class="sub">${t("runLock")}</span>` : ""}</div>`;
-    const runOnly = !!setup.run && canRun(ty, setup.loc),
+      h += `<div class="field"><span class="lab">${t("runQ")}</span><div class="seg">${["iv", "run", "free"].map((k) => `<button type="button" data-run="${k}" aria-pressed="${k === "free" ? setup.run === "free" : (k === "run") === (!!setup.run && setup.run !== "free" && !kneeAnk())}" ${k !== "iv" && kneeAnk() ? "disabled" : ""}>${t("runOpt")[k]}</button>`).join("")}</div>${setup.run === "free" ? `<span class="sub">${t("freeRunHint")}</span>` : ""}${kneeAnk() ? `<span class="sub">${t("runLock")}</span>` : ""}</div>`;
+    const runOnly = !!setup.run && setup.run !== "free" && canRun(ty, setup.loc),
       studio = setup.loc === "studio" && (ty === "S" || ty === "K");
     if (studio) h += `<div class="field"><span class="sub">${t("studioNote")}</span></div>`;
     const chips =
@@ -438,7 +466,7 @@
       acts = "";
     if (cd) {
       body = `✓ ${t("clubKinds")[cd.ck] || ""} · ${cd.minutes} ${t("min")} · ${effortTxt(cd.rpe)}`;
-      acts = `<button type="button" class="btn ghost" data-del="${cd.id}">${t("del")}</button>`;
+      acts = `<button type="button" class="btn ghost" data-edit="${cd.id}">${t("edit")}</button><button type="button" class="btn ghost" data-del="${cd.id}">${t("del")}</button>`;
     } else if (c.off) {
       body = c.off === "moved" ? t("movedTo")(dayLbl(c.to)) : c.off === "miss" ? t("clubMissed") : t("clubCancelled");
       acts = `<button type="button" class="btn ghost" data-cundo="${ds}">${t("undo")}</button>`;
@@ -488,6 +516,7 @@
               eq: defaultEq(),
               type: planned,
               run: false,
+              sport: mainSport(),
               min: sessMin(planned),
             };
     ui.setup = setup;
@@ -502,10 +531,13 @@
     h += `<div class="panel"><div class="field"><span class="lab">${t("sessType")}</span><div class="seg g3">${["T", "C", "P", "S", "K", "M"].filter((k) => k !== "P" || !simpleView() || ty === "P").map((k) => `<button type="button" data-stype="${k}" aria-pressed="${ty === k}" ${k === "P" && (koLock(ds) || ageGroup() === "kids") ? "disabled" : ""}>${t("types")[k]}${k === planned ? `<small>${t("suggested")}</small>` : ""}</button>`).join("")}</div>${koLock(ds) ? `<span class="sub">${t("koNote")}</span>` : ""}</div>
  <div class="field"><span class="lab">${t("dur")}</span><div class="seg">${durs.map((m) => `<button type="button" data-dur="${m}" aria-pressed="${setup.min === m}">${m}</button>`).join("")}</div></div>
  <div class="field"><span class="lab">${t("where")}</span><div class="seg ${ty === "S" || ty === "K" ? "g2" : ""}">${(ty === "S" || ty === "K" ? ["gym", "studio", "home", "out"] : ["gym", "home", "out"]).map((l) => `<button type="button" data-loc="${l}" aria-pressed="${setup.loc === l}">${t("locs")[l]}</button>`).join("")}</div></div>
-${setupFields(setup, ty)}
- <div class="field">${sess && setupDirty(ds) ? `<span class="sub setup-dirty">● ${t("setupChanged")}</span>` : ""}<button class="btn${sess && !setupDirty(ds) ? " sec" : ""}" type="button" id="buildSess">${sess ? t("recreate") : t("create")}</button><div class="minirow" style="justify-content:space-between">${recent && !doneOn(ds) ? `<button type="button" class="btn ghost" data-move="${ds}">${t("move")}</button>` : ""}${ow.t && !ow.from && !doneOn(ds) ? `<button type="button" class="btn ghost" data-unplan="${ds}">${t("removeExtra")}</button>` : ""}${ow.from ? `<span class="sub">${t("movedFrom")(dayLbl(ow.from))}</span>` : ""}</div></div></div>`;
+${sportRow("data-usport", setup.sport)}${setupFields(setup, ty)}
+ <div class="field">${sess && setupDirty(ds) ? `<span class="sub setup-dirty">● ${t("setupChanged")}</span>` : ""}<button class="btn${sess && !setupDirty(ds) ? " sec" : ""}" type="button" id="buildSess">${freeRunSel(setup, ty) ? t("freeRunLog") : sess ? t("recreate") : t("create")}</button><div class="minirow" style="justify-content:space-between">${recent && !doneOn(ds) ? `<button type="button" class="btn ghost" data-move="${ds}">${t("move")}</button>` : ""}${ow.t && !ow.from && !doneOn(ds) ? `<button type="button" class="btn ghost" data-unplan="${ds}">${t("removeExtra")}</button>` : ""}${ow.from ? `<span class="sub">${t("movedFrom")(dayLbl(ow.from))}</span>` : ""}</div></div></div>`;
     h += `</div></details>`;
-    if (!sess) return h;
+    if (!sess) {
+      const dn = S.log.find((e) => e.date === ds && own(e));
+      return dn ? h + `<div class="note ok">✓ ${t("already")} ${effortTxt(dn.rpe)} · ${dn.minutes} ${t("min")}${runInfo(dn)}</div>` : h;
+    }
     {
       const doneTop = S.log.find((e) => e.date === ds && own(e));
       h += doneTop
@@ -546,7 +578,7 @@ ${setupFields(setup, ty)}
       h += sessionBlockHtml(sess, bi, true);
     });
     const done = S.log.find((e) => e.date === ds && own(e));
-    if (done) h += `<div class="note ok">✓ ${t("already")} ${effortTxt(done.rpe)} · ${done.minutes} ${t("min")}</div>`;
+    if (done) h += `<div class="note ok">✓ ${t("already")} ${effortTxt(done.rpe)} · ${done.minutes} ${t("min")}${runInfo(done)}</div>`;
     else
       h += `<div class="panel training-start"><p class="sub">${workoutText().preview}</p><p class="sub">${S.profile.lang === "de" ? "Bereitlegen" : "Prepare"}: ${esc(sess.eq.map((k) => t("equip")[k] || t("pb")?.[k] || k).join(", ") || (S.profile.lang === "de" ? "keine zusätzliche Ausrüstung" : "no extra equipment"))}</p><button type="button" class="btn" data-workout="start">${PLAY}<span>${sess.flow ? workoutText().resume : workoutText().start}</span></button></div>`;
     return h;

@@ -54,9 +54,10 @@
         sub: "Die Neuerungen des letzten großen Updates",
         h: "Was ist neu",
         pts: [
-          "<b>Neu im Ratgeber:</b> 10 Themen zum Lesen – vom Mythen-Check über die WAKO-Disziplinen bis zum Turniertag. Du findest sie unter Profil → Ratgeber.",
-          "<b>Bessere Stimme:</b> Ringzeit nimmt jetzt automatisch die beste installierte Stimme. Wie du eine noch bessere lädst, steht unter Profil → App & Daten.",
-          "<b>Turnier und Einheit:</b> Vor einem Turnier mit Gewichtsklasse trägst du dein Gewicht einmal pro Woche direkt auf „Heute“ ein. Und geänderte Einstellungen einer Einheit markieren jetzt „Neu erstellen“.",
+          "<b>Sportart je Einheit:</b> Unter „Einheit anpassen“ und beim Vereinstraining siehst du die Sportart. Standard ist dein Hauptsport (Profil → Training → Mehr). Weitere Sportarten kommen später dazu.",
+          "<b>Freier Lauf:</b> Bei Kondition draußen gibt es neben Intervallen und Lauf Zone 2–3 jetzt „Freier Lauf“ – ohne Timer. Danach trägst du Minuten, Strecke und Anstrengung ein.",
+          "<b>Einträge ändern:</b> Im Verlauf und beim Vereinstraining kannst du Einträge bearbeiten. Ändert sich dadurch deine Wochenbelastung, werden nur noch nicht begonnene Einheiten der Woche angepasst – Trainingstage bleiben.",
+          "<b>Belastung gesamt:</b> War gestern etwas hart (z. B. Vereins-Sparring für die Beine), wird die Einheit heute etwas leichter. Full Contact und K1 sind nicht mehr an das Level gebunden – nur an das Alter.",
         ],
         ok: "Verstanden",
       },
@@ -764,6 +765,8 @@
       simBeg: " Als Anfänger: als Schatten- oder Sack-Sparring.",
       deloadAcwr:
         "Deine Gesamtbelastung aus eigenem Training und Verein ist letzte Woche stark gestiegen. Diese Woche wird automatisch leichter.",
+      deloadProj:
+        "Mit dem, was diese Woche schon war und noch geplant ist (eigenes Training und Verein), wird es deutlich mehr als sonst. Die noch offenen Einheiten werden leichter.",
       dataSec: "Daten & Teilen",
       exp: "Sicherung speichern",
       imp: "Sicherung laden",
@@ -916,7 +919,7 @@
       },
       suppEq: "Equipment für den Zusatzteil",
       runQ: "Art der Einheit",
-      runOpt: { iv: "Intervalle", run: "Lauf Zone 2–3" },
+      runOpt: { iv: "Intervalle", run: "Lauf Zone 2–3", free: "Freier Lauf" },
       runLock: "Laufen ist wegen deiner Einschränkung (Knie/Sprunggelenk) nicht verfügbar.",
       run: "Lauf",
       z2: "Zone 2 – locker",
@@ -993,6 +996,16 @@
       emptyW: "Noch kein Gewicht eingetragen.",
       history: "Letzte Einheiten",
       del: "Löschen",
+      edit: "Bearbeiten",
+      sportL: "Sportart",
+      sportMain: "Hauptsport",
+      sportNames: { kickboxing: "Kickboxen", boxing: "Boxen", taekwondo: "Taekwondo" },
+      freeRunHint: "Ohne geführten Timer: Du läufst frei und trägst danach Minuten, Strecke und Anstrengung ein.",
+      freeRunLog: "Lauf eintragen",
+      freeRunTitle: "Freier Lauf",
+      freeRunKm: "Strecke in km (optional)",
+      freeRunNeed: "Bitte Dauer (1–300 Minuten) und Anstrengung angeben; die Strecke nur als Zahl größer als 0.",
+      replanned: "Offene Einheiten dieser Woche wurden angepasst.",
       lang: "Sprache",
       discipline: "Disziplin",
       disc: {
@@ -1097,6 +1110,9 @@
       noLowNote: (d) =>
         `Wegen deiner Einschränkung (Knie/Sprunggelenk) sind ${d === "k1" ? "Low Kicks und Knie" : "Low Kicks"} heute nicht eingeplant. Ändern kannst du das unter Profil → Einschränkungen.`,
       deloadNote: "Entlastungswoche: Runden und Sätze reduziert.",
+      regionNames: { legs: "Beinarbeit", arms: "Schultern und Arme", core: "Rumpf", endu: "Ausdauer" },
+      lightNote: (r, club) =>
+        `Gestern viel ${r.map((k) => L.de.regionNames[k]).join(" und ")} (${club ? "Verein, hart" : "hartes Training"}) – heute etwas leichter und weniger Übungen dafür.`,
       holdNote: "je 60–90 s, ruhig atmen",
       weekday: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
       cats: {
@@ -1182,9 +1198,10 @@
         sub: "The changes of the last big update",
         h: "What's new",
         pts: [
-          "<b>New in the guide:</b> 10 topics to read – from a myth check and the WAKO disciplines to tournament day. Find them under Profile → Guide.",
-          "<b>Better voice:</b> Ringzeit now automatically uses the best installed voice. How to download an even better one is under Profile → App & data.",
-          "<b>Tournament and session:</b> before a tournament with a weight class you log your weight once a week right on Today. And changed session settings now highlight Rebuild.",
+          "<b>Sport per session:</b> under “Adjust session” and for club training you see the sport. The default is your main sport (Profile → Training → More). More sports come later.",
+          "<b>Free run:</b> for outdoor conditioning there is now “Free run” next to intervals and zone 2–3 run – no timer. Afterwards you enter minutes, distance and effort.",
+          "<b>Edit entries:</b> in History and for club training you can edit entries. If that changes your weekly load, only sessions not begun yet are adjusted – training days stay.",
+          "<b>Total load:</b> if yesterday was hard in one area (e.g. club sparring for the legs), today's session is a little easier. Full contact and K1 are no longer tied to the level – only to age.",
         ],
         ok: "Got it",
       },
@@ -1874,6 +1891,8 @@
       simBeg: " As a beginner: as shadow or bag sparring.",
       deloadAcwr:
         "Your total load from your own training and the club rose sharply last week. This week is automatically lighter.",
+      deloadProj:
+        "What has happened this week and what is still planned (own training and club) adds up to clearly more than usual. The sessions still open are lighter.",
       dataSec: "Data & sharing",
       exp: "Save backup",
       imp: "Load backup",
@@ -2023,7 +2042,7 @@
       },
       suppEq: "Equipment for the extra block",
       runQ: "Session type",
-      runOpt: { iv: "Intervals", run: "Zone 2–3 run" },
+      runOpt: { iv: "Intervals", run: "Zone 2–3 run", free: "Free run" },
       runLock: "Running isn't available because of your limitation (knee/ankle).",
       run: "Run",
       z2: "Zone 2 – easy",
@@ -2100,6 +2119,16 @@
       emptyW: "No weight logged yet.",
       history: "Recent sessions",
       del: "Delete",
+      edit: "Edit",
+      sportL: "Sport",
+      sportMain: "Main sport",
+      sportNames: { kickboxing: "Kickboxing", boxing: "Boxing", taekwondo: "Taekwondo" },
+      freeRunHint: "No guided timer: you run freely and enter minutes, distance and effort afterwards.",
+      freeRunLog: "Log run",
+      freeRunTitle: "Free run",
+      freeRunKm: "Distance in km (optional)",
+      freeRunNeed: "Please enter the duration (1–300 minutes) and the effort; distance only as a number above 0.",
+      replanned: "Open sessions of this week were adjusted.",
       lang: "Language",
       discipline: "Discipline",
       disc: {
@@ -2198,6 +2227,9 @@
       noLowNote: (d) =>
         `Because of your limitation (knee/ankle), ${d === "k1" ? "low kicks and knees are" : "low kicks are"} left out today. Change this under Profile → Limitations.`,
       deloadNote: "Deload week: rounds and sets reduced.",
+      regionNames: { legs: "leg work", arms: "shoulders and arms", core: "core", endu: "endurance" },
+      lightNote: (r, club) =>
+        `A lot of ${r.map((k) => L.en.regionNames[k]).join(" and ")} yesterday (${club ? "club, hard" : "hard training"}) – a little easier today with fewer exercises for it.`,
       holdNote: "60–90 s each, breathe slowly",
       weekday: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       cats: {

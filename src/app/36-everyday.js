@@ -78,6 +78,7 @@
         S.sessions[d] = buildSession(d, sess.type, sess.loc, sess.eq, {
           min: sess.min,
           run: sess.run,
+          sport: sess.sport,
         });
         clearSessionTimer();
       }

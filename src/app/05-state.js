@@ -1,6 +1,7 @@
   /* ============ State ============ */
   const DEFAULT_PROFILE = {
     lang: "de",
+    sport: "kickboxing",
     disc: "lc",
     focus: "bal",
     level: 0,
@@ -22,6 +23,7 @@
    * S.ko:     date of the last KO / stoppage by head blows ("" = none)
    */
   let S = {
+    v: 2,
     profile: { ...DEFAULT_PROFILE },
     sessions: {},
     log: [],
