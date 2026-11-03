@@ -2489,3 +2489,14 @@ test("3-D A10: explosive sets without weights use explosive exercises; slow word
   const withW = pick("gym", ["weights", "bb"]);
   assert.ok(withW.every((r) => r.cats.every((c) => c === "str")));
 });
+
+test("session setup: with 'Freier Lauf' only that option is pressed (not 'Intervalle' as well)", () => {
+  const a = app();
+  const pressed = (run) => {
+    const html = a.run(`setupFields({ds:'x',type:'K',loc:'out',eq:[],run:${JSON.stringify(run)},sport:'kickboxing',min:60},'K')`);
+    return ["iv", "run", "free"].filter((k) => new RegExp(`data-run="${k}" aria-pressed="true"`).test(html));
+  };
+  assert.deepEqual(pressed("free"), ["free"]);
+  assert.deepEqual(pressed(true), ["run"]);
+  assert.deepEqual(pressed(false), ["iv"]);
+});
