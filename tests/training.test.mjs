@@ -2677,9 +2677,8 @@ test("4a-U: evasion rounds always name the defence and leave the opponent open; 
   assert.match(h, /Meiden &amp; Kontern|Meiden & Kontern/);
   assert.match(h, /class="dfn"/);
   assert.ok(!/class="pg b"/.test(h.slice(h.indexOf("Meiden &"), h.indexOf("Meiden &") + 700)), "no B frame in the evasion round");
-  assert.match(h, /Boxeinheit nach DBV-Regeln/);
+  assert.ok(!/Boxeinheit nach DBV-Regeln/.test(h), "the rule link sits in the Today footer only");
   assert.doesNotMatch(h, /Entwicklungsvorschau/, "no preview note after the release");
-  assert.match(h, /boxverband\.de/);
 });
 
 test("4a-U fix: no kick exercise (Kick-Intervalle, Kick-Halten, …) in any boxing block – all types, levels, equipment", () => {
@@ -3191,4 +3190,25 @@ test("6b: Mobility uses the brought resistance bands (any sport)", () => {
     for (let i = 0; i < 6; i++) if (/band/i.test(a.run(`JSON.stringify(buildSession('2026-11-03','M','home',['bands'],{sport:'${sport}'}))`))) hit++;
     assert.ok(hit >= 1, sport + " ignores bands");
   }
+});
+test("6b: boxing has no belt exam entry under tournaments; kickboxing and taekwondo keep it", async () => {
+  const a = app();
+  a.run("S.profile.sport='boxing';draft=null;ui.tab='profile';ui.profSec='goals';ui.csport=null;ui.ckind='grade';");
+  assert.ok(!/data-ckind/.test(a.run("renderProfile()")), "boxing shows no kind switch");
+  a.run("S.profile.sport='taekwondo';ui.csport=null;");
+  assert.ok(/data-ckind/.test(a.run("renderProfile()")), "taekwondo keeps it");
+});
+test("6b: the Today footer links the rule book of the main sport's federation", () => {
+  const a = app();
+  const foot = () => a.run("rulesLink()");
+  a.run("S.profile.sport='kickboxing';");
+  assert.match(foot(), /wako-deutschland\.de/);
+  a.run("S.profile.sport='boxing';");
+  assert.match(foot(), /boxverband\.de[^"]*WKB/);
+  assert.match(foot(), /DBV/);
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';");
+  assert.match(foot(), /dtu\.de/);
+  a.run("S.profile.tkd.style='itf';");
+  assert.match(foot(), /itf-d\.de/);
+  assert.ok(!/wako/i.test(foot()));
 });
