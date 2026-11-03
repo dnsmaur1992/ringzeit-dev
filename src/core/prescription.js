@@ -61,6 +61,11 @@ export const RX = {
   shintap: { k: "hold", s: 60, sides: 2, unit: "leg", nochoice: true },
   neck: { k: "dirs", n: 4, s: 10, names: [["Stirn", "Hinterkopf", "links", "rechts"], ["forehead", "back of head", "left", "right"]] },
   fFinger: { k: "grip", n: 10, s: 3, rounds: 2 },
+  /* taekwondo hardening (6b): hand edge, fingertips, foot (docs/taekwondo-concept.md T10) */
+  tkEdge: { k: "sidedsets", n: 3, s: 30, unit: "hand" },
+  tkTips: { k: "sets", n: 3, s: 10 },
+  tkFoot: { k: "hold", s: 60, sides: 2, unit: "leg", nochoice: true },
+  tkBall: { k: "sidedsets", n: 3, s: 20, unit: "leg" },
 };
 /* variants for full-contact adults (the harder dose of a hardening item): only what differs from RX[id] */
 export const RX_HARD = {
