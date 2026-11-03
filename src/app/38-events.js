@@ -568,6 +568,8 @@
     }
     if (ds.usport) {
       ui.setup.sport = ds.usport;
+      // taekwondo has no technique/fight/partner units yet (6b/6c): only strength, conditioning, mobility
+      if (ds.usport === "taekwondo" && !["S", "K", "M"].includes(ui.setup.type)) ui.setup.type = "S";
       render();
       return;
     }

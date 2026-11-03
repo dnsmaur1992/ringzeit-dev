@@ -7,14 +7,14 @@
     }
     if (ui.onb.ack) {
       const A = t("ack");
-      el.innerHTML = `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair("box", 14, outfitFor(ui.onb.sport || mainSport(), ui.onb))}</svg><h1>${A.h}</h1><ul class="ackl">${A.pts.map((x) => `<li>${x}</li>`).join("")}</ul><div class="sub">${A.priv}</div><div class="acts"><button type="button" class="btn" data-onb="ack">${A.ok}</button></div>`;
+      el.innerHTML = `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center;flex-shrink:0" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair("box", 14, outfitFor(ui.onb.sport || mainSport(), ui.onb))}</svg><h1>${A.h}</h1><ul class="ackl">${A.pts.map((x) => `<li>${x}</li>`).join("")}</ul><div class="sub">${A.priv}</div><div class="acts"><button type="button" class="btn" data-onb="ack">${A.ok}</button></div>`;
       el.hidden = false;
       return;
     }
     const o = ui.onb,
       step = o.step;
     let h = `<button type="button" class="btn ghost skip" data-onb="skip">${t("onbSkip")}</button><div class="dots">${[0, 1, 2, 3, 4].map((i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}</div>${step === 0 ? installHtml(true) : ""}`;
-    h += `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair((o.sport || mainSport()) === "taekwondo" ? "kick" : step === 1 || step === 3 ? "box" : "kick", 14, outfitFor(o.sport || mainSport(), o))}</svg>`;
+    h += `<svg viewBox="0 0 400 220" style="width:100%;max-width:420px;height:auto;align-self:center;flex-shrink:0" aria-hidden="true"><ellipse cx="200" cy="208" rx="150" ry="10" fill="#C9A86A" opacity=".18"/>${fightPair((o.sport || mainSport()) === "boxing" ? "box" : (o.sport || mainSport()) === "taekwondo" ? "kick" : step === 1 || step === 3 ? "box" : "kick", 14, outfitFor(o.sport || mainSport(), o))}</svg>`;
     if (step === 0) {
       const osp = o.sport || mainSport();
       if (sportChoices().length > 1)

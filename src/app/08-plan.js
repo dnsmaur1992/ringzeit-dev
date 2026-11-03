@@ -1542,6 +1542,8 @@
   }
   function buildSessionCore(dateStr, type, loc, eqIn, opts = {}) {
     loadCache = {};
+    // taekwondo: technique, fight and partner units come with the plans of 6b/6c – until then only the sport-neutral types
+    if (isTkd() && ["T", "C", "P"].includes(type)) type = "S";
     // the fitness gym only exists for strength and conditioning; it brings its standard equipment along
     if (loc === "studio" && type !== "S" && type !== "K") loc = "gym";
     const studio = loc === "studio",
