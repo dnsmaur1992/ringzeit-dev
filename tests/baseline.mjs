@@ -200,6 +200,10 @@ function snapshot() {
           }));
           const copy = JSON.parse(JSON.stringify(s));
           delete copy.created;
+          // 3-U: every built session now carries its sport and a random id (documented, intentional); the sport must be the default
+          if (copy.sport !== "kickboxing" || !copy.id) throw new Error("session without sport/id");
+          delete copy.sport;
+          delete copy.id;
           return { session: copy, items };
         })()`);
         r.sessions[`${ty}-${loc}${opts.run ? "-run" : ""}`] = sess;

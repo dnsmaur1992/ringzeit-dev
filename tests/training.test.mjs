@@ -2225,3 +2225,128 @@ test("announcer: no voice list yet -> language only; a failing voice is retried 
   assert.equal(Array.from(a.run("__spoken")).length, 1);
   assert.equal(a.run("speechFail"), null);
 });
+
+/* ---------- 3-U: shared history, sport per unit, free run, correction and deletion ---------- */
+const prior = (a) =>
+  a.run(`(()=>{S.profile.planStart='';for (const m of ['2026-10-05','2026-10-12','2026-10-19','2026-10-26']) for (const k of [0,2,4]) S.log.push({id:'p'+m+k,date:iso(addDays(parse(m),k)),src:'own',type:'T',sport:'kickboxing',minutes:75,rpe:6,tHi:7});loadCache={};})()`);
+
+test("3-U case 1: hard club sparring the day before → the next day is built lighter, with a one-sentence reason", () => {
+  const a = app();
+  const base = a.run("rpeRange('T','2026-11-03').hi");
+  assert.equal(a.run("buildSession('2026-11-03','T','gym',[]).notes.some(n=>/Gestern viel/.test(n))"), false);
+  a.run("S.log.push({id:'e1',date:'2026-11-02',src:'club',type:'V',ck:'P',minutes:90,rpe:9});loadCache={};");
+  assert.equal(a.run("rpeRange('T','2026-11-03').hi"), base - 1);
+  assert.match(a.run("buildSession('2026-11-03','T','gym',[]).notes.join('|')"), /Gestern viel Beinarbeit und Schultern und Arme \(Verein, hart\)/);
+  assert.equal(a.run("rpeRange('T','2026-11-04').hi"), base, "only the day after");
+  assert.equal(a.run("buildSession('2026-11-03','M','home',[]).notes.some(n=>/Gestern viel/.test(n))"), false, "mobility stays as it is");
+});
+
+test("3-U: every built session and every entry carries its sport; a unit can be set to another sport; old entries are kickboxing", async () => {
+  const a = app();
+  a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+  assert.equal(a.run("S.sessions[ui.sel].sport"), "kickboxing");
+  assert.match(a.run("S.sessions[ui.sel].id"), /^s/);
+  assert.match(a.run("renderSession()"), /data-usport="kickboxing"/, "the sport row is shown, with the one finished sport");
+  assert.equal(a.run("sportChoices().join()"), "kickboxing");
+  await a.click({ dataset: { usport: "boxing" } });
+  assert.equal(a.run("ui.setup.sport"), "boxing");
+  assert.equal(a.run("setupDirty(ui.sel)"), true, "the change is flagged until rebuilt");
+  assert.equal(a.run("entrySport({date:'2026-10-01',minutes:60,rpe:5})"), "kickboxing");
+  a.run("S.profile.sport='boxing';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',[]);");
+  assert.equal(a.run("S.sessions[ui.sel].sport"), "boxing", "default = main sport");
+  assert.equal(a.run("S.sessions[ui.sel] && planContext(ui.sel).sport.id"), "kickboxing", "unfinished sport falls back to the finished module");
+});
+
+test("3-U cases 5–7: a corrected or deleted entry rebuilds only sessions that have not begun; days and types stay", async () => {
+  const a = app();
+  prior(a);
+  a.run("const w=iso(addDays(monday(today()),2)),f=iso(addDays(monday(today()),4));S.sessions[w]=buildSession(w,'T','gym',[]);S.sessions[f]=buildSession(f,'T','gym',[]);S.sessions[f].flow={block:0,step:0};");
+  const before = a.run("JSON.stringify([0,2,4].map(i=>planOn(iso(addDays(monday(today()),i)))))");
+  a.run("changeLog(()=>S.log.push({id:'big',date:'2026-11-02',src:'own',type:'T',sport:'kickboxing',minutes:120,rpe:10,tHi:7}))");
+  assert.equal(a.run("weekLoad('2026-11-04').deload"), true);
+  assert.equal(a.run("weekLoad('2026-11-04').why"), "proj");
+  assert.equal(a.run("!!S.sessions['2026-11-04']"), false, "not begun → dropped, rebuilt on demand");
+  assert.equal(a.run("!!S.sessions['2026-11-06']"), true, "begun → kept");
+  assert.equal(a.run("JSON.stringify([0,2,4].map(i=>planOn(iso(addDays(monday(today()),i)))))"), before, "days and types unchanged");
+  // correction 120 min × 10 → 75 min × 6 through the edit sheet
+  a.run("S.sessions['2026-11-04']=buildSession('2026-11-04','T','gym',[]);");
+  await a.click({ dataset: { edit: "big" } });
+  assert.equal(a.run("ui.sheet.kind"), "edit");
+  a.node("scMin").value = "75";
+  a.node("scRpe").value = "6";
+  a.node("scNote").value = "";
+  await a.click({ dataset: { sx: "editsave" } });
+  assert.equal(a.run("S.log.find(e=>e.id==='big').rpe"), 6);
+  assert.ok(a.run("!!S.log.find(e=>e.id==='big').edited"));
+  assert.equal(a.run("weekLoad('2026-11-04').deload"), false, "load sank → no lighter week");
+  assert.equal(a.run("!!S.sessions['2026-11-04']"), false, "the open session is rebuilt with the new state");
+  // deletion: week load drops, recomputed the same way
+  a.run("changeLog(()=>S.log.push({id:'big2',date:'2026-11-03',src:'own',type:'T',minutes:120,rpe:10,tHi:7}));S.sessions['2026-11-04']=buildSession('2026-11-04','T','gym',[]);");
+  assert.equal(a.run("weekLoad('2026-11-04').deload"), true);
+  await a.click({ dataset: { del: "big2" } });
+  assert.equal(a.run("S.log.some(e=>e.id==='big2')"), false);
+  assert.equal(a.run("weekLoad('2026-11-04').deload"), false);
+  assert.equal(a.run("!!S.sessions['2026-11-04']"), false);
+  assert.equal(a.run("S.log.find(e=>e.id==='big').minutes"), 75, "other entries unchanged");
+});
+
+test("3-U case 12: free run – no timer, minutes + km + effort; load 240, pace 5:20 /km, distance without effect on the load", async () => {
+  const a = app();
+  a.run("ui.sel=iso(today());ui.tab='session';ui.setup={ds:ui.sel,type:'K',loc:'out',eq:[],run:'free',sport:'kickboxing',min:60};");
+  assert.match(a.run("setupFields(ui.setup,'K')"), /data-run="free" aria-pressed="true"/);
+  assert.match(a.run("renderSession()"), /Lauf eintragen/);
+  await a.click({ id: "buildSess", dataset: {} });
+  assert.equal(a.run("ui.sheet.kind"), "freerun");
+  assert.equal(a.run("S.sessions[ui.sel]"), undefined, "no guided session is built");
+  // nothing preselected: saving without effort is refused
+  a.node("scMin").value = "40";
+  a.node("scKm").value = "7,5";
+  a.node("scRpe").value = "";
+  a.node("scNote").value = "";
+  await a.click({ dataset: { sx: "freerunsave" } });
+  assert.equal(a.run("S.log.length"), 0);
+  assert.ok(a.run("ui.sheet.err"));
+  a.node("scRpe").value = "6";
+  await a.click({ dataset: { sx: "freerunsave" } });
+  const e = JSON.parse(a.run("JSON.stringify(S.log[0])"));
+  assert.deepEqual([e.type, e.run, e.minutes, e.km, e.rpe, e.sport, e.src], ["K", "free", 40, 7.5, 6, "kickboxing", "own"]);
+  assert.equal(a.run("entryLoad(S.log[0])"), 240);
+  assert.equal(a.run("runInfo(S.log[0])"), " · 7,5 km · 5:20 /km");
+  assert.equal(a.run("doneOn(ui.sel)"), true, "counts as the own conditioning unit of the day");
+  assert.match(a.run("renderSession()"), /7,5 km · 5:20 \/km/);
+});
+
+test("3-U case 8: a tournament of another sport drives the phases; a belt exam only acts on its own sport", () => {
+  const a = app();
+  a.run("S.profile.comps=[{id:'c1',kind:'comp',sport:'boxing',date:iso(addDays(today(),20))}];");
+  assert.equal(a.run("phaseInfo().phase"), "peak");
+  assert.equal(a.run("phaseInfo().official"), false, "no kickboxing format is applied to a sport without module");
+  a.run("S.profile.comps=[{id:'g1',kind:'grade',sport:'boxing',date:iso(addDays(today(),10))}];");
+  assert.equal(a.run("phaseInfo().phase"), "base", "exam of another sport: no effect");
+  a.run("S.profile.comps=[{id:'g2',kind:'grade',date:iso(addDays(today(),10))}];");
+  assert.equal(a.run("phaseInfo().phase"), "grade", "no sport = kickboxing");
+});
+
+test("3-U case 10: full contact / K1 are not tied to the level any more; the age limit stays", () => {
+  const a = app();
+  a.run("S.profile.level=0;S.profile.birthYear=2001;draft=null;ui.profSec='train';");
+  let h = a.run("renderProfile()");
+  assert.doesNotMatch(h, /data-lock="disc"/);
+  assert.match(h, /data-p="disc" data-v="fc"/);
+  a.run("S.profile.birthYear=2012;draft=null;ui.profSec='train';");
+  h = a.run("renderProfile()");
+  assert.match(h, /data-lock="age"/);
+  assert.doesNotMatch(h, /data-p="disc" data-v="fc"/);
+});
+
+test("3-U case 11: a backup round trip restores exactly the exported state – no duplicates, no marker leftovers", () => {
+  const a = app();
+  prior(a);
+  const snap = a.run("JSON.stringify(S)");
+  a.run("changeLog(()=>{S.log.find(e=>e.id.startsWith('p2026-10-05'))?.rpe; S.log[0].rpe=9;S.log[0].edited='x'})");
+  a.run(`S=hydrate(JSON.parse(${JSON.stringify(snap)}));`);
+  assert.equal(a.run("S.log.length"), 12);
+  assert.equal(a.run("S.log[0].rpe"), 6);
+  assert.equal(a.run("S.v"), 2);
+  assert.equal(a.run("new Set(S.log.map(e=>e.id)).size"), 12);
+});
