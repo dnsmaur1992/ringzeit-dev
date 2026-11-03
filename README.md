@@ -121,7 +121,7 @@
 - **Turnier-Packliste** zum Abhaken, eine Woche vor dem Wettkampf
 - Automatische **Entlastungswochen** und Pausen bei Krankheit, Verletzung oder Urlaub
 - **Gesamtbelastung** aus eigenem Training und Verein (Minuten × Anstrengung, alle Sportarten gemeinsam): Eine zu hohe Woche macht die noch nicht begonnenen Einheiten leichter – Trainingstage bleiben; war der Vortag in einem Bereich hart (z. B. Vereins-Sparring → Beine), ist die Einheit heute etwas leichter
-- **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; zurzeit gibt es nur Kickboxen
+- **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; zurzeit gibt es nur Kickboxen; **Boxen** (DBV) gibt es als Entwicklungsvorschau, nur wählbar je Einheit: Schläge ohne Kicks, Altersklassen und Rundenlängen nach DBV-WKB (ohne Geburtsjahr: Erwachsene), Beinarbeit- und Meiden-Runden, Aufgabensparring (höchstens eine Runde Touch-Sparring nach Absprache mit dem Trainer), Block „Handgelenk & Griff“ statt Abhärtung, K.o.-Sperre 30 Tage
 - **Freier Lauf** (Kondition draußen): ohne Timer, danach Minuten, Strecke und Anstrengung eintragen
 - **Text und Timer aus einer Quelle:** Dosierung, Timerphasen und Zeitangaben stammen aus derselben strukturierten Verordnung – was dort steht, läuft der Timer (Seil-Intervalle im 30-s-Wechsel, Kick-Halten ca. 4–5 Min., Einbeinstand links dann rechts, Abhärtung für Full Contact mit passenden Durchgängen)
 - **Einträge bearbeiten und löschen:** die Wochenbelastung und die noch nicht begonnenen Einheiten werden neu berechnet
@@ -249,7 +249,7 @@ ringzeit-dev/
 │   ├── modules.js         Einstieg der gemeinsamen Module (Build: ein Bündel „RZ“)
 │   ├── core/              Gemeinsame Dienste: Format, Datum, Zufall, Speicher
 │   ├── catalog/           Übungskatalog
-│   ├── sports/            Sportarten (bisher: kickboxing) und Register
+│   ├── sports/            Sportarten (kickboxing; boxing als Entwicklungsvorschau) und Register
 │   └── app/               Übrige App in geordneten Teilen 00–39 (Ansichten, Planung, Timer, Ratgeber …)
 ├── tools/build_pwa.py     Setzt den Quellcode zusammen und baut index.html, sw.js, manifest
 ├── package.json           Build-/Testwerkzeug (esbuild)
