@@ -131,7 +131,7 @@ RuleProfile      { publisher, title, version, validFrom, scope, format(age, ageC
                    allowedTechniques, ageClasses }
 ```
 Fachliche Erfahrung/Grade bleiben je Sport bzw. Style im Profil (`profile.sports[sport] = { level, discipline, grades }`),
-Belastung und vergleichbare Fitnesstests gemeinsam (konkretes Schema: 3-Q).
+Belastung und vergleichbare Fitnesstests gemeinsam (konkretes Schema: `docs/data-load-concept.md` Abschnitt 3).
 
 ### 6.3 Übungen, stabile IDs und Dosierung (Umsetzung 3-D)
 ```
@@ -148,12 +148,13 @@ Prescription       { sets?, reps?|[lo,hi], workSec?|[lo,hi], restSec?, betweenSe
 - Schlüssel ist die ID, nie der Anzeigename – Umbenennen/Übersetzen (auch koreanisch) ändert keine Dosierung.
 
 ### 6.4 Historie und Belastung (Umsetzung 3-Q/3-U)
-Ein gemeinsames Log für alle Sportarten; jede absolvierte Einheit genau einmal:
-`TrainingEntry { id, date, src: "own"|"club"|"other", sport?, style?, discipline?, type, minutes (Ist), rpe|null,
-inputConfirmed, completed, openExercises, perf, progression }`.
-Belastung = Minuten × RPE wie heute (Session-RPE), über alle Quellen; fehlende Werte bleiben fehlend und werden
-benannt, nicht geschätzt. Überschneidungen (Beine/Tritte, Schulter, Kraft, Intervalle, Beweglichkeit) und
-Planaktualisierung legt 3-Q fest. Einträge ohne `sport` gelten als Kickboxen (betrifft nur eigene Dev-Daten).
+Ein gemeinsames Log für alle Sportarten; jede absolvierte Einheit genau einmal. **Konkretisiert in 3-Q:
+`docs/data-load-concept.md`** (Schema, Belastungs- und Bereichsmodell, Wochenvorlage, Korrektur/Löschung, Fitnesstest
+und Level je Sportart, Dosierungsvertrag, Abweichungsliste, Akzeptanzfälle). Kurzfassung:
+`LogEntry { id, date, src: "own"|"club", sport, style?, type, minutes, rpe, sid?, km?, perf?, … }` – keine Eintragsart
+„sonstige Aktivität“ (Entscheidung E4, stattdessen „Freier Lauf“). Belastung = Minuten × RPE (Session-RPE) über alle
+Quellen und Sportarten; Dauer und Anstrengung sind Pflicht (E5), Altdaten ohne Wert zählen nicht und werden benannt.
+Einträge ohne `sport` gelten als Kickboxen (betrifft nur eigene Dev-Daten).
 
 ## 7. Umfang Schritt 2
 
@@ -213,6 +214,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `tools/build_pwa.py` | Build: `build/ringzeit.html` (lesbar), `pwa/index.html` (komprimiert), `pwa/sw.js`, `pwa/manifest.webmanifest`; `--readable` baut nur die lesbare Fassung |
 | `index.html`, `sw.js`, `manifest.webmanifest` | generiert, veröffentlicht (Kopie aus `pwa/`) – nicht von Hand ändern |
 | `installieren.html` | Installationsseite, QR-Code auf die Dev-Adresse |
+| `docs/data-load-concept.md` | Daten-/Belastungskonzept (3-Q): Schema, Belastungsvertrag, Dosierungsvertrag, Abweichungen, Akzeptanzfälle |
+| `docs/rules-sources.md` | Regel- und Trainingsquellen (Herausgeber, Fassung, Geltungsbereich) |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
 | `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen) – 113 Tests |
 | `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen) – 9 Tests |

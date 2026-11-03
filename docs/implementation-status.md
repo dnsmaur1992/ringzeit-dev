@@ -15,6 +15,7 @@
 | W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
 | W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
 | W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
+| W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | GESICHTET, alle Entscheidungen eingearbeitet – Abnahme offen |
 
 ## Entscheidungen
 
@@ -26,6 +27,8 @@
 - 03.11.2026, Schritt 1: Satzpause, die beim Vor-/Zurückblättern verworfen wird, bleibt in Schritt 2 unverändert; mögliche Korrektur in 2-B (umgesetzt, siehe unten).
 - 03.11.2026, Schritt 2: `RT`, `okEx`/`pickEx` bleiben vorerst in `app/08-plan.js` (mit Planlogik bzw. Profilgrenzen verwoben); Umzug, wenn 3-U/4a sie ohnehin anpassen.
 - 03.11.2026, 2-B (Betreiber: „Android, Deutsch, mehr weiß ich nicht“; übrige Vorschläge unwidersprochen übernommen): Wiederaufnahme mit Dialog (immer, bei Stand älter als 24 h mit Zusatzzeile), Timer pausiert, nichts wird automatisch verbucht; paginierte Satzpause bleibt erhalten, wenn man zur selben Übung zurückkommt; Nackenübung überall „Isometrische Nackenkräftigung – Halteübung“, Dosierung unverändert 4 × 10 s (Text an den Timer angepasst, keine Mehrbelastung – der Full-Contact-Text „15 s, 2 Durchgänge“ entfällt).
+- 03.11.2026, 3-Q (Betreiber): E1 Sportart je Einheit = Hauptsport aus Inbetriebnahme, je Einheit umstellbar (eigene und Verein); E2 Wochenstruktur bleibt, Inhalt aus gewählter Sportart; E3 Turniere/Prüfungen mit Sportart, Turniere jeder Sportart steuern die Belastungsphasen, Gürtelprüfung nur ihr Sport; E4 keine „sonstigen Aktivitäten“, dafür „Freier Lauf“ (Minuten, km, Anstrengung); E5 Dauer und Anstrengung Pflicht, keine Vorauswahl; E6 jede Woche startet mit fester Vorlage, Nicht-Begonnenes verfällt, Ergebnisse steuern Umfang/Intensität auch unbegonnener Einheiten der laufenden Woche, nicht die Tage; E7 Mittelweg: Fitnesstest löst Level aus, Technikteil je Sportart, Level je Sportart, Wettkampfklasse frei wählbar (FC/K1-Fitnesssperre entfällt). Details: `docs/data-load-concept.md`.
+- 03.11.2026, 3-Q-Sichtung: Schutzregeln (Art-Tausch bei KO/Vereins-Sparring/stressiger Woche/Ramadan) bleiben; A1–A4, A8, A9, A11 wie vorgeschlagen; A5 ein Satz = erst links, dann rechts; A6 Nackenprogression bleibt, Text „je Richtung“ + Skizze mit vier Richtungen; A7 Kick-Halten-Timer auf ca. 4 Min.; A10 explosiv bleibt explosiv, langsam bleibt langsam; A12 Satzzahl gilt (3 × 4 Sprints).
 - 03.11.2026, Schritt 1: Vergleichsbasis um vier Profile (Schulter/Rücken, wenig Zeit, 5 Tage, Gürtelprüfung) und zwei Abläufe „Navigieren während des Trainings und Fortsetzen“ erweitert.
 
 ## Prüfungen
@@ -61,11 +64,10 @@ Manuelle Abnahmen:
 ## Offen
 
 - Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
-- `docs/rules-sources.md` entsteht mit den ersten Quellen (spätestens 4a-Q).
-
+- `docs/rules-sources.md` angelegt (3-Q): Trainingsquellen T1/T2 für das Belastungsmodell; Verbandsregeln folgen in 4a-Q/5, WAKO-Fassung weiter unbelegt.
 - Android-Sprachausgabe: Ursache nicht belegt. Für gezielte Behebung werden Gerät, Android-Version, Browser/installierte App und die Fehlermeldung unter „Stimme der Ansagen“ benötigt.
-- `docs/todo-bedienung-akku.md`: alle Punkte außer der Tonprüfung auf Android erledigt; die Tonprüfung steht jetzt hier. Datei kann entfernt werden.
+- Android-Tonprüfung aus der früheren `docs/todo-bedienung-akku.md` (entfernt) steht jetzt hier.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Abnahme von 2-B: Wochenpaket 3/8, Teil 3-Q (Quellen und Regelstand Kickboxen/Belastungsmodell; Modell laut Plan Opus).
+Nach Sichtung von 3-Q: Teil 3-U – gemeinsame Historie, Belastung und Auswahl (Modell laut Plan Sonnet).
