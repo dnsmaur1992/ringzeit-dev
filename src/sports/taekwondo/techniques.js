@@ -142,6 +142,10 @@ export const COMBOS = [
     ["stepf", "sr1"],
     ["sr5", "nae"],
     ["stepf", "swch", "dol"],
+    // 7h: spinning hook and jump kicks in chains (released by level 1 or the grade; never under 19, not with a knee limit)
+    ["dol", "dol", "dhu"],
+    ["ap", "dol", "ttdol"],
+    ["yeop", "dol", "dhu"],
   ],
   [
     ["dol", "dolh", "dwi"],
@@ -159,6 +163,9 @@ export const COMBOS = [
     ["turn", "dol", "dolh", "dwi", "dol"],
     ["stepf", "ap", "dol", "dolh", "dwi", "dolh"],
     ["sr1", "sr5", "dolh"],
+    // 7h: long chains with spinning hook and jump kicks
+    ["dol", "dolh", "dhu", "dol"],
+    ["ap", "dol", "ttdol", "dolh"],
   ],
 ];
 /** number of kicks in a combo (a series counts its parts, steps and punches do not) */
