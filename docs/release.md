@@ -36,9 +36,10 @@ bisherige Nutzer sieht es nach dem Update genau einmal.
 3. **Den Inhalt** des entpackten Ordners hineinziehen, also die Ordner `src`, `docs`, `tests`, `tools` und alle Dateien
    der obersten Ebene, nicht den Ordner selbst. GitHub behält die Unterordner bei.
 4. Unten „Commit changes“. Vorhandene Dateien werden überschrieben.
-5. **Alte Datei löschen:** `src/ringzeit.html`. Das war die frühere Ein-Datei-Quelle, die der neue Build nicht mehr
-   nutzt. Auf GitHub: Datei öffnen → **⋯ → Delete file** → Commit.
-   `docs/todo-bedienung-akku.md` gibt es nur im stabilen Repo. Die Datei stört nicht und kann bleiben.
+5. **Alte Dateien löschen.** Auf GitHub: Datei öffnen → **⋯ → Delete file** → Commit.
+   - `src/ringzeit.html`: die frühere Ein-Datei-Quelle, die der neue Build nicht mehr nutzt.
+   - In `docs/` die Bilder ohne Verweis: `heute.jpg`, `banner.jpg`, `bandagieren.jpg`, `coach.jpg`, `rundentimer.jpg`, `test.jpg`.
+   - `docs/todo-bedienung-akku.md` gibt es nur im stabilen Repo. Die Datei stört nicht und kann bleiben.
 
 ## 4. Prüfen nach dem Upload
 
