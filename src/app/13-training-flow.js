@@ -600,7 +600,7 @@ ${setupFields(setup, ty)}
     }
     if ((sess.notes && sess.notes.length) || dataLine) {
       const notes = sess.notes || [];
-      const safety = ["koNote", "koNoteBox", "koNoteTkd", "gearNote", "wrNote", "knNote"]
+      const safety = ["koNote", "koNoteBox", "koNoteTkd", "gearNote", "gearKb", "gearWt", "gearItf", "gearPartner", "boxGear", "wtSparNote", "wrNote", "knNote"]
         .flatMap((key) => [L.de[key], L.en[key]])
         .filter((x) => typeof x === "string");
       const critical = notes.filter((n) => safety.includes(n));

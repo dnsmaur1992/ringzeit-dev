@@ -1022,7 +1022,7 @@
   // round text; the heavy bag reads differently in Full Contact (impact) and Leichtkontakt (speed)
   /* taekwondo rounds carry sp: "t" and read their own texts */
   const rtOf = (it) => (it.sp === "t" && tkm().RT[it.k]) || RT[it.k];
-  const roundDesc = (it, lg) => (it.k === "bag" && it.sp !== "t" && t("bagDisc")[discOf()]) || (rtOf(it) || [])[lg + 2] || "";
+  const roundDesc = (it, lg) => (it.pow ? t("wtPow") + " " : "") + ((it.k === "bag" && it.sp !== "t" && t("bagDisc")[discOf()]) || (rtOf(it) || [])[lg + 2] || "");
   /* rough difficulty of a combo: length, kicks, head kicks and advanced techniques */
   const comboLevel = (c) =>
     c.length + 0.5 * c.filter((x) => KICKS.has(x)).length + c.filter((x) => HIGHK.has(x)).length + 1.5 * c.filter((x) => ADV.has(x)).length;
@@ -1620,6 +1620,13 @@
   }
   /* Taekwondo: one hand area (fist, hand edge, fingers) and one leg area (shin, foot), alternating from session to session;
      children and youth only the gentle solo items, taper/recovery weeks without impact (docs/taekwondo-concept.md T10, T12, T13) */
+  /* WT is fought in full contact with electronic scoring (PSS counts only hits with enough impact, docs/taekwondo-concept.md
+     2.1): adults and youth from 16, from level 1, never in taper/recovery/deload weeks (soft) get impact rounds, trunk
+     hardening and the harder hardening dose – like full contact in kickboxing (7e). Children and free sparring stay as they are. */
+  const wtFull = (soft) => {
+    const age = ageAt(today());
+    return isTkd() && tkdUnitStyle() === "wt" && !soft && (S.profile.level || 0) >= 1 && age != null && age >= 16;
+  };
   function tkdHardBlock(eq, loc, soft) {
     const p = S.profile,
       yg = young(),
@@ -1639,9 +1646,13 @@
         eqPref = g.filter((x) => x.m !== "s");
       return rnd(eqPref.length ? eqPref : g);
     };
-    const a = pick(hand),
-      b = pick(leg);
-    return { key: "hard", min: 6, items: [a, b].filter(Boolean).map((x) => ({ kind: "hard", id: x.id })) };
+    let a = pick(hand);
+    const b = pick(leg),
+      full = wtFull(soft);
+    // WT full contact: every second session the trunk instead of the hand area – at the bag the core against the bag,
+    // otherwise brace & exhale (the partner ab drill speaks of gloves and body hooks, which WT does not have)
+    if (full && !p.limits.length && Math.random() < 0.5) a = HARD.find((x) => x.id === (eq.includes("bag") && loc !== "out" ? "bodybag" : "brace"));
+    return { key: "hard", min: 6, items: [a, b].filter(Boolean).map((x) => (full && x.h ? { kind: "hard", id: x.id, h: 1 } : { kind: "hard", id: x.id })) };
   }
   /* Boxing: no hardening with hits, a fixed 6-minute block for wrists and grip instead (docs/boxing-concept.md §3.4).
      Towel and grip every time; the rest by age, level, limits and equipment; taper/recovery weeks: only the gentle ones. */
@@ -2084,7 +2095,14 @@
         main = Math.round((nR * (fw + rb)) / 60);
       }
       const sup = rest - exMin - main;
-      if (type === "P" && eq.includes("partner")) notes.push(t("gearNote"));
+      if (type === "P" && eq.includes("partner")) {
+        notes.push(t("gearNote"));
+        // what "complete protective gear" means in this sport (7e; boxing keeps its own note below)
+        if (!box) notes.push(t(isTkd() ? (tkdUnitStyle() === "itf" ? "gearItf" : "gearWt") : "gearKb"));
+        if (isTkd() && tkdUnitStyle() === "wt") notes.push(t("wtSparNote"));
+      }
+      // partner rounds in technique units: mouthguard, firm pads, guards when there is contact (7e)
+      if ((type === "T" || type === "C") && eq.includes("partner") && kAge == null) notes.push(t("gearPartner"));
       let items;
       if (type === "P" && ph.phase === "peak" && fmtR) {
         // fight simulation: two full bouts in the exact format, like two bouts on tournament day
@@ -2103,6 +2121,13 @@
       else {
         // short sessions have a short warm-up: two easy opening rounds instead of one
         items = fightRounds(type, nR, loc, eq, theme, D <= 45 ? 2 : 1);
+        // WT full contact: every second bag or pad round with impact (7e)
+        if (wtFull(soft)) {
+          let k = 0;
+          items.forEach((it) => {
+            if (!it.ease && ["bag", "partner", "pads"].includes(it.k) && k++ % 2 === 0) it.pow = 1;
+          });
+        }
         // fight-pace intervals: every round in technique & conditioning, every second round in technique
         if (fmtR && !taper) items.forEach((it, i) => (it.pace = !it.ease && (type === "C" || i % 2 === 1)));
         if (br)
