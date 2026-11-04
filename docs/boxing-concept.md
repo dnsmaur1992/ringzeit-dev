@@ -10,7 +10,7 @@ in der App nie als solche bezeichnet.
 |---|---|
 | B1 | Regeln: in der App nur ein Verweis auf die WKB-PDF (wie beim Kickboxen). Keine Handschuh-/Unzenangaben, keine Gewichtsklassentabelle. Übernommen wird nur, was der Planer braucht (Rundenformat je Altersklasse, Sperre nach Niederschlag). |
 | B2 | Partnertage = **Aufgabensparring** (A/B mit klarer Aufgabe). Dazu höchstens eine Runde **„Freies Touch-Sparring“**: frei, aber minimaler Kontakt (höchstens 30–40 % Schlaghärte), nur mit Partner und kompletter Schutzausrüstung, ab Fortgeschritten, nicht für Kinder, nicht in Taper-/Erholungswochen und nicht während einer Sperre. Hinweis bei der Runde: „Freies Sparring nur nach Absprache mit deinem Trainer und unter Aufsicht.“ Vorbild ist die bestehende Kickbox-Runde „Freies technisches Sparring“ (dort 50 %, Trainer schaut zu). |
-| B3 | **Keine Abhärtung.** Stattdessen ein fester Block **Handgelenk & Griff**. Mehr Anteil an **Beinarbeit** und **Oberkörperarbeit (Meiden mit dem Kopf)**. |
+| B3 | **Keine Abhärtung.** *(Geändert in 7b, Betreiber 04.11.2026: ab Level 1, 16 Jahren, ohne Einschränkungen und nicht in Entlastungs-/Taper-/Erholungswochen wird die zweite Hälfte des Blocks Körperabhärtung – „Handgelenk & Körperabhärtung“.)* Stattdessen ein fester Block **Handgelenk & Griff**. Mehr Anteil an **Beinarbeit** und **Oberkörperarbeit (Meiden mit dem Kopf)**. |
 | B4 | Über 40 Jahre: kein DBV-Format; Trainingsstandard **3 × 2 Min., 1 Min. Pause**, gekennzeichnet „kein offizielles DBV-Format“. |
 
 ## 2. Regelmatrix (DBV-Wettkampfbestimmungen)

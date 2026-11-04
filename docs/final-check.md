@@ -65,11 +65,13 @@ Der Betreiber hat B1–B5 und drei Schwerpunkt-Befunde freigegeben (B6–B8, sei
 
 Nach 7b: 223 Tests grün, Baseline identisch, Isolation 12/12, Ablauf-Matrix 648 Einheiten ohne Befund, H1–H9 alle OK, Ansichten/Offline/Inbetriebnahme OK.
 
+**7c-2 (nach Meldung des Betreibers):** Das ⓘ an den Übungen öffnete das Infoblatt nicht. Ursache: Die Text-ID wurde beim Klick in eine Zahl umgewandelt (Überbleibsel aus der Zeit vor 3-D). Die Ablauf-Matrix hatte das nicht erfasst, weil sie das Infoblatt nicht antippt. Behoben; ein neuer Test tippt jedes ⓘ in Kraft-, Konditions-, Technik- und Mobility-Einheiten aller Sportarten an. Jahreszeit- und Feiertagsbilder: 14 Anlässe × 3 Outfits ohne Fehler, Mützen, Teilchen und Motive bei allen Outfits.
+
 ## 3. Nur auf dem Gerät belegbar
 
 | Punkt | Stand |
 |---|---|
-| iPhone, installierte App (Home-Bildschirm) | Laut Betreiber durchgehend genutzt und bisher ohne Fehler. Die Checkliste für die Endabnahme folgt in 7c. |
+| iPhone, installierte App (Home-Bildschirm) | Laut Betreiber durchgehend genutzt und bisher ohne Fehler; 7b-Stichproben am 04.11.2026 bestanden. Checkliste: `docs/geraete-checkliste.md` (G1–G17). |
 | Android: Sprachausgabe DE/EN, Ton, Wachhalten | **nicht belegt** (kein Gerät verfügbar, Entscheidung des Betreibers 03.11.2026) |
 | Ton bei Stummschalter, Bildschirm bleibt an, Hintergrund/Neustart mitten in der Runde | nur Gerät; VM-Tests decken die Logik ab (Wiederaufnahme, Uhr, Weckfunktion) |
 | Pages-Update auf dem Gerät (neue Version beim nächsten Start) | nur Gerät; Service-Worker-Logik und Cache-Präfix automatisch geprüft |
@@ -80,6 +82,6 @@ Nach 7b: 223 Tests grün, Baseline identisch, Isolation 12/12, Ablauf-Matrix 648
 - WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen.
 - WAKO-Regelfassung für Kickboxen weiter unbelegt.
 - Ratgeber Taekwondo: Gürtelbinden, Dobok-Pflege, „Respekt vor dem Gürtel“ sind allgemeine Praxis.
-- Trainerfragen F1–F3 (siehe `docs/taekwondo-concept.md`).
+- Trainerfragen F2–F3 (F1 am 04.11.2026 mit Ja beantwortet).
 
-Die Prüfliste zum Abhaken folgt in 7c.
+Prüfliste zum Abhaken: `docs/trainer-pruefliste.md` (A1–A5, B1–B8, C1–C5). Ablösung der stabilen App: `docs/abloesung.md` (nur Doku).
