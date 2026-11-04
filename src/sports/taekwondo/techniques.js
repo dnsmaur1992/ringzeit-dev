@@ -34,8 +34,8 @@ export const STEPS = new Set(["stepf", "stepb", "steps", "turn", "swch"]);
 /* head-height kicks: only after the warm-up rounds */
 export const HEAD = new Set(["dolh", "nae", "dhu"]);
 
-/* release: lvl = minimum level (0 beginner, 1 advanced), kup = highest Kup number (worn grade must be that or higher; no
-   grade entered: only the level counts), basic = also for children under 13, risky = not with a knee or ankle limit,
+/* release: lvl = minimum level (0 beginner, 1 advanced), kup = highest Kup number (7g: level OR grade – either one is
+   enough; no grade entered: only the level counts), basic = also for children under 13, risky = not with a knee or ankle limit,
    noYoung = not under 19 for spinning back kicks (same as the kickboxing back kick). */
 const REQ = {
   ap: { basic: true },
@@ -61,11 +61,20 @@ export function allowed(id, ctx) {
   const r = REQ[id];
   if (!r) return false;
   if (ctx.kid && !r.basic) return false;
-  if ((ctx.level || 0) < (r.lvl || 0)) return false;
-  if (r.kup != null && ctx.kup != null && ctx.kup > r.kup) return false;
+  // 7g: level OR grade – with a grade entered, either the level or the Kup releases it; without a grade only the level counts
+  const lvlOk = (ctx.level || 0) >= (r.lvl || 0);
+  if (r.kup != null && ctx.kup != null) {
+    if (!lvlOk && ctx.kup > r.kup) return false;
+  } else if (!lvlOk) return false;
   if (r.noYoung && ctx.young) return false;
   if (r.risky && ctx.risky) return false;
   return true;
+}
+
+/** 7g: released only by the grade (level alone would not be enough) – the plan then also draws combos above the level pool */
+export function byGrade(id, ctx) {
+  const r = REQ[id];
+  return !!r && r.kup != null && ctx.kup != null && ctx.kup <= r.kup && (ctx.level || 0) < (r.lvl || 0) && allowed(id, ctx);
 }
 
 /* Leg (or hand) side: L = lead (vorderes Bein / vordere Hand), R = rear (hinteres), relative to the fighting stance.

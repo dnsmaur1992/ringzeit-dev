@@ -35,7 +35,7 @@ export const SIDED = new Set([...WT_SIDED, "dung"]);
 export const FIXED = { ...WT_FIXED, dung: "L" };
 export const SIDE_DEF = { ...WT_SIDE_DEF, dung: "L" };
 
-/* release: lvl = minimum level, kup = highest Kup number (grade entered), basic = also under 13, risky = not with a knee or
+/* release: lvl = minimum level, kup = highest Kup number (grade entered; 7g: level OR grade), basic = also under 13, risky = not with a knee or
    ankle limit, noYoung = not under 19 (spinning kicks). Jump kicks from the 2nd Kup (Kyok-Pa list, R4a), none for children. */
 const REQ = {
   ap: { basic: true },
@@ -62,11 +62,20 @@ export function allowed(id, ctx) {
   const r = REQ[id];
   if (!r) return false;
   if (ctx.kid && !r.basic) return false;
-  if ((ctx.level || 0) < (r.lvl || 0)) return false;
-  if (r.kup != null && ctx.kup != null && ctx.kup > r.kup) return false;
+  // 7g: level OR grade – with a grade entered, either the level or the Kup releases it; without a grade only the level counts
+  const lvlOk = (ctx.level || 0) >= (r.lvl || 0);
+  if (r.kup != null && ctx.kup != null) {
+    if (!lvlOk && ctx.kup > r.kup) return false;
+  } else if (!lvlOk) return false;
   if (r.noYoung && ctx.young) return false;
   if (r.risky && ctx.risky) return false;
   return true;
+}
+
+/** 7g: released only by the grade (level alone would not be enough) – the plan then also draws combos above the level pool */
+export function byGrade(id, ctx) {
+  const r = REQ[id];
+  return !!r && r.kup != null && ctx.kup != null && ctx.kup <= r.kup && (ctx.level || 0) < (r.lvl || 0) && allowed(id, ctx);
 }
 
 /* combo pools per level (hand-foot connections, about 40 % hand / 60 % foot); every combo is filtered through allowed() */
