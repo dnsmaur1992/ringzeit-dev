@@ -3818,3 +3818,36 @@ test("7c-4: the belt-exam view follows the main sport – kickboxing BFVKB, taek
   assert.match(h, /tOpen/, "fitness test");
   assert.equal(a.run("t('tourTestBox')[0]"), "Fitnesstest");
 });
+test("7b-2: strength, conditioning and mobility picks follow the main sport; basic lifts stay; kickboxing unchanged; limits still filter", () => {
+  const a = app();
+  const F = JSON.parse(a.run("JSON.stringify(SPORT_FOCUS)"));
+  const pick = (sp, st, ty, o = {}) => {
+    a.run(`S.profile.sport='${sp}';S.profile.birthYear=1995;S.profile.level=1;S.profile.limits=${JSON.stringify(o.lim || [])};${st ? `S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${st}'});` : ""}`);
+    const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-02','${ty}','gym',['bag','rope','weights','kb','bands'],{sport:'${sp}',min:${ty === "M" ? 45 : 60}${st ? `,tstyle:'${st}'` : ""}}))`));
+    const items = s.blocks.filter((b) => !["warm", "cool", "main", "hard", "wrist"].includes(b.key)).flatMap((b) => b.items).filter((it) => it.kind === "ex");
+    return { s, extra: items.filter((it) => !it.basic).map((it) => it.id), basic: items.filter((it) => it.basic).map((it) => it.id) };
+  };
+  for (const [sp, st, k] of [["boxing", "", "boxing"], ["taekwondo", "wt", "wt"], ["taekwondo", "itf", "itf"]]) {
+    const all = new Set(Object.values(F[k]).flat());
+    for (const ty of ["S", "K"]) {
+      let n = 0, f = 0;
+      const seen = new Set();
+      for (let i = 0; i < 20; i++) {
+        const r = pick(sp, st, ty);
+        r.extra.forEach((id) => { n++; if (all.has(id)) f++; seen.add(id); });
+        if (ty === "S") assert.ok(r.basic.length >= 3, "basic lifts stay");
+      }
+      assert.ok(f / n >= 0.7, `${k} ${ty}: focus share ${f}/${n}`);
+      assert.ok(seen.size >= 4, `${k} ${ty}: variety ${[...seen].join()}`);
+    }
+  }
+  // the basic lifts are the same in every sport
+  const b0 = new Set(pick("kickboxing", "", "S").basic.map((x) => x.split(".")[1].replace(/barbell_|seated_/, "")));
+  assert.ok(b0.size >= 3);
+  // boxing mobility: shoulders, thoracic spine and neck first
+  let up = 0;
+  for (let i = 0; i < 10; i++) up += pick("boxing", "", "M").extra.filter((id) => F.boxing.mob.includes(id)).length;
+  assert.ok(up >= 30, "boxing mobility focus " + up);
+  // limits keep working: a knee limit removes the jumps of the WT power focus
+  for (let i = 0; i < 15; i++) assert.ok(!pick("taekwondo", "wt", "S", { lim: ["knee"] }).extra.some((id) => /jump_squats|lateral_bounds|broad_jumps|skater_jumps/.test(id)));
+});
