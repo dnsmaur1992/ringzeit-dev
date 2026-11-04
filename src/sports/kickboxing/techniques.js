@@ -200,3 +200,17 @@ export const THEMES = [
     ap: (c) => [...c.filter((x) => x !== "knee"), "knee"],
   },
 ];
+
+/* 7f: kick chains – a weaker form of the taekwondo kick chains, from level 1 about every fifth combo; low = only in the
+   disciplines with leg kicks (Kick Light, K1) */
+export const KICK_CHAINS = [
+  { lvl: 1, c: ["front", "round"] },
+  { lvl: 1, c: ["round", "round"] },
+  { lvl: 1, c: ["round", "roundh"] },
+  { lvl: 1, c: ["side", "round"] },
+  { lvl: 1, c: ["front", "lowk"], low: true },
+  { lvl: 2, c: ["front", "round", "roundh"] },
+  { lvl: 2, c: ["round", "side", "roundh"] },
+  { lvl: 2, c: ["lowk", "round", "roundh"], low: true },
+  { lvl: 2, c: ["lowk", "lowk", "roundh"], low: true },
+];
