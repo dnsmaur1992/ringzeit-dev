@@ -386,11 +386,44 @@
       prev = iso(addDays(parse(ds), -1));
     return { regions, club: S.log.some((e) => e.date === prev && e.src === "club" && e.rpe >= 7) };
   }
+  /* sport focus of strength, conditioning, power and mobility picks (7b-2): preferred, never exclusive. The basic lifts
+     (strengthBasics) stay the same in every sport so that the logs stay comparable; focus blocks (score 3) and the
+     equipment at hand keep priority; limits, age and equipment still filter (okEx). Kickboxing has no list (unchanged). */
+  const SPORT_FOCUS = {
+    boxing: {
+      str: ["str.cable_woodchop", "str.pallof_press", "str.russian_twists", "str.plank_shoulder_taps", "str.band_face_pulls", "str.cable_face_pulls", "str.dead_hang", "str.neck_iso_hold", "str.hollow_hold"],
+      pow: ["pow.explosive_push_ups", "pow.clap_push_ups"],
+      cond: ["cond.shadow_sprints", "cond.bag_sprints", "cond.band_punches", "cond.speed_rounds", "cond.rope_intervals", "cond.bear_crawl"],
+      mob: ["mob.band_dislocates", "mob.open_book_rotation", "mob.worlds_greatest_stretch", "mob.neck_mobility", "mob.cat_cow"],
+    },
+    wt: {
+      str: ["str.bulgarian_split_squats", "str.single_leg_kick_hold", "str.step_ups", "str.single_leg_calf_raises", "str.copenhagen_plank", "str.hanging_knee_raises"],
+      pow: ["pow.jump_squats", "pow.lateral_bounds", "pow.broad_jumps"],
+      cond: ["cond.kick_intervals", "cond.skater_jumps", "cond.sprints", "cond.stair_or_bench_runs", "cond.rope_intervals"],
+      mob: ["mob.kick_holds", "mob.slow_motion_kicks", "mob.controlled_leg_swings", "mob.active_leg_raises"],
+    },
+    itf: {
+      str: ["str.bulgarian_split_squats", "str.single_leg_kick_hold", "str.step_ups", "str.pallof_press", "str.plank_shoulder_taps", "str.hanging_knee_raises"],
+      pow: ["pow.jump_squats", "pow.lateral_bounds", "pow.explosive_push_ups"],
+      cond: ["cond.kick_intervals", "cond.band_punches", "cond.speed_rounds", "cond.skater_jumps", "cond.sprints"],
+      mob: ["mob.frog_stretch", "mob.pigeon_stretch", "mob.90_90_hip_switches", "mob.open_book_rotation", "mob.band_dislocates"],
+    },
+  };
+  const SPORT_W = 2;
+  const sportFocus = (cat) => {
+    const sp = sportNow(),
+      k = sp === "boxing" ? "boxing" : sp === "taekwondo" ? (tkdUnitStyle() === "itf" ? "itf" : "wt") : null;
+    return k ? SPORT_FOCUS[k][cat] || null : null;
+  };
   function pickEx(cat, n, loc, eq, used, prefer) {
     let pool = shuffle(EX.filter((e) => e.cat === cat && okEx(e, loc, eq) && !used.has(e.id)));
     // regions that were hard the day before: exercises that load them come later (below every explicit preference)
     if (buildLight.length) pool.sort((a, b) => lightPenalty(a) - lightPenalty(b));
-    if (prefer) pool.sort((a, b) => prefer(b) - prefer(a));
+    // about three in four focus exercises get the bonus in each pick, so the sport shows clearly and variety stays
+    const focus = sportFocus(cat),
+      bonus = focus ? new Map(pool.map((e) => [e.id, focus.includes(e.key) && Math.random() < 0.75 ? SPORT_W : 0])) : null,
+      score = focus ? (e) => (prefer ? prefer(e) : 0) + (bonus.get(e.id) || 0) : prefer;
+    if (score) pool.sort((a, b) => score(b) - score(a));
     if (pool.length < n)
       pool = pool.concat(shuffle(EX.filter((e) => e.cat === cat && okEx(e, loc, eq) && !pool.includes(e))));
     const out = pool.slice(0, n);
