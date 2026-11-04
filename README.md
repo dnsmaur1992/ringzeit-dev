@@ -28,7 +28,7 @@
 |---|---|---|---|---|
 | **Verband / Regeln** | WAKO (WAKO Deutschland) | DBV-Wettkampfbestimmungen | World Taekwondo · DTU | ITF · ITF-D |
 | **Disziplinen / Formate** | Light Contact, Kick Light, Full Contact, K1 Style | Altersklassen und Rundenlängen nach DBV | Kampfformat nach Altersklasse (WT/DTU) | Kampfformat nach Alter (ITF) |
-| **Schwerpunkt im Plan** | Kombinationen nach Disziplin, 6-Kick-Regel im FC | **Ausdauer und Zähigkeit:** 3-Min.-Runden, Kraftausdauer, Körperabhärtung | **Beweglichkeit, Spritzigkeit, Kontrolle:** aktive Beweglichkeit in jeder Technikeinheit | **Leichtkontakt-Charakter, spektakuläre Kicks:** Hand-Fuß-Verbindungen, viele Sprung- und Drehtritte |
+| **Schwerpunkt im Plan** | Kombinationen nach Disziplin, 6-Kick-Regel im FC | **Ausdauer und Zähigkeit:** 3-Min.-Runden, Kraftausdauer, Körperabhärtung | **Vollkontakt mit Beweglichkeit, Spritzigkeit, Kontrolle:** aktive Beweglichkeit in jeder Technikeinheit, Wirkungsrunden für den PSS, Rumpf-Abhärtung | **Leichtkontakt-Charakter, spektakuläre Kicks:** Hand-Fuß-Verbindungen, viele Sprung- und Drehtritte |
 | **Typisch** | Partnerdrills mit Gegenaktion | Beinarbeit, Meiden, Aufgabensparring | Trittketten, Serien mit schnellem Wechsel, Step-Sparring | Sambo-/Ibo-/Ilbo-Matsogi als Drill-Prinzip |
 | **Gürtel** | BFVKB-Prüfungsprogramm | – | Kup/Poom/Dan nach DTU-PO, Taegeuk | Kup/Dan nach ITF-D-PO, Tul |
 | **Begriffe** | Deutsch/Englisch | Deutsch/Englisch | Koreanisch (Kukkiwon) oder App-Namen | Koreanisch (ITF-D-PO) oder App-Namen |
