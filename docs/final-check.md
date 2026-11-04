@@ -67,6 +67,8 @@ Nach 7b: 223 Tests grün, Baseline identisch, Isolation 12/12, Ablauf-Matrix 648
 
 **7c-2 (nach Meldung des Betreibers):** Das ⓘ an den Übungen öffnete das Infoblatt nicht. Ursache: Die Text-ID wurde beim Klick in eine Zahl umgewandelt (Überbleibsel aus der Zeit vor 3-D). Die Ablauf-Matrix hatte das nicht erfasst, weil sie das Infoblatt nicht antippt. Behoben; ein neuer Test tippt jedes ⓘ in Kraft-, Konditions-, Technik- und Mobility-Einheiten aller Sportarten an. Jahreszeit- und Feiertagsbilder: 14 Anlässe × 3 Outfits ohne Fehler, Mützen, Teilchen und Motive bei allen Outfits.
 
+**7b-2:** Kraft, Kondition, Schnellkraft und Mobility mit Fokus auf den Hauptsport (Liste `SPORT_FOCUS`). Danach: 227 Tests, Baseline identisch, Ablauf-Matrix 648 ohne Befund, H1–H9 OK.
+
 ## 3. Nur auf dem Gerät belegbar
 
 | Punkt | Stand |

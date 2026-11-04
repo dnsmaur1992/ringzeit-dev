@@ -25,6 +25,7 @@ Antwort bitte je Punkt: **passt** / **ändern: …** / **unklar**.
 | B5 | **Boxen, Ausdauer und Zähigkeit**: Kondition ≈ 33 Min. in 3-Min.-Runden; Kraft 24 + Kraftausdauer 15; Körperabhärtung (Bauch mit Partner, Rumpf an den Sack, Spannung & Ausatmen) ab Level 1 und 16 Jahren | seit 7b | |
 | B6 | **Boxen, Touch-Sparring**: höchstens eine Runde, 30–40 % Schlaghärte, nach Absprache mit dem Trainer | seit 4a-U | |
 | B7 | **Abhärtung Taekwondo** (Faust, Handkante, Finger, Schienbein, Fuß), Kinder nur sanft | seit 6b | |
+| B9 | **Kraft/Kondition/Mobility je Sportart** (7b-2): Boxen Rumpfrotation, Schulter, Griff, Nacken, Schattensprints, Band-Punches, Mobility Schultern/BWS/Nacken; WT Einbein, Sprungkraft dosiert, Hüfte/Adduktoren, Kick-Intervalle; ITF Einbein, Sprung, Schlag-Explosivität, Mobility Hüfte + Schultern | seit 7b-2 | |
 | B8 | **Belastungsbereiche** (eigene Festlegung, keine Quelle): WT Beine 0,50 · Arme 0,15 · Rumpf 0,15 · Ausdauer 0,20; ITF 0,40 · 0,25 · 0,15 · 0,20; Kickboxen 0,35 · 0,35 · 0,10 · 0,20 | seit 7b | |
 
 ## C. Ratgeber (allgemeine Praxis, ohne Quelle)
