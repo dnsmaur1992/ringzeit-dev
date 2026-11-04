@@ -3198,7 +3198,8 @@ test("6b: taekwondo hardening = one hand area + one leg area, gentle for childre
     const ids = hardIds(tkdSess(a, "S"));
     if (!ids.length) continue;
     assert.equal(ids.length, 2, "two items: " + ids);
-    assert.ok(HAND.includes(ids[0]) && LEG.includes(ids[1]), "hand + leg: " + ids);
+    // 7e: WT full contact (16+, level 1+) takes the trunk instead of the hand area every second session
+    assert.ok((HAND.includes(ids[0]) || ["bodybag", "brace"].includes(ids[0])) && LEG.includes(ids[1]), "hand or trunk + leg: " + ids);
   }
   const k = app();
   tkdProfile(k, { by: 2016, lvl: 0 });
@@ -3860,4 +3861,52 @@ test("7d: sparring can be chosen in the simple view too; still locked after a KO
   a.run("S.profile.birthYear=2017;ui.setup=null;");
   h = a.run("renderSession()");
   assert.match(h, /data-stype="P"[^>]*disabled/, "children: locked");
+});
+
+test("7e: WT full contact – impact rounds, trunk hardening and the harder dose from 16 and level 1, never in soft weeks; ITF, children unchanged", () => {
+  const a = app();
+  const mk = (o) => {
+    a.run(`S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${o.st || "wt"}',wt:'k4',itf:'k4'});S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=[];`);
+    return JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-02','${o.ty || "T"}','gym',['bag','rope'${o.partner ? ",'partner'" : ""}],{sport:'taekwondo',tstyle:'${o.st || "wt"}'}))`));
+  };
+  let pow = 0, trunk = 0, harder = 0;
+  for (let i = 0; i < 20; i++) {
+    const s = mk({});
+    const main = s.blocks.find((b) => b.key === "main");
+    pow += main.items.filter((it) => it.pow).length;
+    const hb = s.blocks.find((b) => b.key === "hard");
+    if (hb.items.some((it) => ["bodybag", "brace"].includes(it.id))) trunk++;
+    assert.ok(!hb.items.some((it) => it.id === "abs"), "no partner ab drill with body hooks in WT");
+    if (hb.items.some((it) => it.h)) harder++;
+  }
+  assert.ok(pow >= 20, "impact rounds " + pow);
+  assert.ok(trunk >= 4 && trunk <= 16, "trunk about every second session " + trunk);
+  assert.ok(harder >= 10, "harder dose " + harder);
+  for (const o of [{ st: "itf" }, { lvl: 0 }, { by: 2012 }]) {
+    for (let i = 0; i < 10; i++) {
+      const s = mk(o);
+      assert.ok(!s.blocks.some((b) => b.items.some((it) => it.pow || it.h)), JSON.stringify(o));
+    }
+  }
+  a.run("S.profile.lang='de';");
+  assert.match(a.run(`roundDesc({kind:'round',k:'bag',sp:'t',pow:1},0)`), /PSS/);
+});
+test("7e: protective gear notes per sport in sparring with a partner, a partner-drill note in technique units – shown as safety notes", () => {
+  const a = app();
+  a.run("S.profile.lang='de';S.profile.birthYear=1995;S.profile.level=1;");
+  const notes = (sp, st, ty) => {
+    a.run(`S.profile.sport='${sp}';${st ? `S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${st}'});` : ""}`);
+    return JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-02','${ty}','gym',['partner','pads','bag'],{sport:'${sp}'${st ? `,tstyle:'${st}'` : ""}}).notes)`)).join(" | ");
+  };
+  assert.match(notes("kickboxing", "", "P"), /Schutzausrüstung Kickboxen/);
+  assert.match(notes("taekwondo", "wt", "P"), /Rumpfschutz \(Weste\)/);
+  assert.match(notes("taekwondo", "wt", "P"), /vollem Kontakt/);
+  assert.match(notes("taekwondo", "itf", "P"), /geschlossene Handschuhe/);
+  assert.doesNotMatch(notes("taekwondo", "itf", "P"), /vollem Kontakt/);
+  assert.match(notes("boxing", "", "P"), /Mundschutz und Kopfschutz/);
+  assert.doesNotMatch(notes("boxing", "", "P"), /Schutzausrüstung Kickboxen/);
+  for (const [sp, st] of [["kickboxing"], ["boxing"], ["taekwondo", "wt"]]) assert.match(notes(sp, st, "T"), /Partnerübungen: Mundschutz/, sp);
+  // shown in the safety box (also in the simple view)
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.simple=true;const d=iso(today());ui.sel=d;ui.tab='session';ui.setup=null;S.sessions[d]=buildSession(d,'P','gym',['partner','pads'],{sport:'taekwondo',tstyle:'wt'});");
+  assert.match(a.run("renderSession()"), /note warn[^>]*>[^<]*Sparring mit Partner[\s\S]*Schutzausrüstung WT/);
 });
