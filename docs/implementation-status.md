@@ -217,6 +217,12 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
 - Offen und nicht blockierend: Trainer-Prüfliste (`docs/trainer-pruefliste.md`), Android, Altdaten-Test vor einer Ablösung (`docs/abloesung.md`).
 - Nicht ausgeführt: keine Veröffentlichung oder Ablösung der stabilen App.
 
+## Nach dem Abschluss
+
+- **Altdaten-Test** (Auftrag Betreiber 04.11.2026 08:57, mit seiner Sicherung der stabilen App): bestanden. Ergebnis und Befund siehe `docs/abloesung.md` 3b. Vor dem Release müssen die Texte unter „Was ist neu“ neu geschrieben werden.
+- **7d** (Wunsch Betreiber 04.11.2026 09:05): „Sparring“ ist auch in der einfachen Ansicht wählbar (bisher nur in der ausführlichen; Verhalten aus der stabilen App). Gesperrt bleibt es nach einem K.o. und bei Kindern. Test „7d“, alter Test angepasst (228 Tests).
+- **7e** (Freigabe 04.11.2026 09:17; Frage des Betreibers: WT wird im Vollkontakt gekämpft): WT ab 16 Jahren und Level 1, nie in Entlastungs-, Taper- oder Erholungswochen: jede zweite Sack- bzw. Pratzenrunde als **Wirkungsrunde** („der PSS wertet nur Treffer mit Wucht“); in der Abhärtung jede zweite Einheit **Rumpf** statt Handbereich (Rumpf an den Sack, sonst Spannung & Ausatmen; die Bauch-Abhärtung mit Partner nennt Handschuhe und Körperhaken und passt nicht zu WT); die **härtere Abhärtungsdosis** wie bei Full Contact. Klarstellung: Die „härtere Kondition“ bei Full Contact/K1 ist in der App die härtere Abhärtungsdosis, Konditionseinheiten selbst sind dort nicht dichter; WT bekommt genau das. Freies Sparring bleibt bei 50 % (T14), Kinder, ITF, Boxen unverändert; Hinweis in WT-Sparring-Einheiten zum Vollkontakt im Wettkampf. **Schutzausrüstung**: in Sparring-Einheiten mit Partner zusätzlich die Liste je Sportart (Kickboxen, WT, ITF; Boxen wie bisher), in Technik-Einheiten mit Partnerrunden „Partnerübungen: Mundschutz …“; alle als Sicherheitshinweis (auch in der einfachen Ansicht). Die Kickbox-Baseline wurde neu aufgenommen: 41 Abweichungen, ausschließlich die neuen Hinweise, Pläne unverändert. Tests „7e“ (2), alter Abhärtungstest angepasst (230 Tests).
+
 ## Nächster Vorschlag (ohne Freigabe)
 
 Das Gesamtprojekt ist abgeschlossen. Weitere Arbeit nur auf eigenen Auftrag: Rückmeldungen aus der Trainer-Prüfliste als Korrekturauftrag, Android-Prüfung mit Gerät, später die Ablösung der stabilen App nach `docs/abloesung.md` (vorher Altdaten-Test).

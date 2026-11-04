@@ -25,7 +25,7 @@ Cache-Speicher und sind nur über Schlüssel und Präfix getrennt. Darauf bauen 
 ## 3. Schritte für Weg 1
 
 1. **Sicherung:** In der stabilen App eine Sicherung exportieren (`ringzeit-…json`, altes Format) und gut aufheben. Zusätzlich ein Komplett-ZIP des stabilen Repos anlegen. Beides ist der Rückweg.
-2. **Datenübernahme testen (Pflicht, bisher nicht gemacht):** Ein Test mit Altdaten wurde für das Projekt bewusst ausgeschlossen. Vor der Ablösung ist er nötig:
+2. **Datenübernahme testen (Pflicht; am 04.11.2026 mit einer echten Sicherung bestanden, siehe 3b; vor dem Release mit einer frischen Sicherung wiederholen):**
    - In einer Kopie von Ringzeit Dev `APP_ID` auf `"ringzeit"` setzen und lokal bauen.
    - Die Sicherung aus Schritt 1 importieren, oder sie als `ringzeit.v1` in den localStorage legen.
    - Prüfen: Profil, Disziplin, Gürtel, Verlauf, Fitnesstests, Gewichte, Turniere und Pausen sind vollständig. Alte Übungsnummern werden zu Text-IDs. Kein Eintrag ist doppelt. Die Wochenbelastung stimmt.
@@ -39,6 +39,32 @@ Cache-Speicher und sind nur über Schlüssel und Präfix getrennt. Darauf bauen 
 5. **Bauen und prüfen:** `python3 tools/build_pwa.py`, dann Suite, Baseline, `final-check.mjs`, `final-browser.cjs` (läuft gegen die Repo-Wurzel). Danach die Geräte-Checkliste (`docs/geraete-checkliste.md`) mit einer Kopie der echten Daten durchgehen.
 6. **Veröffentlichen:** Hochladen ins stabile Repo, so wie bisher per Web-Upload. Die Nutzer bekommen die neue Version beim nächsten Start (die App-Seite wird zuerst aus dem Netz geladen) und sehen einmal „Was ist neu“.
 7. **Nachsorge:** In den ersten Tagen Rückmeldungen sammeln (Feedback-Formular, Profil → App & Daten).
+
+## 3b. Ergebnis des Altdaten-Tests (04.11.2026)
+
+Getestet mit einer echten Sicherung der stabilen App (Export vom 04.11.2026; die Datei liegt nicht im Repo). Beide Wege
+wurden geprüft: das Laden über `hydrate` im Testlauf und das Release-Szenario im Browser. Dort war ein Build mit
+`APP_ID = "ringzeit"` eingestellt, die Daten lagen unter `ringzeit.v1`.
+
+| Prüfung | Ergebnis |
+|---|---|
+| Profil (24 Felder: Disziplin, Level, Trainingstage, Minuten, Verein, Einschränkungen, Schwerpunkt-Block, Abzeichen, Rundentimer, Tagesform …) | unverändert übernommen |
+| Hauptsport ohne Angabe | Kickboxen |
+| Turniere (3, davon 2 mit Ergebnis und Notizen) | vollständig |
+| Verlauf (3 Einträge) | vollständig, nichts doppelt; alte Übungsnummern → Text-IDs (z. B. 43 → Ausfallschritte, 23 → Unterarmstütz) |
+| Wochenbelastung | KW 26.10. 576 (= 60 × 4 + 56 × 6), KW 02.11. 360 (= 60 × 6) |
+| Einheiten (4) mit Haken, Sätzen und Runden | erhalten; die geplante Einheit vom 05.11. läuft im geführten Training vollständig durch |
+| Fitnesstest, Level | übernommen; Kickboxen Level 2 bleibt; Boxen und Taekwondo brauchen einen eigenen Technikteil (so gewollt) |
+| Verschiebungen und Ausfälle | erhalten |
+| Schwerpunkt-Block Schnellkraft | läuft weiter (Woche 2) |
+| Alle Seiten | ohne Fehler |
+| Neue Sicherung → Rückladen | identisch |
+| Release-Szenario im Browser | App startet mit den Daten, keine Inbetriebnahme, keine JS-Fehler, „Was ist neu“ erscheint einmal |
+
+**Vor dem Release noch nötig:** Die Texte unter „Was ist neu“ (`news` in `src/app/01-overview-i18n.js`, `NEWS_V` in
+`src/app/16-onboarding.js`) stammen aus der Zeit vor Boxen und Taekwondo. Dort steht zum Beispiel noch
+„Weitere Sportarten kommen später dazu“. Sie müssen für den Release neu geschrieben werden (Boxen, Taekwondo,
+Schwerpunkte je Sportart), mit erhöhtem `NEWS_V`.
 
 ## 4. Rückweg
 
