@@ -3982,3 +3982,18 @@ test("7g: taekwondo release by level OR grade – a beginner with a high grade g
   assert.ok(itf2.has("ttdol") || itf2.has("ttyeop"), "ITF beginner 2nd Kup: jump kicks");
   for (const x of ["dwi", "dhu", "ttdol", "ttyeop"]) assert.ok(!kicks("itf", { grade: "k5" }).has(x), "ITF beginner 5th Kup: " + x);
 });
+
+test("7h: WT from level 1 – about every fifth combo carries a spinning hook or jump kick; teens, children, knee limit none", () => {
+  const a = app();
+  const share = (o) => {
+    a.run(`S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'wt',wt:'${o.grade || ""}'});S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.lim || [])};`);
+    let sp = 0;
+    for (let i = 0; i < 500; i++) if (JSON.parse(a.run(`(()=>{buildSport='taekwondo';unitStyle='wt';const c=tkdCombo('shadow');buildSport=null;unitStyle=null;return JSON.stringify(c)})()`)).some((x) => ["dhu", "ttdol", "ttyeop"].includes(x))) sp++;
+    return sp / 500;
+  };
+  for (const o of [{ lvl: 1 }, { lvl: 2 }, { lvl: 2, grade: "k10" }, { lvl: 0, grade: "k4" }]) {
+    const s = share(o);
+    assert.ok(s >= 0.1 && s <= 0.3, JSON.stringify(o) + " " + s);
+  }
+  for (const o of [{ lvl: 2, by: 2010 }, { lvl: 2, by: 2017 }, { lvl: 2, lim: ["knee"] }, { lvl: 0 }]) assert.equal(share(o), 0, JSON.stringify(o));
+});
