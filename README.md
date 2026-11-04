@@ -310,7 +310,7 @@ ringzeit-dev/
 | [Taekwondo-Konzept](docs/taekwondo-concept.md) · [Box-Konzept](docs/boxing-concept.md) | Regeln, Grade, Trainingsmodell |
 | [Regel- und Trainingsquellen](docs/rules-sources.md) | Herausgeber, Fassung, Geltung |
 | [Trainingslogik](docs/trainingslogik.md) · [Belastungskonzept](docs/data-load-concept.md) | Progression, Belastung, Dosierung |
-| [Ablösung der stabilen App](docs/abloesung.md) | Anleitung für später (nicht ausgeführt) |
+| [Release](docs/release.md) · [Ablösung der stabilen App](docs/abloesung.md) | Release-Paket für die stabile App (`tools/release.py`), Upload-Anleitung, Prüfergebnis |
 
 ---
 

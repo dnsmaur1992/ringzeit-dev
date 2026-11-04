@@ -1,14 +1,14 @@
 /* Ringzeit Dev service worker: the app works offline; updates are fetched in the background and used on the next start.
    Only caches with this app's own prefix are touched: the stable Ringzeit app shares the origin and keeps its own caches. */
 const PREFIX = "ringzeit-dev-";
-const CACHE = PREFIX + "202611041227";
+const CACHE = PREFIX + "202611041312";
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()),
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE && !(PREFIX === "ringzeit-" && k.startsWith("ringzeit-dev-"))).map((k) => caches.delete(k)))).then(() => self.clients.claim()),
   );
 });
 self.addEventListener("fetch", (e) => {
