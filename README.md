@@ -303,6 +303,7 @@ ringzeit-dev/
 |---|---|
 | [Umsetzungsstand](docs/implementation-status.md) | alle Teile, Entscheidungen und Abnahmen |
 | [Architektur](docs/architecture.md) | Aufbau, Module, Tests |
+| [Komponenten und Zusammenspiel](docs/komponenten.md) | Diagramme: Build, Schichten, App-Teile, Datenfluss, Speicher, „Wo ändere ich was?“ |
 | [Gesamtprüfung](docs/final-check.md) | automatische Belege, Befunde, Korrekturen |
 | [Geräte-Checkliste](docs/geraete-checkliste.md) | Prüfpunkte auf dem iPhone |
 | [Trainer-Prüfliste](docs/trainer-pruefliste.md) | offene fachliche Fragen zum Abhaken |
