@@ -123,7 +123,6 @@
       k,
       ev,
       hat,
-      trunks: k === "summer",
       greet: [...new Set(fe.map((f) => f.g))],
     };
   }
@@ -136,26 +135,7 @@
     return !!h && h.m === 9 && h.y === f.y;
   }
   const season = () => (seasonOn() ? seasonNow() : null);
-  /* knee-length swim shorts: turquoise with coral and yellow flowers, white drawstring */
-  const TRUNKS_DEF = `<defs><pattern id="trunksP" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#1FB3C2"/><circle cx="3.5" cy="4" r="2.2" fill="#FF7A59"/><circle cx="3.5" cy="4" r=".8" fill="#FFD23F"/><circle cx="10.5" cy="10.5" r="1.8" fill="#FFD23F"/><circle cx="10.5" cy="10.5" r=".7" fill="#FF7A59"/></pattern></defs>`;
   let figN = 0;
-  function trunks(o) {
-    const b = o.body,
-      n = (o.belly.match(/-?[\d.]+/g) || []).map(Number),
-      waist = n.length >= 6 ? (n[1] + n[5]) / 2 + 1 : b.cy + b.ry * 0.4,
-      mid = n.length >= 6 ? n[2] : b.cx,
-      id = "tc" + figN++;
-    // legs: from the hip down over the knee (board shorts)
-    let legs = "";
-    o.legs.forEach((l) => {
-      const [h, k, f] = l,
-        e = [k[0] + (f[0] - k[0]) * 0.22, k[1] + (f[1] - k[1]) * 0.22];
-      const pts = `${h.join(",")} ${k.join(",")} ${e.map((v) => v.toFixed(1)).join(",")}`;
-      legs += `<polyline points="${pts}" fill="none" stroke="${FIG.BG}" stroke-width="35" stroke-linecap="butt" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="url(#trunksP)" stroke-width="29" stroke-linecap="butt" stroke-linejoin="round"/>`;
-    });
-    const body = `<clipPath id="${id}"><ellipse cx="${b.cx}" cy="${b.cy}" rx="${b.rx - 2}" ry="${b.ry - 2}" transform="rotate(${b.rot} ${b.cx} ${b.cy})"/></clipPath><g clip-path="url(#${id})"><rect x="${b.cx - 70}" y="${waist.toFixed(1)}" width="140" height="80" fill="url(#trunksP)"/><rect x="${b.cx - 70}" y="${waist.toFixed(1)}" width="140" height="4" fill="#138895"/></g><path d="M${mid - 3} ${(waist + 3).toFixed(1)} l-3 9 M${mid + 3} ${(waist + 3).toFixed(1)} l3 9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`;
-    return { legs, body };
-  }
   /* boxing corners: shirt and shorts in one colour with a white waistline (blue corner left, red corner right).
      Shirt = the whole body, shorts = the thighs and the part of the body below the waistline (a darker tone). */
   const BOX_BLUE = { top: "#2F6FD0", shorts: "#1F4FA3" },
@@ -225,8 +205,7 @@
       else s += limb(a, 17) + glove(e[0], e[1]);
     };
     const se = season(),
-      tr = outfit ? (outfit.dobok ? tkdOutfit(o, outfit.belt) : boxOutfit(o, outfit)) : se && se.trunks ? trunks(o) : null;
-    if (tr && !outfit) s += TRUNKS_DEF;
+      tr = outfit ? (outfit.dobok ? tkdOutfit(o, outfit.belt) : boxOutfit(o, outfit)) : null;
     o.back.forEach(arm);
     o.legs.forEach((l) => (s += limb(l, 23)));
     if (tr) s += tr.legs;
@@ -482,6 +461,26 @@
         : null;
     let extra = "";
     const ev = se2 && se2.ev;
+    // summer: a palm tree in the background (taller than the fighters) on the left, a striped deckchair on the right
+    if (se2 && se2.k === "summer") {
+      const fronds = [
+        "M80 40 Q112 22 146 44 Q114 34 80 46Z",
+        "M80 40 Q118 44 136 78 Q110 52 80 46Z",
+        "M80 40 Q48 20 14 40 Q46 32 80 46Z",
+        "M80 40 Q42 44 26 78 Q52 52 80 46Z",
+        "M80 40 Q86 14 112 10 Q92 22 82 44Z",
+        "M80 40 Q66 16 40 14 Q62 24 78 44Z",
+      ];
+      let rings = "";
+      for (let i = 0; i < 9; i++) {
+        const t = i / 9,
+          x = 58 + (80 - 58) * t * t + Math.sin(t * 3) * 4,
+          y = 206 - (206 - 48) * t;
+        rings += `<path d="M${(x - 5).toFixed(1)} ${y.toFixed(1)} q5 -3 10 0" stroke="#6B4A2E" stroke-width="1.6" fill="none"/>`;
+      }
+      extra += `<g class="palm"><path d="M56 208 Q50 156 64 106 Q72 72 80 44" stroke="#8B5E3C" stroke-width="11" fill="none" stroke-linecap="round"/>${rings}${fronds.map((d) => `<path d="${d}" fill="#2E8B57" stroke="#1E5E3B" stroke-width="1.5" stroke-linejoin="round"/>`).join("")}<circle cx="76" cy="48" r="5" fill="#7A5230"/><circle cx="85" cy="49" r="5" fill="#6B4A2E"/></g>`;
+      extra += `<g class="deckchair"><path d="M332 208 L356 150 M370 208 L344 176" stroke="#C9A86A" stroke-width="4" stroke-linecap="round"/><path d="M354 156 L338 194 L378 200" fill="none" stroke="#FF7A59" stroke-width="11" stroke-linejoin="round"/><path d="M354 156 L338 194 L378 200" fill="none" stroke="#FFF4E0" stroke-width="11" stroke-dasharray="5 5" stroke-linejoin="round"/><path d="M326 184 L374 184 M378 200 L384 208" stroke="#C9A86A" stroke-width="4" stroke-linecap="round"/></g>`;
+    }
     // lanterns for Ramadan and Eid (with stars at Eid)
     const lanterns = () => {
       let h = `<g transform="translate(330 40)"><circle r="16" fill="#F6E7B0"/><circle cx="7" cy="-5" r="15" fill="url(#sky)"/></g>`;
