@@ -93,6 +93,11 @@ export const COMBOS = [
     ["swch", "jir", "dol", "dolh"],
     ["turn", "jir", "dol", "dwi"],
     ["jir", "jir", "dol", "dolh"],
+    // 7f: longer hand-foot chains
+    ["jir", "dol", "dol", "dolh"],
+    ["ap", "dol", "yeop"],
+    ["slide", "dol", "yeop", "dol"],
+    ["jir", "dol", "ban", "dol"],
   ],
   [
     ["jir", "jir", "dol", "dolh", "dwi"],
@@ -102,6 +107,10 @@ export const COMBOS = [
     ["swch", "jir", "dung", "dol", "dolh", "dwi"],
     ["jir", "ap", "dol", "dolh", "dwi", "dol"],
     ["jir", "dung", "dol", "dolh", "ttdol"],
+    // 7f: longer hand-foot chains
+    ["jir", "ap", "dol", "dolh", "yeop"],
+    ["dol", "dol", "dolh", "jir", "dwi"],
+    ["slide", "yeop", "dol", "dolh", "dhu"],
   ],
 ];
 export const kickCount = (c) => c.reduce((n, x) => n + (KICKS.has(x) ? 1 : 0), 0);
