@@ -1752,7 +1752,7 @@ test("switching to the simple view replans open sessions without hidden equipmen
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(su.eq)")), ["bag"]);
 });
 
-test("simple view: pictures instead of codes, no sparring choice, club logging only with club days", () => {
+test("simple view: pictures instead of codes, sparring choice (since 7d), club logging only with club days", () => {
   const a = app();
   a.run(`S.profile.example=false;S.profile.simple=true;S.profile.club={days:[],minutes:90};const d=iso(today());ui.sel=d;ui.tab='session';ui.setup=null;
     S.sessions[d]=buildSession(d,'T','gym',defaultEq(),{min:60});`);
@@ -1760,7 +1760,7 @@ test("simple view: pictures instead of codes, no sparring choice, club logging o
   assert.equal(a.run("effortTxt(7)"), "😣 Hart");
   assert.match(a.run("weekStrip(null,'data-open')"), /class="k ico"/);
   const h = a.run("renderSession()");
-  assert.doesNotMatch(h, /data-stype="P"/, "no sparring choice");
+  assert.match(h, /data-stype="P"/, "sparring can be chosen in the simple view (7d)");
   assert.match(h, /data-stype="T"/);
   assert.doesNotMatch(a.run("clubPanel(iso(addDays(today(),-1)))"), /data-clublog/, "no club logging without club days");
   a.run("S.profile.club={days:[0,1,2,3,4,5,6],minutes:90}");
@@ -3850,4 +3850,14 @@ test("7b-2: strength, conditioning and mobility picks follow the main sport; bas
   assert.ok(up >= 30, "boxing mobility focus " + up);
   // limits keep working: a knee limit removes the jumps of the WT power focus
   for (let i = 0; i < 15; i++) assert.ok(!pick("taekwondo", "wt", "S", { lim: ["knee"] }).extra.some((id) => /jump_squats|lateral_bounds|broad_jumps|skater_jumps/.test(id)));
+});
+test("7d: sparring can be chosen in the simple view too; still locked after a KO and for children", () => {
+  const a = app();
+  a.run("S.profile.example=false;S.profile.simple=true;S.profile.sport='kickboxing';S.profile.birthYear=1995;const d=iso(today());ui.sel=d;ui.tab='session';ui.setup=null;S.sessions[d]=buildSession(d,'T','home',['bag'],{min:60});");
+  assert.equal(a.run("simpleView()"), true);
+  let h = a.run("renderSession()");
+  assert.match(h, /data-stype="P"(?![^>]*disabled)/, "sparring offered in the simple view");
+  a.run("S.profile.birthYear=2017;ui.setup=null;");
+  h = a.run("renderSession()");
+  assert.match(h, /data-stype="P"[^>]*disabled/, "children: locked");
 });
