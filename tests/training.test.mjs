@@ -3767,3 +3767,19 @@ test("7b B5: a second tap on the safety note after the onboarding closed does no
   await a.click({ dataset: { onb: "ack" } });
   assert.equal(a.run("S.profile.ackSafe"), "2026-01-01", "no pending note: nothing happens");
 });
+test("7c fix: the ⓘ of every exercise with a sketch opens its info sheet (text ids, all sports)", async () => {
+  const a = app();
+  for (const [sp, st] of [["kickboxing"], ["boxing"], ["taekwondo", "wt"], ["taekwondo", "itf"]])
+    for (const ty of ["T", "S", "K", "M"]) {
+      a.run(`S.profile.sport='${sp}';${st ? `S.profile.tkd.style='${st}';` : ""}ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'${ty}','gym',['weights','bag','rope'],{sport:'${sp}'${st ? `,tstyle:'${st}'` : ""}});ui.setup=null;ui.sheet=null;`);
+      const ids = [...new Set([...a.run("renderSession()").matchAll(/data-exinfo="([^"]+)"/g)].map((m) => m[1]))];
+      assert.ok(ids.length, `${sp} ${ty}: info buttons`);
+      for (const id of ids) {
+        await a.click({ dataset: { exinfo: id } });
+        assert.equal(a.run("ui.sheet && ui.sheet.id"), id, id);
+        const h = a.run("renderSheet(), document.getElementById('sheet').innerHTML");
+        assert.match(h, /class="skwrap"/, id);
+        a.run("ui.sheet=null;");
+      }
+    }
+});
