@@ -39,7 +39,7 @@ def const(name):
     return m.group(1)
 APP_ID=const('APP_ID'); APP_NAME=const('APP_NAME')
 if not re.fullmatch(r'[a-z0-9-]+',APP_ID): raise SystemExit('APP_ID must be lowercase letters, digits and dashes')
-DESC='Entwicklungsversion – Trainingsplaner für Kickboxen nach WAKO-Regeln'
+DESC='Entwicklungsversion – Trainingsplaner für Kickboxen, Boxen und Taekwondo'
 ver=time.strftime('%Y%m%d%H%M')
 body=src.replace('const APP_VER = "dev";', 'const APP_VER = "'+time.strftime('%d.%m.%Y %H:%M')+'";').replace('<title>'+APP_NAME+'</title>\n','').replace('<meta name="claude:viewport-fit-sides" content="cover" />\n','')
 head=f'''<!doctype html>
