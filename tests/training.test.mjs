@@ -2520,7 +2520,10 @@ test("4a-U: boxing sessions hold only punches, no kick round, no kickbox hardeni
         assert.ok(!tokensOf(s).some((x) => KICKTOK.test(x)), `${type} lvl${lvl} ${by} ${lim}: no kick`);
         assert.ok(!boxItems(s).some((it) => it.k === "sixkick" || it.bk === "hard"), "no six-kick round, no kickbox hardening");
         assert.ok(!boxItems(s).some((it) => it.kind === "round" && it.k === "task" && /^(hands|kicks|free|lowfocus|sixkick|knee)$/.test(it.id)), "only boxing tasks");
-        assert.ok(!boxItems(s).some((it) => it.kind === "hard" && /^(fGlove|fWraps|fBare|fPads|fTap|checks|shinbag|shintap|bodybag|abs|arms)$/.test(it.id)), "no hardening with hits");
+        assert.ok(!boxItems(s).some((it) => it.kind === "hard" && /^(fGlove|fWraps|fBare|fPads|fTap|checks|shinbag|shintap|arms)$/.test(it.id)), "no hardening with hits");
+        // 7b B7: body conditioning only in the toughness block – level 1+, from 16, without limits
+        const tough = s.blocks.find((b) => b.lbl === "tough");
+        if (boxItems(s).some((it) => it.kind === "hard" && /^(abs|bodybag|brace)$/.test(it.id))) assert.ok(tough && lvl >= 1 && 2026 - by >= 16 && !lim.length, `body conditioning only when allowed: lvl${lvl} ${by} ${lim}`);
       }
   }
 });
@@ -2533,7 +2536,8 @@ test("4a-U: Handgelenk & Griff – fixed block (towel + grip) instead of hardeni
   assert.equal(w.min, 6);
   assert.ok(w.items.some((it) => it.id === "fWring") && w.items.some((it) => it.id === "fFinger"));
   assert.equal(s.blocks.filter((b) => b.key === "hard").length, 0);
-  a.run("ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bands'],{sport:'boxing'});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
+  // beginners keep the plain wrist block (7b: body conditioning from level 1)
+  a.run("S.profile.level=0;ui.sel=iso(today());ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bands'],{sport:'boxing'});ui.setup=setupOf(S.sessions[ui.sel],ui.sel);");
   assert.match(a.run("renderSession()"), /Handgelenk &amp; Griff|Handgelenk & Griff/);
   // children: only towel and grip, no neck, no fist load
   a.run("S.profile.level=0;S.profile.birthYear=2015;");
@@ -2880,7 +2884,7 @@ test("6a/6b: taekwondo WT unit types, ITF only sport-neutral types, own labels",
   const a = app();
   a.run("S.profile.sport='taekwondo';S.profile.days=[0,1,2,3];S.profile.birthYear=1995;S.profile.level=1;");
   const types = JSON.parse(a.run("JSON.stringify(Object.values(dayTypes()))"));
-  assert.ok(types.every((x) => ["T", "S", "P", "K"].includes(x)), "WT pattern: " + types);
+  assert.deepEqual(types, ["T", "S", "P", "M"], "WT pattern since 7b: mobility instead of conditioning");
   a.run("S.profile.tkd.style='itf';");
   const itf = JSON.parse(a.run("JSON.stringify(Object.values(dayTypes()))"));
   assert.ok(itf.every((x) => ["T", "S", "P", "K"].includes(x)) && itf.includes("T"), "ITF pattern like WT since 6c: " + itf);
@@ -3594,4 +3598,172 @@ test("6d-3: free round timer – presets and default by main sport and style; co
     const txt = a.run("combo('shadow', null).map((x) => techNm(x)).join(' · ')");
     assert.ok(txt && !/undefined/.test(txt), txt);
   }
+});
+
+/* ---------- 7b: sport focus and corrections ---------- */
+const sess7 = (a, sport, type, o = {}) =>
+  JSON.parse(a.run(`(()=>{S.profile.sport='${sport}';S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.lim || [])};S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${o.st || "wt"}',wt:'${o.grade || "k1"}',itf:'${o.grade || "k1"}'});return JSON.stringify(buildSession('2026-11-02','${type}','${o.loc || "gym"}',${JSON.stringify(o.eq || ["bag", "rope", "weights"])},{sport:'${sport}',min:${o.min ?? 60}${sport === "taekwondo" ? `,tstyle:'${o.st || "wt"}'` : ""}}))})()`));
+const blk = (s, f) => s.blocks.find(f);
+test("7b B6: WT technique = strength 8 + active flexibility 6; ITF, kickboxing and boxing keep strength 14", () => {
+  const a = app();
+  const wt = sess7(a, "taekwondo", "T");
+  const am = blk(wt, (b) => b.lbl === "amob");
+  assert.ok(am && am.key === "mob" && am.min === 6, JSON.stringify(wt.blocks.map((b) => [b.key, b.lbl, b.min])));
+  assert.equal(blk(wt, (b) => b.key === "str").min, 8);
+  assert.ok(am.items.every((it) => ["mob.kick_holds", "mob.slow_motion_kicks", "mob.controlled_leg_swings", "mob.active_leg_raises"].includes(it.id)), "active items");
+  for (const [sp, st] of [["taekwondo", "itf"], ["kickboxing"], ["boxing"]]) {
+    const s = sess7(a, sp, "T", { st });
+    assert.equal(blk(s, (b) => b.key === "str").min, 14, sp + st);
+    assert.ok(!blk(s, (b) => b.lbl === "amob"), sp);
+  }
+  a.run("S.profile.sport='taekwondo';S.profile.lang='de';ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{sport:'taekwondo',tstyle:'wt'});ui.setup=null;");
+  assert.match(a.run("renderSession()"), /Aktive Beweglichkeit/);
+});
+test("7b B6: WT mobility = active flexibility 34 (about half active items) + easy cool-down 3; WT week pattern", () => {
+  const a = app();
+  for (let i = 0; i < 10; i++) {
+    const m = sess7(a, "taekwondo", "M", { min: 45 });
+    const mb = blk(m, (b) => b.key === "mob");
+    assert.equal(mb.min, 34);
+    assert.equal(mb.lbl, "amob");
+    assert.equal(blk(m, (b) => b.key === "cool").min, 3);
+    const act = mb.items.filter((it) => /kick_holds|slow_motion_kicks|controlled_leg_swings|active_leg_raises/.test(it.id)).length;
+    assert.ok(act >= 3 && act >= mb.items.length / 2 - 1, `${act} of ${mb.items.length}`);
+  }
+  const pat = (n, st) => JSON.parse(a.run(`(()=>{S.profile.sport='taekwondo';S.profile.tkd.style='${st}';S.profile.level=1;S.profile.birthYear=1995;S.profile.days=[0,1,2,3,4,5,6].slice(0,${n});return JSON.stringify(Object.values(dayTypes()))})()`));
+  assert.deepEqual(pat(3, "wt"), ["T", "S", "P"]);
+  assert.deepEqual(pat(4, "wt"), ["T", "S", "P", "M"]);
+  assert.deepEqual(pat(5, "wt"), ["T", "S", "P", "C", "M"]);
+  assert.deepEqual(pat(6, "wt"), ["T", "S", "P", "M", "T", "M"]);
+  assert.deepEqual(pat(7, "wt"), ["T", "S", "P", "M", "T", "S", "M"]);
+  assert.deepEqual(pat(4, "itf"), ["T", "S", "P", "K"], "ITF unchanged");
+});
+test("7b B7: boxing conditioning in 3-minute rounds (≈33 min), strength 24 + finisher 15, mobility 22 + footwork/shadow 8", () => {
+  const a = app();
+  const k = sess7(a, "boxing", "K");
+  const c = blk(k, (b) => b.key === "cond");
+  assert.equal(c.w, 180);
+  assert.equal(c.b, 60);
+  assert.ok(c.min >= 31 && c.min <= 34, String(c.min));
+  assert.ok(blk(k, (b) => b.key === "core").min <= 8);
+  const s = sess7(a, "boxing", "S");
+  assert.equal(blk(s, (b) => b.key === "str").min, 24);
+  assert.equal(blk(s, (b) => b.key === "cond").min, 15);
+  const m = sess7(a, "boxing", "M", { min: 45 });
+  assert.equal(blk(m, (b) => b.key === "mob").min, 22);
+  const f = blk(m, (b) => b.lbl === "foot");
+  assert.ok(f && f.rounds && f.min === 8 && f.w === 120 && f.b === 30 && f.items.length === 3, JSON.stringify(f));
+  assert.ok(f.items.every((it) => it.ease), "easy rounds");
+  // kickboxing keeps its blocks
+  const kk = sess7(a, "kickboxing", "K");
+  assert.equal(blk(kk, (b) => b.key === "cond").w, 120);
+  assert.equal(blk(sess7(a, "kickboxing", "S"), (b) => b.key === "str").min, 27);
+  assert.ok(!blk(sess7(a, "kickboxing", "M", { min: 45 }), (b) => b.lbl));
+  // children keep their short conditioning rounds
+  assert.notEqual(blk(sess7(a, "boxing", "K", { by: 2015, lvl: 0, min: 45 }), (b) => b.key === "cond").w, 180);
+});
+test("7b B7: boxing toughness – wrist 3 + body 3 from level 1, 16 years, no limits; body item by equipment", () => {
+  const a = app();
+  const body = (o) => {
+    const w = blk(sess7(a, "boxing", "T", o), (b) => b.key === "wrist");
+    return [w.lbl || "", w.items.map((it) => it.id).join(",")];
+  };
+  assert.deepEqual(body({ eq: ["partner", "bag"] }), ["tough", "fWring,fFinger,abs"]);
+  assert.deepEqual(body({ eq: ["bag"] }), ["tough", "fWring,fFinger,bodybag"]);
+  assert.deepEqual(body({ eq: [], loc: "home" }), ["tough", "fWring,fFinger,brace"]);
+  assert.equal(body({ lvl: 0 })[0], "");
+  assert.equal(body({ by: 2012 })[0], "", "under 16");
+  assert.equal(body({ lim: ["back"] })[0], "", "limits");
+  a.run("S.profile.lang='de';");
+  assert.equal(a.run("blkName({key:'wrist',lbl:'tough'})"), "Handgelenk & Körperabhärtung");
+  assert.equal(a.run("blkName({key:'wrist'})"), a.run("t('wrist')"));
+  // deload, taper and recovery weeks (soft): never body conditioning
+  a.run("S.profile.sport='boxing';S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];");
+  assert.equal(a.run("wristBlock(['partner'], true, [], 'gym').lbl || ''"), "");
+});
+test("7b B8: ITF from level 1 – at least 40 % of the combos carry a jumping or spinning kick (as far as allowed); WT less; locks stay", () => {
+  const a = app();
+  const share = (st, o = {}) => {
+    a.run(`S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${st}',wt:'${o.grade || "k1"}',itf:'${o.grade || "k1"}'});S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 1};S.profile.limits=${JSON.stringify(o.lim || [])};`);
+    let n = 0, sp = 0;
+    for (let i = 0; i < 400; i++) {
+      const c = JSON.parse(a.run(`(()=>{buildSport='taekwondo';unitStyle='${st}';const c=tkdCombo('shadow');buildSport=null;unitStyle=null;return JSON.stringify(c)})()`));
+      n++;
+      if (c.some((x) => ["ttdol", "ttyeop", "dwi", "dhu"].includes(x))) sp++;
+    }
+    return sp / n;
+  };
+  const itf = share("itf"), wt = share("wt");
+  assert.ok(itf >= 0.4, "ITF " + itf);
+  assert.ok(itf > wt, `ITF ${itf} vs WT ${wt}`);
+  assert.equal(share("itf", { lvl: 0 }), 0, "beginners: none");
+  assert.equal(share("itf", { by: 2017 }), 0, "children: none");
+  assert.equal(share("itf", { lim: ["knee"] }), 0, "knee limit: none");
+});
+test("7b B8: ITF mobility = mobility 28 + easy hand-foot links 4 (2 rounds) + cool-down 5", () => {
+  const a = app();
+  const m = sess7(a, "taekwondo", "M", { st: "itf", min: 45 });
+  assert.equal(blk(m, (b) => b.key === "mob").min, 28);
+  const hf = blk(m, (b) => b.lbl === "hf");
+  assert.ok(hf && hf.rounds && hf.min === 4 && hf.w === 90 && hf.b === 30 && hf.items.length === 2, JSON.stringify(hf));
+  assert.ok(hf.items.every((it) => it.ease) && hf.items.some((it) => it.combo && it.combo.some((x) => ["jir", "dung"].includes(x)) && it.combo.some((x) => ["ap", "dol", "dolh", "yeop", "mireo", "nae", "ban"].includes(x))) || hf.items.some((it) => it.combo), "easy hand-foot rounds");
+  assert.equal(blk(m, (b) => b.key === "cool").min, 5);
+  a.run("S.profile.lang='de';ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'M','gym',['bag'],{sport:'taekwondo',tstyle:'itf',min:45});ui.setup=null;");
+  assert.match(a.run("renderSession()"), /Lockere Hand-Fuß-Verbindungen/);
+});
+test("7b B1: taekwondo load areas by style for club and own technique/sparring units; kickboxing and boxing unchanged", () => {
+  const a = app();
+  const r = (e) => JSON.parse(a.run(`JSON.stringify(entryRegions(${JSON.stringify(e)}))`));
+  assert.deepEqual(r({ src: "club", ck: "T", sport: "taekwondo", tstyle: "wt" }), { legs: 0.5, arms: 0.15, core: 0.15, endu: 0.2 });
+  assert.deepEqual(r({ src: "club", ck: "P", sport: "taekwondo", tstyle: "itf" }), { legs: 0.4, arms: 0.25, core: 0.15, endu: 0.2 });
+  assert.deepEqual(r({ src: "club", ck: "T", sport: "taekwondo" }), { legs: 0.5, arms: 0.15, core: 0.15, endu: 0.2 }, "no style: WT");
+  assert.deepEqual(r({ src: "club", ck: "K", sport: "taekwondo", tstyle: "wt" }), r({ src: "club", ck: "K", sport: "kickboxing" }), "conditioning stays general");
+  assert.deepEqual(r({ src: "club", ck: "P", sport: "kickboxing" }), { legs: 0.35, arms: 0.35, core: 0.1, endu: 0.2 }, "kickboxing unchanged (3-Q)");
+  assert.deepEqual(r({ src: "own", type: "T", sport: "taekwondo", tstyle: "itf" }), { legs: 0.4, arms: 0.25, core: 0.15, endu: 0.2 });
+  // a hard WT club evening lightens only the legs the next day
+  a.run("S.profile.sport='kickboxing';S.log=[{id:'c1',date:'2026-11-01',src:'club',ck:'P',sport:'taekwondo',tstyle:'wt',minutes:90,rpe:8,inputConfirmed:true}];");
+  assert.equal(a.run("JSON.stringify(lightRegions({log:S.log,date:'2026-11-02'}))"), '["legs"]');
+  // own unit: the stored areas are the style table
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='itf';");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(sessionRegions(buildSession('2026-11-02','T','gym',['bag'],{sport:'taekwondo',tstyle:'wt'})))")), { legs: 0.5, arms: 0.15, core: 0.15, endu: 0.2 });
+});
+test("7b B2: entries keep the unit's style/discipline; the history names them where not obvious", async () => {
+  const a = app();
+  a.run("S.profile.sport='kickboxing';S.profile.disc='lc';S.profile.lang='de';S.log=[];ui.sel='2026-11-02';ui.tab='session';S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag'],{sport:'taekwondo',tstyle:'itf',min:30});startWorkout();playerAction('early');");
+  a.node("fMin").value = "30";
+  a.node("fDurationConfirmed").checked = true;
+  a.node("fRpe").value = "6";
+  await a.click({ id: "fSave" });
+  if (a.run("S.log.length") === 0) a.run("sheetAction('confirm')");
+  assert.equal(a.run("S.log[0].tstyle"), "itf");
+  assert.equal(a.run("S.log[0].disc"), undefined);
+  assert.match(a.run("logTag(S.log[0])"), /Taekwondo · ITF/);
+  assert.equal(a.run("logTag({sport:'kickboxing',disc:'lc'})"), "", "own sport and discipline: no tag");
+  assert.match(a.run("logTag({sport:'kickboxing',disc:'k1'})"), /K1/);
+  // club entries of taekwondo take the profile style
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';");
+  assert.match(a.run("renderLog()"), /Taekwondo · ITF|ITF/);
+});
+test("7b B3: the boxing opening round names no kicks (DE/EN); kickboxing keeps its text", () => {
+  const a = app();
+  for (const lg of ["de", "en"]) {
+    a.run(`S.profile.lang='${lg}';`);
+    for (let i = 0; i < 8; i++) {
+      const s = sess7(a, "boxing", "T", { eq: ["bag"] });
+      const ease = blk(s, (b) => b.key === "main").items.filter((it) => it.ease);
+      assert.ok(ease.length && ease.every((it) => it.box), "flagged");
+      for (const it of ease) assert.doesNotMatch(a.run(`paceTxt(${JSON.stringify(it)})`), /kick/i);
+    }
+    const kb = blk(sess7(a, "kickboxing", "T", { eq: ["bag"] }), (b) => b.key === "main").items.find((it) => it.ease);
+    assert.match(a.run(`paceTxt(${JSON.stringify(kb)})`), /kick/i);
+  }
+});
+test("7b B5: a second tap on the safety note after the onboarding closed does nothing", async () => {
+  const a = app();
+  a.run("ui.onb=null;S.profile.ackSafe='2026-01-01';");
+  await a.click({ dataset: { onb: "ack" } });
+  assert.equal(a.run("S.profile.ackSafe"), "2026-01-01");
+  a.run("ui.onb={step:3};");
+  await a.click({ dataset: { onb: "ack" } });
+  assert.equal(a.run("S.profile.ackSafe"), "2026-01-01", "no pending note: nothing happens");
 });

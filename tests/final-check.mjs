@@ -119,8 +119,9 @@ const note = (id, ok, txt) => R.push(`${ok ? "OK    " : "BEFUND"} ${id}: ${txt}`
     a.run(`S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${sty}'});S.profile.birthYear=1995;S.profile.level=1;S.log=[];`);
     const r = await walk(a, `S.sessions[ui.sel]=buildSession(ui.sel,'T','gym',['bag','partner'],{sport:'taekwondo',tstyle:'${sty}'});`, "tkd " + sty);
     const reg = JSON.parse(a.run(`JSON.stringify(entryRegions(S.log.find(e=>e.date==='2026-11-02')))`));
-    const club = JSON.parse(a.run(`JSON.stringify(clubRegions('T','taekwondo'))`));
-    note("H1-" + sty, false, `eigene T-Einheit Bereiche ${JSON.stringify(reg)}; Vereinstraining Taekwondo ${JSON.stringify(club)} – Konzept 6.1: ${sty === "wt" ? "Beine 0,50 · Arme 0,15" : "Beine 0,40 · Arme 0,25"} · Rumpf 0,15 · Ausdauer 0,20`);
+    const want = sty === "wt" ? { legs: 0.5, arms: 0.15, core: 0.15, endu: 0.2 } : { legs: 0.4, arms: 0.25, core: 0.15, endu: 0.2 };
+    const club2 = JSON.parse(a.run(`JSON.stringify(clubRegions('T','taekwondo','${sty}'))`));
+    note("H1-" + sty, JSON.stringify(reg) === JSON.stringify(want) && JSON.stringify(club2) === JSON.stringify(want), `eigene T-Einheit ${JSON.stringify(reg)}; Vereinstraining ${JSON.stringify(club2)} – Konzept 6.1: ${sty === "wt" ? "Beine 0,50 · Arme 0,15" : "Beine 0,40 · Arme 0,25"} · Rumpf 0,15 · Ausdauer 0,20`);
   }
 }
 // H2 WT then ITF unit in the same week: both logged once, style kept on the entries
@@ -149,8 +150,8 @@ const note = (id, ok, txt) => R.push(`${ok ? "OK    " : "BEFUND"} ${id}: ${txt}`
   const a = app();
   a.run(`S.profile.sport='kickboxing';S.log=[{id:'c1',date:'2026-11-01',src:'club',ck:'P',sport:'boxing',minutes:90,rpe:8,inputConfirmed:true}];`);
   note("H3", true, "leichte Bereiche nach hartem Box-Vereinssparring: " + a.run("JSON.stringify(lightRegions({log:S.log,date:'2026-11-02'}))"));
-  a.run(`S.log=[{id:'c2',date:'2026-11-01',src:'club',ck:'P',sport:'taekwondo',minutes:90,rpe:8,inputConfirmed:true}];`);
-  note("H3b", true, "nach hartem Taekwondo-Vereinssparring: " + a.run("JSON.stringify(lightRegions({log:S.log,date:'2026-11-02'}))"));
+  a.run(`S.log=[{id:'c2',date:'2026-11-01',src:'club',ck:'P',sport:'taekwondo',tstyle:'wt',minutes:90,rpe:8,inputConfirmed:true}];`);
+  note("H3b", a.run("JSON.stringify(lightRegions({log:S.log,date:'2026-11-02'}))") === '["legs"]', "nach hartem WT-Vereinssparring: " + a.run("JSON.stringify(lightRegions({log:S.log,date:'2026-11-02'}))"));
 }
 // H4 resume of an ITF unit inside a kickboxing main profile keeps the style
 {
