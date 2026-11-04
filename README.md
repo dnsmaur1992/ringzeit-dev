@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan fürs Kickboxen, Boxen und Taekwondo" width="100%">
+  <img src="docs/banner.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan für Kickboxen, Boxen und Taekwondo" width="100%">
 </p>
 
 <p align="center">
@@ -7,6 +7,10 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Kickboxen-WAKO-C8404A?style=flat-square" alt="Kickboxen nach WAKO">
+  <img src="https://img.shields.io/badge/Boxen-DBV-2F6FD0?style=flat-square" alt="Boxen nach DBV">
+  <img src="https://img.shields.io/badge/Taekwondo-WT%20%2F%20DTU%20%C2%B7%20ITF--D-E8E2D6?style=flat-square" alt="Taekwondo WT/DTU und ITF-D">
+  <br>
   <img src="https://img.shields.io/badge/kostenlos-ohne%20Konto-C9A86A?style=flat-square" alt="Kostenlos, ohne Konto">
   <img src="https://img.shields.io/badge/offline-nutzbar-5FB3A6?style=flat-square" alt="Offline nutzbar">
   <img src="https://img.shields.io/badge/Daten-nur%20auf%20dem%20Handy-8EC9A4?style=flat-square" alt="Daten nur auf dem Handy">
@@ -14,13 +18,26 @@
   <img src="https://img.shields.io/badge/Sprache-DE%20%C2%B7%20EN-8C9099?style=flat-square" alt="Deutsch und Englisch">
 </p>
 
-> **Ringzeit Dev – Entwicklungsversion.** Dieses Repository (`ringzeit-dev`) ist die Entwicklungskopie der stabilen [Ringzeit-App](https://github.com/dnsmaur1992/ringzeit) für die Erweiterung um Boxen und Taekwondo. Sie läuft unter [dnsmaur1992.github.io/ringzeit-dev](https://dnsmaur1992.github.io/ringzeit-dev/) mit eigenen, frischen Daten: eigener Speicher (`ringzeit-dev.v1`), eigene Caches (`ringzeit-dev-…`), eigene installierbare App „Ringzeit Dev“, keine Cloud-Speicherung und kein Import aus der stabilen App. Sicherungen der stabilen App werden hier nicht geladen. Bitte für echtes Training weiter die stabile App nutzen. Details: [docs/architecture.md](docs/architecture.md), Stand: [docs/implementation-status.md](docs/implementation-status.md).
+**Ringzeit** plant dein Training im **Kickboxen, Boxen oder Taekwondo** neben dem Verein – passend zu Disziplin bzw. Stil, Level, Alter und Trainingstagen. Runden, Kombinationen und Übungen kommen fertig dosiert aufs Handy, der Rundentimer läutet die Glocke, eine Ansage ruft die Kombis, und am Ende siehst du, was du geschafft hast. Jede Sportart folgt den Regeln ihres Verbands und hat ihren eigenen Trainingsschwerpunkt.
 
-**Ringzeit** plant dein Training im **Kickboxen, Boxen oder Taekwondo (WT oder ITF)** neben dem Verein – passend zu Disziplin bzw. Stil, Level und Trainingstagen. Runden, Kombinationen und Übungen kommen fertig dosiert aufs Handy, der Rundentimer läutet die Glocke, und am Ende siehst du, was du geschafft hast. Die Regeln richten sich nach der WAKO.
+> **Ringzeit Dev – Entwicklungsversion.** Dieses Repository (`ringzeit-dev`) ist die Entwicklungskopie der stabilen [Ringzeit-App](https://github.com/dnsmaur1992/ringzeit), erweitert um Boxen und Taekwondo. Sie läuft getrennt unter [dnsmaur1992.github.io/ringzeit-dev](https://dnsmaur1992.github.io/ringzeit-dev/): eigener Speicher (`ringzeit-dev.v1`), eigene Caches (`ringzeit-dev-…`), eigene installierbare App „Ringzeit Dev“, kein Import aus der stabilen App. Stand und Prüfungen: [Umsetzungsstand](docs/implementation-status.md) · [Gesamtprüfung](docs/final-check.md) · [Ablösung der stabilen App](docs/abloesung.md).
+
+## Drei Sportarten auf einen Blick
+
+| | 🥋 Kickboxen | 🥊 Boxen | 🥋 Taekwondo WT | 🥋 Taekwondo ITF |
+|---|---|---|---|---|
+| **Verband / Regeln** | WAKO (WAKO Deutschland) | DBV-Wettkampfbestimmungen | World Taekwondo · DTU | ITF · ITF-D |
+| **Disziplinen / Formate** | Light Contact, Kick Light, Full Contact, K1 Style | Altersklassen und Rundenlängen nach DBV | Kampfformat nach Altersklasse (WT/DTU) | Kampfformat nach Alter (ITF) |
+| **Schwerpunkt im Plan** | Kombinationen nach Disziplin, 6-Kick-Regel im FC | **Ausdauer und Zähigkeit:** 3-Min.-Runden, Kraftausdauer, Körperabhärtung | **Beweglichkeit, Spritzigkeit, Kontrolle:** aktive Beweglichkeit in jeder Technikeinheit | **Leichtkontakt-Charakter, spektakuläre Kicks:** Hand-Fuß-Verbindungen, viele Sprung- und Drehtritte |
+| **Typisch** | Partnerdrills mit Gegenaktion | Beinarbeit, Meiden, Aufgabensparring | Trittketten, Serien mit schnellem Wechsel, Step-Sparring | Sambo-/Ibo-/Ilbo-Matsogi als Drill-Prinzip |
+| **Gürtel** | BFVKB-Prüfungsprogramm | – | Kup/Poom/Dan nach DTU-PO, Taegeuk | Kup/Dan nach ITF-D-PO, Tul |
+| **Begriffe** | Deutsch/Englisch | Deutsch/Englisch | Koreanisch (Kukkiwon) oder App-Namen | Koreanisch (ITF-D-PO) oder App-Namen |
+
+Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf eine andere Sportart, Disziplin oder einen anderen Stil stellen. **Verlauf, Belastung und Fitnesstest sind gemeinsam**, das Technik-Level gilt je Sportart und Stil.
 
 > **Neu hier?** Öffne die [Installationsanleitung](https://dnsmaur1992.github.io/ringzeit-dev/installieren.html) auf deinem Handy – mit QR-Code und Schritt-für-Schritt-Hilfe für iPhone und Android.
 
-**Dein erster Trainingsstart:** Heute → Tagesplan sichten und Ausrüstung bereitlegen → **Training beginnen** (oben oder unter dem Plan). Danach führt dich Ringzeit **Übung für Übung im Vollbild** durch die Einheit – mit 10 Sekunden Vorbereitung, Gong und Ansage, bei Kraft mit Satz-Tabelle – bis zum Abschluss. ✕ führt zurück zur Planübersicht und pausiert die Timer. Die Tour hat nur sechs Schritte; Einrichtung und Tour können übersprungen werden; die Tour ist unter **Profil → App & Daten** erneut erreichbar.
+**Dein erster Trainingsstart:** Sportart wählen → Heute → Tagesplan sichten und Ausrüstung bereitlegen → **Training beginnen**. Danach führt dich Ringzeit **Übung für Übung im Vollbild** durch die Einheit – mit 10 Sekunden Vorbereitung, Gong und Ansage, bei Kraft mit Satz-Tabelle – bis zum Abschluss. ✕ führt zurück zur Planübersicht und pausiert die Timer. Einrichtung und Tour lassen sich überspringen; die Tour ist unter **Profil → App & Daten** erneut erreichbar.
 
 ---
 
@@ -30,8 +47,10 @@
 - [Funktionen](#funktionen)
 - [Installation](#installation)
 - [Deine Daten](#deine-daten)
+- [Entwicklung und Prüfungen](#entwicklung-und-prüfungen)
 - [Updates veröffentlichen](#updates-veröffentlichen)
 - [Technik](#technik)
+- [Dokumentation](#dokumentation)
 - [Hinweise](#hinweise)
 
 ---
@@ -40,21 +59,27 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/heute.jpg" width="200" alt="Heute"><br><sub><b>Heute</b> – nächste Einheit und Fortschritt</sub></td>
-    <td align="center"><img src="docs/einheit.jpg" width="200" alt="Einheit"><br><sub><b>Einheit</b> – Runden mit Kombinationen</sub></td>
+    <td align="center"><img src="docs/tkd-heute.jpg" width="200" alt="Heute – Taekwondo"><br><sub><b>Taekwondo</b> – Dobok mit Gürtel des Grades</sub></td>
+    <td align="center"><img src="docs/box-heute.jpg" width="200" alt="Heute – Boxen"><br><sub><b>Boxen</b> – blaue und rote Ecke</sub></td>
+    <td align="center"><img src="docs/kb-heute.jpg" width="200" alt="Heute – Kickboxen"><br><sub><b>Kickboxen</b> – wie gewohnt</sub></td>
     <td align="center"><img src="docs/timer.jpg" width="200" alt="Timer im Vollbild"><br><sub><b>Vollbild-Timer</b> mit Ansage</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/tkd-einheit.jpg" width="200" alt="WT-Einheit"><br><sub><b>WT</b> – Trittketten, Serien mit schnellem Wechsel</sub></td>
+    <td align="center"><img src="docs/itf-einheit.jpg" width="200" alt="ITF-Einheit"><br><sub><b>ITF</b> – Hand-Fuß-Verbindungen</sub></td>
+    <td align="center"><img src="docs/box-einheit.jpg" width="200" alt="Box-Einheit"><br><sub><b>Boxen</b> – Kondition in 3-Minuten-Runden</sub></td>
+    <td align="center"><img src="docs/einheit.jpg" width="200" alt="Kickbox-Einheit"><br><sub><b>Kickboxen</b> – Runden mit Kombinationen</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/tkd-guertel.jpg" width="200" alt="Gürtelbereich Taekwondo"><br><sub><b>Gürtelbereich</b> – Grad, Stil, Prüfung</sub></td>
+    <td align="center"><img src="docs/tkd-ratgeber.jpg" width="200" alt="Ratgeber Taekwondo"><br><sub><b>Ratgeber</b> – Gürtel, Grade, Begriffe</sub></td>
+    <td align="center"><img src="docs/tkd-timer.jpg" width="200" alt="Rundentimer"><br><sub><b>Rundentimer</b> – Vorlagen je Sportart</sub></td>
     <td align="center"><img src="docs/abschluss.jpg" width="200" alt="Abschluss"><br><sub><b>Abschluss</b> – Woche und Serie</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/schwerpunkt.jpg" width="200" alt="Schwerpunkt-Block"><br><sub><b>Schwerpunkt</b> – 6-Wochen-Blöcke</sub></td>
-    <td align="center"><img src="docs/test.jpg" width="200" alt="Fitnesstest"><br><sub><b>Fitnesstest</b> mit Vergleich</sub></td>
     <td align="center"><img src="docs/verlauf.jpg" width="200" alt="Verlauf"><br><sub><b>Verlauf</b> – Abzeichen und Kalender</sub></td>
-    <td align="center"><img src="docs/rundentimer.jpg" width="200" alt="Rundentimer"><br><sub><b>Rundentimer</b> mit Ringglocke</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/coach.jpg" width="200" alt="Coach-Modus"><br><sub><b>Coach-Modus</b> – Kombis werden angesagt</sub></td>
-    <td align="center"><img src="docs/bandagieren.jpg" width="200" alt="Bandagieren"><br><sub><b>Bandagieren</b> – Schritt für Schritt</sub></td>
-    <td align="center"><img src="docs/packliste.jpg" width="200" alt="Turnier-Packliste"><br><sub><b>Packliste</b> für den Turniertag</sub></td>
+    <td align="center"><img src="docs/schwerpunkt.jpg" width="200" alt="Schwerpunkt-Block"><br><sub><b>Schwerpunkt</b> – 6-Wochen-Blöcke</sub></td>
+    <td align="center"><img src="docs/packliste.jpg" width="200" alt="Turnier-Packliste"><br><sub><b>Packliste</b> – je Sportart</sub></td>
     <td align="center"><img src="docs/feste.jpg" width="200" alt="Feiertage"><br><sub><b>Feiertage</b> – hier Chanukka</sub></td>
   </tr>
 </table>
@@ -63,7 +88,7 @@
 
 ## Funktionen
 
-### 🥋 Drei Sportarten, jede mit eigenem Schwerpunkt
+### 🥋 Die Sportarten im Detail
 - **Hauptsport im Profil** jederzeit wechselbar, zusätzlich eine andere Sportart (bzw. Disziplin oder Stil) für einzelne Einheiten; Verlauf, Belastung und Fitnesstest sind gemeinsam, das Technik-Level gilt je Sportart und Stil
 - **Kickboxen** (WAKO): Light Contact, Kick Light, Full Contact, K1 Style – wie bisher
 - **Boxen** (DBV): Schläge ohne Kicks, Altersklassen und Rundenlängen nach den DBV-Wettkampfbestimmungen; Schwerpunkt **Ausdauer und Zähigkeit** – Kondition in 3-Minuten-Runden, längerer Kraftausdauer-Teil, „Handgelenk & Körperabhärtung“ ab Level 1 und 16 Jahren, Mobility mit lockerer Beinarbeit und Schatten
@@ -75,18 +100,18 @@
 ### 🥊 Training, das zu dir passt
 - **Einfach oder ausführlich:** In der Einrichtung wählbar (für neue Nutzer ist „Einfach“ vorausgewählt), später unter Profil → App & Daten. Einfach zeigt auf Heute nur das Training; Fitnesstest und Verlauf liegen dann im Profil statt in der Leiste. Auch „Einheit anpassen“ fragt dann nur Trainingsart, Dauer, Ort und Partner/Sandsack – ohne Tagesform, Zusatz-Geräte und Fachbegriffe
 - **Anstrengung mit Gesichtern:** fünf Stufen von 😌 „Sehr locker“ bis 🥵 „Am Limit“; in der ausführlichen Ansicht zusätzlich die genaue Skala 1–10
-- **Wochenplan** für Light Contact, Kick Light, Full Contact und K1 Style – abgestimmt auf Trainingstage, Dauer, Level und Vereinstraining
+- **Wochenplan je Sportart** (Kickboxen nach Disziplin, Boxen, Taekwondo WT oder ITF) – abgestimmt auf Trainingstage, Dauer, Level und Vereinstraining
 - **Einheiten** für Technik, Technik & Kondition, Sparring, Kraft, Kondition und Mobility – zu Hause, in der Halle, draußen oder im Fitnessstudio
-- **Kombinationen** passend zum Level, mit Führ- und Schlaghand-Hinweis; eigene Kombis aus dem Verein werden eingebaut
+- **Kombinationen** passend zu Sportart, Level, Alter und Grad, mit Seite (V/H); eigene Kombis aus dem Verein werden eingebaut
 - **Partnerrunden mit Gegenaktion** (als Ausnahme: pro Einheit 1 bei Grundlage, 2–4 bei Fortgeschritten, 3–6 bei Wettkampf): Der Partner greift mal zuerst an, unterbricht mittendrin oder kontert am Ende – mit passender Verteidigung (Parieren, Slippen, Abducken, Doppeldeckung, Rausgehen, Ableiten; ab Fortgeschritten auch Fußfeger mit Fuß anheben; in Kick Light und K1 Low Kick mit Checken bzw. Schienbein-Block; in K1 Knie mit Abblocken), ab Fortgeschritten oft mit sofortiger eigener Antwort, bei Wettkampf auch als doppelter Schlagabtausch; in Full Contact mit Deckungs-Hinweis. Wer was macht, zeigen farbige Rahmen (A hellblau, B gelb)
-- **Klare Ziele:** Jeder Tritt und jedes Knie nennt sein Ziel (Kopf, Körper, Oberschenkel) und die Seite (V/H); Schläge zum Körper (Jab, Cross, Haken) kommen in jeder Einheit vor.
-- **Disziplin spürbar:** Leichtkontakt mit kurzen, schnellen Kombis und Kontrolle; Full Contact mit Wirkung am Sandsack, mehr Körpertreffern, mehr Druck im Partnerdrill und der 6-Kick-Regel auch mit Partner.
+- **Klare Ziele (Kickboxen):** Jeder Tritt und jedes Knie nennt sein Ziel (Kopf, Körper, Oberschenkel) und die Seite (V/H); Schläge zum Körper (Jab, Cross, Haken) kommen in jeder Einheit vor.
+- **Disziplin spürbar (Kickboxen):** Leichtkontakt mit kurzen, schnellen Kombis und Kontrolle; Full Contact mit Wirkung am Sandsack, mehr Körpertreffern, mehr Druck im Partnerdrill und der 6-Kick-Regel auch mit Partner.
 - **Zu zweit trainieren:** Zirkel versetzt mit Splitscreen (A links, B rechts), Geräte abwechselnd; härtere Abhärtung im Vollkontakt (Full Contact, K1).
 - **Partnerrunden von leicht zu schwer:** Die Kombinationen steigern sich über die Einheit
 - **Vereinstage und Ringzeit-Tage** getrennt eintragen: eigene Einheiten werden neben dem Verein geplant
 - **Kinder-Modus (8–12 Jahre):** kürzere Einheiten und angepasste Übungen und Belastungen
-- **Weitere Kicks:** Brazilian Kick, Spinning Hook Kick, Tornado Kick und gesprungenes Knie; Axe-Kick ab Fortgeschritten
-- **Full Contact und K1 Style erst ab 15 Jahren** und mit freigeschaltetem Trainingslevel
+- **Weitere Kicks (Kickboxen):** Brazilian Kick, Spinning Hook Kick, Tornado Kick und gesprungenes Knie; Axe-Kick ab Fortgeschritten
+- **Full Contact und K1 Style erst ab 15 Jahren** (Altersgrenze der WAKO)
 - **Klare Dosierung** bei jeder Übung: Wiederholungen, Sekunden, Strecke oder Minuten
 - **Sicherer Einstieg:** Aufwärmen mit kurzem Andehnen, Einstiegsrunden ohne Kopftritte
 - **Skizzen** zu allen Übungen, die nicht selbsterklärend sind
@@ -115,7 +140,7 @@
 - Leuchtring mit Fortschritt, pulsierende letzte 10 Sekunden und ein Blitz zum Rundenende
 - **Automatischer Rundenwechsel im geführten Training:** Nach der Pause läuft die nächste Runde direkt weiter; die 10 Sekunden Vorlauf gibt es nur beim manuellen Start
 - **Musik bei den Rundentimern** im Profil wählen; der Bildschirm bleibt mit unterstütztem Wake Lock während des Timers an
-- **Coach-Modus:** ruft während der Runde Kombis aus deinem Level aus – wie der Trainer am Ring
+- **Coach-Modus:** ruft während der Runde Kombis aus deiner Sportart und deinem Level aus – wie der Trainer am Ring; bei Taekwondo mit den Techniknamen deiner Wahl
   - Im freien Rundentimer schaltet der Knopf oben rechts (🔊/🔈) die Ansagen an und aus; wer die Coach-Ansagen einschaltet, schaltet die Sprache automatisch mit ein
   - Auf dem iPhone wird die Sprachausgabe beim ersten Tipp nach jedem App-Start automatisch freigeschaltet – ohne Umschalten
   - Ringzeit nutzt automatisch die **beste installierte Stimme** (Premium vor Erweitert vor Standard, keine Spaß- oder reinen Online-Stimmen). Unter Profil → App & Daten steht, welche gerade läuft, wie man eine bessere lädt, und es gibt eine Hörprobe
@@ -123,18 +148,17 @@
 ### 🏆 Ziele und Motivation
 - **Turniervorbereitung** im Wettkampf-Format des Verbands (WAKO, DBV, WT/DTU, ITF), Formkurve bis zum Wettkampftag
   - **Gewichtsklasse:** In den 8 Wochen vor dem Turnier erinnert „Heute“ einmal pro Woche ans Wiegen, mit Eingabefeld direkt im Hinweis. Verglichen wird der Schnitt der letzten zwei Wochen. Es gibt nur sachliche Hinweise, keine Tipps zum Gewichtmachen; unter 15 Jahren keine Erinnerungen
-- **Gürtelprüfung** nach der Prüfungsordnung, mit Theorie-Quiz und Selbstverteidigung
+- **Gürtelprüfung:** Kickboxen nach dem BFVKB-Programm mit Theorie-Quiz und Selbstverteidigung; Taekwondo mit Grad je Stil, Prüfungsteilen, Formnamen und Mindestwartezeiten (DTU- bzw. ITF-D-Prüfungsordnung); kein automatischer Gürtel
 - **Schwerpunkt-Blöcke** über 6 Wochen: Kampfausdauer, Schnellkraft oder Beweglichkeit
 - **Fitnesstest** mit Netzdiagramm und Vorher-nachher-Vergleich
 - **Abzeichen, Wochenserie und Trainingskalender**
-- **Turnier-Packliste** zum Abhaken, eine Woche vor dem Wettkampf
+- **Turnier-Packliste** zum Abhaken, eine Woche vor dem Wettkampf – je Sportart bzw. Stil aus den Wettkampfregeln abgeleitet
 - Automatische **Entlastungswochen** und Pausen bei Krankheit, Verletzung oder Urlaub
 - **Gesamtbelastung** aus eigenem Training und Verein (Minuten × Anstrengung, alle Sportarten gemeinsam): Eine zu hohe Woche macht die noch nicht begonnenen Einheiten leichter – Trainingstage bleiben; war der Vortag in einem Bereich hart (z. B. Vereins-Sparring → Beine), ist die Einheit heute etwas leichter
 - **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; **Kickboxen**, **Boxen** (DBV) und **Taekwondo** (WT/DTU, ITF-D; Onboarding fragt zuerst die Sportart; eigener Ratgeber, Packliste, Tipps, Rundentimer-Vorlagen und Technik-Test je Sportart). Boxen: Schläge ohne Kicks, Altersklassen und Rundenlängen nach DBV-WKB (ohne Geburtsjahr: Erwachsene), Beinarbeit- und Meiden-Runden, Aufgabensparring (höchstens eine Runde Touch-Sparring nach Absprache mit dem Trainer), Block „Handgelenk & Griff“ (ab Level 1 und 16 Jahren mit Körperabhärtung) statt der Kickbox-Abhärtung, K.o.-Sperre 30 Tage
 - **Freier Lauf** (Kondition draußen): ohne Timer, danach Minuten, Strecke und Anstrengung eintragen
 - **Text und Timer aus einer Quelle:** Dosierung, Timerphasen und Zeitangaben stammen aus derselben strukturierten Verordnung – was dort steht, läuft der Timer (Seil-Intervalle im 30-s-Wechsel, Kick-Halten ca. 4–5 Min., Einbeinstand links dann rechts, Abhärtung für Full Contact mit passenden Durchgängen)
 - **Einträge bearbeiten und löschen:** die Wochenbelastung und die noch nicht begonnenen Einheiten werden neu berechnet
-- **Full Contact und K1** sind nicht mehr an das Level gebunden, nur an das Mindestalter
 - **Ramadan-Modus:** leichtere Einheiten für alle, die fasten – freiwillig
 
 ### ✅ Übungen und Einheiten abhaken
@@ -166,17 +190,17 @@
 - Die App erklärt die Anpassungen direkt in der Einheit. Details und Grenzwerte: [Trainingslogik](docs/trainingslogik.md)
 
 ### 🩹 Ratgeber
-- **Bandagieren** als animierte Schritt-für-Schritt-Anleitung, dazu ein Video
+- **Bandagieren** (Kickboxen, Boxen) als animierte Schritt-für-Schritt-Anleitung, dazu ein Video
 - **Materialpflege** für Handschuhe, Bandagen, Schoner und Mundschutz – mit Erinnerung nach dem Training
-- **Pflege & Erste Hilfe:** PECH-Regel, Thai-Boxing-Öl, Nasenbluten und wann man zum Arzt sollte
+- **Pflege & Erste Hilfe:** PECH-Regel, Thai-Boxing-Öl (Kickboxen), Nasenbluten und wann man zum Arzt sollte
 - **Taekwondo:** Gürtel binden & Dobok, Grade & Prüfung (Wartezeiten und Formen aus den Prüfungsordnungen), Begriffe, Geschichte & Verbände – je nach Stil WT oder ITF, mit Links zu DTU und ITF-D; Pflege und Erste Hilfe ohne Bandagen und Handschuhe
 - **Zum Lesen:** zehn kurze Themen mit Quellenangabe – Mythen-Check, was in einer Runde im Körper passiert, warum Schienbeine härter werden, wie Punktrichter werten, die WAKO-Disziplinen im Vergleich, der Turniertag von innen, die häufigsten Anfängerfehler, Kopf und Nerven, Schlaf und Erholung, Handschuhe erklärt. „Nächstes Thema“ blättert weiter. Bewusst ohne Anleitungen zum Gewichtmachen
 
 ### ✨ Liebe zum Detail
-- Lebendige Startseite, die sich der **Tages- und Jahreszeit** anpasst – mit Mütze im Winter und Palme mit Liegestuhl im Sommer
+- Lebendige Startseite mit **Sportkleidung je Sportart** (Boxen in Blau/Rot, Taekwondo im Dobok mit dem Gürtel deines Grades), die sich der **Tages- und Jahreszeit** anpasst – mit Mütze im Winter und Palme mit Liegestuhl im Sommer
 - **Feiertage** verschiedener Kulturen: Weihnachten, Silvester, Ostern, Karneval, Ramadan, Zuckerfest, Opferfest, Chanukka, Nouruz, Diwali und mehr
 - **Feedback senden** unter Profil → App & Daten: öffnet ein Tally-Formular, mitgeschickt werden nur App-Version, Geräteart und Sprache – keine Trainingsdaten
-- **Fun Facts und Technik-Tipps** beim Laden – „Weiter“ blättert weiter, nach spätestens 10 Sekunden öffnet sich die App von selbst
+- **Fun Facts und Technik-Tipps je Sportart und Stil** beim Laden (mit Quellen) – „Weiter“ blättert weiter, nach spätestens 10 Sekunden öffnet sich die App von selbst
 - **Sicherheitshinweis beim Start**, dazu Hinweise und Datenschutz im Profil
 - **„Was ist neu“:** nach größeren Updates einmal ein kurzer Hinweis mit den wichtigsten Neuerungen; jederzeit nachlesbar unter Profil → App & Daten
 - **Freiwillige Geschlechtsangabe** zur Einordnung des Fitnesstests
@@ -205,7 +229,7 @@ Die ausführliche Anleitung mit QR-Code (auch zum Ausdrucken für die Halle): **
 
 - **Kein Konto, kein Server, keine Werbung, kein Tracking.**
 - Alle Angaben und Trainingseinträge bleiben **nur auf deinem Handy**.
-- Sicherung: **Profil → Daten & Teilen → Sicherung speichern**. Beim Handywechsel dort **„Sicherung laden“**.
+- Sicherung: **Profil → App & Daten → Daten & Teilen → Sicherung speichern**. Beim Handywechsel dort **„Sicherung laden“**.
 - Die App erinnert alle 30 Tage an eine Sicherung.
 
 ---
@@ -220,6 +244,9 @@ python3 tools/build_pwa.py
 cp pwa/index.html pwa/sw.js pwa/manifest.webmanifest .
 # Isolation stabile App ↔ Dev-App im Browser (Playwright/Chromium, Ordner mit den Dateien der stabilen App):
 node tests/isolation.e2e.mjs ../ringzeit
+# Gesamtprüfung (einige Minuten): jede Einheit aller Sportprofile im geführten Training bis zum Abschluss
+node tests/final-check.mjs
+node tests/final-browser.cjs     # Ansichten 390 px, Offline, Inbetriebnahme – am ausgelieferten Stand
 ```
 
 Der Build setzt die App aus `src/` zusammen (siehe Technik) und schreibt die lesbare Gesamtfassung nach `build/ringzeit.html` – genau diese Datei prüfen die Tests. App-Kennung und Name liest er aus `APP_ID`/`APP_NAME` in `src/app/06-storage.js`. `build/`, `pwa/` und `node_modules/` werden nicht hochgeladen.
@@ -269,9 +296,25 @@ ringzeit-dev/
 
 ---
 
+## Dokumentation
+
+| Dokument | Inhalt |
+|---|---|
+| [Umsetzungsstand](docs/implementation-status.md) | alle Teile, Entscheidungen und Abnahmen |
+| [Architektur](docs/architecture.md) | Aufbau, Module, Tests |
+| [Gesamtprüfung](docs/final-check.md) | automatische Belege, Befunde, Korrekturen |
+| [Geräte-Checkliste](docs/geraete-checkliste.md) | Prüfpunkte auf dem iPhone |
+| [Trainer-Prüfliste](docs/trainer-pruefliste.md) | offene fachliche Fragen zum Abhaken |
+| [Taekwondo-Konzept](docs/taekwondo-concept.md) · [Box-Konzept](docs/boxing-concept.md) | Regeln, Grade, Trainingsmodell |
+| [Regel- und Trainingsquellen](docs/rules-sources.md) | Herausgeber, Fassung, Geltung |
+| [Trainingslogik](docs/trainingslogik.md) · [Belastungskonzept](docs/data-load-concept.md) | Progression, Belastung, Dosierung |
+| [Ablösung der stabilen App](docs/abloesung.md) | Anleitung für später (nicht ausgeführt) |
+
+---
+
 ## Hinweise
 
-- Ringzeit **ersetzt keinen Trainer** und plant das Training neben dem Verein. Bei Schmerzen abbrechen; Sparring nur unter Aufsicht und mit kompletter Schutzausrüstung.
+- Ringzeit **ersetzt keinen Trainer und keinen Unterricht** und plant das Training neben dem Verein. Grundtechniken, Formen und Prüfungsinhalte lernst du im Verein. Bei Schmerzen abbrechen; Sparring nur unter Aufsicht und mit kompletter Schutzausrüstung.
 - Ringzeit ist ein privates Projekt und **kein offizielles Angebot** der WAKO, der WAKO Deutschland, des BFVKB, des Deutschen Boxsport-Verbands (DBV), der World Taekwondo (WT), der Deutschen Taekwondo Union (DTU), der ITF oder des ITF-D. Verbindlich sind immer die aktuellen Regelwerke des jeweiligen Verbands: [WAKO Deutschland](https://www.wako-deutschland.de/downloads/), [DBV](https://www.boxverband.de/), [DTU](https://www.dtu.de/downloads/regelwerke-co), [ITF-D](https://www.itf-d.de/).
 - Feedback und Fehler gern über [Issues](../../issues) oder direkt beim Training.
 
