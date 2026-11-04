@@ -19,7 +19,6 @@ export const NO_EX = new Set([
 ]);
 
 export const STYLES = ["wt", "itf"];
-export const DEFAULT_STYLE = "wt";
 
 export const COLORS = {
   white: "#F1EFE8",
@@ -128,8 +127,6 @@ const ITF_PARTS = (c) => {
   return [];
 };
 export const examParts = (style, code) => (style === "itf" ? ITF_PARTS(code) : WT_PARTS(code));
-/** WT: children and youth under 15 do no break test (a choice from the elective part instead). */
-export const noBreakUnder15 = (style) => style !== "itf";
 
 /** Earliest date for an exam: the day of the last grading plus the minimum waiting time (a hint, never a lock). */
 export function earliestExam(style, code, lastDate) {

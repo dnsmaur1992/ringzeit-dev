@@ -30,7 +30,6 @@ export const TECH = {
 export const KICKS = new Set(["ap", "dol", "dolh", "yeop", "mireo", "dwi", "nae", "ban", "dhu", "ttdol", "ttyeop"]);
 /* hand techniques (a wrist or shoulder limit removes them) */
 export const HANDS = new Set(["jir"]);
-export const STEPS = new Set(["stepf", "stepb", "steps", "turn", "swch"]);
 /* head-height kicks: only after the warm-up rounds */
 export const HEAD = new Set(["dolh", "nae", "dhu"]);
 
