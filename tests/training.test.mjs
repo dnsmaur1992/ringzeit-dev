@@ -2913,7 +2913,7 @@ test("6a: figures wear the white dobok with the belt of the grade (taekwondo onl
   assert.ok(!hero.includes("#2F6FD0") && !hero.includes("#D2343F"), "no boxing corners");
   const none = a.run("heroScene('kick','S',false,outfitFor('taekwondo',{tgrade:'',tstyle:'wt'}))");
   assert.ok(none.includes(a.run("TKDT.COLORS.white")), "no grade: white belt as the standard drawing");
-  // swim trunks season: the dobok stays
+  // summer (palm and deckchair since 7c-3): the dobok stays
   a.run("ui.seasonDate='2026-07-15';S.profile.seasonOff=false;");
   assert.ok(a.run("heroScene('kick','S',false,outfitFor('taekwondo'))").includes("#FEFEFC"));
   assert.equal(a.run("outfitFor('kickboxing')"), false);
@@ -3782,4 +3782,23 @@ test("7c fix: the ⓘ of every exercise with a sketch opens its info sheet (text
         a.run("ui.sheet=null;");
       }
     }
+});
+test("7c-3: summer shows a palm tree (taller than the fighters) and a deckchair for every outfit – no swim trunks any more", () => {
+  const a = app();
+  a.run("S.profile.seasonOff=false;");
+  for (const sp of ["kickboxing", "boxing", "taekwondo"]) {
+    a.run(`S.profile.sport='${sp}';ui.seasonDate='2026-07-15';`);
+    const h = a.run(`heroScene('kick','T',false,outfitFor('${sp}'))`);
+    assert.match(h, /class="palm"/, sp);
+    assert.match(h, /class="deckchair"/, sp);
+    assert.doesNotMatch(h, /trunksP/, sp);
+    // the palm reaches higher than the heads of the fighters (crown at y ≈ 10–48, heads around y 50–60)
+    assert.ok(h.indexOf('class="palm"') < h.lastIndexOf("<circle"), "palm drawn before the fighters (background)");
+    for (const ds of ["2026-01-20", "2026-04-15", "2026-10-15"]) {
+      a.run(`ui.seasonDate='${ds}';`);
+      assert.doesNotMatch(a.run(`heroScene('kick','T',false,outfitFor('${sp}'))`), /class="palm"|class="deckchair"/, sp + ds);
+    }
+  }
+  a.run("S.profile.seasonOff=true;ui.seasonDate='2026-07-15';");
+  assert.doesNotMatch(a.run("heroScene('kick','T',false,false)"), /class="palm"/, "design off: no summer scenery");
 });
