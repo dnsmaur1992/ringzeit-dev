@@ -102,7 +102,8 @@
     }
     // ----- bottom sheet
     if (ds.sx) return sheetAction(ds.sx);
-    if (ds.exinfo) return openSheet({ kind: "ex", id: +ds.exinfo });
+    // exercise ids are text ids since 3-D ("warm.easy_jog"); a number conversion broke the info sheet
+    if (ds.exinfo) return openSheet({ kind: "ex", id: ds.exinfo });
     // ----- focus blocks
     if (ds.blk) return blockAction(ds.blk);
     if (ds.inst) return installAction(ds.inst);
