@@ -651,6 +651,8 @@
     }
     if (ds.restartTour) return startTour();
     if (ds.onb === "ack") {
+      // a second tap while the plan is being set up does nothing (7b B5)
+      if (!ui.onb || (!ui.onb.ack && !ui.onb.ackOnly)) return;
       S.profile.ackSafe = iso(today());
       const a = ui.onb.ack;
       if (ui.onb.ackOnly) {

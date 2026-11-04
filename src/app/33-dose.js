@@ -1,4 +1,6 @@
   /* ============ Dose: every exercise says how much – reps, seconds, distance or minutes ============ */
+  /* name of a block: its own label where the sport sets one (7b: active flexibility, footwork & shadow, hand-foot links, toughness) */
+  const blkName = (b) => (b && b.lbl && t("blkLbl")[b.lbl]) || t(b.key);
   /* per-exercise doses by exercise id: [de, en] */
   /* texts without a timer number; everything with timer numbers comes from its prescription (RX) */
   const DOSE_TXT = {
@@ -224,6 +226,6 @@
     } else if (pair && straight) extra = duoTxt().sets;
     else if (pair && b.items.some((it) => exEqOf(sess, it.id).length)) extra = (note ? " " : "") + duoTxt().turns;
     const nt = note + esc(extra);
-    return `<div class="bhead"><b>${t(b.key)}</b><span>${b.min} ${t("min")}${info ? ` · ${esc(info)}` : ""}</span></div>${nt ? `<div class="bnote">${nt}${duo}</div>` : ""}`;
+    return `<div class="bhead"><b>${blkName(b)}</b><span>${b.min} ${t("min")}${info ? ` · ${esc(info)}` : ""}</span></div>${nt ? `<div class="bnote">${nt}${duo}</div>` : ""}`;
   }
 

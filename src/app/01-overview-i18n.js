@@ -345,6 +345,7 @@
         off: "Ramadan-Modus aus",
       },
       easeRound: "Einstiegsrunde: 70 % Tempo, Kicks höchstens auf Körperhöhe.",
+      easeRoundBox: "Einstiegsrunde: 70 % Tempo, locker und kontrolliert.",
       seasonLbl: "Jahreszeiten-Design",
       view: {
         lbl: "Ansicht",
@@ -1011,6 +1012,7 @@
       hard: "Abhärtung",
       wrist: "Handgelenk & Griff",
       mob: "Mobility-Flow",
+      blkLbl: { amob: "Aktive Beweglichkeit", foot: "Lockere Beinarbeit & Schatten", hf: "Lockere Hand-Fuß-Verbindungen", tough: "Handgelenk & Körperabhärtung" },
       core: "Rumpf",
       min: "min",
       round: "Runde",
@@ -1627,6 +1629,7 @@
         off: "Ramadan mode off",
       },
       easeRound: "Opening round: 70 % pace, kicks no higher than the body.",
+      easeRoundBox: "Opening round: 70 % pace, loose and controlled.",
       seasonLbl: "Seasonal design",
       view: {
         lbl: "View",
@@ -2277,6 +2280,7 @@
       hard: "Hardening",
       wrist: "Wrist & grip",
       mob: "Mobility flow",
+      blkLbl: { amob: "Active flexibility", foot: "Easy footwork & shadow", hf: "Easy hand-foot links", tough: "Wrists & body conditioning" },
       core: "Core",
       min: "min",
       round: "Round",

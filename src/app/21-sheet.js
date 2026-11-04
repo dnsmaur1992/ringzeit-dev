@@ -180,6 +180,7 @@
           type: "V",
           ck: o.ck,
           sport: o.sport || mainSport(),
+          tstyle: (o.sport || mainSport()) === "taekwondo" ? tkdStyle() : undefined,
           minutes: Math.max(5, Math.min(300, o.min || 90)),
           rpe: o.rpe || 7,
           note: (o.note || "").slice(0, 300),

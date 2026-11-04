@@ -9,7 +9,8 @@
     const p = S.profile,
       days = p.days.slice().sort((a, b) => a - b),
       sp0 = sportFor(p.sport),
-      pat = sp0.dayPattern[days.length] || [];
+      // WT plans one mobility unit more than conditioning from 4 days (docs/taekwondo-concept.md 6.2, F1 = yes, 7b)
+      pat = ((p.sport === "taekwondo" && tkdStyle() === "wt" && sp0.dayPatternWt) || sp0.dayPattern)[days.length] || [];
     const m = {};
     days.forEach((d, i) => {
       let ty = pat[i];
@@ -996,6 +997,9 @@
      evasion rounds (always an opponent action first, imagined or real – never a random defence) */
   /* taekwondo (WT): kicks released by level and grade (sports/taekwondo/techniques.js); a wrist or shoulder limit drops the
      punch; children up to 3 techniques; head-height kicks never in the opening rounds (noHead) */
+  const ITF_SPECT = new Set(["ttdol", "ttyeop", "dwi", "dhu"]);
+  /* active flexibility in the full range of motion (WT focus, 7b) */
+  const ACTIVE_MOB = ["mob.kick_holds", "mob.slow_motion_kicks", "mob.controlled_leg_swings", "mob.active_leg_raises"];
   function tkdCombo(kind, noHead) {
     const p = S.profile,
       ctx = tkdCtx(),
@@ -1009,7 +1013,13 @@
     // the fitter, the longer the kick chains: advanced at least 3 kicks, competition level at least 4 (most of the time)
     const lvl = p.level || 0,
       longer = pool.filter((c) => M.kickCount(c) >= 2 + lvl);
+    // ITF (7b B8): from level 1 about every second combo carries a jumping or spinning kick, as far as grade, age and limits allow
+    const spect = M === ITFT && lvl >= 1 ? pool.filter((c) => c.some((x) => ITF_SPECT.has(x))) : [];
     if (lvl >= 1 && longer.length && Math.random() < 0.75) pool = longer;
+    if (spect.length && Math.random() < 0.45) {
+      const sl = spect.filter((c) => pool.includes(c));
+      pool = sl.length ? sl : spect;
+    }
     if (!pool.length) pool = M.LIGHT.filter((c) => c.every((x) => M.allowed(x, ctx)));
     if (!pool.length) pool = [["ap", "dol"]];
     return rnd(pool).slice();
@@ -1602,7 +1612,7 @@
   }
   /* Boxing: no hardening with hits, a fixed 6-minute block for wrists and grip instead (docs/boxing-concept.md §3.4).
      Towel and grip every time; the rest by age, level, limits and equipment; taper/recovery weeks: only the gentle ones. */
-  function wristBlock(eq, soft, blocks = []) {
+  function wristBlock(eq, soft, blocks = [], loc = "gym") {
     const p = S.profile,
       kid = ageGroup() === "kids",
       yg = young(),
@@ -1617,11 +1627,18 @@
     }
     // the neck hold is dropped when the session already has it (strength block)
     if (!kid && !blocks.some((b) => b.items.some((it) => it.id === "str.neck_iso_hold"))) more.push("neck");
+    // toughness (7b B7): from level 1, from 16 years, without limits and not in taper/recovery weeks the second half is body
+    // conditioning – with a partner the ab conditioning, at the bag the core against the bag, otherwise brace & exhale
+    const age = ageAt(today());
+    if (!soft && !kid && p.level >= 1 && age != null && age >= 16 && !p.limits.length) {
+      const body = eq.includes("partner") ? "abs" : eq.includes("bag") && loc !== "out" ? "bodybag" : "brace";
+      return { key: "wrist", lbl: "tough", min: 6, items: [...base, body].map((id) => ({ kind: "hard", id })) };
+    }
     const pick = shuffle(more).slice(0, kid ? 0 : 1);
     return { key: "wrist", min: 6, items: [...base, ...pick].map((id) => ({ kind: "hard", id })) };
   }
   function hardBlock(eq, loc, soft, blocks = []) {
-    if (isBox()) return wristBlock(eq, soft, blocks);
+    if (isBox()) return wristBlock(eq, soft, blocks, loc);
     if (isTkd()) return tkdHardBlock(eq, loc, soft);
     const p = S.profile,
       // harder only for full-contact adults and never in taper/recovery weeks (soft)
@@ -1686,6 +1703,8 @@
       unitStyle = null;
     }
     s.sport = opts.sport || mainSport();
+    // boxing opening rounds name no kicks (7b B3): every easy round of a boxing unit gets the boxing text
+    if (s.sport === "boxing") s.blocks.forEach((b) => b.rounds && b.items.forEach((it) => it.ease && (it.box = 1)));
     // a unit of another style/discipline than the profile keeps it (taekwondo: WT or ITF-D, kickboxing: discipline)
     if (s.sport === "taekwondo") s.tstyle = opts.tstyle || tkdStyle();
     if (s.sport === "kickboxing" && opts.disc && opts.disc !== S.profile.disc) s.disc = opts.disc;
@@ -1768,9 +1787,13 @@
       byName = (list, base) => (e) => (list.includes(e.key) ? 3 : 0) + (base ? base(e) : 0);
     if (bi) notes.push(t("blk").note[bi.k][bi.st]);
     if (type === "M") {
-      const warm = 8,
-        cool = 7,
-        flow = D - warm - cool;
+      // sport focus (7b): WT active flexibility in the full range of motion, boxing loose footwork/shadow, ITF loose hand-foot links
+      const wtM = isTkd() && tkdUnitStyle() === "wt",
+        itfM = isTkd() && !wtM,
+        warm = 8,
+        cool = wtM ? 3 : itfM ? 5 : 7,
+        extra = box ? Math.round(((D - warm - cool) * 8) / 30) : itfM ? Math.round(((D - warm - cool) * 4) / 32) : 0,
+        flow = D - warm - cool - extra;
       blocks.push({
         key: "warm",
         min: warm,
@@ -1792,10 +1815,18 @@
           loc,
           eq,
           used,
-          bk === "mob" ? byName(BLK_MOB[bi.st], machines) : machines,
+          wtM ? byName(ACTIVE_MOB, machines) : bk === "mob" ? byName(BLK_MOB[bi.st], machines) : machines,
         ),
         sets: t("holdNote"),
+        ...(wtM ? { lbl: "amob" } : {}),
       });
+      if (extra >= 3) {
+        // easy shadow rounds: boxing footwork and shadow (3 × 2:00 / 0:30), ITF loose hand-foot links (2 × 1:30 / 0:30)
+        const w = box ? 120 : 90,
+          b = 30,
+          n = Math.max(2, Math.floor((extra * 60) / (w + b)));
+        blocks.push({ key: "main", lbl: box ? "foot" : "hf", min: extra, rounds: true, w, b, items: fightRounds("T", n, loc, [], null, n).map((r) => ({ ...r, ease: 1 })) });
+      }
       const breath = EX["cool.breathing"];
       blocks.push({
         key: "cool",
@@ -1903,7 +1934,8 @@
     const supSets = load.deload || work === "phys" ? "2×" : "3×";
     let theme = null;
     if (type === "S") {
-      const main = Math.round(rest * 0.7),
+      // boxing: a longer strength-endurance finisher (≈ 24 / 15 min of 39, 7b B7)
+      const main = Math.round(rest * (box ? 24 / 39 : 0.7)),
         fin = rest - main,
         light = p.level === 0 || young(),
         B = t("blk").sets;
@@ -1947,15 +1979,18 @@
         })),
       });
     } else if (type === "K") {
+      // boxing: conditioning in 3-minute rounds with 1 minute rest and a larger share (≈ 33 of 39 min, 7b B7)
       const br = bk === "end" ? blockRounds(bi, dateStr) : null,
-        w = br ? br.w : condW,
+        boxK = box && !br && kAge == null && !fmtR,
+        w = br ? br.w : boxK ? 180 : condW,
         bb = br ? br.b : restB,
-        len = (w + bb) / 60;
-      let n = roundsFor(Math.round(rest * 0.75), len);
+        len = (w + bb) / 60,
+        kShare = boxK ? 33 / 39 : 0.75;
+      let n = roundsFor(Math.round(rest * kShare), len);
       // fixed fight-pace rounds come last; in the overload week only a short lead-in before them
       if (br && br.n)
         n = Math.min(Math.max(n, br.n), bi.wk === 6 ? br.n + 2 : 99, Math.max(2, Math.floor((rest - 5) / len)));
-      const main = br && br.n ? Math.round(n * len) : Math.round(rest * 0.75),
+      const main = br && br.n ? Math.round(n * len) : Math.round(rest * kShare),
         core = rest - main,
         coreMax = Math.round(rest * 0.3);
       blocks.push({
@@ -2064,12 +2099,15 @@
           : bk === "pow" && bi.st > 0
             ? [...powPick(1), ...pickEx("cond", 1, loc, eq, used), ...pickEx("str", 2, loc, eq, used)]
             : [...pickEx("cond", 2, loc, eq, used), ...pickEx("str", 2, loc, eq, used)];
+      // WT technique: strength 8 + active flexibility 6 instead of strength 14 (docs/taekwondo-concept.md 6.2, 7b B6)
+      const amob = isTkd() && tkdUnitStyle() === "wt" && type === "T" && sup >= 10 ? Math.round((sup * 6) / 14) : 0;
       blocks.push({
         key: type === "C" ? "cond" : "str",
-        min: sup,
-        items: supItems,
+        min: sup - amob,
+        items: amob ? supItems.slice(0, 3) : supItems,
         sets: supSets,
       });
+      if (amob) blocks.push({ key: "mob", lbl: "amob", min: amob, items: pickEx("mob", 2, loc, eq, used, byName(ACTIVE_MOB)), sets: t("holdNote") });
     }
     if (hardMin) blocks.push(hardBlock(eq, loc, soft, blocks));
     blocks.push({

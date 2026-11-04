@@ -145,7 +145,7 @@
     if (!st) return "";
     if (st.kind === "rest") return playerText().lapRest;
     if (st.kind === "finish") return workoutText().finish;
-    if (st.kind === "rounds") return t(sess.blocks[st.bi].key);
+    if (st.kind === "rounds") return blkName(sess.blocks[st.bi]);
     return itemTitle(sess, st.bi, st.ni);
   }
   /* dose line as in the plan (target for strength, otherwise the prescription) */
@@ -464,7 +464,7 @@
       tm = ui.exerciseTimer,
       nx = steps[i + 1];
     const doneN = steps.filter((s) => stepDone(sess, s)).length,
-      head = `<div class="fbar"><button type="button" class="x" data-workout="close" aria-label="${W.close}">✕</button><span>${esc(st.kind === "finish" ? W.finish : t(sess.blocks[st.bi].key))} · ${P.step(i + 1, steps.length)}</span><button type="button" class="x" data-player="list" aria-label="${P.list}">☰</button></div><div class="pbar"><span style="width:${Math.round((100 * doneN) / Math.max(1, steps.length - 1))}%"></span></div>`;
+      head = `<div class="fbar"><button type="button" class="x" data-workout="close" aria-label="${W.close}">✕</button><span>${esc(st.kind === "finish" ? W.finish : blkName(sess.blocks[st.bi]))} · ${P.step(i + 1, steps.length)}</span><button type="button" class="x" data-player="list" aria-label="${P.list}">☰</button></div><div class="pbar"><span style="width:${Math.round((100 * doneN) / Math.max(1, steps.length - 1))}%"></span></div>`;
     if (st.kind === "finish")
       return `<div class="player-inner">${head}${finishFormHtml(sess)}<button type="button" class="btn sec" data-player="prev">${W.back}</button></div>`;
     const b = sess.blocks[st.bi],
@@ -475,7 +475,7 @@
       h += `<div class="pcard"><small>${esc(P.lap(st.lap + 1, st.laps))}</small><b>${P.lapRest}</b><p>${P.lapRestHint}</p></div>`;
     } else if (st.kind === "rounds") {
       const n = b.items.filter((it, ni) => itemDone(sess, st.bi, ni)).length;
-      h += `<div class="pcard"><small>${P.rounds}</small><b>${esc(t(b.key))}</b><p>${P.roundsOf(n, b.items.length)}</p></div><button type="button" class="btn" data-fx="open">${P.roundsOpen}</button>`;
+      h += `<div class="pcard"><small>${P.rounds}</small><b>${esc(blkName(b))}</b><p>${P.roundsOf(n, b.items.length)}</p></div><button type="button" class="btn" data-fx="open">${P.roundsOpen}</button>`;
     } else {
       const it = b.items[st.ni],
         dose = stepDose(sess, st),
@@ -547,8 +547,8 @@
       bi = ui.workout.block,
       b = sess.blocks[bi],
       W = workoutText();
-    let h = `<div class="workout-inner"><div class="fbar"><button type="button" class="x" data-workout="close" aria-label="${W.close}">✕</button><span>${esc(t("types")[sess.type])}</span><span>${bi + 1}/${sess.blocks.length + 1}</span></div>${ui.workout.player ? `<button type="button" class="btn" data-player="flow">${playerText().player}</button>` : ""}<h1 id="workoutTitle" tabindex="-1">${b ? t(b.key) : W.finish}</h1>`;
-    h += `<ol class="workout-steps" aria-label="${S.profile.lang === "de" ? "Trainingsabschnitte" : "Training sections"}">${sess.blocks.map((block, i) => `<li ${i === bi ? 'aria-current="step"' : ""}>${esc(t(block.key))}</li>`).join("")}<li ${!b ? 'aria-current="step"' : ""}>${W.finish}</li></ol>`;
+    let h = `<div class="workout-inner"><div class="fbar"><button type="button" class="x" data-workout="close" aria-label="${W.close}">✕</button><span>${esc(t("types")[sess.type])}</span><span>${bi + 1}/${sess.blocks.length + 1}</span></div>${ui.workout.player ? `<button type="button" class="btn" data-player="flow">${playerText().player}</button>` : ""}<h1 id="workoutTitle" tabindex="-1">${b ? blkName(b) : W.finish}</h1>`;
+    h += `<ol class="workout-steps" aria-label="${S.profile.lang === "de" ? "Trainingsabschnitte" : "Training sections"}">${sess.blocks.map((block, i) => `<li ${i === bi ? 'aria-current="step"' : ""}>${esc(blkName(block))}</li>`).join("")}<li ${!b ? 'aria-current="step"' : ""}>${W.finish}</li></ol>`;
     if (b) {
       h += `<p id="workoutProgress" class="sub" aria-live="polite"></p>`;
       if (b.rounds)
@@ -1121,6 +1121,16 @@
   /* main sport of the plan (profile draft): same choice row, written to the profile with the other plan settings */
   const sportRowP = (p) =>
     `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices(true).map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${sportLabel(k)}</button>`).join("")}</div></div>${(p.sport || mainSport()) === "taekwondo" ? tkdPrefsHtml() : ""}`;
+  /* sport, style and discipline of an entry where they are not obvious (7b B2): other sport than the main one,
+     WT/ITF for taekwondo, a discipline other than the profile's for kickboxing */
+  function logTag(e) {
+    const sp = entrySport(e),
+      parts = [];
+    if (sp !== mainSport()) parts.push(sportLabel(sp));
+    if (sp === "taekwondo" && e.tstyle) parts.push(e.tstyle === "itf" ? "ITF" : "WT");
+    if (sp === "kickboxing" && e.disc && e.disc !== S.profile.disc && t("disc")[e.disc]) parts.push(t("disc")[e.disc]);
+    return parts.length ? ` · ${parts.join(" · ")}` : "";
+  }
   function renderLog() {
     let h = header(t("logTitle"));
     const mon = monday(today()),
@@ -1166,7 +1176,7 @@
           .slice(0, 25)
           .map(
             (e) =>
-              `<div class="logi"><span class="rpe" style="color:${e.rpe >= 8 ? "var(--ember)" : e.rpe >= 5 ? "var(--frost)" : "var(--done)"}">${e.rpe}</span><div style="flex:1;min-width:0"><b>${t("types")[e.type] || ""}${e.ck ? ` · ${t("clubKinds")[e.ck] || ""}` : ""}</b><div class="sub">${fmtDate(e.date)} · ${e.minutes} ${t("min")}${e.perf ? ` · ${t("exDone")(e.perf.length)}` : ""}${perfVolume(e.perf) ? ` · ${t("volume")} ${Math.round(perfVolume(e.perf)).toLocaleString(S.profile.lang === "de" ? "de-DE" : "en-GB")} kg` : ""}${runInfo(e)}${e.note ? ` · ${esc(e.note)}` : ""}</div></div><button type="button" class="btn ghost" data-edit="${e.id}">${t("edit")}</button><button type="button" class="btn ghost" data-del="${e.id}">${t("del")}</button></div>`,
+              `<div class="logi"><span class="rpe" style="color:${e.rpe >= 8 ? "var(--ember)" : e.rpe >= 5 ? "var(--frost)" : "var(--done)"}">${e.rpe}</span><div style="flex:1;min-width:0"><b>${t("types")[e.type] || ""}${e.ck ? ` · ${t("clubKinds")[e.ck] || ""}` : ""}${logTag(e)}</b><div class="sub">${fmtDate(e.date)} · ${e.minutes} ${t("min")}${e.perf ? ` · ${t("exDone")(e.perf.length)}` : ""}${perfVolume(e.perf) ? ` · ${t("volume")} ${Math.round(perfVolume(e.perf)).toLocaleString(S.profile.lang === "de" ? "de-DE" : "en-GB")} kg` : ""}${runInfo(e)}${e.note ? ` · ${esc(e.note)}` : ""}</div></div><button type="button" class="btn ghost" data-edit="${e.id}">${t("edit")}</button><button type="button" class="btn ghost" data-del="${e.id}">${t("del")}</button></div>`,
           )
           .join("") +
         `</div></div>`;

@@ -64,7 +64,7 @@
   function workoutNextLabel() {
     const sess = S.sessions[ui.sel],
       next = sess?.blocks[(ui.workout?.block ?? 0) + 1];
-    return `${workoutText().next} ${next ? t(next.key) : workoutText().finish}`;
+    return `${workoutText().next} ${next ? blkName(next) : workoutText().finish}`;
   }
   function workoutProgress(sess, bi) {
     const b = sess.blocks[bi];

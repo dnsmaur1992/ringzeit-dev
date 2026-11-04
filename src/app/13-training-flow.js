@@ -231,6 +231,9 @@
       tHi: sess ? sess.tHi : rpeRange(ty, ui.sel).hi,
       note: actual.note,
       sport: sess?.sport || mainSport(),
+      // style (taekwondo) or discipline (kickboxing) of the unit, for the history and the load areas (7b B2)
+      tstyle: (sess?.sport || mainSport()) === "taekwondo" ? sess?.tstyle || tkdStyle() : undefined,
+      disc: (sess?.sport || mainSport()) === "kickboxing" ? sess?.disc || S.profile.disc : undefined,
       sid: sess?.id,
       reg: sessionRegions(sess),
     }));
@@ -243,6 +246,8 @@
   /* Shares of an own session from its exercises (warm-up, cool-down, mobility and hardening blocks do not count);
      without enough exercises the entry falls back to the table of its type (core/history.js) */
   function sessionRegions(sess) {
+    // taekwondo technique, sparring and fight-conditioning units: the kick rounds carry the load – style table (7b B1)
+    if (sess && sess.sport === "taekwondo" && ["T", "P", "C"].includes(sess.type)) return tkdRegions(sess.tstyle || tkdStyle());
     const list = [];
     (sess?.blocks || []).forEach((b) => {
       if (!["warm", "cool", "mob", "hard", "wrist"].includes(b.key))
