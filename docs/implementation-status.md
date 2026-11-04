@@ -25,7 +25,8 @@
 | W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
 | W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
 | W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:59, Stand `58224bd`, App-Version 03.11.2026 21:47, 206 Tests) |
-| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | WARTET AUF SICHTUNG (213 Tests, Baseline Kickboxen identisch, Isolationstest 12/12; Nachbesserungen 6d-2 Tipps, 6d-3 Rundentimer) |
+| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | ABGENOMMEN (03.11.2026 22:36, Stand `df2ab31`, App-Version 03.11.2026 22:31, 213 Tests; inkl. Nachbesserungen 6d-2 Tipps und 6d-3 Rundentimer) |
+| W8 | 7a – Automatische Gesamtprüfung | Opus 5.5 | WARTET AUF SICHTUNG (Prüfbericht `docs/final-check.md`: 648 Abläufe ohne Befund, Befunde B1–B5 für 7b; keine Code-Änderung) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -188,6 +189,12 @@ Nachbesserungen nach der Sichtung:
 - **6d-2** (03.11.2026 22:23): sechs Tipps mit Box-Technik (Haken ×2, Uppercut, Jab, Cross) bzw. „Füße nie kreuzen“ erscheinen bei Taekwondo nicht mehr (Markierung `nt`).
 - **6d-3** (03.11.2026 22:31): Freier Rundentimer folgt dem Hauptsport. Kickboxen unverändert (WAKO, K1 …); Boxen: „Amateur“ (DBV-Format nach Alter) plus Sparring, Pratzen, HIIT, Profi; Taekwondo: „WT-Kampf“ bzw. „ITF-Kampf“ (Format nach Alter aus `wtFormat`/`itfFormat`) plus Sparring, Pratzen, HIIT. Voreinstellung = Kampfformat des Sports; gespeicherte eigene Werte bleiben. Coach-Ansagen nutzen bei Taekwondo und Boxen die Techniknamen der Sportart (vorher Kickbox-Namen). Dateien: `27-free-timer.js`, `38-events.js`, `01-overview-i18n.js`, Tests.
 
+## 7 – Gesamtprüfung (Umsetzung)
+
+Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automatische Gesamtprüfung und Prüfbericht, 7b begrenzte Korrekturen nur freigegebener Befunde, 7c Geräte- und Trainer-Prüfliste, Delta- und Komplett-ZIP, Ablöse-Anleitung (nur Doku), Stopp für die Gesamtabnahme. Android: nicht belegt (kein Gerät). iPhone: installierte App.
+
+- **7a**: `docs/final-check.md` (Belege getrennt nach automatisch, Gerät, fachlich); neue Prüfskripte `tests/final-check.mjs` (Ablauf-Matrix, H1–H9) und `tests/final-browser.cjs` (Ansichten 390 px, Offline, frisches Profil). App-Code unverändert.
+
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach Sichtung von 6d: Teil 7 – Gesamtprüfung (Modell laut Plan: Opus; keine neuen Funktionen, Endlieferung, kein automatisches Veröffentlichen). Erst nach Abnahme von 6d und ausdrücklichem Auftrag.
+Nach Sichtung von 7a: Teil 7b – Korrekturen der freigegebenen Befunde (B1–B5), jede mit Test und erneutem manuellem Test; Modell Opus. Nur auf ausdrücklichen Auftrag.

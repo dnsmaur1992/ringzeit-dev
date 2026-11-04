@@ -226,6 +226,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `tests/core.test.mjs` | Module direkt (Format, Datum, Zufall, Speicher, Modulgrenzen, Historie/Belastung/Bereiche/Level) – 27 Tests (4a-U: DBV-Regeln, Boxdaten, Aufgaben, Register; 3-D: ID-Tabelle, Verordnungen, A1–A4/A6/A7/A9/A11/A13) |
 | `tests/baseline.mjs` + `tests/baseline/kickboxing.json` | Vergleichsbasis Kickboxen |
 | `tests/isolation.e2e.mjs` | Browserprüfung stabile App ↔ Dev-App (Playwright/Chromium) |
+| `tests/final-check.mjs` | Gesamtprüfung (7a): jede Einheit von 12 Profilen × 3 Level × 6 Typen × 3 Orten im geführten Training bis zum Abschluss, Einzelprüfungen H1–H9; Laufzeit einige Minuten, `quick` = ein Ort |
+| `tests/final-browser.cjs` | Gesamtprüfung (7a) im Browser am ausgelieferten Stand: Ansichten 390 px je Sport/Stil/Sprache, Offline/Cache, Inbetriebnahme frisches Profil |
 
 ```bash
 npm install                     # einmalig; esbuild nach node_modules/
@@ -233,6 +235,8 @@ node --test tests/training.test.mjs tests/core.test.mjs
 node tests/baseline.mjs
 python3 tools/build_pwa.py && cp pwa/index.html pwa/sw.js pwa/manifest.webmanifest .
 node tests/isolation.e2e.mjs <Ordner der stabilen App>
+node tests/final-check.mjs        # Gesamtprüfung (einige Minuten)
+node tests/final-browser.cjs      # Browserprüfung am ausgelieferten Stand
 ```
 
 Baseline-Stand vor Schritt 0: Commit `914ed7d`, inhaltsgleich mit der stabilen App `ff7a7d8`; 105/105 Tests; Build mit
