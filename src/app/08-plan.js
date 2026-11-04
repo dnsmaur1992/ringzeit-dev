@@ -1047,9 +1047,13 @@
       lim = p.limits;
     const M = tkm();
     let pool = M.COMBOS.slice(0, (p.level || 0) + 1).flat();
-    // 7g: a technique released by the grade alone (level OR grade) also brings the higher combos that carry it
-    if (ctx.kup != null) pool = pool.concat(M.COMBOS.slice((p.level || 0) + 1).flat().filter((c) => c.some((x) => M.byGrade(x, ctx))));
     pool = pool.filter((c) => c.every((x) => M.allowed(x, ctx)));
+    // 7g: a technique released by the grade alone (level OR grade) also brings the higher combos that carry it – 7h: about
+    // every fifth combo, so the level pool stays the core
+    if (ctx.kup != null) {
+      const extra = M.COMBOS.slice((p.level || 0) + 1).flat().filter((c) => c.some((x) => M.byGrade(x, ctx)) && c.every((x) => M.allowed(x, ctx)));
+      if (extra.length && Math.random() < 0.2) pool = extra;
+    }
     if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.some((x) => TKDT.HANDS.has(x) || (M.HANDS && M.HANDS.has(x))));
     if (noHead) pool = pool.filter((c) => !c.some((x) => M.HEAD.has(x)));
     if (ctx.kid) pool = pool.filter((c) => c.length <= 3);
