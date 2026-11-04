@@ -73,7 +73,7 @@ Nach 7b: 223 Tests grün, Baseline identisch, Isolation 12/12, Ablauf-Matrix 648
 
 | Punkt | Stand |
 |---|---|
-| iPhone, installierte App (Home-Bildschirm) | Laut Betreiber durchgehend genutzt und bisher ohne Fehler; 7b-Stichproben am 04.11.2026 bestanden. Checkliste: `docs/geraete-checkliste.md` (G1–G17). |
+| iPhone, installierte App (Home-Bildschirm) | Laut Betreiber durchgehend genutzt und ohne Fehler; Stichproben zu 7b, 7b-2, 7c-2–7c-4 bestanden; G8 Wiederaufnahme, G11 Offline, G13 Trennung am 04.11.2026 bestanden. Gesamtabnahme 04.11.2026 08:47. Checkliste: `docs/geraete-checkliste.md`. |
 | Android: Sprachausgabe DE/EN, Ton, Wachhalten | **nicht belegt** (kein Gerät verfügbar, Entscheidung des Betreibers 03.11.2026) |
 | Ton bei Stummschalter, Bildschirm bleibt an, Hintergrund/Neustart mitten in der Runde | nur Gerät; VM-Tests decken die Logik ab (Wiederaufnahme, Uhr, Weckfunktion) |
 | Pages-Update auf dem Gerät (neue Version beim nächsten Start) | nur Gerät; Service-Worker-Logik und Cache-Präfix automatisch geprüft |

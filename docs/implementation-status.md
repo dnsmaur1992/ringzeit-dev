@@ -26,10 +26,11 @@
 | W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
 | W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:59, Stand `58224bd`, App-Version 03.11.2026 21:47, 206 Tests) |
 | W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | ABGENOMMEN (03.11.2026 22:36, Stand `df2ab31`, App-Version 03.11.2026 22:31, 213 Tests; inkl. Nachbesserungen 6d-2 Tipps und 6d-3 Rundentimer) |
-| W8 | 7a – Automatische Gesamtprüfung | Opus 5.5 | GESICHTET (04.11.2026, Stand `07ff90f`; Befunde B1–B5 plus Schwerpunkte B6–B8 für 7b freigegeben) |
+| W8 | 7a – Automatische Gesamtprüfung | Opus 5.5 | ABGENOMMEN (gesichtet 04.11.2026, Stand `07ff90f`) |
 | W8 | 7b – Korrekturen B1–B8 | Opus 5.5 | ABGENOMMEN (04.11.2026 06:43, Stand `6799ac7`, App-Version 04.11.2026 06:24, 223 Tests) |
-| W8 | 7b-2 – Kraft, Kondition, Mobility nach Hauptsport | Opus 5.5 | WARTET AUF MANUELLEN TEST (227 Tests, Baseline Kickboxen identisch) |
-| W8 | 7c – Prüflisten, Ablöse-Anleitung, Endlieferung | Opus 5.5 | WARTET AUF GESAMTABNAHME (Doku; 7c-2: Korrektur ⓘ-Infoblatt; 7c-3: Sommer mit Palme und Liegestuhl; 7c-4: Gürtelreiter je Sportart; README neu; 226 Tests) |
+| W8 | 7b-2 – Kraft, Kondition, Mobility nach Hauptsport | Opus 5.5 | ABGENOMMEN (04.11.2026 08:47, Stand `11ddc02`, App-Version 04.11.2026 08:06, 227 Tests) |
+| W8 | 7c – Prüflisten, Ablöse-Anleitung, Endlieferung (inkl. 7c-2 ⓘ, 7c-3 Sommer, 7c-4 Gürtelreiter, README) | Opus 5.5 | ABGENOMMEN (04.11.2026 08:47, Stand `11ddc02`) |
+| **W8** | **Gesamtprojekt** | – | **ABGESCHLOSSEN – Gesamtabnahme durch den Betreiber am 04.11.2026 08:47, Stand `11ddc02`, App-Version 04.11.2026 08:06** |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -208,6 +209,14 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
 - **7c-4** (beim Erzeugen der README-Bilder gefunden, 04.11.2026): Test → „Gürtelprüfung“ zeigte bei Hauptsport Taekwondo und Boxen das Kickbox-Programm (BFVKB-Gurte). Jetzt zeigt der Reiter bei Taekwondo den Taekwondo-Gürtelbereich des Stils; Boxen hat keinen Gürtelreiter (nur Fitnesstest), die Tour sagt dort „Fitnesstest“. Test „7c-4“ (226 Tests).
 - **README neu** (Wunsch Betreiber 04.11.2026 07:35): Banner mit drei Sportarten, Verbands-Badges, Tabelle „Drei Sportarten auf einen Blick“, neue Screenshots aus der App (Taekwondo, Boxen, ITF, Gürtelbereich, Ratgeber, Rundentimer), Funktionen je Sportart gekennzeichnet, Gesamtprüfung bei den Prüfbefehlen, Übersicht der Dokumentation. Neue Bilder: `docs/banner.jpg` (ersetzt), `docs/{kb,box,tkd}-heute.jpg`, `docs/{tkd,itf,box}-einheit.jpg`, `docs/tkd-guertel.jpg`, `docs/tkd-ratgeber.jpg`, `docs/tkd-timer.jpg`.
 
+## Gesamtabnahme (04.11.2026 08:47)
+
+- Abgenommen: alle Teile 0–7 (W1–W8) einschließlich 7b-2, 7c-2, 7c-3, 7c-4, README und Banner.
+- Geräteprüfung iPhone (installierte App), Betreiber 04.11.2026: G8 Wiederaufnahme, G11 Offline, G13 Trennung von der stabilen App bestanden; laufende Nutzung seit Projektbeginn ohne Fehler. Android: nicht belegt.
+- Automatisch belegt am Endstand: 227 Tests, Baseline Kickboxen identisch, Isolation 12/12, Ablauf-Matrix 648 Einheiten ohne Befund, H1–H9 OK, Ansichten 390 px DE/EN, Offline-Start, Inbetriebnahme je Sportart.
+- Offen und nicht blockierend: Trainer-Prüfliste (`docs/trainer-pruefliste.md`), Android, Altdaten-Test vor einer Ablösung (`docs/abloesung.md`).
+- Nicht ausgeführt: keine Veröffentlichung oder Ablösung der stabilen App.
+
 ## Nächster Vorschlag (ohne Freigabe)
 
-Nach deiner Gesamtabnahme: W8 und das Gesamtprojekt sind abgeschlossen. Danach nur auf eigenen Auftrag: Geräte-Checkliste und Trainer-Prüfliste abarbeiten, Rückmeldungen als Korrekturauftrag, später die Ablösung nach `docs/abloesung.md`.
+Das Gesamtprojekt ist abgeschlossen. Weitere Arbeit nur auf eigenen Auftrag: Rückmeldungen aus der Trainer-Prüfliste als Korrekturauftrag, Android-Prüfung mit Gerät, später die Ablösung der stabilen App nach `docs/abloesung.md` (vorher Altdaten-Test).

@@ -27,7 +27,7 @@ Stand: App-Version 04.11.2026 06:24 (Repo `6799ac7`). **Android: nicht belegt** 
 | Nr. | Prüfung | Erwartung | ✓ |
 |---|---|---|---|
 | G7 | Mitten in einer Runde zum Home-Bildschirm, nach 1 Minute zurück | Timer zeigt die richtige Restzeit bzw. die nächste Phase; keine doppelte Glocke | ☐ |
-| G8 | Mitten im geführten Training die App ganz schließen und neu öffnen | Angebot „Training fortsetzen“; die Position stimmt, der Timer kommt **pausiert** zurück; nichts wurde abgehakt oder gebucht | ☐ |
+| G8 | Mitten im geführten Training die App ganz schließen und neu öffnen | Angebot „Training fortsetzen“; die Position stimmt, der Timer kommt **pausiert** zurück; nichts wurde abgehakt oder gebucht | ☑ (04.11.2026) |
 | G9 | Wiederaufnahme ablehnen | Plan bleibt, die Einheit kann neu begonnen werden | ☐ |
 | G10 | Einheit vorzeitig abschließen (offene Übungen) | Rückfrage; Dauer und Anstrengung zählen im Verlauf, offene Übungen bleiben offen | ☐ |
 
@@ -35,9 +35,9 @@ Stand: App-Version 04.11.2026 06:24 (Repo `6799ac7`). **Android: nicht belegt** 
 
 | Nr. | Prüfung | Erwartung | ✓ |
 |---|---|---|---|
-| G11 | Flugmodus an, App öffnen | App startet vollständig, Training und Timer funktionieren | ☐ |
+| G11 | Flugmodus an, App öffnen | App startet vollständig, Training und Timer funktionieren | ☑ (04.11.2026) |
 | G12 | Flugmodus aus, nach dem nächsten Upload App zweimal öffnen | Beim zweiten Start ist die neue Version da (Profil → App & Daten) | ☐ |
-| G13 | Stabile App „Ringzeit“ und „Ringzeit Dev“ nacheinander öffnen | beide behalten ihre eigenen Daten; keine vermischt die andere | ☐ |
+| G13 | Stabile App „Ringzeit“ und „Ringzeit Dev“ nacheinander öffnen | beide behalten ihre eigenen Daten; keine vermischt die andere | ☑ (04.11.2026) |
 
 ## Sportarten (je eine Stichprobe)
 
@@ -47,5 +47,7 @@ Stand: App-Version 04.11.2026 06:24 (Repo `6799ac7`). **Android: nicht belegt** 
 | G15 | Hauptsport Boxen: dasselbe | keine Kicks, Runden 3:00, „Handgelenk & Griff“ bzw. „Handgelenk & Körperabhärtung“ | ☐ |
 | G16 | Hauptsport Kickboxen: dasselbe | wie vor dem Projekt | ☐ |
 | G17 | Sicherung wieder einspielen | Stand wie vor dem Test; Grade, Stil und Verlauf vollständig | ☐ |
+
+Geprüft am: 04.11.2026 (G8, G11, G13 durch den Betreiber; übrige Punkte in der laufenden Nutzung ohne Auffälligkeit)  Gerät: iPhone, installierte App  Ergebnis: Gesamtabnahme 04.11.2026 08:47
 
 Geprüft am: ________  Gerät/iOS-Version: ________________  Ergebnis: ☐ alles erfüllt ☐ Abweichungen (Liste anhängen)
