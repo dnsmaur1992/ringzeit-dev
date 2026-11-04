@@ -29,6 +29,7 @@ Antwort bitte je Punkt: **passt** / **ändern: …** / **unklar**.
 | B10 | **WT-Vollkontakt (7e)**: Wirkungsrunden am Sack/Pratze, Rumpf-Abhärtung (Rumpf an den Sack, Spannung & Ausatmen) und härtere Abhärtungsdosis ab 16 Jahren und Fortgeschritten; freies Sparring bleibt 50 % | seit 7e | |
 | B11 | **Schutzausrüstungs-Hinweise** je Sportart in Sparring- und Partnereinheiten | seit 7e | |
 | B12 | **Kickketten (7f)**: WT ab Level 1 mehr Kettenrunden und längere Ketten; ITF etwas längere Hand-Fuß-Ketten; Kickboxen ab Level 1 etwa jede fünfte Kombination eine Kickkette (2–3 Kicks; seit 7g bei „mehr Boxen“ seltener, bei „mehr Kicks“ häufiger) | seit 7f | |
+| B14 | **WT-Dreh- und Sprungtritte (7h)**: ab Fortgeschritten etwa jede fünfte Kombination mit Drehhaken- oder Sprungtritt (nicht unter 19, nicht bei Knie/Sprunggelenk) | seit 7h | |
 | B13 | **ITF-Freigabe (7g)**: Rückwärts- und Drehhakentritt ab Fortgeschritten **oder** 4. Kup, Sprungtritte ab Fortgeschritten **oder** 2. Kup | seit 7g | |
 | B8 | **Belastungsbereiche** (eigene Festlegung, keine Quelle): WT Beine 0,50 · Arme 0,15 · Rumpf 0,15 · Ausdauer 0,20; ITF 0,40 · 0,25 · 0,15 · 0,20; Kickboxen 0,35 · 0,35 · 0,10 · 0,20 | seit 7b | |
 
