@@ -3876,6 +3876,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* 7i: small badge (main sport in the sport row, kind of a date) */
+  .hsb {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 7px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--ice) 22%, transparent);
+    color: var(--ice);
+    font-size: 11px;
+    font-weight: 700;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .seg .hsb {
+    display: block;
+    margin: 2px auto 0;
+    width: max-content;
+  }
   .pback {
     align-self: flex-start;
     margin: -8px 0 -4px;
