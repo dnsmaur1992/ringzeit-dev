@@ -170,7 +170,7 @@ Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf ei
 - Haken und Satzwerte bleiben pro Einheit gespeichert, auch nach Neuladen und in Sicherungen
 - **Abschließen bleibt immer möglich:** Sind Übungen offen, erscheint eine Rückfrage; die tatsächliche Dauer und Anstrengung zählen trotzdem für Belastung und Verlauf
 - Sind alle Übungen erledigt, wird **„Einheit abschließen“** grün hervorgehoben
-- **Übersichtlicher Einstieg:** kurze Tour, „Erste Schritte“ zeigt nur den nächsten Schritt, im Profil stehen die Trainingstage oben und Seltenes unter „Mehr“
+- **Übersichtlicher Einstieg:** kurze Tour, „Erste Schritte“ zeigt nur den nächsten Schritt, das Profil ist in sechs Bereiche gegliedert: **Über mich** (Sport & Gürtel – nach Wahl der Sportart nur deren Fragen –, Alter, Level, Einschränkungen), **Trainingswoche**, **Termine & Ziele** (Turniere und Prüfungen in einer Liste), Alltag & Pausen, Ratgeber, App & Daten
 - **Kompakte Einheitenansicht:** Einstellungen unter „Einheit anpassen“, Erklärungen unter „Warum diese Einheit?“, wichtige Kontakt-/Einschränkungshinweise separat
   - Geänderte Einstellungen (z. B. kein Sandsack) gelten erst nach **„Neu erstellen“**. Bis dahin ist der Knopf hervorgehoben; wer vorher „Training beginnen“ tippt, wird einmal gefragt: neu erstellen oder so starten
 - **Sichtbarer Fortschritt** und Sprung zur nächsten offenen Übung; Hakenflächen und Timer-Symbolschalter tragen eindeutige zugängliche Namen
