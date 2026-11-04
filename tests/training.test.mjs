@@ -3802,3 +3802,19 @@ test("7c-3: summer shows a palm tree (taller than the fighters) and a deckchair 
   a.run("S.profile.seasonOff=true;ui.seasonDate='2026-07-15';");
   assert.doesNotMatch(a.run("heroScene('kick','T',false,false)"), /class="palm"/, "design off: no summer scenery");
 });
+test("7c-4: the belt-exam view follows the main sport – kickboxing BFVKB, taekwondo grade area, boxing fitness test only", async () => {
+  const a = app();
+  a.run("S.profile.lang='de';ui.tab='test';ui.testOpen=false;ui.testView='exam';S.profile.sport='kickboxing';");
+  let h = a.run("renderTest()");
+  assert.match(h, /data-tview="exam"/);
+  assert.match(h, /data-belt=/, "kickboxing: BFVKB belts");
+  a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';");
+  h = a.run("renderTest()");
+  assert.doesNotMatch(h, /data-belt=/, "taekwondo: no kickboxing belts");
+  assert.match(h, /Kup/, "taekwondo grade area");
+  a.run("S.profile.sport='boxing';");
+  h = a.run("renderTest()");
+  assert.doesNotMatch(h, /data-tview=|data-belt=/, "boxing: no belt exam");
+  assert.match(h, /tOpen/, "fitness test");
+  assert.equal(a.run("t('tourTestBox')[0]"), "Fitnesstest");
+});
