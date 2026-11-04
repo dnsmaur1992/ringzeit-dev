@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan fürs Kickboxen" width="100%">
+  <img src="docs/banner.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan fürs Kickboxen, Boxen und Taekwondo" width="100%">
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 
 > **Ringzeit Dev – Entwicklungsversion.** Dieses Repository (`ringzeit-dev`) ist die Entwicklungskopie der stabilen [Ringzeit-App](https://github.com/dnsmaur1992/ringzeit) für die Erweiterung um Boxen und Taekwondo. Sie läuft unter [dnsmaur1992.github.io/ringzeit-dev](https://dnsmaur1992.github.io/ringzeit-dev/) mit eigenen, frischen Daten: eigener Speicher (`ringzeit-dev.v1`), eigene Caches (`ringzeit-dev-…`), eigene installierbare App „Ringzeit Dev“, keine Cloud-Speicherung und kein Import aus der stabilen App. Sicherungen der stabilen App werden hier nicht geladen. Bitte für echtes Training weiter die stabile App nutzen. Details: [docs/architecture.md](docs/architecture.md), Stand: [docs/implementation-status.md](docs/implementation-status.md).
 
-**Ringzeit** plant dein Kickbox-Training neben dem Verein – passend zu deiner Disziplin, deinem Level und deinen Trainingstagen. Runden, Kombinationen und Übungen kommen fertig dosiert aufs Handy, der Rundentimer läutet die Glocke, und am Ende siehst du, was du geschafft hast. Die Regeln richten sich nach der WAKO.
+**Ringzeit** plant dein Training im **Kickboxen, Boxen oder Taekwondo (WT oder ITF)** neben dem Verein – passend zu Disziplin bzw. Stil, Level und Trainingstagen. Runden, Kombinationen und Übungen kommen fertig dosiert aufs Handy, der Rundentimer läutet die Glocke, und am Ende siehst du, was du geschafft hast. Die Regeln richten sich nach der WAKO.
 
 > **Neu hier?** Öffne die [Installationsanleitung](https://dnsmaur1992.github.io/ringzeit-dev/installieren.html) auf deinem Handy – mit QR-Code und Schritt-für-Schritt-Hilfe für iPhone und Android.
 
@@ -63,6 +63,15 @@
 
 ## Funktionen
 
+### 🥋 Drei Sportarten, jede mit eigenem Schwerpunkt
+- **Hauptsport im Profil** jederzeit wechselbar, zusätzlich eine andere Sportart (bzw. Disziplin oder Stil) für einzelne Einheiten; Verlauf, Belastung und Fitnesstest sind gemeinsam, das Technik-Level gilt je Sportart und Stil
+- **Kickboxen** (WAKO): Light Contact, Kick Light, Full Contact, K1 Style – wie bisher
+- **Boxen** (DBV): Schläge ohne Kicks, Altersklassen und Rundenlängen nach den DBV-Wettkampfbestimmungen; Schwerpunkt **Ausdauer und Zähigkeit** – Kondition in 3-Minuten-Runden, längerer Kraftausdauer-Teil, „Handgelenk & Körperabhärtung“ ab Level 1 und 16 Jahren, Mobility mit lockerer Beinarbeit und Schatten
+- **Taekwondo WT / DTU**: Trittketten, die mit der Fitness länger werden, Serien mit schnellem Wechsel, Step- und Situations-Sparring; Schwerpunkt **Beweglichkeit, Spritzigkeit und Kontrolle in der vollen Bewegungsweite** – aktive Beweglichkeit in jeder Technikeinheit, Mobility als aktive Beweglichkeit, ab 4 Tagen eine Mobility-Einheit statt Kondition
+- **Taekwondo ITF-D**: Hand-Fuß-Verbindungen wie im Leichtkontakt, Sambo-/Ibo-/Ilbo-Matsogi als Drill-Prinzip; ab Level 1 etwa jede zweite Kombination mit Sprung- oder Drehtritt (soweit Grad, Alter und Einschränkungen es erlauben)
+- **Gürtelbereich Taekwondo:** Kup/Dan (WT auch Poom), Gürtelfarbe, Prüfungsteile und Formnamen (Taegeuk bzw. Tul) zum Abhaken, Mindestwartezeiten; der Gürtel wird nie automatisch vergeben
+- **Koreanische Technikbegriffe** (WT: Kukkiwon-Umschrift, ITF: Schreibweise der ITF-D-Prüfungsordnung) oder App-Namen; Ansagen immer in der App-Sprache
+
 ### 🥊 Training, das zu dir passt
 - **Einfach oder ausführlich:** In der Einrichtung wählbar (für neue Nutzer ist „Einfach“ vorausgewählt), später unter Profil → App & Daten. Einfach zeigt auf Heute nur das Training; Fitnesstest und Verlauf liegen dann im Profil statt in der Leiste. Auch „Einheit anpassen“ fragt dann nur Trainingsart, Dauer, Ort und Partner/Sandsack – ohne Tagesform, Zusatz-Geräte und Fachbegriffe
 - **Anstrengung mit Gesichtern:** fünf Stufen von 😌 „Sehr locker“ bis 🥵 „Am Limit“; in der ausführlichen Ansicht zusätzlich die genaue Skala 1–10
@@ -101,7 +110,7 @@
 - **Gemeinsame Timersteuerung:** Runden-, Übungs- und freier Timer teilen sich eine Uhr; beim Wechsel wird der andere Timer pausiert, beim endgültigen Einheitsabschluss werden Timer und ausstehende Ansagen beendet
 - **Weniger Hintergrundarbeit:** sekundengenau geplante Timeraufrufe während des Trainings, keine dauernde Abfrage im Leerlauf; verdeckte Anzeigen werden nicht laufend neu geschrieben
 - **Bildschirm und Animationen bleiben erhalten:** Die Restzeit ist während laufender Runden und Pausen sichtbar. Die Audiowachhaltung bleibt auf Apple-Mobilgeräten erhalten; andere Audiokontexte können zwischen Signalen ruhen
-- Eigener **Rundentimer** mit Vorlagen (WAKO, K1, Sparring, Pratzen, HIIT)
+- Eigener **Rundentimer** mit Vorlagen je Hauptsport (Kickboxen: WAKO, K1, Sparring, Pratzen, HIIT, Profi; Boxen: Amateur nach DBV-Format; Taekwondo: WT- bzw. ITF-Kampf nach Alter)
 - Im Vollbild bleiben **Start, Zurück und Weiter immer sichtbar**, auch bei langen Übungstexten und kleinen Handys
 - Leuchtring mit Fortschritt, pulsierende letzte 10 Sekunden und ein Blitz zum Rundenende
 - **Automatischer Rundenwechsel im geführten Training:** Nach der Pause läuft die nächste Runde direkt weiter; die 10 Sekunden Vorlauf gibt es nur beim manuellen Start
@@ -112,7 +121,7 @@
   - Ringzeit nutzt automatisch die **beste installierte Stimme** (Premium vor Erweitert vor Standard, keine Spaß- oder reinen Online-Stimmen). Unter Profil → App & Daten steht, welche gerade läuft, wie man eine bessere lädt, und es gibt eine Hörprobe
 
 ### 🏆 Ziele und Motivation
-- **Turniervorbereitung** im Wettkampf-Format der WAKO, Formkurve bis zum Wettkampftag
+- **Turniervorbereitung** im Wettkampf-Format des Verbands (WAKO, DBV, WT/DTU, ITF), Formkurve bis zum Wettkampftag
   - **Gewichtsklasse:** In den 8 Wochen vor dem Turnier erinnert „Heute“ einmal pro Woche ans Wiegen, mit Eingabefeld direkt im Hinweis. Verglichen wird der Schnitt der letzten zwei Wochen. Es gibt nur sachliche Hinweise, keine Tipps zum Gewichtmachen; unter 15 Jahren keine Erinnerungen
 - **Gürtelprüfung** nach der Prüfungsordnung, mit Theorie-Quiz und Selbstverteidigung
 - **Schwerpunkt-Blöcke** über 6 Wochen: Kampfausdauer, Schnellkraft oder Beweglichkeit
@@ -121,7 +130,7 @@
 - **Turnier-Packliste** zum Abhaken, eine Woche vor dem Wettkampf
 - Automatische **Entlastungswochen** und Pausen bei Krankheit, Verletzung oder Urlaub
 - **Gesamtbelastung** aus eigenem Training und Verein (Minuten × Anstrengung, alle Sportarten gemeinsam): Eine zu hohe Woche macht die noch nicht begonnenen Einheiten leichter – Trainingstage bleiben; war der Vortag in einem Bereich hart (z. B. Vereins-Sparring → Beine), ist die Einheit heute etwas leichter
-- **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; **Kickboxen** und **Boxen** (DBV, regulär sichtbar; Onboarding fragt zuerst die Sportart; eigener Ratgeber, Packliste, Tipps und Technik-Test je Sportart): Schläge ohne Kicks, Altersklassen und Rundenlängen nach DBV-WKB (ohne Geburtsjahr: Erwachsene), Beinarbeit- und Meiden-Runden, Aufgabensparring (höchstens eine Runde Touch-Sparring nach Absprache mit dem Trainer), Block „Handgelenk & Griff“ statt Abhärtung, K.o.-Sperre 30 Tage
+- **Sportart je Einheit** (Standard: Hauptsport aus dem Profil) für eigene Einheiten und Vereinstraining; **Kickboxen**, **Boxen** (DBV) und **Taekwondo** (WT/DTU, ITF-D; Onboarding fragt zuerst die Sportart; eigener Ratgeber, Packliste, Tipps, Rundentimer-Vorlagen und Technik-Test je Sportart). Boxen: Schläge ohne Kicks, Altersklassen und Rundenlängen nach DBV-WKB (ohne Geburtsjahr: Erwachsene), Beinarbeit- und Meiden-Runden, Aufgabensparring (höchstens eine Runde Touch-Sparring nach Absprache mit dem Trainer), Block „Handgelenk & Griff“ (ab Level 1 und 16 Jahren mit Körperabhärtung) statt der Kickbox-Abhärtung, K.o.-Sperre 30 Tage
 - **Freier Lauf** (Kondition draußen): ohne Timer, danach Minuten, Strecke und Anstrengung eintragen
 - **Text und Timer aus einer Quelle:** Dosierung, Timerphasen und Zeitangaben stammen aus derselben strukturierten Verordnung – was dort steht, läuft der Timer (Seil-Intervalle im 30-s-Wechsel, Kick-Halten ca. 4–5 Min., Einbeinstand links dann rechts, Abhärtung für Full Contact mit passenden Durchgängen)
 - **Einträge bearbeiten und löschen:** die Wochenbelastung und die noch nicht begonnenen Einheiten werden neu berechnet
@@ -160,6 +169,7 @@
 - **Bandagieren** als animierte Schritt-für-Schritt-Anleitung, dazu ein Video
 - **Materialpflege** für Handschuhe, Bandagen, Schoner und Mundschutz – mit Erinnerung nach dem Training
 - **Pflege & Erste Hilfe:** PECH-Regel, Thai-Boxing-Öl, Nasenbluten und wann man zum Arzt sollte
+- **Taekwondo:** Gürtel binden & Dobok, Grade & Prüfung (Wartezeiten und Formen aus den Prüfungsordnungen), Begriffe, Geschichte & Verbände – je nach Stil WT oder ITF, mit Links zu DTU und ITF-D; Pflege und Erste Hilfe ohne Bandagen und Handschuhe
 - **Zum Lesen:** zehn kurze Themen mit Quellenangabe – Mythen-Check, was in einer Runde im Körper passiert, warum Schienbeine härter werden, wie Punktrichter werten, die WAKO-Disziplinen im Vergleich, der Turniertag von innen, die häufigsten Anfängerfehler, Kopf und Nerven, Schlaf und Erholung, Handschuhe erklärt. „Nächstes Thema“ blättert weiter. Bewusst ohne Anleitungen zum Gewichtmachen
 
 ### ✨ Liebe zum Detail
@@ -249,11 +259,11 @@ ringzeit-dev/
 │   ├── modules.js         Einstieg der gemeinsamen Module (Build: ein Bündel „RZ“)
 │   ├── core/              Gemeinsame Dienste: Format, Datum, Zufall, Speicher
 │   ├── catalog/           Übungskatalog
-│   ├── sports/            Sportarten (kickboxing; boxing als Entwicklungsvorschau) und Register
+│   ├── sports/            Sportarten (kickboxing, boxing, taekwondo mit WT und ITF-D) und Register
 │   └── app/               Übrige App in geordneten Teilen 00–39 (Ansichten, Planung, Timer, Ratgeber …)
 ├── tools/build_pwa.py     Setzt den Quellcode zusammen und baut index.html, sw.js, manifest
 ├── package.json           Build-/Testwerkzeug (esbuild)
-├── tests/                 training (Logik), core (Module), baseline (Vergleichsbasis), isolation.e2e (Browser)
+├── tests/                 training (Logik), core (Module), baseline (Vergleichsbasis), isolation.e2e (Browser), final-check / final-browser (Gesamtprüfung)
 └── docs/                  Bilder, Architektur, Umsetzungsstand
 ```
 
@@ -262,7 +272,7 @@ ringzeit-dev/
 ## Hinweise
 
 - Ringzeit **ersetzt keinen Trainer** und plant das Training neben dem Verein. Bei Schmerzen abbrechen; Sparring nur unter Aufsicht und mit kompletter Schutzausrüstung.
-- Ringzeit ist ein privates Projekt und **kein offizielles Angebot** der WAKO, der WAKO Deutschland oder des BFVKB. Verbindlich sind immer die aktuellen [Regelwerke der WAKO Deutschland](https://www.wako-deutschland.de/downloads/).
+- Ringzeit ist ein privates Projekt und **kein offizielles Angebot** der WAKO, der WAKO Deutschland, des BFVKB, des Deutschen Boxsport-Verbands (DBV), der World Taekwondo (WT), der Deutschen Taekwondo Union (DTU), der ITF oder des ITF-D. Verbindlich sind immer die aktuellen Regelwerke des jeweiligen Verbands: [WAKO Deutschland](https://www.wako-deutschland.de/downloads/), [DBV](https://www.boxverband.de/), [DTU](https://www.dtu.de/downloads/regelwerke-co), [ITF-D](https://www.itf-d.de/).
 - Feedback und Fehler gern über [Issues](../../issues) oder direkt beim Training.
 
 ---
