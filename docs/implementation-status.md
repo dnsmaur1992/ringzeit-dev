@@ -28,7 +28,7 @@
 | W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | ABGENOMMEN (03.11.2026 22:36, Stand `df2ab31`, App-Version 03.11.2026 22:31, 213 Tests; inkl. Nachbesserungen 6d-2 Tipps und 6d-3 Rundentimer) |
 | W8 | 7a – Automatische Gesamtprüfung | Opus 5.5 | GESICHTET (04.11.2026, Stand `07ff90f`; Befunde B1–B5 plus Schwerpunkte B6–B8 für 7b freigegeben) |
 | W8 | 7b – Korrekturen B1–B8 | Opus 5.5 | ABGENOMMEN (04.11.2026 06:43, Stand `6799ac7`, App-Version 04.11.2026 06:24, 223 Tests) |
-| W8 | 7c – Prüflisten, Ablöse-Anleitung, Endlieferung | Opus 5.5 | WARTET AUF GESAMTABNAHME (Doku; 7c-2: Korrektur ⓘ-Infoblatt; 7c-3: Sommer mit Palme und Liegestuhl; 225 Tests) |
+| W8 | 7c – Prüflisten, Ablöse-Anleitung, Endlieferung | Opus 5.5 | WARTET AUF GESAMTABNAHME (Doku; 7c-2: Korrektur ⓘ-Infoblatt; 7c-3: Sommer mit Palme und Liegestuhl; 7c-4: Gürtelreiter je Sportart; README neu; 226 Tests) |
 
 ## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
 
@@ -202,6 +202,8 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
 - **7c** (Auftrag 04.11.2026 06:44): `docs/geraete-checkliste.md` (iPhone, installierte App; Android nicht belegt), `docs/trainer-pruefliste.md` (Regelwerke A1–A5, Trainingsinhalte B1–B8, Ratgeber C1–C5), `docs/abloesung.md` (Weg 1 empfohlen: Code übernehmen, Daten bleiben; Datenübernahme-Test vor der Ablösung Pflicht; Cache-Präfix; Rückweg). Endlieferung: Delta-ZIP (nur 7c) und Komplett-ZIP des Endstands. Keine Veröffentlichung, keine Ablösung.
 - **7c-2** (Fehlerbericht Betreiber 04.11.2026 06:55): Das ⓘ an den Übungen öffnete seit 3-D nichts mehr, weil die Text-ID beim Klick in eine Zahl umgewandelt wurde (`38-events.js`). Behoben, mit Test über alle Sportarten (224 Tests). Jahreszeit- und Feiertagsbilder für alle drei Outfits geprüft (Kickboxen, Boxen, Dobok): Mützen, Teilchen und Motive erscheinen bei allen; die Sommer-Badehose gibt es nur ohne Sportkleidung (so gewollt); mit ausgeschaltetem Design gibt es keine Jahreszeit-Elemente.
 - **7c-3** (Wunsch Betreiber 04.11.2026 07:26): Sommer ohne Badehose; stattdessen eine Palme im Hintergrund links (höher als die Figuren) und ein gestreifter Liegestuhl rechts – bei allen Outfits, nur auf der Startseite (die Lade- und Inbetriebnahme-Bilder haben keinen Hintergrund). Test „7c-3“ (225 Tests).
+- **7c-4** (beim Erzeugen der README-Bilder gefunden, 04.11.2026): Test → „Gürtelprüfung“ zeigte bei Hauptsport Taekwondo und Boxen das Kickbox-Programm (BFVKB-Gurte). Jetzt zeigt der Reiter bei Taekwondo den Taekwondo-Gürtelbereich des Stils; Boxen hat keinen Gürtelreiter (nur Fitnesstest), die Tour sagt dort „Fitnesstest“. Test „7c-4“ (226 Tests).
+- **README neu** (Wunsch Betreiber 04.11.2026 07:35): Banner mit drei Sportarten, Verbands-Badges, Tabelle „Drei Sportarten auf einen Blick“, neue Screenshots aus der App (Taekwondo, Boxen, ITF, Gürtelbereich, Ratgeber, Rundentimer), Funktionen je Sportart gekennzeichnet, Gesamtprüfung bei den Prüfbefehlen, Übersicht der Dokumentation. Neue Bilder: `docs/banner.jpg` (ersetzt), `docs/{kb,box,tkd}-heute.jpg`, `docs/{tkd,itf,box}-einheit.jpg`, `docs/tkd-guertel.jpg`, `docs/tkd-ratgeber.jpg`, `docs/tkd-timer.jpg`.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
