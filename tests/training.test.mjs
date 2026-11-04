@@ -3910,3 +3910,43 @@ test("7e: protective gear notes per sport in sparring with a partner, a partner-
   a.run("S.profile.sport='taekwondo';S.profile.tkd.style='wt';S.profile.simple=true;const d=iso(today());ui.sel=d;ui.tab='session';ui.setup=null;S.sessions[d]=buildSession(d,'P','gym',['partner','pads'],{sport:'taekwondo',tstyle:'wt'});");
   assert.match(a.run("renderSession()"), /note warn[^>]*>[^<]*Sparring mit Partner[\s\S]*Schutzausrüstung WT/);
 });
+test("7f: kick chains – WT more chain rounds and longer chains, ITF weaker, kickboxing occasional chains from level 1; locks stay", () => {
+  const a = app();
+  const KK = new Set(JSON.parse(a.run("JSON.stringify([...KICKS, ...TKDT.KICKS])")));
+  const stats = (sp, st, lvl, o = {}) => {
+    let combos = 0, k3 = 0, k4 = 0, pure = 0;
+    for (let i = 0; i < 25; i++) {
+      a.run(`S.profile.sport='${sp}';S.profile.disc='${o.disc || "lc"}';S.profile.birthYear=${o.by ?? 1995};S.profile.level=${lvl};S.profile.limits=${JSON.stringify(o.lim || [])};${st ? `S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${st}',wt:'k1',itf:'k1'});` : ""}`);
+      const s = JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-02','T','gym',['bag','rope'],{sport:'${sp}',min:60${st ? `,tstyle:'${st}'` : ""}}))`));
+      for (const it of s.blocks.find((b) => b.key === "main").items) {
+        if (!it.combo) continue;
+        const seq = it.combo.flatMap((x) => (sp === "taekwondo" && a.run(`!!tkm().SERIES['${x}']`) ? JSON.parse(a.run(`(unitStyle='${st}',JSON.stringify(tkm().SERIES['${x}'].p.map(q=>q[0])))`)) : [x]));
+        a.run("unitStyle=null");
+        const k = seq.filter((x) => KK.has(x)).length;
+        combos++;
+        if (k >= 3) k3++;
+        if (k >= 4) k4++;
+        if (k >= 2 && seq.every((x) => KK.has(x))) pure++;
+      }
+    }
+    return { k3: k3 / combos, k4: k4 / combos, pure: pure / combos };
+  };
+  const w1 = stats("taekwondo", "wt", 1), w2 = stats("taekwondo", "wt", 2);
+  assert.ok(w1.k3 >= 0.5, "WT L1 ≥3 kicks " + w1.k3);
+  assert.ok(w2.k4 >= 0.4, "WT L2 ≥4 kicks " + w2.k4);
+  const i2 = stats("taekwondo", "itf", 2);
+  assert.ok(i2.k3 >= 0.35, "ITF L2 ≥3 kicks " + i2.k3);
+  assert.ok(i2.k3 < w2.k3, "ITF weaker than WT");
+  const k1 = stats("kickboxing", "", 1), k0 = stats("kickboxing", "", 0);
+  assert.ok(k1.pure >= 0.1 && k1.pure <= 0.4, "kickboxing L1 kick chains " + k1.pure);
+  assert.ok(k0.pure < 0.1, "kickboxing L0 none of the new chains " + k0.pure);
+  // low kicks only in KL and K1; knee limit: no chains with risky kicks
+  for (let i = 0; i < 200; i++) {
+    a.run("S.profile.sport='kickboxing';S.profile.level=2;S.profile.birthYear=1995;S.profile.limits=[];S.profile.disc='lc';");
+    assert.ok(!a.run("combo('shadow',null)").includes("lowk"), "no low kick in LC");
+  }
+  const kid = stats("kickboxing", "", 2, { by: 2016 });
+  assert.ok(kid.pure < 0.15, "children: no new chains " + kid.pure);
+  // the new ITF chains only use techniques the ITF module knows
+  for (const c of JSON.parse(a.run("JSON.stringify(ITFT.COMBOS.flat())"))) for (const x of c) assert.ok(a.run(`!!ITFT.TECH['${x}']`), x);
+});
