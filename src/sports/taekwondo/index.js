@@ -31,6 +31,16 @@ export const taekwondo = {
     6: ["T", "S", "P", "K", "T", "M"],
     7: ["T", "S", "P", "K", "C", "S", "M"],
   },
+  /* WT (7b, docs/taekwondo-concept.md 6.2, F1 = yes): from 4 days one mobility unit instead of conditioning */
+  dayPatternWt: {
+    1: ["T"],
+    2: ["T", "S"],
+    3: ["T", "S", "P"],
+    4: ["T", "S", "P", "M"],
+    5: ["T", "S", "P", "C", "M"],
+    6: ["T", "S", "P", "M", "T", "M"],
+    7: ["T", "S", "P", "M", "T", "S", "M"],
+  },
   techniques,
   grades,
 };
