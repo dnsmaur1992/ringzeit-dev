@@ -3036,10 +3036,10 @@ test("6a: no kickboxing/boxing technique exercises in taekwondo units (all types
   // kickboxing keeps them
   assert.equal(a.run("(()=>{S.profile.sport='kickboxing';return okEx(EX['warm.easy_shadowboxing'],'gym',[])})()"), true);
 });
-test("6a: the association (WT/ITF) and the name language are switched under Hauptsport and take effect at once", async () => {
+test("6a: the association (WT/ITF) and the name language are switched under About me and take effect at once", async () => {
   const a = app();
-  a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;draft=null;");
-  const h = a.run("sportRowP(S.profile)");
+  a.run("S.profile.sport='taekwondo';S.profile.birthYear=1995;draft=null;ui.psport=null;");
+  const h = a.run("profSportHtml(S.profile)");
   assert.match(h, /data-tk="style" data-tv="itf"/);
   assert.match(h, /data-tk="names" data-tv="app"/);
   assert.equal(a.run("tkdNames()"), "ko", "default Korean");
@@ -3048,7 +3048,7 @@ test("6a: the association (WT/ITF) and the name language are switched under Haup
   await tk(a, { tk: "style", tv: "itf" });
   assert.equal(a.run("discLabel()"), "Taekwondo ITF-D");
   a.run("S.profile.sport='kickboxing';");
-  assert.doesNotMatch(a.run("sportRowP(S.profile)"), /data-tk="style"/, "only for taekwondo");
+  assert.doesNotMatch(a.run("profSportHtml(S.profile)"), /data-tk="style"/, "only for taekwondo");
 });
 test("6a: dobok stands out – pure white dobok, skin-tone head and fists, no gloves", () => {
   const a = app();
