@@ -5977,8 +5977,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -5987,9 +5986,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
-           "hookb",
+           "side",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "round",
            "roundh"
           ]
          },
@@ -5998,7 +6003,6 @@
           "k": "partner",
           "combo": [
            "jab",
-           "crossb",
            "hookb",
            "roundh"
           ]
@@ -6007,8 +6011,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
            "cross",
+           "hook",
            "hookb",
            "roundh"
           ]
@@ -6033,8 +6037,8 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "hookb",
+           "pre": {
+            "a": "crossb",
             "d": "block"
            }
           }
@@ -6047,22 +6051,12 @@
            "front",
            "hookb",
            "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "axe",
-           "hookb",
-           "roundh"
           ],
           "react": {
            "post": {
-            "a": "round",
-            "d": "step",
-            "c": "jab"
+            "a": "hook",
+            "d": "duck",
+            "c": "hook"
            }
           }
          }
@@ -6074,19 +6068,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
-         },
-         {
-          "kind": "ex",
           "id": 21
          },
          {
           "kind": "ex",
-          "id": 58
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 42
+         },
+         {
+          "kind": "ex",
+          "id": 48
          }
         ],
         "sets": "3×"
@@ -6101,7 +6095,7 @@
          },
          {
           "kind": "hard",
-          "id": "arms"
+          "id": "abs"
          }
         ]
        },
@@ -6111,7 +6105,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
+          "id": 76
          },
          {
           "kind": "ex",
@@ -6119,7 +6113,7 @@
          },
          {
           "kind": "ex",
-          "id": 76
+          "id": 73
          }
         ]
        }
@@ -6246,15 +6240,6 @@
       ],
       [
        {
-        "dose": "4 × (10 s / 20 s locker)",
-        "timer": {
-         "phases": 8,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
         "dose": "3 Min.",
         "timer": {
          "phases": 1,
@@ -6266,20 +6251,29 @@
         }
        },
        {
-        "dose": "30–45 s halten",
+        "dose": "40 s Belastung, 20 s Pause",
         "timer": {
-         "phases": 1,
-         "seconds": 30,
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "10–12 Wdh. je Seite",
+        "timer": null
+       },
+       {
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
          "choices": [
           30,
           45
          ],
          "perSet": 30
         }
-       },
-       {
-        "dose": "10–12 Wdh. pro Bein",
-        "timer": null
        }
       ],
       [
@@ -6297,26 +6291,25 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        }
       ],
       [
        {
-        "dose": "60–90 s halten",
+        "dose": "2 Min.",
         "timer": {
          "phases": 1,
-         "seconds": 60,
+         "seconds": 120,
          "choices": [
-          60,
-          90
+          120
          ],
-         "perSet": 60
+         "perSet": 120
         }
        },
        {
@@ -6331,14 +6324,15 @@
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
-         "seconds": 120,
+         "seconds": 60,
          "choices": [
-          120
+          60,
+          90
          ],
-         "perSet": 120
+         "perSet": 60
         }
        }
       ]
@@ -6389,30 +6383,11 @@
           "k": "shadow",
           "combo": [
            "side",
+           "jab",
            "cross",
-           "hook",
            "round"
           ],
           "ease": 1
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "jabb",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "front",
-           "jab",
-           "cross"
-          ]
          },
          {
           "kind": "round",
@@ -6427,28 +6402,9 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jab",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
            "side",
            "jab",
            "cross"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "crossb",
-           "upper",
-           "hook"
           ]
          },
          {
@@ -6458,6 +6414,44 @@
            "side",
            "jabb",
            "cross"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "cross",
+           "hookb",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "jabb",
+           "cross",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "cross",
+           "hookb",
+           "hook"
           ]
          }
         ]
@@ -6472,15 +6466,15 @@
          },
          {
           "kind": "ex",
-          "id": 16
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 57
+          "id": 22
          },
          {
           "kind": "ex",
-          "id": 54
+          "id": 49
          }
         ],
         "sets": "3×"
@@ -6495,7 +6489,7 @@
          },
          {
           "kind": "hard",
-          "id": "bodybag"
+          "id": "shinbag"
          }
         ]
        },
@@ -6505,15 +6499,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
-         },
-         {
-          "kind": "ex",
           "id": 72
          },
          {
           "kind": "ex",
           "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 73
          }
         ]
        }
@@ -6650,10 +6644,10 @@
         }
        },
        {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -6663,7 +6657,7 @@
         "timer": null
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
+        "dose": "10–12 Wdh. je Seite",
         "timer": null
        }
       ],
@@ -6681,15 +6675,32 @@
        },
        {
         "dose": null,
-        "timer": {
-         "phases": 11,
-         "seconds": 145,
-         "choices": [],
-         "perSet": 0
-        }
+        "timer": null
        }
       ],
       [
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
        {
         "dose": "60–90 s halten",
         "timer": {
@@ -6700,28 +6711,6 @@
           90
          ],
          "perSet": 60
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        }
       ]
@@ -7121,7 +7110,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
+           "side",
            "round"
           ],
           "ease": 1
@@ -7131,15 +7120,30 @@
           "k": "partner",
           "combo": [
            "jab",
-           "hook",
-           "cross",
-           "front"
+           "jab",
+           "cross"
+          ],
+          "react": {
+           "post": {
+            "a": "round",
+            "d": "step"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "jab",
+           "jabb",
+           "cross"
           ],
           "react": {
            "mid": {
             "at": 2,
-            "a": "cross",
-            "d": "slip"
+            "a": "sweep",
+            "d": "lift"
            }
           }
          },
@@ -7147,32 +7151,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "jabb",
            "cross",
-           "round"
+           "roundh"
           ],
           "react": {
-           "mid": {
-            "at": 1,
-            "a": "front",
-            "d": "deflect"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "side",
-           "crossb"
-          ],
-          "react": {
-           "pre": {
-            "a": "hookb",
-            "d": "block"
+           "post": {
+            "a": "crossb",
+            "d": "block",
+            "c": "cross"
            }
           }
          },
@@ -7188,7 +7175,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 12
+          "id": 16
+         },
+         {
+          "kind": "ex",
+          "id": 20
          },
          {
           "kind": "ex",
@@ -7197,10 +7188,6 @@
          {
           "kind": "ex",
           "id": 13
-         },
-         {
-          "kind": "ex",
-          "id": 16
          }
         ],
         "sets": "3×"
@@ -7215,7 +7202,7 @@
          },
          {
           "kind": "hard",
-          "id": "arms"
+          "id": "abs"
          }
         ]
        },
@@ -7225,15 +7212,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 74
+          "id": 76
+         },
+         {
+          "kind": "ex",
+          "id": 72
          },
          {
           "kind": "ex",
           "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 73
          }
         ]
        }
@@ -7344,10 +7331,19 @@
       ],
       [
        {
-        "dose": "3 × (20 s Vollgas / 10 s locker)",
+        "dose": "3 × (20 s / 10 s Pause)",
         "timer": {
          "phases": 6,
          "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
@@ -7361,15 +7357,6 @@
         "timer": {
          "phases": 8,
          "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "3 × (20 s / 10 s Pause)",
-        "timer": {
-         "phases": 6,
-         "seconds": 90,
          "choices": [],
          "perSet": 0
         }
@@ -7390,16 +7377,27 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        }
       ],
       [
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
+        }
+       },
        {
         "dose": "je Seite 45 s",
         "timer": {
@@ -7420,18 +7418,6 @@
           30
          ],
          "perSet": 30
-        }
-       },
-       {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
         }
        }
       ]
@@ -9049,8 +9035,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -9059,8 +9044,35 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
+           "side",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "hookb",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "side",
+           "jab",
+           "hookb",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "side",
            "hookb",
            "roundh"
           ],
@@ -9076,56 +9088,15 @@
           "k": "partner",
           "combo": [
            "jab",
-           "crossb",
+           "front",
            "hookb",
            "roundh"
           ],
           "react": {
-           "post": {
+           "mid": {
+            "at": 2,
             "a": "hookb",
             "d": "block"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "cross",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "side",
-           "jab",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "pre": {
-            "a": "front",
-            "d": "deflect"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "side",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "pre": {
-            "a": "upper",
-            "d": "step"
            }
           }
          }
@@ -9432,30 +9403,11 @@
           "k": "shadow",
           "combo": [
            "side",
+           "jab",
            "cross",
-           "hook",
            "round"
           ],
           "ease": 1
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "jab",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "front",
-           "jab",
-           "cross"
-          ]
          },
          {
           "kind": "round",
@@ -9470,18 +9422,36 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jabb",
-           "cross",
-           "roundh"
+           "side",
+           "jab",
+           "cross"
           ]
          },
          {
           "kind": "round",
           "k": "bag",
           "combo": [
-           "side",
            "jab",
-           "cross"
+           "cross",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "cross",
+           "hookb",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "round",
+           "roundh"
           ]
          }
         ]
@@ -9492,19 +9462,19 @@
         "items": [
          {
           "kind": "ex",
+          "id": 83
+         },
+         {
+          "kind": "ex",
           "id": 21
          },
          {
           "kind": "ex",
-          "id": 7
+          "id": 41
          },
          {
           "kind": "ex",
-          "id": 42
-         },
-         {
-          "kind": "ex",
-          "id": 58
+          "id": 49
          }
         ],
         "sets": "2×"
@@ -9515,7 +9485,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fWraps"
+          "id": "fGlove"
          },
          {
           "kind": "hard",
@@ -9529,11 +9499,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
+          "id": 73
          },
          {
           "kind": "ex",
-          "id": 76
+          "id": 72
          },
          {
           "kind": "ex",
@@ -9651,6 +9621,15 @@
       ],
       [
        {
+        "dose": "4 × (10 s / 20 s locker)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
         "dose": "3 Min.",
         "timer": {
          "phases": 1,
@@ -9662,41 +9641,24 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
-        "timer": {
-         "phases": 4,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
+        "dose": "10–12 Wdh.",
+        "timer": null
        },
        {
         "dose": "10–12 Wdh. je Seite",
         "timer": null
-       },
-       {
-        "dose": "30–45 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 30,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
-        }
        }
       ],
       [
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        },
        {
@@ -9711,25 +9673,26 @@
       ],
       [
        {
-        "dose": "je Seite 30 s",
+        "dose": "60–90 s halten",
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 1,
+         "seconds": 60,
          "choices": [
-          30
+          60,
+          90
          ],
-         "perSet": 30
+         "perSet": 60
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": "je Seite 45 s",
         "timer": {
-         "phases": 1,
-         "seconds": 120,
+         "phases": 3,
+         "seconds": 95,
          "choices": [
-          120
+          45
          ],
-         "perSet": 120
+         "perSet": 45
         }
        },
        {
@@ -10117,12 +10080,27 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hook",
-           "crossb",
-           "front"
+           "side",
+           "round"
           ],
           "ease": 1
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "jab",
+           "jabb",
+           "cross"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "front",
+            "d": "deflect"
+           }
+          }
          },
          {
           "kind": "round",
@@ -10133,27 +10111,9 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "side",
-            "d": "deflect",
-            "c": "cross"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "cross",
-           "round"
-          ],
-          "react": {
-           "mid": {
-            "at": 1,
-            "a": "jab",
-            "d": "parry"
+           "pre": {
+            "a": "hookb",
+            "d": "block"
            }
           }
          },
@@ -10169,7 +10129,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 18
+          "id": 20
          },
          {
           "kind": "ex",
@@ -10177,11 +10137,11 @@
          },
          {
           "kind": "ex",
-          "id": 13
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 10
+          "id": 16
          }
         ],
         "sets": "2×"
@@ -10206,15 +10166,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 76
+         },
+         {
+          "kind": "ex",
           "id": 75
          },
          {
           "kind": "ex",
-          "id": 74
-         },
-         {
-          "kind": "ex",
-          "id": 76
+          "id": 72
          }
         ]
        }
@@ -10317,8 +10277,13 @@
       ],
       [
        {
-        "dose": "pro Bein 10",
-        "timer": null
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
         "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
@@ -10330,7 +10295,7 @@
         }
        },
        {
-        "dose": "4 × (15 s / 15 s Pause)",
+        "dose": "4 × (10 s / 20 s locker)",
         "timer": {
          "phases": 8,
          "seconds": 120,
@@ -10339,8 +10304,13 @@
         }
        },
        {
-        "dose": "4 Läufe à 20 m",
-        "timer": null
+        "dose": "3 × (20 s / 10 s Pause)",
+        "timer": {
+         "phases": 6,
+         "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
@@ -10369,6 +10339,17 @@
       ],
       [
        {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
+        }
+       },
+       {
         "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
@@ -10388,17 +10369,6 @@
           45
          ],
          "perSet": 45
-        }
-       },
-       {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
         }
        }
       ]
@@ -11869,9 +11839,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
-           "round"
+           "front",
+           "lowk"
           ],
           "ease": 1
          },
@@ -11879,48 +11848,35 @@
           "kind": "round",
           "k": "partner",
           "combo": [
+           "front",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "hookb",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "cross",
+           "hookb",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "cross",
            "hook",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "cross",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "cross",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "front",
            "hookb",
            "roundh"
           ],
@@ -11936,7 +11892,24 @@
           "k": "partner",
           "combo": [
            "lowk",
+           "cross",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "crossb",
+            "d": "block"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "jab",
+           "lowk",
            "hookb",
            "roundh"
           ],
@@ -11951,11 +11924,18 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
            "lowk",
+           "jab",
            "hookb",
            "roundh"
-          ]
+          ],
+          "react": {
+           "mid": {
+            "at": 2,
+            "a": "upper",
+            "d": "cover"
+           }
+          }
          }
         ]
        },
@@ -12250,9 +12230,9 @@
           "k": "shadow",
           "combo": [
            "side",
+           "round",
            "cross",
-           "hook",
-           "lowk"
+           "hook"
           ],
           "ease": 1
          },
@@ -12270,27 +12250,10 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jab",
+           "side",
            "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "jab",
+           "hook",
            "lowk"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "cross"
           ]
          },
          {
@@ -12318,6 +12281,23 @@
           "k": "bag",
           "combo": [
            "side",
+           "jab",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
            "lowk",
            "cross",
            "hook"
@@ -12331,19 +12311,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
+          "id": 7
          },
          {
           "kind": "ex",
-          "id": 18
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 22
+          "id": 43
          },
          {
           "kind": "ex",
-          "id": 48
+          "id": 41
          }
         ],
         "sets": "3×"
@@ -12368,11 +12348,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 73
          },
          {
           "kind": "ex",
-          "id": 73
+          "id": 76
          },
          {
           "kind": "ex",
@@ -12491,33 +12471,30 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 4,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
+        "dose": "4 × (15 s / 15 s Pause)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "10–12 Wdh. pro Bein",
         "timer": null
        },
        {
         "dose": "10–12 Wdh.",
         "timer": null
-       },
-       {
-        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
-        "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
-        }
        }
       ],
       [
@@ -12544,17 +12521,6 @@
       ],
       [
        {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
-        }
-       },
-       {
         "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
@@ -12564,6 +12530,17 @@
           90
          ],
          "perSet": 60
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        },
        {
@@ -12984,9 +12961,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "cross"
+           "jabb",
+           "lowk"
           ],
           "ease": 1
          },
@@ -12994,13 +12970,27 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
+           "front",
+           "round"
+          ],
+          "react": {
+           "pre": {
+            "a": "lowk",
+            "d": "step"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "round",
            "roundh"
           ],
           "react": {
            "pre": {
-            "a": "cross",
-            "d": "cover"
+            "a": "lowk",
+            "d": "check"
            }
           }
          },
@@ -13009,32 +12999,14 @@
           "k": "partner",
           "combo": [
            "jab",
-           "jab",
+           "round",
            "cross",
-           "lowk"
+           "brazil"
           ],
           "react": {
-           "post": {
-            "a": "round",
-            "d": "block",
-            "c": "cross"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "cross",
-           "shook"
-          ],
-          "react": {
-           "mid": {
-            "at": 1,
-            "a": "hook",
-            "d": "duck"
+           "pre": {
+            "a": "lowk",
+            "d": "check"
            }
           }
          },
@@ -13050,19 +13022,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
+          "id": 18
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 12
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 20
+          "id": 21
          }
         ],
         "sets": "3×"
@@ -13077,7 +13049,7 @@
          },
          {
           "kind": "hard",
-          "id": "checks"
+          "id": "abs"
          }
         ]
        },
@@ -13087,11 +13059,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 75
          },
          {
           "kind": "ex",
-          "id": 72
+          "id": 76
          },
          {
           "kind": "ex",
@@ -13200,34 +13172,31 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s Pause)",
-        "timer": {
-         "phases": 6,
-         "seconds": 90,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "10 Wdh.",
+        "dose": "pro Bein 10",
         "timer": null
        },
        {
-        "dose": "3 × (20 s Vollgas / 10 s locker)",
+        "dose": "4 Läufe à 20 m",
+        "timer": null
+       },
+       {
+        "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        }
       ],
@@ -13246,6 +13215,19 @@
        {
         "dose": null,
         "timer": {
+         "phases": 5,
+         "seconds": 70,
+         "choices": [
+          20
+         ],
+         "perSet": 20
+        }
+       }
+      ],
+      [
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
          "phases": 3,
          "seconds": 65,
          "choices": [
@@ -13253,9 +13235,7 @@
          ],
          "perSet": 30
         }
-       }
-      ],
-      [
+       },
        {
         "dose": "2 Min.",
         "timer": {
@@ -13265,17 +13245,6 @@
           120
          ],
          "perSet": 120
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        },
        {
@@ -14769,9 +14738,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
-           "round"
+           "front",
+           "lowk"
           ],
           "ease": 1
          },
@@ -14779,8 +14747,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
+           "front",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "jab",
-           "crossb",
            "hookb",
            "roundh"
           ]
@@ -14799,32 +14774,14 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "lowk",
+           "cross",
+           "hook",
            "hookb",
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "crossb",
-            "d": "block",
-            "c": "cross"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "front",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "mid": {
-            "at": 1,
-            "a": "jab",
+           "pre": {
+            "a": "lowk",
             "d": "step"
            }
           }
@@ -14834,14 +14791,15 @@
           "k": "partner",
           "combo": [
            "lowk",
-           "jab",
+           "cross",
            "hookb",
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "hook",
-            "d": "cover"
+           "mid": {
+            "at": 1,
+            "a": "front",
+            "d": "deflect"
            }
           }
          }
@@ -14853,19 +14811,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 10
+          "id": 8
          },
          {
           "kind": "ex",
-          "id": 83
+          "id": 19
+         },
+         {
+          "kind": "ex",
+          "id": 50
          },
          {
           "kind": "ex",
           "id": 51
-         },
-         {
-          "kind": "ex",
-          "id": 42
          }
         ],
         "sets": "2×"
@@ -14890,15 +14848,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 75
+         },
+         {
+          "kind": "ex",
           "id": 72
          },
          {
           "kind": "ex",
           "id": 76
-         },
-         {
-          "kind": "ex",
-          "id": 73
          }
         ]
        }
@@ -15008,24 +14966,32 @@
       ],
       [
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "10 Wdh.",
         "timer": null
        },
        {
-        "dose": "4 × (10 s / 20 s locker)",
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
-        "timer": null
+        "dose": "30–45 s halten",
+        "timer": {
+         "phases": 1,
+         "seconds": 30,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
+        }
        },
        {
-        "dose": "10–12 Wdh. je Seite",
+        "dose": "10–12 Wdh. pro Bein",
         "timer": null
        }
       ],
@@ -15055,6 +15021,17 @@
       ],
       [
        {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
+        }
+       },
+       {
         "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
@@ -15074,18 +15051,6 @@
           120
          ],
          "perSet": 120
-        }
-       },
-       {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
         }
        }
       ]
@@ -15136,9 +15101,9 @@
           "k": "shadow",
           "combo": [
            "side",
-           "jab",
-           "crossb",
-           "lowk"
+           "round",
+           "cross",
+           "hook"
           ],
           "ease": 1
          },
@@ -15156,27 +15121,10 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jab",
+           "side",
            "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "jab",
+           "hook",
            "lowk"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "cross"
           ]
          },
          {
@@ -15188,6 +15136,24 @@
            "cross",
            "roundh"
           ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "lowk",
+           "cross",
+           "hook"
+          ]
          }
         ]
        },
@@ -15197,19 +15163,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 18
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 14
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 22
+          "id": 45
          },
          {
           "kind": "ex",
-          "id": 43
+          "id": 41
          }
         ],
         "sets": "2×"
@@ -15234,7 +15200,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 72
+          "id": 73
          },
          {
           "kind": "ex",
@@ -15351,11 +15317,16 @@
       ],
       [
        {
-        "dose": "pro Bein 10",
-        "timer": null
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
          "phases": 2,
          "seconds": 60,
@@ -15368,7 +15339,7 @@
         "timer": null
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
+        "dose": "10–12 Wdh.",
         "timer": null
        }
       ],
@@ -15396,14 +15367,15 @@
       ],
       [
        {
-        "dose": "je Seite 45 s",
+        "dose": "60–90 s halten",
         "timer": {
-         "phases": 3,
-         "seconds": 95,
+         "phases": 1,
+         "seconds": 60,
          "choices": [
-          45
+          60,
+          90
          ],
-         "perSet": 45
+         "perSet": 60
         }
        },
        {
@@ -15811,9 +15783,9 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "crossb"
+           "lowk",
+           "cross",
+           "hook"
           ],
           "ease": 1
          },
@@ -15822,13 +15794,14 @@
           "k": "partner",
           "combo": [
            "jab",
-           "cross",
-           "roundh"
+           "jab",
+           "jabb",
+           "cross"
           ],
           "react": {
-           "post": {
-            "a": "lowk",
-            "d": "check"
+           "pre": {
+            "a": "side",
+            "d": "deflect"
            }
           }
          },
@@ -15836,16 +15809,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "jabb",
            "cross",
-           "lowk"
+           "roundh"
           ],
           "react": {
-           "post": {
-            "a": "side",
-            "d": "step",
-            "c": "front"
+           "mid": {
+            "at": 1,
+            "a": "lowk",
+            "d": "step"
            }
           }
          },
@@ -15861,19 +15833,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 20
-         },
-         {
-          "kind": "ex",
-          "id": 18
+          "id": 10
          },
          {
           "kind": "ex",
           "id": 13
+         },
+         {
+          "kind": "ex",
+          "id": 20
          }
         ],
         "sets": "2×"
@@ -15888,7 +15860,7 @@
          },
          {
           "kind": "hard",
-          "id": "checks"
+          "id": "abs"
          }
         ]
        },
@@ -15898,15 +15870,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 74
+         },
+         {
+          "kind": "ex",
           "id": 76
-         },
-         {
-          "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 73
          }
         ]
        }
@@ -16008,10 +15980,23 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "4 Läufe à 20 m",
+        "timer": null
+       },
+       {
+        "dose": "4 × (15 s / 15 s Pause)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -16021,19 +16006,6 @@
         "timer": {
          "phases": 2,
          "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "pro Bein 10",
-        "timer": null
-       },
-       {
-        "dose": "4 × (15 s / 15 s Pause)",
-        "timer": {
-         "phases": 8,
-         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -16054,25 +16026,25 @@
        {
         "dose": null,
         "timer": {
+         "phases": 5,
+         "seconds": 70,
+         "choices": [
+          20
+         ],
+         "perSet": 20
+        }
+       }
+      ],
+      [
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
          "phases": 3,
          "seconds": 65,
          "choices": [
           30
          ],
          "perSet": 30
-        }
-       }
-      ],
-      [
-       {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
         }
        },
        {
@@ -16087,15 +16059,14 @@
         }
        },
        {
-        "dose": "60–90 s halten",
+        "dose": "2 Min.",
         "timer": {
          "phases": 1,
-         "seconds": 60,
+         "seconds": 120,
          "choices": [
-          60,
-          90
+          120
          ],
-         "perSet": 60
+         "perSet": 120
         }
        }
       ]
@@ -17580,8 +17551,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1,
@@ -17591,11 +17561,42 @@
           "kind": "round",
           "k": "partner",
           "combo": [
+           "side",
+           "round"
+          ],
+          "six": 1,
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "cross",
            "hookb",
            "roundh"
           ],
-          "six": 1,
+          "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "roundh",
+            "d": "cover"
+           },
+           "post": {
+            "a": "front",
+            "d": "step",
+            "c": "jab"
+           }
+          },
           "pace": true
          },
          {
@@ -17608,17 +17609,6 @@
            "roundh"
           ],
           "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "hook",
-           "cross",
-           "hookb",
-           "roundh"
-          ],
-          "pace": true
          },
          {
           "kind": "round",
@@ -17629,6 +17619,16 @@
            "hookb",
            "roundh"
           ],
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "front",
+           "round",
+           "roundh"
+          ],
           "pace": false
          },
          {
@@ -17637,62 +17637,6 @@
           "combo": [
            "jab",
            "crossb",
-           "hookb",
-           "roundh"
-          ],
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "hookb",
-           "roundh"
-          ],
-          "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "side",
-           "hookb",
-           "roundh"
-          ],
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "front",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "mid": {
-            "at": 1,
-            "a": "hookb",
-            "d": "block"
-           },
-           "post": {
-            "a": "side",
-            "d": "step",
-            "c": "jab"
-           }
-          },
-          "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "axe",
            "hookb",
            "roundh"
           ],
@@ -17709,14 +17653,42 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "cross",
-           "brazil",
+           "jab",
+           "side",
+           "hookb",
+           "roundh"
+          ],
+          "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "side",
+           "back",
            "hookb",
            "roundh"
           ],
           "react": {
            "mid": {
-            "at": 1,
+            "at": 2,
+            "a": "upper",
+            "d": "cover"
+           }
+          },
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "axe",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "pre": {
             "a": "hook",
             "d": "cover"
            },
@@ -17736,19 +17708,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 7
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 9
+          "id": 19
+         },
+         {
+          "kind": "ex",
+          "id": 23
          },
          {
           "kind": "ex",
           "id": 58
-         },
-         {
-          "kind": "ex",
-          "id": 43
          }
         ],
         "sets": "3×"
@@ -17775,15 +17747,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 75
+          "id": 76
          },
          {
           "kind": "ex",
           "id": 73
+         },
+         {
+          "kind": "ex",
+          "id": 74
          }
         ]
        }
@@ -17914,16 +17886,11 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
-        "timer": {
-         "phases": 4,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
+        "dose": "4 Läufe à 20 m",
+        "timer": null
        },
        {
-        "dose": "45 s Belastung, 15 s Pause",
+        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
         "timer": {
          "phases": 2,
          "seconds": 60,
@@ -17944,55 +17911,52 @@
         }
        },
        {
-        "dose": "12–15 Wdh. pro Bein",
-        "timer": null
-       }
-      ],
-      [
-       {
-        "dose": null,
+        "dose": "45–60 s halten",
         "timer": {
-         "phases": 5,
-         "seconds": 70,
+         "phases": 1,
+         "seconds": 45,
          "choices": [
-          20
-         ],
-         "perSet": 20
-        }
-       },
-       {
-        "dose": null,
-        "timer": {
-         "phases": 5,
-         "seconds": 70,
-         "choices": [
-          20
-         ],
-         "perSet": 20
-        }
-       }
-      ],
-      [
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
+          45,
+          60
          ],
          "perSet": 45
         }
+       }
+      ],
+      [
+       {
+        "dose": null,
+        "timer": {
+         "phases": 5,
+         "seconds": 70,
+         "choices": [
+          20
+         ],
+         "perSet": 20
+        }
        },
        {
-        "dose": "je Seite 30 s",
+        "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
+        }
+       }
+      ],
+      [
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        },
        {
@@ -18005,6 +17969,17 @@
           90
          ],
          "perSet": 60
+        }
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
         }
        }
       ]
@@ -18056,8 +18031,7 @@
           "combo": [
            "side",
            "jab",
-           "upper",
-           "hook"
+           "front"
           ],
           "ease": 1,
           "pace": false
@@ -18068,7 +18042,8 @@
           "combo": [
            "side",
            "jab",
-           "front"
+           "cross",
+           "roundh"
           ],
           "pace": true
          },
@@ -18091,50 +18066,7 @@
           "combo": [
            "side",
            "jab",
-           "crossb",
-           "hook"
-          ],
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "cross",
-           "roundh"
-          ],
-          "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "back"
-          ],
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
            "cross"
-          ],
-          "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "hookb",
-           "hook",
-           "cross",
-           "back"
           ],
           "pace": true
          },
@@ -18154,9 +18086,10 @@
           "k": "bag",
           "combo": [
            "side",
-           "cross",
-           "hookb",
-           "round"
+           "jab",
+           "crossb",
+           "hook",
+           "roundh"
           ],
           "pace": true
          },
@@ -18166,9 +18099,53 @@
           "combo": [
            "side",
            "jab",
-           "crossb",
+           "cross",
+           "hookb",
+           "roundh"
+          ],
+          "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "round"
+          ],
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "round",
+           "cross",
+           "brazil"
+          ],
+          "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "brazil",
+           "cross",
            "hook",
            "roundh"
+          ],
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "jab",
+           "cross",
+           "hook",
+           "shook"
           ],
           "pace": false
          }
@@ -18180,19 +18157,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 14
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 18
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 47
+          "id": 22
          },
          {
           "kind": "ex",
-          "id": 48
+          "id": 49
          }
         ],
         "sets": "3×"
@@ -18219,11 +18196,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
+          "id": 72
          },
          {
           "kind": "ex",
-          "id": 76
+          "id": 73
          },
          {
           "kind": "ex",
@@ -18357,33 +18334,32 @@
       ],
       [
        {
-        "dose": "45 s Belastung, 15 s Pause",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        },
        {
-        "dose": "pro Bein 10",
-        "timer": null
+        "dose": "4 × (15 s / 15 s Pause)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
         "dose": "12–15 Wdh.",
         "timer": null
        },
        {
-        "dose": "45–60 s pro Bein halten · ein Satz = erst links, dann rechts",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45,
-          60
-         ],
-         "perSet": 45
-        }
+        "dose": "12–15 Wdh. je Seite",
+        "timer": null
        }
       ],
       [
@@ -18410,25 +18386,26 @@
       ],
       [
        {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
-         "seconds": 120,
+         "seconds": 60,
          "choices": [
-          120
+          60,
+          90
          ],
-         "perSet": 120
+         "perSet": 60
         }
        },
        {
@@ -18879,8 +18856,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "front",
            "round"
           ],
           "ease": 1,
@@ -18890,17 +18866,14 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "cross",
-           "round"
+           "round",
+           "roundh"
           ],
           "six": 1,
           "react": {
            "post": {
-            "a": "sweep",
-            "d": "lift",
-            "c": "round"
+            "a": "front",
+            "d": "step"
            }
           },
           "pace": true
@@ -18912,36 +18885,28 @@
            "jab",
            "jab",
            "hook",
-           "cross",
+           "crossb",
            "front"
           ],
-          "react": {
-           "post": {
-            "a": "upper",
-            "d": "cover",
-            "c": "cross"
-           }
-          },
           "pace": true
          },
          {
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "jabb",
-           "cross",
+           "round",
+           "side",
            "roundh"
           ],
           "react": {
            "pre": {
-            "a": "hook",
-            "d": "duck"
+            "a": "upper",
+            "d": "cover"
            },
            "post": {
-            "a": "roundh",
-            "d": "step"
+            "a": "crossb",
+            "d": "block",
+            "c": "cross"
            }
           },
           "pace": true
@@ -18954,17 +18919,17 @@
            "jab",
            "crossb",
            "hook",
-           "roundh"
+           "round"
           ],
           "react": {
            "pre": {
-            "a": "jab",
-            "d": "slip"
+            "a": "cross",
+            "d": "step"
            },
            "post": {
-            "a": "cross",
-            "d": "cover",
-            "c": "cross"
+            "a": "jab",
+            "d": "slip",
+            "c": "hookb"
            }
           },
           "pace": true
@@ -18974,20 +18939,21 @@
           "k": "partner",
           "combo": [
            "jab",
-           "jab",
-           "round",
+           "hook",
+           "upper",
            "cross",
-           "brazil"
+           "round"
           ],
           "react": {
            "mid": {
-            "at": 3,
-            "a": "round",
-            "d": "step"
+            "at": 1,
+            "a": "side",
+            "d": "deflect"
            },
            "post": {
-            "a": "front",
-            "d": "step"
+            "a": "sweep",
+            "d": "step",
+            "c": "jab"
            }
           },
           "pace": true
@@ -19005,19 +18971,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 8
+          "id": 20
          },
          {
           "kind": "ex",
-          "id": 21
-         },
-         {
-          "kind": "ex",
-          "id": 16
+          "id": 19
          },
          {
           "kind": "ex",
           "id": 9
+         },
+         {
+          "kind": "ex",
+          "id": 16
          }
         ],
         "sets": "3×"
@@ -19044,15 +19010,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 72
+         },
+         {
+          "kind": "ex",
           "id": 73
          },
          {
           "kind": "ex",
-          "id": 76
-         },
-         {
-          "kind": "ex",
-          "id": 74
+          "id": 75
          }
         ]
        }
@@ -19167,25 +19133,19 @@
       ],
       [
        {
-        "dose": "15 Wdh.",
-        "timer": null
-       },
-       {
-        "dose": "3 Min.",
+        "dose": "45 s Belastung, 15 s Pause",
         "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [
-          180
-         ],
-         "perSet": 180
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
         }
        },
        {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
@@ -19198,6 +19158,15 @@
          "choices": [],
          "perSet": 0
         }
+       },
+       {
+        "dose": "3 × (20 s / 10 s Pause)",
+        "timer": {
+         "phases": 6,
+         "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
@@ -19225,6 +19194,17 @@
        }
       ],
       [
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
        {
         "dose": "60–90 s halten",
         "timer": {
@@ -19238,25 +19218,14 @@
         }
        },
        {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
+        "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
-         "seconds": 95,
+         "seconds": 65,
          "choices": [
-          45
+          30
          ],
-         "perSet": 45
+         "perSet": 30
         }
        }
       ]
@@ -20810,8 +20779,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1,
@@ -20821,10 +20789,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "cross",
-           "hookb",
-           "roundh"
+           "side",
+           "round"
           ],
           "six": 1,
           "pace": true
@@ -20833,12 +20799,22 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "hook",
            "cross",
            "hookb",
            "roundh"
           ],
           "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "cross",
+           "hookb",
+           "roundh"
+          ],
+          "pace": true
          },
          {
           "kind": "round",
@@ -20849,39 +20825,14 @@
            "hookb",
            "roundh"
           ],
-          "react": {
-           "post": {
-            "a": "jab",
-            "d": "slip",
-            "c": "cross"
-           }
-          },
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "pre": {
-            "a": "crossb",
-            "d": "block"
-           }
-          },
           "pace": false
          },
          {
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
            "front",
-           "hookb",
+           "round",
            "roundh"
           ],
           "react": {
@@ -20902,10 +20853,9 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "upper",
-            "d": "step",
-            "c": "jab"
+           "pre": {
+            "a": "hookb",
+            "d": "block"
            }
           },
           "pace": false
@@ -20921,9 +20871,9 @@
           ],
           "react": {
            "post": {
-            "a": "hook",
-            "d": "duck",
-            "c": "hook"
+            "a": "front",
+            "d": "step",
+            "c": "jab"
            }
           },
           "pace": true
@@ -20936,19 +20886,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 12
          },
          {
           "kind": "ex",
-          "id": 16
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 22
+          "id": 48
          },
          {
           "kind": "ex",
-          "id": 51
+          "id": 54
          }
         ],
         "sets": "2×"
@@ -20975,15 +20925,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 74
-         },
-         {
-          "kind": "ex",
-          "id": 73
+          "id": 72
          },
          {
           "kind": "ex",
           "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 76
          }
         ]
        }
@@ -21103,16 +21053,7 @@
       ],
       [
        {
-        "dose": "45 s Belastung, 15 s Pause",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "3 × (20 s Vollgas / 10 s locker)",
         "timer": {
          "phases": 6,
          "seconds": 90,
@@ -21121,8 +21062,25 @@
         }
        },
        {
-        "dose": "12–15 Wdh.",
-        "timer": null
+        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "45–60 s pro Bein halten · ein Satz = erst links, dann rechts",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45,
+          60
+         ],
+         "perSet": 45
+        }
        },
        {
         "dose": "12–15 Wdh. pro Bein",
@@ -21166,18 +21124,6 @@
         }
        },
        {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
-        }
-       },
-       {
         "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
@@ -21186,6 +21132,17 @@
           30
          ],
          "perSet": 30
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        }
       ]
@@ -21237,8 +21194,7 @@
           "combo": [
            "side",
            "jab",
-           "upper",
-           "hook"
+           "front"
           ],
           "ease": 1,
           "pace": false
@@ -21249,7 +21205,8 @@
           "combo": [
            "side",
            "jab",
-           "front"
+           "cross",
+           "roundh"
           ],
           "pace": true
          },
@@ -21272,8 +21229,30 @@
           "combo": [
            "side",
            "jab",
+           "cross"
+          ],
+          "pace": true
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "hook",
+           "cross",
+           "front"
+          ],
+          "pace": false
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "jab",
            "crossb",
-           "hook"
+           "hook",
+           "roundh"
           ],
           "pace": true
          },
@@ -21284,6 +21263,7 @@
            "side",
            "jab",
            "cross",
+           "hookb",
            "roundh"
           ],
           "pace": false
@@ -21293,29 +21273,7 @@
           "k": "bag",
           "combo": [
            "side",
-           "back"
-          ],
-          "pace": true
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "cross"
-          ],
-          "pace": false
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "hookb",
-           "hook",
-           "cross",
-           "back"
+           "round"
           ],
           "pace": true
          }
@@ -21327,19 +21285,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 18
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 49
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 58
          }
         ],
         "sets": "2×"
@@ -21350,7 +21308,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fWraps",
+          "id": "fGlove",
           "h": 1
          },
          {
@@ -21366,7 +21324,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
+          "id": 72
          },
          {
           "kind": "ex",
@@ -21493,29 +21451,39 @@
       ],
       [
        {
-        "dose": "4 × (10 s / 20 s locker)",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
+        }
+       },
+       {
+        "dose": "45 s Belastung, 15 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
+        "dose": "12–15 Wdh. je Seite",
         "timer": null
        },
        {
-        "dose": "12–15 Wdh. pro Bein",
-        "timer": null
-       },
-       {
-        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
+        "dose": "45–60 s halten",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 1,
+         "seconds": 45,
+         "choices": [
+          45,
+          60
+         ],
+         "perSet": 45
         }
        }
       ],
@@ -21524,11 +21492,11 @@
         "dose": null,
         "timer": {
          "phases": 5,
-         "seconds": 100,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        },
        {
@@ -21543,15 +21511,14 @@
       ],
       [
        {
-        "dose": "60–90 s halten",
+        "dose": "je Seite 45 s",
         "timer": {
-         "phases": 1,
-         "seconds": 60,
+         "phases": 3,
+         "seconds": 95,
          "choices": [
-          60,
-          90
+          45
          ],
-         "perSet": 60
+         "perSet": 45
         }
        },
        {
@@ -21977,8 +21944,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "round",
            "round"
           ],
           "ease": 1,
@@ -21996,14 +21962,10 @@
           ],
           "six": 1,
           "react": {
-           "pre": {
-            "a": "crossb",
-            "d": "block"
-           },
            "post": {
-            "a": "side",
-            "d": "step",
-            "c": "jab"
+            "a": "upper",
+            "d": "cover",
+            "c": "cross"
            }
           },
           "pace": true
@@ -22012,16 +21974,19 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "jabb",
-           "cross",
+           "round",
+           "side",
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "sweep",
+           "mid": {
+            "at": 1,
+            "a": "round",
             "d": "step"
+           },
+           "post": {
+            "a": "hook",
+            "d": "duck"
            }
           },
           "pace": true
@@ -22032,19 +21997,15 @@
           "combo": [
            "jab",
            "jab",
-           "round",
-           "cross",
-           "brazil"
+           "crossb",
+           "hook",
+           "round"
           ],
           "react": {
-           "pre": {
-            "a": "jab",
-            "d": "parry"
-           },
-           "post": {
-            "a": "front",
-            "d": "step",
-            "c": "jab"
+           "mid": {
+            "at": 1,
+            "a": "roundh",
+            "d": "step"
            }
           },
           "pace": true
@@ -22062,11 +22023,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 19
+          "id": 12
          },
          {
           "kind": "ex",
-          "id": 10
+          "id": 16
          },
          {
           "kind": "ex",
@@ -22074,7 +22035,7 @@
          },
          {
           "kind": "ex",
-          "id": 20
+          "id": 9
          }
         ],
         "sets": "2×"
@@ -22105,11 +22066,11 @@
          },
          {
           "kind": "ex",
-          "id": 72
+          "id": 75
          },
          {
           "kind": "ex",
-          "id": 73
+          "id": 74
          }
         ]
        }
@@ -22217,17 +22178,22 @@
       ],
       [
        {
-        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
+        "dose": "3 × (20 s Vollgas / 10 s locker)",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
+         "phases": 6,
+         "seconds": 90,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "4 Läufe à 20 m",
-        "timer": null
+        "dose": "3 × (20 s / 10 s Pause)",
+        "timer": {
+         "phases": 6,
+         "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
         "dose": "4 × (15 s / 15 s Pause)",
@@ -22285,6 +22251,17 @@
         }
        },
        {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
+        }
+       },
+       {
         "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
@@ -22293,18 +22270,6 @@
           45
          ],
          "perSet": 45
-        }
-       },
-       {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
         }
        }
       ]
@@ -34994,9 +34959,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
-           "round"
+           "front",
+           "lowk"
           ],
           "ease": 1
          },
@@ -35004,8 +34968,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
+           "front",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "jab",
-           "cross",
            "hookb",
            "roundh"
           ]
@@ -35015,7 +34986,7 @@
           "k": "partner",
           "combo": [
            "jab",
-           "crossb",
+           "cross",
            "hookb",
            "roundh"
           ]
@@ -35034,25 +35005,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "front",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
            "lowk",
-           "jab",
+           "cross",
            "hookb",
            "roundh"
           ],
           "react": {
            "pre": {
-            "a": "jab",
-            "d": "parry"
+            "a": "front",
+            "d": "deflect"
            }
           }
          },
@@ -35066,10 +35027,10 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "front",
-            "d": "step",
-            "c": "jab"
+           "mid": {
+            "at": 1,
+            "a": "jab",
+            "d": "step"
            }
           }
          }
@@ -35081,19 +35042,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 12
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 9
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 41
+          "id": 51
          },
          {
           "kind": "ex",
-          "id": 43
+          "id": 42
          }
         ],
         "sets": "3×"
@@ -35108,7 +35069,7 @@
          },
          {
           "kind": "hard",
-          "id": "abs"
+          "id": "checks"
          }
         ]
        },
@@ -35122,11 +35083,11 @@
          },
          {
           "kind": "ex",
-          "id": 74
+          "id": 76
          },
          {
           "kind": "ex",
-          "id": 75
+          "id": 73
          }
         ]
        }
@@ -35249,30 +35210,25 @@
       ],
       [
        {
-        "dose": "3 × (20 s all-out / 10 s easy)",
-        "timer": {
-         "phases": 6,
-         "seconds": 90,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "40 s work, 20 s rest",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "10–12 reps",
+        "dose": "4 runs of 20 m",
         "timer": null
+       },
+       {
+        "dose": "4 × (10 s / 20 s easy)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
         "dose": "10–12 reps per leg",
         "timer": null
+       },
+       {
+        "dose": "10–12 reps per side",
+        "timer": null
        }
       ],
       [
@@ -35289,41 +35245,6 @@
        },
        {
         "dose": null,
-        "timer": {
-         "phases": 5,
-         "seconds": 70,
-         "choices": [
-          20
-         ],
-         "perSet": 20
-        }
-       }
-      ],
-      [
-       {
-        "dose": "45 s per side",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
-        "dose": "45 s per side",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
-        "dose": "30 s per side",
         "timer": {
          "phases": 3,
          "seconds": 65,
@@ -35331,6 +35252,42 @@
           30
          ],
          "perSet": 30
+        }
+       }
+      ],
+      [
+       {
+        "dose": "45 s per side",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
+       {
+        "dose": "2 min",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
+        }
+       },
+       {
+        "dose": "hold 60–90 s",
+        "timer": {
+         "phases": 1,
+         "seconds": 60,
+         "choices": [
+          60,
+          90
+         ],
+         "perSet": 60
         }
        }
       ]
@@ -35381,7 +35338,7 @@
           "k": "shadow",
           "combo": [
            "side",
-           "lowk",
+           "round",
            "cross",
            "hook"
           ],
@@ -35401,26 +35358,10 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jab",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
            "side",
-           "jab",
+           "cross",
+           "hook",
            "lowk"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "cross"
           ]
          },
          {
@@ -35438,9 +35379,27 @@
           "k": "shadow",
           "combo": [
            "side",
+           "lowk",
+           "cross",
+           "hook"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
            "jab",
            "crossb",
            "lowk"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
+           "roundh"
           ]
          }
         ]
@@ -35451,19 +35410,19 @@
         "items": [
          {
           "kind": "ex",
+          "id": 14
+         },
+         {
+          "kind": "ex",
           "id": 21
          },
          {
           "kind": "ex",
-          "id": 9
+          "id": 54
          },
          {
           "kind": "ex",
-          "id": 22
-         },
-         {
-          "kind": "ex",
-          "id": 45
+          "id": 23
          }
         ],
         "sets": "3×"
@@ -35474,7 +35433,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fGlove"
+          "id": "fBare"
          },
          {
           "kind": "hard",
@@ -35488,15 +35447,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 74
-         },
-         {
-          "kind": "ex",
           "id": 73
+         },
+         {
+          "kind": "ex",
+          "id": 76
+         },
+         {
+          "kind": "ex",
+          "id": 72
          }
         ]
        }
@@ -35618,6 +35577,15 @@
       ],
       [
        {
+        "dose": "40 s work, 20 s rest",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
         "dose": "3 min",
         "timer": {
          "phases": 1,
@@ -35629,29 +35597,28 @@
         }
        },
        {
-        "dose": "40 s work, 20 s rest",
+        "dose": "10–12 reps per leg",
+        "timer": null
+       },
+       {
+        "dose": "30–45 s hold",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 30,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
-       },
-       {
-        "dose": "10–12 reps",
-        "timer": null
-       },
-       {
-        "dose": "10–12 reps",
-        "timer": null
        }
       ],
       [
        {
         "dose": null,
         "timer": {
-         "phases": 5,
-         "seconds": 70,
+         "phases": 3,
+         "seconds": 45,
          "choices": [
           20
          ],
@@ -35665,14 +35632,26 @@
       ],
       [
        {
-        "dose": "30 s per side",
+        "dose": "hold 60–90 s",
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 1,
+         "seconds": 60,
          "choices": [
-          30
+          60,
+          90
          ],
-         "perSet": 30
+         "perSet": 60
+        }
+       },
+       {
+        "dose": "2 min",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        },
        {
@@ -35684,18 +35663,6 @@
           45
          ],
          "perSet": 45
-        }
-       },
-       {
-        "dose": "hold 60–90 s",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
         }
        }
       ]
@@ -36082,9 +36049,9 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "crossb"
+           "lowk",
+           "cross",
+           "hook"
           ],
           "ease": 1
          },
@@ -36093,13 +36060,14 @@
           "k": "partner",
           "combo": [
            "jab",
-           "cross",
-           "roundh"
+           "jab",
+           "jabb",
+           "cross"
           ],
           "react": {
-           "post": {
-            "a": "lowk",
-            "d": "check"
+           "pre": {
+            "a": "side",
+            "d": "deflect"
            }
           }
          },
@@ -36107,16 +36075,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "jabb",
            "cross",
-           "lowk"
+           "roundh"
           ],
           "react": {
-           "post": {
-            "a": "side",
-            "d": "step",
-            "c": "front"
+           "mid": {
+            "at": 1,
+            "a": "lowk",
+            "d": "step"
            }
           }
          },
@@ -36132,19 +36099,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 20
-         },
-         {
-          "kind": "ex",
-          "id": 18
+          "id": 10
          },
          {
           "kind": "ex",
           "id": 13
+         },
+         {
+          "kind": "ex",
+          "id": 20
          }
         ],
         "sets": "3×"
@@ -36159,7 +36126,7 @@
          },
          {
           "kind": "hard",
-          "id": "checks"
+          "id": "abs"
          }
         ]
        },
@@ -36169,15 +36136,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 74
+         },
+         {
+          "kind": "ex",
           "id": 76
-         },
-         {
-          "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 73
          }
         ]
        }
@@ -36284,10 +36251,23 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s rest)",
+        "dose": "40 s (about 10 m out and back), 20 s rest",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "4 runs of 20 m",
+        "timer": null
+       },
+       {
+        "dose": "4 × (15 s / 15 s rest)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -36297,19 +36277,6 @@
         "timer": {
          "phases": 2,
          "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "10 per leg",
-        "timer": null
-       },
-       {
-        "dose": "4 × (15 s / 15 s rest)",
-        "timer": {
-         "phases": 8,
-         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -36330,25 +36297,25 @@
        {
         "dose": null,
         "timer": {
+         "phases": 5,
+         "seconds": 70,
+         "choices": [
+          20
+         ],
+         "perSet": 20
+        }
+       }
+      ],
+      [
+       {
+        "dose": "30 s per side",
+        "timer": {
          "phases": 3,
          "seconds": 65,
          "choices": [
           30
          ],
          "perSet": 30
-        }
-       }
-      ],
-      [
-       {
-        "dose": "2 min",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
         }
        },
        {
@@ -36363,15 +36330,14 @@
         }
        },
        {
-        "dose": "hold 60–90 s",
+        "dose": "2 min",
         "timer": {
          "phases": 1,
-         "seconds": 60,
+         "seconds": 120,
          "choices": [
-          60,
-          90
+          120
          ],
-         "perSet": 60
+         "perSet": 120
         }
        }
       ]
@@ -37989,9 +37955,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
-           "round"
+           "front",
+           "lowk"
           ],
           "ease": 1
          },
@@ -37999,34 +37964,43 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "lowk",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
            "front",
+           "round"
+          ],
+          "react": {
+           "pre": {
+            "a": "round",
+            "d": "block"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "pre": {
+            "a": "lowk",
+            "d": "step"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "cross",
            "hookb",
            "roundh"
           ],
           "react": {
            "mid": {
-            "at": 2,
+            "at": 1,
             "a": "front",
             "d": "deflect"
            }
@@ -38037,14 +38011,14 @@
           "k": "partner",
           "combo": [
            "lowk",
-           "jab",
+           "cross",
            "hookb",
            "roundh"
           ],
           "react": {
-           "post": {
+           "pre": {
             "a": "lowk",
-            "d": "step"
+            "d": "check"
            }
           }
          }
@@ -38056,19 +38030,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
-         },
-         {
-          "kind": "ex",
           "id": 10
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 48
+          "id": 51
+         },
+         {
+          "kind": "ex",
+          "id": 42
          }
         ],
         "sets": "2×"
@@ -38083,7 +38057,7 @@
          },
          {
           "kind": "hard",
-          "id": "arms"
+          "id": "checks"
          }
         ]
        },
@@ -38093,15 +38067,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
-         },
-         {
-          "kind": "ex",
           "id": 72
          },
          {
           "kind": "ex",
-          "id": 74
+          "id": 76
+         },
+         {
+          "kind": "ex",
+          "id": 73
          }
         ]
        }
@@ -38212,38 +38186,25 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s rest)",
+        "dose": "4 runs of 20 m",
+        "timer": null
+       },
+       {
+        "dose": "4 × (10 s / 20 s easy)",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "4 runs of 20 m",
+        "dose": "10–12 reps per leg",
         "timer": null
        },
        {
-        "dose": "10 s each direction (forehead, back of head, left, right)",
-        "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
-        }
-       },
-       {
-        "dose": "30–45 s per leg hold · one set = left first, then right",
-        "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
-        }
+        "dose": "10–12 reps per side",
+        "timer": null
        }
       ],
       [
@@ -38272,6 +38233,28 @@
       ],
       [
        {
+        "dose": "45 s per side",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
+       {
+        "dose": "2 min",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
+        }
+       },
+       {
         "dose": "hold 60–90 s",
         "timer": {
          "phases": 1,
@@ -38281,28 +38264,6 @@
           90
          ],
          "perSet": 60
-        }
-       },
-       {
-        "dose": "45 s per side",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
-        "dose": "45 s per side",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        }
       ]
@@ -38353,8 +38314,9 @@
           "k": "shadow",
           "combo": [
            "side",
-           "jabb",
-           "cross"
+           "round",
+           "cross",
+           "hook"
           ],
           "ease": 1
          },
@@ -38373,9 +38335,9 @@
           "k": "shadow",
           "combo": [
            "side",
-           "jabb",
            "cross",
-           "roundh"
+           "hook",
+           "lowk"
           ]
          },
          {
@@ -38383,17 +38345,17 @@
           "k": "bag",
           "combo": [
            "side",
-           "jab",
-           "lowk"
+           "jabb",
+           "cross",
+           "roundh"
           ]
          },
          {
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "side",
-           "jab",
-           "cross"
+           "round",
+           "roundh"
           ]
          }
         ]
@@ -38404,15 +38366,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 19
+         },
+         {
+          "kind": "ex",
           "id": 13
          },
          {
           "kind": "ex",
-          "id": 21
-         },
-         {
-          "kind": "ex",
-          "id": 45
+          "id": 22
          },
          {
           "kind": "ex",
@@ -38427,7 +38389,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fGlove"
+          "id": "fBare"
          },
          {
           "kind": "hard",
@@ -38441,7 +38403,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 72
+          "id": 73
          },
          {
           "kind": "ex",
@@ -38559,23 +38521,21 @@
       ],
       [
        {
+        "dose": "40 s (about 10 m out and back), 20 s rest",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
         "dose": "4 × (15 s / 15 s rest)",
         "timer": {
          "phases": 8,
          "seconds": 120,
          "choices": [],
          "perSet": 0
-        }
-       },
-       {
-        "dose": "3 min",
-        "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [
-          180
-         ],
-         "perSet": 180
         }
        },
        {
@@ -38599,8 +38559,8 @@
        {
         "dose": null,
         "timer": {
-         "phases": 5,
-         "seconds": 70,
+         "phases": 3,
+         "seconds": 45,
          "choices": [
           20
          ],
@@ -38614,14 +38574,15 @@
       ],
       [
        {
-        "dose": "45 s per side",
+        "dose": "hold 60–90 s",
         "timer": {
-         "phases": 3,
-         "seconds": 95,
+         "phases": 1,
+         "seconds": 60,
          "choices": [
-          45
+          60,
+          90
          ],
-         "perSet": 45
+         "perSet": 60
         }
        },
        {
@@ -39023,7 +38984,7 @@
           "combo": [
            "jab",
            "cross",
-           "lowk"
+           "round"
           ],
           "ease": 1
          },
@@ -39032,12 +38993,14 @@
           "k": "partner",
           "combo": [
            "jabb",
+           "lowk",
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "lowk",
-            "d": "step"
+           "post": {
+            "a": "side",
+            "d": "step",
+            "c": "front"
            }
           }
          },
@@ -39053,11 +39016,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 7
+          "id": 16
          },
          {
           "kind": "ex",
@@ -39065,7 +39028,7 @@
          },
          {
           "kind": "ex",
-          "id": 16
+          "id": 13
          }
         ],
         "sets": "2×"
@@ -39090,7 +39053,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 74
          },
          {
           "kind": "ex",
@@ -39098,7 +39061,7 @@
          },
          {
           "kind": "ex",
-          "id": 74
+          "id": 73
          }
         ]
        }
@@ -39197,7 +39160,7 @@
       ],
       [
        {
-        "dose": "40 s work, 20 s rest",
+        "dose": "40 s (about 10 m out and back), 20 s rest",
         "timer": {
          "phases": 2,
          "seconds": 60,
@@ -39206,10 +39169,10 @@
         }
        },
        {
-        "dose": "2 min alternating (30 s fast / 30 s easy)",
+        "dose": "3 × (20 s / 10 s rest)",
         "timer": {
-         "phases": 4,
-         "seconds": 120,
+         "phases": 6,
+         "seconds": 90,
          "choices": [],
          "perSet": 0
         }
@@ -39224,10 +39187,10 @@
         }
        },
        {
-        "dose": "3 × (20 s / 10 s rest)",
+        "dose": "4 × (15 s / 15 s rest)",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
@@ -39259,14 +39222,14 @@
       ],
       [
        {
-        "dose": "2 min",
+        "dose": "45 s per side",
         "timer": {
-         "phases": 1,
-         "seconds": 120,
+         "phases": 3,
+         "seconds": 95,
          "choices": [
-          120
+          45
          ],
-         "perSet": 120
+         "perSet": 45
         }
        },
        {
@@ -39281,14 +39244,15 @@
         }
        },
        {
-        "dose": "45 s per side",
+        "dose": "hold 60–90 s",
         "timer": {
-         "phases": 3,
-         "seconds": 95,
+         "phases": 1,
+         "seconds": 60,
          "choices": [
-          45
+          60,
+          90
          ],
-         "perSet": 45
+         "perSet": 60
         }
        }
       ]
@@ -40767,8 +40731,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -40777,9 +40740,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
-           "hookb",
+           "side",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "round",
            "roundh"
           ]
          },
@@ -40788,17 +40757,6 @@
           "k": "partner",
           "combo": [
            "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "cross",
            "hookb",
            "roundh"
           ],
@@ -40820,7 +40778,7 @@
           ],
           "react": {
            "pre": {
-            "a": "crossb",
+            "a": "jab",
             "d": "step"
            }
           }
@@ -40835,9 +40793,9 @@
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "side",
-            "d": "deflect"
+           "post": {
+            "a": "upper",
+            "d": "step"
            }
           }
          },
@@ -40846,14 +40804,14 @@
           "k": "partner",
           "combo": [
            "jab",
-           "axe",
+           "front",
            "hookb",
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "upper",
-            "d": "step"
+           "pre": {
+            "a": "side",
+            "d": "deflect"
            }
           }
          }
@@ -40865,7 +40823,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 18
+          "id": 8
          },
          {
           "kind": "ex",
@@ -40873,11 +40831,11 @@
          },
          {
           "kind": "ex",
-          "id": 54
+          "id": 50
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 51
          }
         ],
         "sets": "3×"
@@ -40906,15 +40864,15 @@
          },
          {
           "kind": "ex",
-          "id": 62
-         },
-         {
-          "kind": "ex",
-          "id": 73
+          "id": 84
          },
          {
           "kind": "ex",
           "id": 72
+         },
+         {
+          "kind": "ex",
+          "id": 73
          }
         ]
        }
@@ -41041,7 +40999,7 @@
       ],
       [
        {
-        "dose": "pro Bein 10",
+        "dose": "10 Wdh.",
         "timer": null
        },
        {
@@ -41054,17 +41012,20 @@
         }
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
-        "timer": null
+        "dose": "30–45 s halten",
+        "timer": {
+         "phases": 1,
+         "seconds": 30,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
+        }
        },
        {
-        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
-        "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
-        }
+        "dose": "10–12 Wdh. pro Bein",
+        "timer": null
        }
       ],
       [
@@ -41097,8 +41058,19 @@
         "timer": null
        },
        {
-        "dose": "je Seite 5",
+        "dose": "je Seite 10",
         "timer": null
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
        },
        {
         "dose": "60–90 s halten",
@@ -41110,17 +41082,6 @@
           90
          ],
          "perSet": 60
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        }
       ]
@@ -41171,30 +41132,11 @@
           "k": "shadow",
           "combo": [
            "side",
+           "jab",
            "cross",
-           "hook",
            "round"
           ],
           "ease": 1
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "jab",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "front",
-           "jab",
-           "cross"
-          ]
          },
          {
           "kind": "round",
@@ -41209,9 +41151,9 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jabb",
-           "cross",
-           "roundh"
+           "side",
+           "jab",
+           "cross"
           ]
          },
          {
@@ -41219,7 +41161,7 @@
           "k": "bag",
           "combo": [
            "side",
-           "jab",
+           "jabb",
            "cross"
           ]
          },
@@ -41228,9 +41170,27 @@
           "k": "shadow",
           "combo": [
            "side",
-           "crossb",
-           "upper",
-           "hook"
+           "cross",
+           "hookb",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "jabb",
+           "cross",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
+           "roundh"
           ]
          }
         ]
@@ -41241,19 +41201,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 14
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 18
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 47
+          "id": 45
          },
          {
           "kind": "ex",
-          "id": 48
+          "id": 50
          }
         ],
         "sets": "3×"
@@ -41264,11 +41224,11 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fWraps"
+          "id": "fGlove"
          },
          {
           "kind": "hard",
-          "id": "bodybag"
+          "id": "shinbag"
          }
         ]
        },
@@ -41278,11 +41238,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 60
+          "id": 61
          },
          {
           "kind": "ex",
-          "id": 61
+          "id": 60
          },
          {
           "kind": "ex",
@@ -41416,27 +41376,34 @@
       ],
       [
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
-        "timer": null
+        "dose": "3 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
+        }
        },
        {
         "dose": "10–12 Wdh.",
         "timer": null
        },
        {
-        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
+        "dose": "30–45 s halten",
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 1,
+         "seconds": 30,
          "choices": [
           30,
           45
@@ -41449,31 +41416,26 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        },
        {
         "dose": null,
-        "timer": {
-         "phases": 11,
-         "seconds": 145,
-         "choices": [],
-         "perSet": 0
-        }
+        "timer": null
        }
       ],
       [
        {
-        "dose": "10 Wechsel",
+        "dose": "je Seite 6",
         "timer": null
        },
        {
-        "dose": "je Seite 6",
+        "dose": "10 Wechsel",
         "timer": null
        },
        {
@@ -41896,7 +41858,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
+           "side",
            "round"
           ],
           "ease": 1
@@ -41906,15 +41868,30 @@
           "k": "partner",
           "combo": [
            "jab",
-           "hook",
-           "cross",
-           "front"
+           "jab",
+           "cross"
+          ],
+          "react": {
+           "post": {
+            "a": "round",
+            "d": "step"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "jab",
+           "jabb",
+           "cross"
           ],
           "react": {
            "mid": {
             "at": 2,
-            "a": "cross",
-            "d": "slip"
+            "a": "sweep",
+            "d": "lift"
            }
           }
          },
@@ -41922,32 +41899,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
+           "jabb",
            "cross",
-           "round"
+           "roundh"
           ],
           "react": {
-           "mid": {
-            "at": 1,
-            "a": "front",
-            "d": "deflect"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "side",
-           "crossb"
-          ],
-          "react": {
-           "pre": {
-            "a": "hookb",
-            "d": "block"
+           "post": {
+            "a": "crossb",
+            "d": "block",
+            "c": "cross"
            }
           }
          },
@@ -41963,7 +41923,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 12
+          "id": 16
+         },
+         {
+          "kind": "ex",
+          "id": 20
          },
          {
           "kind": "ex",
@@ -41972,10 +41936,6 @@
          {
           "kind": "ex",
           "id": 13
-         },
-         {
-          "kind": "ex",
-          "id": 16
          }
         ],
         "sets": "3×"
@@ -41990,7 +41950,7 @@
          },
          {
           "kind": "hard",
-          "id": "arms"
+          "id": "abs"
          }
         ]
        },
@@ -42000,11 +41960,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 69
+          "id": 61
          },
          {
           "kind": "ex",
-          "id": 62
+          "id": 69
          },
          {
           "kind": "ex",
@@ -42126,10 +42086,19 @@
       ],
       [
        {
-        "dose": "3 × (20 s Vollgas / 10 s locker)",
+        "dose": "3 × (20 s / 10 s Pause)",
         "timer": {
          "phases": 6,
          "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
@@ -42143,15 +42112,6 @@
         "timer": {
          "phases": 8,
          "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "3 × (20 s / 10 s Pause)",
-        "timer": {
-         "phases": 6,
-         "seconds": 90,
          "choices": [],
          "perSet": 0
         }
@@ -42172,18 +42132,18 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        }
       ],
       [
        {
-        "dose": "je Seite 5",
+        "dose": "je Seite 6",
         "timer": null
        },
        {
@@ -43823,9 +43783,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -43834,21 +43792,31 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ]
+           "side",
+           "round"
+          ],
+          "react": {
+           "post": {
+            "a": "crossb",
+            "d": "block",
+            "c": "cross"
+           }
+          }
          },
          {
           "kind": "round",
           "k": "partner",
           "combo": [
            "jab",
-           "cross",
            "hookb",
            "roundh"
-          ]
+          ],
+          "react": {
+           "post": {
+            "a": "jab",
+            "d": "step"
+           }
+          }
          },
          {
           "kind": "round",
@@ -43860,10 +43828,9 @@
            "roundh"
           ],
           "react": {
-           "mid": {
-            "at": 2,
-            "a": "hook",
-            "d": "duck"
+           "post": {
+            "a": "hookb",
+            "d": "block"
            }
           }
          },
@@ -43877,9 +43844,8 @@
            "roundh"
           ],
           "react": {
-           "mid": {
-            "at": 2,
-            "a": "cross",
+           "pre": {
+            "a": "upper",
             "d": "cover"
            }
           }
@@ -43892,15 +43858,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 13
+          "id": 16
          },
          {
           "kind": "ex",
-          "id": 12
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 50
+          "id": 52
          },
          {
           "kind": "ex",
@@ -43929,11 +43895,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 69
+          "id": 84
          },
          {
           "kind": "ex",
-          "id": 84
+          "id": 69
          },
          {
           "kind": "ex",
@@ -44057,16 +44023,7 @@
       ],
       [
        {
-        "dose": "4 × (15 s / 15 s Pause)",
-        "timer": {
-         "phases": 8,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "3 × (20 s Vollgas / 10 s locker)",
+        "dose": "3 × (20 s / 10 s Pause)",
         "timer": {
          "phases": 6,
          "seconds": 90,
@@ -44075,15 +44032,16 @@
         }
        },
        {
-        "dose": "30–45 s halten",
+        "dose": "4 Läufe à 20 m",
+        "timer": null
+       },
+       {
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
-         "phases": 1,
-         "seconds": 30,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
+         "phases": 7,
+         "seconds": 55,
+         "choices": [],
+         "perSet": 10
         }
        },
        {
@@ -44125,11 +44083,11 @@
       ],
       [
        {
-        "dose": "je Seite 5",
+        "dose": "je Seite 10",
         "timer": null
        },
        {
-        "dose": "je Seite 10",
+        "dose": "je Seite 5",
         "timer": null
        },
        {
@@ -44203,8 +44161,8 @@
           "k": "shadow",
           "combo": [
            "side",
+           "jab",
            "cross",
-           "hook",
            "round"
           ],
           "ease": 1
@@ -44213,7 +44171,7 @@
           "kind": "round",
           "k": "bag",
           "combo": [
-           "jabb",
+           "jab",
            "cross",
            "roundh"
           ]
@@ -44223,7 +44181,6 @@
           "k": "shadow",
           "combo": [
            "side",
-           "front",
            "jab",
            "cross"
           ]
@@ -44233,7 +44190,7 @@
           "k": "bag",
           "combo": [
            "side",
-           "round",
+           "jabb",
            "cross"
           ]
          },
@@ -44242,8 +44199,9 @@
           "k": "shadow",
           "combo": [
            "side",
-           "jab",
-           "cross"
+           "cross",
+           "hookb",
+           "round"
           ]
          }
         ]
@@ -44254,19 +44212,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 18
+          "id": 16
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 57
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 54
          }
         ],
         "sets": "2×"
@@ -44281,7 +44239,7 @@
          },
          {
           "kind": "hard",
-          "id": "shinbag"
+          "id": "bodybag"
          }
         ]
        },
@@ -44291,11 +44249,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 62
+          "id": 60
          },
          {
           "kind": "ex",
-          "id": 84
+          "id": 61
          },
          {
           "kind": "ex",
@@ -44418,30 +44376,32 @@
       ],
       [
        {
-        "dose": "4 × (10 s / 20 s locker)",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
+        }
+       },
+       {
+        "dose": "3 × (20 s / 10 s Pause)",
+        "timer": {
+         "phases": 6,
+         "seconds": 90,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
+        "dose": "10–12 Wdh.",
         "timer": null
        },
        {
         "dose": "10–12 Wdh. pro Bein",
         "timer": null
-       },
-       {
-        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
-        "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
-        }
        }
       ],
       [
@@ -44458,16 +44418,21 @@
        },
        {
         "dose": null,
-        "timer": null
+        "timer": {
+         "phases": 11,
+         "seconds": 145,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
        {
-        "dose": "je Seite 5",
+        "dose": "10 Wechsel",
         "timer": null
        },
        {
-        "dose": "je Seite 10",
+        "dose": "je Seite 6",
         "timer": null
        },
        {
@@ -44863,12 +44828,27 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hook",
-           "crossb",
-           "front"
+           "side",
+           "round"
           ],
           "ease": 1
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "jab",
+           "jab",
+           "jabb",
+           "cross"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "front",
+            "d": "deflect"
+           }
+          }
          },
          {
           "kind": "round",
@@ -44879,27 +44859,9 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "side",
-            "d": "deflect",
-            "c": "cross"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "jab",
-           "cross",
-           "round"
-          ],
-          "react": {
-           "mid": {
-            "at": 1,
-            "a": "jab",
-            "d": "parry"
+           "pre": {
+            "a": "hookb",
+            "d": "block"
            }
           }
          },
@@ -44915,7 +44877,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 18
+          "id": 20
          },
          {
           "kind": "ex",
@@ -44923,11 +44885,11 @@
          },
          {
           "kind": "ex",
-          "id": 13
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 10
+          "id": 16
          }
         ],
         "sets": "2×"
@@ -44952,11 +44914,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 84
+          "id": 69
          },
          {
           "kind": "ex",
-          "id": 69
+          "id": 60
          },
          {
           "kind": "ex",
@@ -45071,8 +45033,13 @@
       ],
       [
        {
-        "dose": "pro Bein 10",
-        "timer": null
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
         "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
@@ -45084,7 +45051,7 @@
         }
        },
        {
-        "dose": "4 × (15 s / 15 s Pause)",
+        "dose": "4 × (10 s / 20 s locker)",
         "timer": {
          "phases": 8,
          "seconds": 120,
@@ -45093,8 +45060,13 @@
         }
        },
        {
-        "dose": "4 Läufe à 20 m",
-        "timer": null
+        "dose": "3 × (20 s / 10 s Pause)",
+        "timer": {
+         "phases": 6,
+         "seconds": 90,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
@@ -45123,11 +45095,11 @@
       ],
       [
        {
-        "dose": "je Seite 10",
+        "dose": "je Seite 5",
         "timer": null
        },
        {
-        "dose": "je Seite 5",
+        "dose": "10 Wechsel",
         "timer": null
        },
        {
@@ -47028,9 +47000,9 @@
           "k": "shadow",
           "combo": [
            "side",
-           "jab",
-           "upper",
-           "hook"
+           "cross",
+           "hook",
+           "cross"
           ],
           "ease": 1
          },
@@ -47039,14 +47011,16 @@
           "k": "bag",
           "combo": [
            "side",
-           "front"
+           "front",
+           "front",
+           "round"
           ]
          },
          {
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "jabb",
+           "jab",
            "cross",
            "roundh"
           ]
@@ -47056,27 +47030,7 @@
           "k": "bag",
           "combo": [
            "side",
-           "front",
-           "front",
-           "round"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "jab",
-           "lowk"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "round",
-           "round"
+           "front"
           ]
          },
          {
@@ -47096,6 +47050,25 @@
            "side",
            "roundh"
           ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "cross",
+           "hook",
+           "lowk"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "front",
+           "round"
+          ]
          }
         ]
        },
@@ -47105,19 +47078,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
-         },
-         {
-          "kind": "ex",
           "id": 18
          },
          {
           "kind": "ex",
-          "id": 45
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 57
+          "id": 43
+         },
+         {
+          "kind": "ex",
+          "id": 54
          }
         ],
         "sets": "3×"
@@ -47128,7 +47101,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fWraps"
+          "id": "fGlove"
          },
          {
           "kind": "hard",
@@ -47150,7 +47123,7 @@
          },
          {
           "kind": "ex",
-          "id": 75
+          "id": 76
          }
         ]
        }
@@ -47276,6 +47249,10 @@
       ],
       [
        {
+        "dose": "pro Bein 10",
+        "timer": null
+       },
+       {
         "dose": "4 × (10 s / 20 s locker)",
         "timer": {
          "phases": 8,
@@ -47285,15 +47262,11 @@
         }
        },
        {
-        "dose": "pro Bein 10",
+        "dose": "10–12 Wdh. pro Bein",
         "timer": null
        },
        {
-        "dose": "10–12 Wdh.",
-        "timer": null
-       },
-       {
-        "dose": "10–12 Wdh.",
+        "dose": "10–12 Wdh. pro Bein",
         "timer": null
        }
       ],
@@ -47301,12 +47274,12 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        },
        {
@@ -47344,14 +47317,14 @@
         }
        },
        {
-        "dose": "je Seite 30 s",
+        "dose": "2 Min.",
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 1,
+         "seconds": 120,
          "choices": [
-          30
+          120
          ],
-         "perSet": 30
+         "perSet": 120
         }
        }
       ]
@@ -50032,11 +50005,30 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
-           "side",
-           "jabb",
+           "cross",
+           "hook",
            "lowk"
           ],
           "ease": 1
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "front",
+           "front",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "jabb",
+           "cross",
+           "roundh"
+          ]
          },
          {
           "kind": "round",
@@ -50050,9 +50042,10 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
+           "side",
            "jab",
-           "cross",
-           "roundh"
+           "crossb",
+           "hook"
           ]
          },
          {
@@ -50060,26 +50053,7 @@
           "k": "bag",
           "combo": [
            "side",
-           "front",
-           "front",
-           "round"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "jab",
            "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "round",
-           "round"
           ]
          }
         ]
@@ -50090,19 +50064,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 18
-         },
-         {
-          "kind": "ex",
           "id": 16
          },
          {
           "kind": "ex",
-          "id": 45
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 48
+          "id": 54
+         },
+         {
+          "kind": "ex",
+          "id": 47
          }
         ],
         "sets": "2×"
@@ -50117,7 +50091,7 @@
          },
          {
           "kind": "hard",
-          "id": "bodybag"
+          "id": "shinbag"
          }
         ]
        },
@@ -50127,15 +50101,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 76
+          "id": 73
          },
          {
           "kind": "ex",
           "id": 72
+         },
+         {
+          "kind": "ex",
+          "id": 75
          }
         ]
        }
@@ -50249,10 +50223,6 @@
       ],
       [
        {
-        "dose": "pro Bein 10",
-        "timer": null
-       },
-       {
         "dose": "3 × (20 s / 10 s Pause)",
         "timer": {
          "phases": 6,
@@ -50262,47 +50232,26 @@
         }
        },
        {
-        "dose": "10–12 Wdh.",
-        "timer": null
-       },
-       {
-        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
+        "dose": "4 × (10 s / 20 s locker)",
         "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
-        }
-       }
-      ],
-      [
-       {
-        "dose": null,
-        "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30
-         ],
-         "perSet": 30
-        }
-       },
-       {
-        "dose": null,
-        "timer": {
-         "phases": 11,
-         "seconds": 145,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
+       },
+       {
+        "dose": "10–12 Wdh. pro Bein",
+        "timer": null
+       },
+       {
+        "dose": "10–12 Wdh.",
+        "timer": null
        }
       ],
       [
        {
-        "dose": "je Seite 30 s",
+        "dose": null,
         "timer": {
          "phases": 3,
          "seconds": 65,
@@ -50313,14 +50262,21 @@
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": null,
+        "timer": null
+       }
+      ],
+      [
+       {
+        "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
-         "seconds": 120,
+         "seconds": 60,
          "choices": [
-          120
+          60,
+          90
          ],
-         "perSet": 120
+         "perSet": 60
         }
        },
        {
@@ -50332,6 +50288,17 @@
           45
          ],
          "perSet": 45
+        }
+       },
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
         }
        }
       ]
@@ -52464,8 +52431,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
+           "side",
+           "jab",
            "hookb",
            "round"
           ],
@@ -52475,13 +52442,14 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "side",
            "jab",
+           "side",
            "hookb",
            "roundh"
           ],
           "react": {
-           "pre": {
+           "mid": {
+            "at": 2,
             "a": "hookb",
             "d": "block"
            }
@@ -52495,19 +52463,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 13
-         },
-         {
-          "kind": "ex",
           "id": 18
          },
          {
           "kind": "ex",
-          "id": 23
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 55
+         },
+         {
+          "kind": "ex",
+          "id": 48
          }
         ],
         "sets": "3×"
@@ -52518,15 +52486,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 73
+         },
+         {
+          "kind": "ex",
           "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 76
          }
         ]
        }
@@ -52630,23 +52598,23 @@
       ],
       [
        {
-        "dose": "4 × (15 s / 15 s Pause)",
+        "dose": "pro Bein 10",
+        "timer": null
+       },
+       {
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
-        "timer": null
-       },
-       {
-        "dose": "30–45 s halten",
+        "dose": "30–45 s je Seite halten",
         "timer": {
-         "phases": 1,
-         "seconds": 30,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
           30,
           45
@@ -52655,22 +52623,19 @@
         }
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
-        "timer": null
-       }
-      ],
-      [
-       {
-        "dose": "je Seite 30 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
          "phases": 3,
          "seconds": 65,
          "choices": [
-          30
+          30,
+          45
          ],
          "perSet": 30
         }
-       },
+       }
+      ],
+      [
        {
         "dose": "je Seite 45 s",
         "timer": {
@@ -52683,14 +52648,26 @@
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
-         "seconds": 120,
+         "seconds": 60,
          "choices": [
-          120
+          60,
+          90
          ],
-         "perSet": 120
+         "perSet": 60
+        }
+       },
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
         }
        }
       ]
@@ -52741,8 +52718,8 @@
           "k": "shadow",
           "combo": [
            "side",
-           "crossb",
-           "hook",
+           "jab",
+           "cross",
            "round"
           ],
           "ease": 1
@@ -52751,7 +52728,8 @@
           "kind": "round",
           "k": "bag",
           "combo": [
-           "jab",
+           "jabb",
+           "cross",
            "roundh"
           ]
          }
@@ -52763,19 +52741,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 14
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 50
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 43
          }
         ],
         "sets": "3×"
@@ -52786,15 +52764,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 72
          },
          {
           "kind": "ex",
           "id": 74
-         },
-         {
-          "kind": "ex",
-          "id": 75
          }
         ]
        }
@@ -52897,25 +52875,33 @@
       ],
       [
        {
-        "dose": "4 × (10 s / 20 s locker)",
+        "dose": "40 s Belastung, 20 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "10 Wdh.",
-        "timer": null
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
-        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
+        "dose": "30–45 s halten",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 1,
+         "seconds": 30,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        },
        {
@@ -52925,14 +52911,14 @@
       ],
       [
        {
-        "dose": "2 Min.",
+        "dose": "je Seite 30 s",
         "timer": {
-         "phases": 1,
-         "seconds": 120,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
-          120
+          30
          ],
-         "perSet": 120
+         "perSet": 30
         }
        },
        {
@@ -52947,14 +52933,14 @@
         }
        },
        {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        }
       ]
@@ -53264,14 +53250,13 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
+           "jabb",
            "round"
           ],
           "ease": 1,
           "react": {
-           "post": {
-            "a": "round",
+           "pre": {
+            "a": "crossb",
             "d": "step"
            }
           }
@@ -53288,11 +53273,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 10
+          "id": 8
          },
          {
           "kind": "ex",
@@ -53300,7 +53285,7 @@
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 19
          }
         ],
         "sets": "3×"
@@ -53311,15 +53296,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
-         },
-         {
-          "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
           "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 72
+         },
+         {
+          "kind": "ex",
+          "id": 76
          }
         ]
        }
@@ -53419,16 +53404,18 @@
       ],
       [
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "10 Wdh.",
         "timer": null
        },
        {
@@ -53441,32 +53428,25 @@
         }
        },
        {
-        "dose": "10 Wdh.",
-        "timer": null
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
        {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
-        }
-       },
-       {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        },
        {
@@ -53478,6 +53458,17 @@
           45
          ],
          "perSet": 45
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        }
       ]
@@ -54829,8 +54820,8 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
+           "side",
+           "jab",
            "hookb",
            "round"
           ],
@@ -54840,13 +54831,14 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "side",
            "jab",
+           "side",
            "hookb",
            "roundh"
           ],
           "react": {
-           "pre": {
+           "mid": {
+            "at": 2,
             "a": "hookb",
             "d": "block"
            }
@@ -54860,19 +54852,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 13
-         },
-         {
-          "kind": "ex",
           "id": 18
          },
          {
           "kind": "ex",
-          "id": 23
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 55
+         },
+         {
+          "kind": "ex",
+          "id": 48
          }
         ],
         "sets": "2×"
@@ -54883,15 +54875,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 73
+         },
+         {
+          "kind": "ex",
           "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 76
          }
         ]
        }
@@ -54991,23 +54983,23 @@
       ],
       [
        {
-        "dose": "4 × (15 s / 15 s Pause)",
+        "dose": "pro Bein 10",
+        "timer": null
+       },
+       {
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "pro Bein 10",
-        "timer": null
-       },
-       {
-        "dose": "30–45 s halten",
+        "dose": "30–45 s je Seite halten",
         "timer": {
-         "phases": 1,
-         "seconds": 30,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
           30,
           45
@@ -55016,22 +55008,19 @@
         }
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
-        "timer": null
-       }
-      ],
-      [
-       {
-        "dose": "je Seite 30 s",
+        "dose": "30–45 s pro Bein halten · ein Satz = erst links, dann rechts",
         "timer": {
          "phases": 3,
          "seconds": 65,
          "choices": [
-          30
+          30,
+          45
          ],
          "perSet": 30
         }
-       },
+       }
+      ],
+      [
        {
         "dose": "je Seite 45 s",
         "timer": {
@@ -55044,14 +55033,26 @@
         }
        },
        {
-        "dose": "2 Min.",
+        "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
-         "seconds": 120,
+         "seconds": 60,
          "choices": [
-          120
+          60,
+          90
          ],
-         "perSet": 120
+         "perSet": 60
+        }
+       },
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
         }
        }
       ]
@@ -55102,8 +55103,8 @@
           "k": "shadow",
           "combo": [
            "side",
-           "crossb",
-           "hook",
+           "jab",
+           "cross",
            "round"
           ],
           "ease": 1
@@ -55112,7 +55113,8 @@
           "kind": "round",
           "k": "bag",
           "combo": [
-           "jab",
+           "jabb",
+           "cross",
            "roundh"
           ]
          }
@@ -55124,19 +55126,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 83
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 14
          },
          {
           "kind": "ex",
-          "id": 52
+          "id": 50
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 43
          }
         ],
         "sets": "2×"
@@ -55147,15 +55149,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 72
          },
          {
           "kind": "ex",
           "id": 74
-         },
-         {
-          "kind": "ex",
-          "id": 75
          }
         ]
        }
@@ -55254,25 +55256,33 @@
       ],
       [
        {
-        "dose": "4 × (10 s / 20 s locker)",
+        "dose": "40 s Belastung, 20 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "10 Wdh.",
-        "timer": null
+        "dose": "40 s Belastung, 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        },
        {
-        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
+        "dose": "30–45 s halten",
         "timer": {
-         "phases": 7,
-         "seconds": 55,
-         "choices": [],
-         "perSet": 10
+         "phases": 1,
+         "seconds": 30,
+         "choices": [
+          30,
+          45
+         ],
+         "perSet": 30
         }
        },
        {
@@ -55282,14 +55292,14 @@
       ],
       [
        {
-        "dose": "2 Min.",
+        "dose": "je Seite 30 s",
         "timer": {
-         "phases": 1,
-         "seconds": 120,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
-          120
+          30
          ],
-         "perSet": 120
+         "perSet": 30
         }
        },
        {
@@ -55304,14 +55314,14 @@
         }
        },
        {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        }
       ]
@@ -55620,14 +55630,13 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
+           "jabb",
            "round"
           ],
           "ease": 1,
           "react": {
-           "post": {
-            "a": "round",
+           "pre": {
+            "a": "crossb",
             "d": "step"
            }
           }
@@ -55644,11 +55653,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 10
+          "id": 8
          },
          {
           "kind": "ex",
@@ -55656,7 +55665,7 @@
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 19
          }
         ],
         "sets": "2×"
@@ -55667,15 +55676,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
-         },
-         {
-          "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
           "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 72
+         },
+         {
+          "kind": "ex",
+          "id": 76
          }
         ]
        }
@@ -55771,16 +55780,18 @@
       ],
       [
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        },
        {
-        "dose": "4 Läufe à 20 m",
+        "dose": "10 Wdh.",
         "timer": null
        },
        {
@@ -55793,32 +55804,25 @@
         }
        },
        {
-        "dose": "10 Wdh.",
-        "timer": null
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
+        "timer": {
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
        {
-        "dose": "60–90 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 60,
-         "choices": [
-          60,
-          90
-         ],
-         "perSet": 60
-        }
-       },
-       {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        },
        {
@@ -55830,6 +55834,17 @@
           45
          ],
          "perSet": 45
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        }
       ]
@@ -57064,8 +57079,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "cross",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -57074,10 +57088,17 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
+           "cross",
            "hookb",
            "roundh"
-          ]
+          ],
+          "react": {
+           "post": {
+            "a": "side",
+            "d": "deflect",
+            "c": "round"
+           }
+          }
          },
          {
           "kind": "round",
@@ -57093,8 +57114,41 @@
           "kind": "round",
           "k": "partner",
           "combo": [
+           "lowk",
+           "round",
+           "roundh"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "roundh",
+            "d": "step"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "lowk",
+           "cross",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "mid": {
+            "at": 1,
+            "a": "cross",
+            "d": "parry"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
            "jab",
-           "crossb",
+           "lowk",
            "hookb",
            "roundh"
           ],
@@ -57102,54 +57156,28 @@
            "mid": {
             "at": 1,
             "a": "crossb",
-            "d": "step"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "side",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "lowk",
-           "jab",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "pre": {
-            "a": "lowk",
-            "d": "step"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "lowk",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "mid": {
-            "at": 2,
-            "a": "jab",
-            "d": "slip"
+            "d": "block"
            },
            "post": {
-            "a": "round",
-            "d": "block",
+            "a": "lowk",
+            "d": "check",
+            "c": "lowk"
+           }
+          }
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "lowk",
+           "jab",
+           "hookb",
+           "roundh"
+          ],
+          "react": {
+           "post": {
+            "a": "sweep",
+            "d": "lift",
             "c": "cross"
            }
           }
@@ -57164,13 +57192,15 @@
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "lowk",
-            "d": "check"
-           },
-           "post": {
+           "mid": {
+            "at": 1,
             "a": "hook",
             "d": "cover"
+           },
+           "post": {
+            "a": "lowk",
+            "d": "step",
+            "c": "jab"
            }
           }
          }
@@ -57182,19 +57212,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 7
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 19
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 47
+          "id": 52
          },
          {
           "kind": "ex",
-          "id": 55
+          "id": 23
          }
         ],
         "sets": "3×"
@@ -57209,7 +57239,7 @@
          },
          {
           "kind": "hard",
-          "id": "abs"
+          "id": "arms"
          }
         ]
        },
@@ -57219,15 +57249,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 74
          },
          {
           "kind": "ex",
           "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 73
          }
         ]
        }
@@ -57354,32 +57384,34 @@
       ],
       [
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 4,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        },
        {
-        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "12–15 Wdh.",
+        "dose": "4 Läufe à 20 m",
         "timer": null
        },
        {
-        "dose": "45–60 s je Seite halten",
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
         "timer": {
-         "phases": 3,
-         "seconds": 95,
+         "phases": 7,
+         "seconds": 55,
+         "choices": [],
+         "perSet": 10
+        }
+       },
+       {
+        "dose": "45–60 s halten",
+        "timer": {
+         "phases": 1,
+         "seconds": 45,
          "choices": [
           45,
           60
@@ -57403,25 +57435,25 @@
        {
         "dose": null,
         "timer": {
-         "phases": 5,
-         "seconds": 70,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
-          20
+          30
          ],
-         "perSet": 20
+         "perSet": 30
         }
        }
       ],
       [
        {
-        "dose": "2 Min.",
+        "dose": "je Seite 30 s",
         "timer": {
-         "phases": 1,
-         "seconds": 120,
+         "phases": 3,
+         "seconds": 65,
          "choices": [
-          120
+          30
          ],
-         "perSet": 120
+         "perSet": 30
         }
        },
        {
@@ -57436,15 +57468,14 @@
         }
        },
        {
-        "dose": "60–90 s halten",
+        "dose": "je Seite 45 s",
         "timer": {
-         "phases": 1,
-         "seconds": 60,
+         "phases": 3,
+         "seconds": 95,
          "choices": [
-          60,
-          90
+          45
          ],
-         "perSet": 60
+         "perSet": 45
         }
        }
       ]
@@ -57495,26 +57526,15 @@
           "k": "shadow",
           "combo": [
            "side",
-           "hook",
            "cross",
-           "front"
+           "hookb",
+           "round"
           ],
           "ease": 1
          },
          {
           "kind": "round",
           "k": "bag",
-          "combo": [
-           "side",
-           "jab",
-           "crossb",
-           "hook",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
           "combo": [
            "side",
            "jab",
@@ -57525,21 +57545,12 @@
          },
          {
           "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "jab",
-           "lowk"
-          ]
-         },
-         {
-          "kind": "round",
           "k": "shadow",
           "combo": [
            "side",
-           "round",
            "cross",
-           "brazil"
+           "hook",
+           "lowk"
           ]
          },
          {
@@ -57568,6 +57579,24 @@
           "k": "bag",
           "combo": [
            "side",
+           "cross",
+           "hook",
+           "cross"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "front",
+           "lowk"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
            "lowk",
            "cross",
            "hook"
@@ -57581,19 +57610,19 @@
         "items": [
          {
           "kind": "ex",
+          "id": 7
+         },
+         {
+          "kind": "ex",
           "id": 13
          },
          {
           "kind": "ex",
-          "id": 83
+          "id": 43
          },
          {
           "kind": "ex",
-          "id": 45
-         },
-         {
-          "kind": "ex",
-          "id": 22
+          "id": 41
          }
         ],
         "sets": "3×"
@@ -57608,7 +57637,7 @@
          },
          {
           "kind": "hard",
-          "id": "shinbag"
+          "id": "bodybag"
          }
         ]
        },
@@ -57618,15 +57647,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
-         },
-         {
-          "kind": "ex",
           "id": 73
          },
          {
           "kind": "ex",
-          "id": 72
+          "id": 74
+         },
+         {
+          "kind": "ex",
+          "id": 75
          }
         ]
        }
@@ -57752,6 +57781,15 @@
       ],
       [
        {
+        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
+        "timer": {
+         "phases": 4,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
+       },
+       {
         "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
          "phases": 8,
@@ -57761,16 +57799,7 @@
         }
        },
        {
-        "dose": "4 × (10 s / 20 s locker)",
-        "timer": {
-         "phases": 8,
-         "seconds": 120,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "12–15 Wdh.",
+        "dose": "12–15 Wdh. pro Bein",
         "timer": null
        },
        {
@@ -57792,21 +57821,15 @@
        },
        {
         "dose": null,
-        "timer": null
+        "timer": {
+         "phases": 11,
+         "seconds": 145,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
-       {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
-        }
-       },
        {
         "dose": "60–90 s halten",
         "timer": {
@@ -57828,6 +57851,17 @@
           45
          ],
          "perSet": 45
+        }
+       },
+       {
+        "dose": "je Seite 30 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 65,
+         "choices": [
+          30
+         ],
+         "perSet": 30
         }
        }
       ]
@@ -58237,8 +58271,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -58247,18 +58280,16 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "cross",
+           "front",
            "lowk"
           ],
           "react": {
            "pre": {
-            "a": "front",
-            "d": "deflect"
+            "a": "hook",
+            "d": "cover"
            },
            "post": {
-            "a": "roundh",
+            "a": "front",
             "d": "step"
            }
           }
@@ -58269,14 +58300,14 @@
           "combo": [
            "jab",
            "jab",
+           "hook",
            "cross",
-           "back"
+           "front"
           ],
           "react": {
            "post": {
-            "a": "round",
-            "d": "block",
-            "c": "cross"
+            "a": "lowk",
+            "d": "step"
            }
           }
          },
@@ -58286,15 +58317,15 @@
           "combo": [
            "jab",
            "jab",
-           "cross",
-           "hook",
-           "round"
+           "round",
+           "roundh",
+           "crossb"
           ],
           "react": {
-           "mid": {
-            "at": 2,
-            "a": "hook",
-            "d": "duck"
+           "post": {
+            "a": "round",
+            "d": "block",
+            "c": "cross"
            }
           }
          },
@@ -60174,9 +60205,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "cross",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -60185,36 +60214,14 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "lowk",
-           "hookb",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "side",
+           "cross",
            "hookb",
            "roundh"
           ],
           "react": {
-           "mid": {
-            "at": 1,
-            "a": "front",
-            "d": "deflect"
+           "pre": {
+            "a": "hook",
+            "d": "cover"
            }
           }
          },
@@ -60222,8 +60229,27 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "lowk",
            "jab",
+           "cross",
+           "hookb",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "lowk",
+           "round",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "lowk",
+           "cross",
            "hookb",
            "roundh"
           ],
@@ -60244,9 +60270,10 @@
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "lowk",
-            "d": "check"
+           "mid": {
+            "at": 1,
+            "a": "roundh",
+            "d": "step"
            }
           }
          }
@@ -60258,19 +60285,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 8
+          "id": 10
          },
          {
           "kind": "ex",
-          "id": 19
-         },
-         {
-          "kind": "ex",
-          "id": 50
+          "id": 83
          },
          {
           "kind": "ex",
           "id": 51
+         },
+         {
+          "kind": "ex",
+          "id": 42
          }
         ],
         "sets": "2×"
@@ -60295,15 +60322,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
           "id": 72
          },
          {
           "kind": "ex",
           "id": 76
+         },
+         {
+          "kind": "ex",
+          "id": 73
          }
         ]
        }
@@ -60418,32 +60445,24 @@
       ],
       [
        {
-        "dose": "15 Wdh.",
+        "dose": "4 Läufe à 20 m",
         "timer": null
        },
        {
-        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
+        "dose": "4 × (10 s / 20 s locker)",
         "timer": {
-         "phases": 2,
-         "seconds": 60,
+         "phases": 8,
+         "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "45–60 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 45,
-         "choices": [
-          45,
-          60
-         ],
-         "perSet": 45
-        }
+        "dose": "12–15 Wdh. pro Bein",
+        "timer": null
        },
        {
-        "dose": "12–15 Wdh. pro Bein",
+        "dose": "12–15 Wdh. je Seite",
         "timer": null
        }
       ],
@@ -60473,17 +60492,6 @@
       ],
       [
        {
-        "dose": "je Seite 30 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30
-         ],
-         "perSet": 30
-        }
-       },
-       {
         "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
@@ -60503,6 +60511,18 @@
           120
          ],
          "perSet": 120
+        }
+       },
+       {
+        "dose": "60–90 s halten",
+        "timer": {
+         "phases": 1,
+         "seconds": 60,
+         "choices": [
+          60,
+          90
+         ],
+         "perSet": 60
         }
        }
       ]
@@ -60553,26 +60573,15 @@
           "k": "shadow",
           "combo": [
            "side",
-           "hook",
            "cross",
-           "front"
+           "hookb",
+           "round"
           ],
           "ease": 1
          },
          {
           "kind": "round",
           "k": "bag",
-          "combo": [
-           "side",
-           "jab",
-           "crossb",
-           "hook",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
           "combo": [
            "side",
            "jab",
@@ -60583,21 +60592,12 @@
          },
          {
           "kind": "round",
-          "k": "bag",
-          "combo": [
-           "side",
-           "jab",
-           "lowk"
-          ]
-         },
-         {
-          "kind": "round",
           "k": "shadow",
           "combo": [
            "side",
-           "round",
            "cross",
-           "brazil"
+           "hook",
+           "lowk"
           ]
          },
          {
@@ -60610,6 +60610,24 @@
            "hook",
            "roundh"
           ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "front",
+           "lowk"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
+           "lowk",
+           "cross",
+           "hook"
+          ]
          }
         ]
        },
@@ -60619,11 +60637,11 @@
         "items": [
          {
           "kind": "ex",
-          "id": 13
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 21
+          "id": 19
          },
          {
           "kind": "ex",
@@ -60631,7 +60649,7 @@
          },
          {
           "kind": "ex",
-          "id": 50
+          "id": 41
          }
         ],
         "sets": "2×"
@@ -60642,7 +60660,7 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fGlove"
+          "id": "fBare"
          },
          {
           "kind": "hard",
@@ -60656,15 +60674,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 72
-         },
-         {
-          "kind": "ex",
           "id": 76
          },
          {
           "kind": "ex",
-          "id": 74
+          "id": 73
+         },
+         {
+          "kind": "ex",
+          "id": 75
          }
         ]
        }
@@ -60778,23 +60796,21 @@
       ],
       [
        {
-        "dose": "4 × (15 s / 15 s Pause)",
+        "dose": "45 s Belastung, 15 s Pause",
         "timer": {
-         "phases": 8,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "3 Min.",
+        "dose": "45 s (ca. 10 m hin und zurück), 15 s Pause",
         "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [
-          180
-         ],
-         "perSet": 180
+         "phases": 2,
+         "seconds": 60,
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -60802,24 +60818,16 @@
         "timer": null
        },
        {
-        "dose": "45–60 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 45,
-         "choices": [
-          45,
-          60
-         ],
-         "perSet": 45
-        }
+        "dose": "12–15 Wdh.",
+        "timer": null
        }
       ],
       [
        {
         "dose": null,
         "timer": {
-         "phases": 5,
-         "seconds": 70,
+         "phases": 3,
+         "seconds": 45,
          "choices": [
           20
          ],
@@ -60833,17 +60841,6 @@
       ],
       [
        {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
         "dose": "2 Min.",
         "timer": {
          "phases": 1,
@@ -60855,14 +60852,26 @@
         }
        },
        {
-        "dose": "je Seite 45 s",
+        "dose": "60–90 s halten",
+        "timer": {
+         "phases": 1,
+         "seconds": 60,
+         "choices": [
+          60,
+          90
+         ],
+         "perSet": 60
+        }
+       },
+       {
+        "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
-         "seconds": 95,
+         "seconds": 65,
          "choices": [
-          45
+          30
          ],
-         "perSet": 45
+         "perSet": 30
         }
        }
       ]
@@ -61249,8 +61258,7 @@
           "k": "partner",
           "combo": [
            "jab",
-           "jab",
-           "cross",
+           "crossb",
            "lowk"
           ],
           "ease": 1
@@ -61259,14 +61267,17 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "round",
-           "roundh",
-           "cross"
+           "jab",
+           "jab",
+           "hook",
+           "cross",
+           "front"
           ],
           "react": {
            "post": {
-            "a": "lowk",
-            "d": "check"
+            "a": "hook",
+            "d": "cover",
+            "c": "cross"
            }
           }
          },
@@ -61276,15 +61287,19 @@
           "combo": [
            "jab",
            "jab",
-           "crossb",
-           "hook",
-           "round"
+           "round",
+           "roundh",
+           "cross"
           ],
           "react": {
+           "mid": {
+            "at": 3,
+            "a": "round",
+            "d": "step"
+           },
            "post": {
-            "a": "crossb",
-            "d": "step",
-            "c": "front"
+            "a": "lowk",
+            "d": "step"
            }
           }
          },
@@ -61304,15 +61319,15 @@
          },
          {
           "kind": "ex",
-          "id": 20
-         },
-         {
-          "kind": "ex",
           "id": 18
          },
          {
           "kind": "ex",
           "id": 13
+         },
+         {
+          "kind": "ex",
+          "id": 10
          }
         ],
         "sets": "2×"
@@ -61327,7 +61342,7 @@
          },
          {
           "kind": "hard",
-          "id": "checks"
+          "id": "abs"
          }
         ]
        },
@@ -61337,15 +61352,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
-         },
-         {
-          "kind": "ex",
           "id": 72
          },
          {
           "kind": "ex",
           "id": 73
+         },
+         {
+          "kind": "ex",
+          "id": 76
          }
         ]
        }
@@ -61461,15 +61476,6 @@
         }
        },
        {
-        "dose": "45 s Belastung, 15 s Pause",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
         "dose": "pro Bein 10",
         "timer": null
        },
@@ -61481,6 +61487,10 @@
          "choices": [],
          "perSet": 0
         }
+       },
+       {
+        "dose": "4 Läufe à 20 m",
+        "timer": null
        }
       ],
       [
@@ -61498,27 +61508,16 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        }
       ],
       [
-       {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
-        }
-       },
        {
         "dose": "je Seite 45 s",
         "timer": {
@@ -61540,6 +61539,17 @@
           90
          ],
          "perSet": 60
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
         }
        }
       ]
@@ -63014,8 +63024,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -63024,9 +63033,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "cross",
-           "hookb",
+           "side",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "partner",
+          "combo": [
+           "round",
            "roundh"
           ]
          },
@@ -63034,15 +63049,15 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
+           "jab",
            "hookb",
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "jab",
-            "d": "step"
+           "mid": {
+            "at": 1,
+            "a": "front",
+            "d": "deflect"
            }
           }
          },
@@ -63050,17 +63065,11 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "hook",
-           "cross",
+           "side",
+           "jab",
            "hookb",
            "roundh"
-          ],
-          "react": {
-           "post": {
-            "a": "front",
-            "d": "deflect"
-           }
-          }
+          ]
          },
          {
           "kind": "round",
@@ -63072,26 +63081,9 @@
            "roundh"
           ],
           "react": {
-           "post": {
-            "a": "hookb",
-            "d": "block"
-           }
-          }
-         },
-         {
-          "kind": "round",
-          "k": "partner",
-          "combo": [
-           "jab",
-           "axe",
-           "hookb",
-           "roundh"
-          ],
-          "react": {
-           "post": {
-            "a": "round",
-            "d": "step",
-            "c": "jab"
+           "pre": {
+            "a": "hook",
+            "d": "duck"
            }
           }
          }
@@ -63125,7 +63117,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 8
+          "id": 18
          },
          {
           "kind": "ex",
@@ -63133,11 +63125,11 @@
          },
          {
           "kind": "ex",
-          "id": 50
+          "id": 54
          },
          {
           "kind": "ex",
-          "id": 51
+          "id": 52
          }
         ],
         "sets": "3×"
@@ -63162,15 +63154,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 76
-         },
-         {
-          "kind": "ex",
-          "id": 75
-         },
-         {
-          "kind": "ex",
           "id": 73
+         },
+         {
+          "kind": "ex",
+          "id": 72
+         },
+         {
+          "kind": "ex",
+          "id": 74
          }
         ]
        }
@@ -63302,7 +63294,7 @@
       ],
       [
        {
-        "dose": "10 Wdh.",
+        "dose": "pro Bein 10",
         "timer": null
        },
        {
@@ -63315,20 +63307,17 @@
         }
        },
        {
-        "dose": "30–45 s halten",
-        "timer": {
-         "phases": 1,
-         "seconds": 30,
-         "choices": [
-          30,
-          45
-         ],
-         "perSet": 30
-        }
-       },
-       {
         "dose": "10–12 Wdh. pro Bein",
         "timer": null
+       },
+       {
+        "dose": "je Richtung 10 s (Stirn, Hinterkopf, links, rechts)",
+        "timer": {
+         "phases": 7,
+         "seconds": 55,
+         "choices": [],
+         "perSet": 10
+        }
        }
       ],
       [
@@ -63357,28 +63346,6 @@
       ],
       [
        {
-        "dose": "2 Min.",
-        "timer": {
-         "phases": 1,
-         "seconds": 120,
-         "choices": [
-          120
-         ],
-         "perSet": 120
-        }
-       },
-       {
-        "dose": "je Seite 30 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 65,
-         "choices": [
-          30
-         ],
-         "perSet": 30
-        }
-       },
-       {
         "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
@@ -63388,6 +63355,28 @@
           90
          ],
          "perSet": 60
+        }
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
         }
        }
       ]
@@ -63438,30 +63427,10 @@
           "k": "shadow",
           "combo": [
            "side",
-           "cross",
-           "hook",
-           "round"
+           "jab",
+           "cross"
           ],
           "ease": 1
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "jab",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "crossb",
-           "upper",
-           "hook"
-          ]
          },
          {
           "kind": "round",
@@ -63476,8 +63445,27 @@
           "kind": "round",
           "k": "shadow",
           "combo": [
+           "side",
+           "cross",
+           "hookb",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "side",
            "jabb",
            "cross",
+           "roundh"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "round",
            "roundh"
           ]
          },
@@ -63488,7 +63476,7 @@
            "side",
            "cross",
            "hookb",
-           "round"
+           "hook"
           ]
          }
         ]
@@ -63521,19 +63509,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 16
+          "id": 21
          },
          {
           "kind": "ex",
-          "id": 7
+          "id": 13
+         },
+         {
+          "kind": "ex",
+          "id": 22
          },
          {
           "kind": "ex",
           "id": 49
-         },
-         {
-          "kind": "ex",
-          "id": 43
          }
         ],
         "sets": "3×"
@@ -63558,15 +63546,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 72
+         },
+         {
+          "kind": "ex",
           "id": 74
          },
          {
           "kind": "ex",
           "id": 73
-         },
-         {
-          "kind": "ex",
-          "id": 72
          }
         ]
        }
@@ -63697,29 +63685,31 @@
       ],
       [
        {
-        "dose": "3 × (20 s / 10 s Pause)",
+        "dose": "3 Min.",
         "timer": {
-         "phases": 6,
-         "seconds": 90,
-         "choices": [],
-         "perSet": 0
+         "phases": 1,
+         "seconds": 180,
+         "choices": [
+          180
+         ],
+         "perSet": 180
         }
        },
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
+        "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
-         "phases": 4,
+         "phases": 8,
          "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "10–12 Wdh. je Seite",
+        "dose": "10–12 Wdh.",
         "timer": null
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
+        "dose": "10–12 Wdh. je Seite",
         "timer": null
        }
       ],
@@ -63753,6 +63743,17 @@
         }
        },
        {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
+       {
         "dose": "60–90 s halten",
         "timer": {
          "phases": 1,
@@ -63762,17 +63763,6 @@
           90
          ],
          "perSet": 60
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        }
       ]
@@ -64190,7 +64180,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
+           "side",
            "round"
           ],
           "ease": 1
@@ -64199,14 +64189,13 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "crossb",
-           "round"
+           "jabb",
+           "roundh"
           ],
           "react": {
            "post": {
-            "a": "upper",
-            "d": "step"
+            "a": "sweep",
+            "d": "lift"
            }
           }
          },
@@ -64216,13 +64205,13 @@
           "combo": [
            "jab",
            "jab",
-           "cross",
-           "round"
+           "axe",
+           "cross"
           ],
           "react": {
            "pre": {
-            "a": "hook",
-            "d": "duck"
+            "a": "front",
+            "d": "deflect"
            }
           }
          },
@@ -64260,19 +64249,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 19
          },
          {
           "kind": "ex",
-          "id": 12
+          "id": 16
          },
          {
           "kind": "ex",
-          "id": 7
+          "id": 83
          },
          {
           "kind": "ex",
-          "id": 8
+          "id": 13
          }
         ],
         "sets": "3×"
@@ -64287,7 +64276,7 @@
          },
          {
           "kind": "hard",
-          "id": "arms"
+          "id": "abs"
          }
         ]
        },
@@ -64297,15 +64286,15 @@
         "items": [
          {
           "kind": "ex",
+          "id": 74
+         },
+         {
+          "kind": "ex",
           "id": 76
          },
          {
           "kind": "ex",
           "id": 75
-         },
-         {
-          "kind": "ex",
-          "id": 74
          }
         ]
        }
@@ -64427,7 +64416,7 @@
       ],
       [
        {
-        "dose": "40 s Belastung, 20 s Pause",
+        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
         "timer": {
          "phases": 2,
          "seconds": 60,
@@ -64436,7 +64425,7 @@
         }
        },
        {
-        "dose": "3 × (20 s Vollgas / 10 s locker)",
+        "dose": "3 × (20 s / 10 s Pause)",
         "timer": {
          "phases": 6,
          "seconds": 90,
@@ -64445,17 +64434,22 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
+        "dose": "4 × (10 s / 20 s locker)",
         "timer": {
-         "phases": 4,
+         "phases": 8,
          "seconds": 120,
          "choices": [],
          "perSet": 0
         }
        },
        {
-        "dose": "10 Wdh.",
-        "timer": null
+        "dose": "4 × (15 s / 15 s Pause)",
+        "timer": {
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
+        }
        }
       ],
       [
@@ -64473,16 +64467,27 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        }
       ],
       [
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
+        }
+       },
        {
         "dose": "2 Min.",
         "timer": {
@@ -64503,17 +64508,6 @@
           30
          ],
          "perSet": 30
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
         }
        }
       ]
@@ -66055,8 +66049,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "hookb",
+           "front",
            "round"
           ],
           "ease": 1
@@ -66065,25 +66058,23 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "cross",
-           "hookb",
-           "roundh"
+           "side",
+           "round"
           ]
          },
          {
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jabb",
-           "cross",
+           "jab",
            "hookb",
            "roundh"
           ],
           "react": {
            "post": {
-            "a": "hookb",
-            "d": "block"
+            "a": "round",
+            "d": "step",
+            "c": "jab"
            }
           }
          },
@@ -66092,14 +66083,14 @@
           "k": "partner",
           "combo": [
            "jab",
-           "axe",
+           "front",
            "hookb",
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "upper",
-            "d": "cover"
+           "post": {
+            "a": "cross",
+            "d": "slip"
            }
           }
          }
@@ -66133,19 +66124,19 @@
         "items": [
          {
           "kind": "ex",
-          "id": 20
+          "id": 8
          },
          {
           "kind": "ex",
-          "id": 21
+          "id": 13
          },
          {
           "kind": "ex",
-          "id": 23
+          "id": 58
          },
          {
           "kind": "ex",
-          "id": 56
+          "id": 47
          }
         ],
         "sets": "2×"
@@ -66170,7 +66161,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 73
+          "id": 76
          },
          {
           "kind": "ex",
@@ -66303,23 +66294,16 @@
       ],
       [
        {
-        "dose": "40 s Belastung, 20 s Pause",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
+        "dose": "10 Wdh.",
+        "timer": null
        },
        {
-        "dose": "3 Min.",
+        "dose": "4 × (15 s / 15 s Pause)",
         "timer": {
-         "phases": 1,
-         "seconds": 180,
-         "choices": [
-          180
-         ],
-         "perSet": 180
+         "phases": 8,
+         "seconds": 120,
+         "choices": [],
+         "perSet": 0
         }
        },
        {
@@ -66335,7 +66319,7 @@
         }
        },
        {
-        "dose": "10–12 Wdh. pro Bein",
+        "dose": "10–12 Wdh.",
         "timer": null
        }
       ],
@@ -66365,15 +66349,14 @@
       ],
       [
        {
-        "dose": "60–90 s halten",
+        "dose": "2 Min.",
         "timer": {
          "phases": 1,
-         "seconds": 60,
+         "seconds": 120,
          "choices": [
-          60,
-          90
+          120
          ],
-         "perSet": 60
+         "perSet": 120
         }
        },
        {
@@ -66446,30 +66429,10 @@
           "k": "shadow",
           "combo": [
            "side",
-           "cross",
-           "hook",
-           "round"
+           "jab",
+           "cross"
           ],
           "ease": 1
-         },
-         {
-          "kind": "round",
-          "k": "bag",
-          "combo": [
-           "jab",
-           "cross",
-           "roundh"
-          ]
-         },
-         {
-          "kind": "round",
-          "k": "shadow",
-          "combo": [
-           "side",
-           "crossb",
-           "upper",
-           "hook"
-          ]
          },
          {
           "kind": "round",
@@ -66478,6 +66441,24 @@
            "side",
            "jabb",
            "cross"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "shadow",
+          "combo": [
+           "side",
+           "cross",
+           "hookb",
+           "round"
+          ]
+         },
+         {
+          "kind": "round",
+          "k": "bag",
+          "combo": [
+           "round",
+           "roundh"
           ]
          }
         ]
@@ -66514,11 +66495,11 @@
          },
          {
           "kind": "ex",
-          "id": 7
+          "id": 9
          },
          {
           "kind": "ex",
-          "id": 42
+          "id": 49
          },
          {
           "kind": "ex",
@@ -66533,11 +66514,11 @@
         "items": [
          {
           "kind": "hard",
-          "id": "fWraps"
+          "id": "fGlove"
          },
          {
           "kind": "hard",
-          "id": "bodybag"
+          "id": "shinbag"
          }
         ]
        },
@@ -66547,7 +66528,7 @@
         "items": [
          {
           "kind": "ex",
-          "id": 75
+          "id": 72
          },
          {
           "kind": "ex",
@@ -66555,7 +66536,7 @@
          },
          {
           "kind": "ex",
-          "id": 74
+          "id": 75
          }
         ]
        }
@@ -66690,10 +66671,10 @@
         }
        },
        {
-        "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
+        "dose": "40 s Belastung, 20 s Pause",
         "timer": {
-         "phases": 4,
-         "seconds": 120,
+         "phases": 2,
+         "seconds": 60,
          "choices": [],
          "perSet": 0
         }
@@ -66719,34 +66700,29 @@
        {
         "dose": null,
         "timer": {
-         "phases": 3,
-         "seconds": 65,
+         "phases": 5,
+         "seconds": 70,
          "choices": [
-          30
+          20
          ],
-         "perSet": 30
+         "perSet": 20
         }
        },
        {
         "dose": null,
-        "timer": {
-         "phases": 11,
-         "seconds": 145,
-         "choices": [],
-         "perSet": 0
-        }
+        "timer": null
        }
       ],
       [
        {
-        "dose": "je Seite 30 s",
+        "dose": "je Seite 45 s",
         "timer": {
          "phases": 3,
-         "seconds": 65,
+         "seconds": 95,
          "choices": [
-          30
+          45
          ],
-         "perSet": 30
+         "perSet": 45
         }
        },
        {
@@ -66761,14 +66737,14 @@
         }
        },
        {
-        "dose": "je Seite 45 s",
+        "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
-         "seconds": 95,
+         "seconds": 65,
          "choices": [
-          45
+          30
          ],
-         "perSet": 45
+         "perSet": 30
         }
        }
       ]
@@ -67173,9 +67149,7 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
-           "jab",
-           "crossb",
+           "side",
            "round"
           ],
           "ease": 1
@@ -67184,13 +67158,13 @@
           "kind": "round",
           "k": "partner",
           "combo": [
-           "jab",
+           "jabb",
            "cross",
            "roundh"
           ],
           "react": {
-           "pre": {
-            "a": "hookb",
+           "post": {
+            "a": "round",
             "d": "block"
            }
           }
@@ -67233,15 +67207,15 @@
          },
          {
           "kind": "ex",
+          "id": 10
+         },
+         {
+          "kind": "ex",
           "id": 7
          },
          {
           "kind": "ex",
-          "id": 19
-         },
-         {
-          "kind": "ex",
-          "id": 10
+          "id": 18
          }
         ],
         "sets": "2×"
@@ -67266,15 +67240,15 @@
         "items": [
          {
           "kind": "ex",
-          "id": 74
+          "id": 75
+         },
+         {
+          "kind": "ex",
+          "id": 76
          },
          {
           "kind": "ex",
           "id": 72
-         },
-         {
-          "kind": "ex",
-          "id": 75
          }
         ]
        }
@@ -67402,6 +67376,10 @@
         }
        },
        {
+        "dose": "4 Läufe à 20 m",
+        "timer": null
+       },
+       {
         "dose": "2 Min. im Wechsel (30 s zügig / 30 s locker)",
         "timer": {
          "phases": 4,
@@ -67411,16 +67389,7 @@
         }
        },
        {
-        "dose": "40 s (ca. 10 m hin und zurück), 20 s Pause",
-        "timer": {
-         "phases": 2,
-         "seconds": 60,
-         "choices": [],
-         "perSet": 0
-        }
-       },
-       {
-        "dose": "4 Läufe à 20 m",
+        "dose": "pro Bein 10",
         "timer": null
        }
       ],
@@ -67450,28 +67419,6 @@
       ],
       [
        {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
-        "dose": "je Seite 45 s",
-        "timer": {
-         "phases": 3,
-         "seconds": 95,
-         "choices": [
-          45
-         ],
-         "perSet": 45
-        }
-       },
-       {
         "dose": "je Seite 30 s",
         "timer": {
          "phases": 3,
@@ -67480,6 +67427,28 @@
           30
          ],
          "perSet": 30
+        }
+       },
+       {
+        "dose": "2 Min.",
+        "timer": {
+         "phases": 1,
+         "seconds": 120,
+         "choices": [
+          120
+         ],
+         "perSet": 120
+        }
+       },
+       {
+        "dose": "je Seite 45 s",
+        "timer": {
+         "phases": 3,
+         "seconds": 95,
+         "choices": [
+          45
+         ],
+         "perSet": 45
         }
        }
       ]
