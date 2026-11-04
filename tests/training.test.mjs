@@ -3107,10 +3107,16 @@ test("6b: technique gating by level, grade, age and limits", () => {
   assert.equal(al("dolh", { ...base, level: 1 }), true);
   assert.equal(al("dwi", { ...base, level: 1, young: true }), false, "no spinning back kick under 19");
   assert.equal(al("dwi", { ...base, level: 1 }), true);
-  assert.equal(al("dhu", { ...base, level: 1, kup: 8 }), false, "hooking kick only from 6th Kup");
-  assert.equal(al("dhu", { ...base, level: 1, kup: 6 }), true);
-  assert.equal(al("ttdol", { ...base, level: 1, kup: 5 }), false, "jump kicks only from 4th Kup");
-  assert.equal(al("ttdol", { ...base, level: 1, kup: 4 }), true);
+  // 7g: level OR grade – either one releases
+  assert.equal(al("dhu", { ...base, level: 0, kup: 8 }), false, "hooking kick: neither level 1 nor 6th Kup");
+  assert.equal(al("dhu", { ...base, level: 1, kup: 8 }), true, "level 1 is enough");
+  assert.equal(al("dhu", { ...base, level: 0, kup: 6 }), true, "6th Kup is enough");
+  assert.equal(al("ttdol", { ...base, level: 0, kup: 5 }), false, "jump kicks: neither level 1 nor 4th Kup");
+  assert.equal(al("ttdol", { ...base, level: 1, kup: 5 }), true, "level 1 is enough");
+  assert.equal(al("ttdol", { ...base, level: 0, kup: 4 }), true, "4th Kup is enough");
+  assert.equal(al("ttdol", { ...base, level: 0 }), false, "no grade entered: only the level counts");
+  assert.equal(al("dolh", { ...base, level: 0, kup: 1 }), false, "head kicks have no grade route: level only");
+  assert.equal(al("ttdol", { ...base, level: 0, kup: 1, young: true }), false, "age lock stays");
   assert.equal(al("ttdol", { ...base, level: 1 }), true, "no grade entered: only the level counts");
   assert.equal(al("ttdol", { ...base, level: 1, kup: 2, risky: true }), false, "knee/ankle limit");
   assert.equal(al("dolh", { ...base, level: 1, kid: true }), false, "children only basics");
@@ -3330,8 +3336,10 @@ test("6c: ITF release by Kup, level, age and limits (own module, not the WT rule
   const base = { level: 1, kup: null, kid: false, young: false, risky: false };
   assert.equal(al("jir", { ...base, level: 0 }), true, "punch from the start");
   assert.equal(al("dolh", { ...base, level: 0 }), false);
-  assert.equal(al("ttdol", { ...base, kup: 3 }), false, "jump kicks from the 2nd Kup");
-  assert.equal(al("ttdol", { ...base, kup: 2 }), true);
+  assert.equal(al("ttdol", { ...base, level: 0, kup: 3 }), false, "jump kicks: neither level 1 nor 2nd Kup");
+  assert.equal(al("ttdol", { ...base, kup: 3 }), true, "7g: level 1 is enough");
+  assert.equal(al("ttdol", { ...base, level: 0, kup: 2 }), true, "7g: 2nd Kup is enough");
+  assert.equal(al("dwi", { ...base, level: 0, kup: 4 }), true, "7g: 4th Kup releases the back kick");
   assert.equal(al("ttdol", { ...base, young: true, kup: 2 }), true, "teens may jump (only spinning kicks are age-limited)");
   assert.equal(al("ttdol", { ...base, kid: true, kup: 2 }), false, "no jump kicks for children");
   assert.equal(al("dwi", { ...base, young: true, kup: 2 }), false, "no spinning kicks under 19");
@@ -3422,8 +3430,10 @@ test("6c: a unit can carry another style than the profile; its grade, names and 
   assert.equal(i.tstyle, "itf");
   assert.equal(a.run("S.profile.tkd.style"), "wt", "profile untouched");
   assert.equal(a.run("unitStyle"), null, "no style leaks after the build");
-  // ITF unit with a 9th Kup: no spinning or jump kicks although the WT grade (4th Kup) would allow it
-  for (let n = 0; n < 12; n++) for (const ids of comboIds(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-04','T','gym',['bag'],{sport:'taekwondo',tstyle:'itf'}))")))) for (const x of ids) assert.ok(!["dwi", "dhu", "ttdol", "ttyeop"].includes(x) || a.run("tkdKup('itf')") <= 4, "kup of the unit style: " + x);
+  // ITF unit with a 9th Kup (beginner): no spinning or jump kicks although the WT grade (4th Kup) would release them (7g: level OR grade)
+  a.run("S.profile.level=0;");
+  for (let n = 0; n < 12; n++) for (const ids of comboIds(JSON.parse(a.run("JSON.stringify(buildSession('2026-11-04','T','gym',['bag'],{sport:'taekwondo',tstyle:'itf'}))")))) for (const x of ids) assert.ok(!["dwi", "dhu", "ttdol", "ttyeop"].includes(x), "kup of the unit style: " + x);
+  a.run("S.profile.level=1;");
   // rendering takes the unit's style for names
   a.run("S.sessions['2026-11-04']=" + JSON.stringify(i) + ";ui.sel='2026-11-04';ui.tab='session';ui.setup=setupOf(S.sessions['2026-11-04'],'2026-11-04');");
   const h = a.run("renderSession()");
@@ -3697,7 +3707,8 @@ test("7b B8: ITF from level 1 – at least 40 % of the combos carry a jumping or
   const itf = share("itf"), wt = share("wt");
   assert.ok(itf >= 0.4, "ITF " + itf);
   assert.ok(itf > wt, `ITF ${itf} vs WT ${wt}`);
-  assert.equal(share("itf", { lvl: 0 }), 0, "beginners: none");
+  assert.equal(share("itf", { lvl: 0, grade: "k9" }), 0, "beginners with a low grade: none");
+  assert.ok(share("itf", { lvl: 0, grade: "k2" }) > 0, "7g: beginners with the 2nd Kup get them through the grade");
   assert.equal(share("itf", { by: 2017 }), 0, "children: none");
   assert.equal(share("itf", { lim: ["knee"] }), 0, "knee limit: none");
 });
@@ -3870,7 +3881,7 @@ test("7e: WT full contact – impact rounds, trunk hardening and the harder dose
     return JSON.parse(a.run(`JSON.stringify(buildSession('2026-11-02','${o.ty || "T"}','gym',['bag','rope'${o.partner ? ",'partner'" : ""}],{sport:'taekwondo',tstyle:'${o.st || "wt"}'}))`));
   };
   let pow = 0, trunk = 0, harder = 0;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 40; i++) {
     const s = mk({});
     const main = s.blocks.find((b) => b.key === "main");
     pow += main.items.filter((it) => it.pow).length;
@@ -3879,9 +3890,9 @@ test("7e: WT full contact – impact rounds, trunk hardening and the harder dose
     assert.ok(!hb.items.some((it) => it.id === "abs"), "no partner ab drill with body hooks in WT");
     if (hb.items.some((it) => it.h)) harder++;
   }
-  assert.ok(pow >= 20, "impact rounds " + pow);
-  assert.ok(trunk >= 4 && trunk <= 16, "trunk about every second session " + trunk);
-  assert.ok(harder >= 10, "harder dose " + harder);
+  assert.ok(pow >= 40, "impact rounds " + pow);
+  assert.ok(trunk >= 10 && trunk <= 32, "trunk about every second session " + trunk);
+  assert.ok(harder >= 20, "harder dose " + harder);
   for (const o of [{ st: "itf" }, { lvl: 0 }, { by: 2012 }]) {
     for (let i = 0; i < 10; i++) {
       const s = mk(o);
@@ -3949,4 +3960,25 @@ test("7f: kick chains – WT more chain rounds and longer chains, ITF weaker, ki
   assert.ok(kid.pure < 0.15, "children: no new chains " + kid.pure);
   // the new ITF chains only use techniques the ITF module knows
   for (const c of JSON.parse(a.run("JSON.stringify(ITFT.COMBOS.flat())"))) for (const x of c) assert.ok(a.run(`!!ITFT.TECH['${x}']`), x);
+});
+
+test("7g: taekwondo release by level OR grade – a beginner with a high grade gets the released kicks in the plan; locks stay", () => {
+  const a = app();
+  const kicks = (st, o) => {
+    a.run(`S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'${st}',wt:'${o.grade || ""}',itf:'${o.grade || ""}'});S.profile.birthYear=${o.by ?? 1995};S.profile.level=${o.lvl ?? 0};S.profile.limits=${JSON.stringify(o.lim || [])};`);
+    const seen = new Set();
+    for (let i = 0; i < 400; i++) for (const x of JSON.parse(a.run(`(()=>{buildSport='taekwondo';unitStyle='${st}';const c=tkdCombo('shadow');buildSport=null;unitStyle=null;return JSON.stringify(c)})()`))) seen.add(x);
+    return seen;
+  };
+  const wt4 = kicks("wt", { grade: "k4" });
+  assert.ok(wt4.has("ttdol") || wt4.has("ttyeop"), "WT beginner 4th Kup: jump kicks " + [...wt4]);
+  assert.ok(wt4.has("dhu"), "WT beginner 4th Kup: hooking kick");
+  assert.ok(!wt4.has("dolh") && !wt4.has("nae"), "head kicks stay level-bound");
+  const wt6 = kicks("wt", { grade: "k6" });
+  assert.ok(wt6.has("dhu") && !wt6.has("ttdol") && !wt6.has("ttyeop"), "WT 6th Kup: hooking kick, no jumps");
+  for (const o of [{ grade: "k8" }, {}, { grade: "k1", by: 2010 }, { grade: "k1", lim: ["knee"] }, { grade: "k1", by: 2017 }])
+    for (const x of ["dhu", "dwi", "ttdol", "ttyeop"]) assert.ok(!kicks("wt", o).has(x), "WT " + JSON.stringify(o) + ": " + x);
+  const itf2 = kicks("itf", { grade: "k2" });
+  assert.ok(itf2.has("ttdol") || itf2.has("ttyeop"), "ITF beginner 2nd Kup: jump kicks");
+  for (const x of ["dwi", "dhu", "ttdol", "ttyeop"]) assert.ok(!kicks("itf", { grade: "k5" }).has(x), "ITF beginner 5th Kup: " + x);
 });
