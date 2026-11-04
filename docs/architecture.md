@@ -63,7 +63,7 @@ src/
     random.js                rnd, shuffle (lesen Math.random beim Aufruf → mit Seed reproduzierbar)
     storage.js               createStore({ key, storage, getState, compact, onFull, cloud, applyCloud, cloudDocs, onCloudLost })
     index.js                 sammelt core/
-    history.js               Belastung (Minuten × Anstrengung), Entlastungsauslöser, Wochenprojektion, Bereichsmodell, Level je Sport – nur explizite Eingaben (3-U)
+    history.js               Belastung (Minuten × Anstrengung), Entlastungsauslöser, Wochenprojektion, Bereichsmodell (Taekwondo je Stil: tkdRegions, 7b), Level je Sport – nur explizite Eingaben (3-U)
     prescription.js          strukturierte Dosierung (RX): Text, Timerphasen und Zeitschätzung aus denselben Zahlen; Härtungsstufen RX_HARD (3-D)
   catalog/
     ids.js                   stabile Text-IDs der 88 Übungen (`<Kategorie>.<Name>`), Zuordnung alter Zeilennummer ↔ ID (3-D)
@@ -73,8 +73,8 @@ src/
     kickboxing/index.js      SportDefinition: id, visible, rules, dayPattern (früher PATTERN), techniques
     kickboxing/rules.js      RULE_PROFILE (WAKO): DISCIPLINES, waFormat, STD_FORMAT; Fassung noch nicht belegt
     kickboxing/techniques.js TECH, KICKS, STRIKE, RISKY, ADV, COMBOS, EXTRA, KICK_ONLY, HAND_ONLY, THEMES
-    boxing/                  SportDefinition (visible: false, preview: true), rules.js (DBV: Altersklassen, Formate, K.o.-Sperre, WKB-Link), techniques.js (Kombinationen, Konter, Themen), tasks.js (Aufgabensparring) (4a-U)
-    taekwondo/               SportDefinition (visible; WT und ITF-D: T/S/P/K/C/M), grades.js (Style, Kup/Dan/Poom, Gürtelfarben, Wartezeiten, Formnamen, Prüfungsteile) (6a), techniques.js (Techniken mit koreanischem Namen, Freischaltung, Kombis, Konter, Rundentexte, Aufgaben) (6b), rules.js (WT-/ITF-D-Altersklassen, Formate, K.o.-Sperre) (6b/6c), itf.js (ITF-D: Techniken mit eigenen Namen, Freischaltung, Hand-Fuß-Kombis, Konter, Matsogi-/Hosinsul-Aufgaben) (6c, Sammelexport als `ITFT`), all.js (Sammelexport als `TKDT`)
+    boxing/                  SportDefinition (visible, seit 4b), rules.js (DBV: Altersklassen, Formate, K.o.-Sperre, WKB-Link), techniques.js (Kombinationen, Konter, Themen), tasks.js (Aufgabensparring) (4a-U)
+    taekwondo/               SportDefinition (visible; WT und ITF-D: T/S/P/K/C/M; dayPattern = ITF, dayPatternWt = WT mit Mobility statt Kondition ab 4 Tagen, 7b), grades.js (Style, Kup/Dan/Poom, Gürtelfarben, Wartezeiten, Formnamen, Prüfungsteile) (6a), techniques.js (Techniken mit koreanischem Namen, Freischaltung, Kombis, Konter, Rundentexte, Aufgaben) (6b), rules.js (WT-/ITF-D-Altersklassen, Formate, K.o.-Sperre) (6b/6c), itf.js (ITF-D: Techniken mit eigenen Namen, Freischaltung, Hand-Fuß-Kombis, Konter, Matsogi-/Hosinsul-Aufgaben) (6c, Sammelexport als `ITFT`), all.js (Sammelexport als `TKDT`)
   app/                       übriger App-Code als geordnete Teile in gemeinsamem Scope (Reihenfolge = Dateiname)
     00-imports.js            die einzige Stelle, die Namen aus RZ übernimmt
     36-tkd-grade.js          Taekwondo-Gürtelbereich: Grad je Style, Prüfungen, Verlauf, Übersicht, `outfitFor` (Dobok/Gürtel der Figuren) (6a)

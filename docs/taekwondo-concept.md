@@ -259,7 +259,7 @@ Wochenmuster: WT plant bei 3+ Tagen eine M-Einheit mehr als Kickboxen (statt ein
 
 | Nr. | Frage |
 |---|---|
-| F1 | WT: Ist eine M-Einheit mehr pro Woche (statt Kondition) sinnvoll? |
+| F1 | WT: Ist eine M-Einheit mehr pro Woche (statt Kondition) sinnvoll? – **Ja** (Betreiber, 04.11.2026; umgesetzt in 7b ab 4 Tagen) |
 | F2 | WT-Technikfreigabe: Drehtritte ab grünem Gürtel + Fortgeschritten, Sprungtritte ab blauem Gürtel – passt das? |
 | F3 | ITF: Gewichtung Hand-/Fußtechnik in der Technikrunde (Vorschlag ≈ 40/60) |
 | F4 | ~~DTU-Formen~~ – entschieden: übliche Taegeuk-Folge mit Hinweis (T15). |

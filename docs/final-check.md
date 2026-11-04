@@ -48,6 +48,23 @@ Keine weiteren Befunde: Ablauf, Timer, Pause/Fortsetzen, automatische Runde, off
 Verlauf/Export, Wiederaufnahme, Isolation, Offline-Cache, Ansichten DE/EN und die Sportbilder sind automatisch ohne
 Fehler.
 
+## 2b. Korrekturen in 7b (freigegeben am 04.11.2026)
+
+Der Betreiber hat B1–B5 und drei Schwerpunkt-Befunde freigegeben (B6–B8, seine Frage vom 04.11.2026 06:03: Schwerpunkte der Sportarten). Die Kickbox-Pläne bleiben unverändert (Baseline identisch).
+
+| Nr. | Korrektur | Beleg |
+|---|---|---|
+| B1 | Taekwondo-Bereiche je Stil (`core/history.js` `tkdRegions`): Vereinstraining T/P/X und eigene T/P/C-Einheiten WT 0,50/0,15/0,15/0,20, ITF 0,40/0,25/0,15/0,20; Kraft/Kondition bleiben allgemein. Nach hartem WT-Abend wird nur noch die Beinarbeit entlastet. | Test „7b B1“, H1, H3b |
+| B2 | Verlaufseintrag mit `tstyle` (Taekwondo) bzw. `disc` (Kickboxen), auch Vereinseinträge Taekwondo; der Verlauf zeigt „Taekwondo · ITF“, wenn Sport, Stil oder Disziplin nicht offensichtlich sind. | Test „7b B2“, H2b |
+| B3 | Box-Einstiegsrunde: „70 % Tempo, locker und kontrolliert“ (DE/EN); jede lockere Runde einer Boxeinheit wird markiert. | Test „7b B3“, H9 |
+| B4 | Manifest und Seitenbeschreibung, `installieren.html`, README (drei Sportarten mit Schwerpunkten, Rundentimer, Turnierformat, Ratgeber, Haftungshinweis für alle Verbände), `docs/architecture.md`. | Textprüfung |
+| B5 | Ein zweites Tippen auf „Verstanden“ bewirkt nichts mehr. | Test „7b B5“ |
+| B6 | **WT**: Technik = Kraft 8 + aktive Beweglichkeit 6 (Kick-Halten, Zeitlupen-Kicks, kontrollierte Beinpendel, aktive Beinheber); Mobility = aktive Beweglichkeit 34 (mind. etwa die Hälfte aktive Übungen) + Cool-down 3; Wochenmuster ab 4 Tagen Mobility statt Kondition (4: T S P M · 5: T S P C M · 6: T S P M T M · 7: T S P M T S M); F1 damit beantwortet. | Tests „7b B6“ (2) |
+| B7 | **Boxen**: Kondition ≈ 33 Min. in 3-Min.-Runden / 1 Min. Pause (Kinder und Turnierformat unverändert), Kraft 24 + Kraftausdauer-Finisher 15, „Handgelenk & Körperabhärtung“ (Handtuch + Griff + Bauch-Abhärtung mit Partner / Rumpf an den Sack / Spannung & Ausatmen) ab Level 1, 16 Jahren, ohne Einschränkungen und nicht in Entlastungs-/Taper-/Erholungswochen; Mobility 22 + lockere Beinarbeit & Schatten 8 (3 × 2:00 / 0:30). | Tests „7b B7“ (2) |
+| B8 | **ITF**: ab Level 1 trägt etwa jede zweite Kombination einen Sprung- oder Drehtritt (gemessen ≥ 40 %, mehr als WT), soweit Grad, Alter und Einschränkungen es erlauben (Anfänger, Kinder, Knie: keine); Mobility 28 + lockere Hand-Fuß-Verbindungen 4 (2 × 1:30 / 0:30) + Cool-down 5. | Tests „7b B8“ (2) |
+
+Nach 7b: 223 Tests grün, Baseline identisch, Isolation 12/12, Ablauf-Matrix 648 Einheiten ohne Befund, H1–H9 alle OK, Ansichten/Offline/Inbetriebnahme OK.
+
 ## 3. Nur auf dem Gerät belegbar
 
 | Punkt | Stand |
