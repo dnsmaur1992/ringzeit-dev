@@ -68,7 +68,9 @@
             ? [t("tour").prof[0], t("tourProfTkd")]
             : st.k === "intro" && isBoxMain()
               ? [t("tour").intro[0], t("tourIntroBox")]
-              : t("tour")[st.k],
+              : st.k === "test" && isBoxMain()
+                ? t("tourTestBox")
+                : t("tour")[st.k],
       // the simple view has no test/history tabs – they live in the profile then
       tx =
         st.k === "prof" && simpleView()

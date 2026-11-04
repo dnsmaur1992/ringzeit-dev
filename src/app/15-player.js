@@ -947,8 +947,11 @@
     });
     return s + `</svg>`;
   }
+  /* belt exam view follows the main sport (7c-4): kickboxing = BFVKB programme, taekwondo = the grade area of the style,
+     boxing has no belts (fitness test only) */
+  const testViewNow = () => (mainSport() === "boxing" ? "fit" : ui.testView || (phaseInfo().phase === "grade" ? "exam" : "fit"));
   function renderTest() {
-    const tv = ui.testView || (phaseInfo().phase === "grade" ? "exam" : "fit");
+    const tv = testViewNow();
     let h = header(!ui.testOpen && tv === "exam" ? t("tview").exam : t("testTitle"));
     if (ui.testOpen) {
       const d = ui.testDraft,
@@ -980,9 +983,10 @@
       h += `<div class="field"><span class="sub">${t("testSkip")}</span><div class="inline"><button type="button" class="btn sec" id="tCancel">${t("testCancel")}</button><button type="button" class="btn" id="tSave">${t("testSave")}</button></div></div></div>`;
       return h;
     }
-    const view = ui.testView || (phaseInfo().phase === "grade" ? "exam" : "fit");
-    h += `<div class="seg tview">${["fit", "exam"].map((k) => `<button type="button" data-tview="${k}" aria-pressed="${view === k}">${t("tview")[k]}</button>`).join("")}</div>`;
-    if (view === "exam") return h + renderExam();
+    const view = testViewNow();
+    if (mainSport() !== "boxing")
+      h += `<div class="seg tview">${["fit", "exam"].map((k) => `<button type="button" data-tview="${k}" aria-pressed="${view === k}">${t("tview")[k]}</button>`).join("")}</div>`;
+    if (view === "exam") return h + (mainSport() === "taekwondo" ? tkdPanelHtml() : renderExam());
     const tests = S.tests.filter((x) => !x.raw || [x.raw.str, x.raw.spd, x.raw.end, x.raw.flx].some((v) => v != null)),
       last = tests[tests.length - 1],
       prev = tests.length > 1 ? tests[tests.length - 2] : null,
