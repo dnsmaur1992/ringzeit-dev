@@ -1,8 +1,9 @@
-# Ablöse-Anleitung: Ringzeit Dev → stabile Ringzeit (nur Doku, Teil 7c)
+# Ablöse-Anleitung: Ringzeit Dev → stabile Ringzeit (Teil 7c)
 
-Diese Anleitung beschreibt, wie der abgenommene Stand von **Ringzeit Dev** später die stabile App **Ringzeit**
-ersetzen kann. **Nichts davon ist ausgeführt.** Die stabile App bleibt unangetastet, bis der Betreiber die Ablösung
-ausdrücklich beauftragt (Auftrag Teil 7: keine automatische Veröffentlichung oder Ablösung).
+Diese Anleitung beschreibt, wie der abgenommene Stand von **Ringzeit Dev** die stabile App **Ringzeit** ersetzt.
+**Stand 04.11.2026:** Das Release-Paket ist vorbereitet und geprüft (Auftrag des Betreibers 13:02). Hochgeladen wird es
+nur vom Betreiber; die Schritt-für-Schritt-Anleitung dazu steht in [release.md](release.md). Die Schritte 2–5 unten
+erledigt das Werkzeug `tools/release.py`.
 
 ## 1. Ausgangslage (Stand 04.11.2026)
 
@@ -61,10 +62,9 @@ wurden geprüft: das Laden über `hydrate` im Testlauf und das Release-Szenario 
 | Neue Sicherung → Rückladen | identisch |
 | Release-Szenario im Browser | App startet mit den Daten, keine Inbetriebnahme, keine JS-Fehler, „Was ist neu“ erscheint einmal |
 
-**Vor dem Release noch nötig:** Die Texte unter „Was ist neu“ (`news` in `src/app/01-overview-i18n.js`, `NEWS_V` in
-`src/app/16-onboarding.js`) stammen aus der Zeit vor Boxen und Taekwondo. Dort steht zum Beispiel noch
-„Weitere Sportarten kommen später dazu“. Sie müssen für den Release neu geschrieben werden (Boxen, Taekwondo,
-Schwerpunkte je Sportart), mit erhöhtem `NEWS_V`.
+**Erledigt (Release-Paket 04.11.2026):** „Was ist neu“ ist neu geschrieben (Boxen, Taekwondo, Schwerpunkte je Sportart,
+neues Profil), `NEWS_V` = 7. Das Cache-Aufräumen schont Ringzeit Dev (Schritt 4). Der Altdaten-Test wurde mit dem
+Release-Stand als echtes Update wiederholt und bestanden, siehe [release.md](release.md) Abschnitt 6.
 
 ## 4. Rückweg
 

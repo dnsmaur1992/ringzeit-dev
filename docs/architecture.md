@@ -225,6 +225,8 @@ virtueller Uhr, festem Zufall (mulberry32, Seed je Fall) und synthetischen Profi
 | `docs/geraete-checkliste.md` | Geräte-Checkliste für die Gesamtabnahme (iPhone, installierte App) |
 | `docs/trainer-pruefliste.md` | offene fachliche Punkte zum Abhaken (Regelwerke, Trainingsinhalte, Ratgeber) |
 | `docs/abloesung.md` | Anleitung zur späteren Ablösung der stabilen App (nur Doku) |
+| `docs/release.md` | Release für die stabile App: was `tools/release.py` ändert, Upload-Anleitung, Prüfergebnis |
+| `tools/release.py` | erzeugt aus dem Dev-Stand die Dateien für das stabile Repo (Kennung `ringzeit`) und baut sie |
 | `docs/komponenten.md` | Komponenten und Zusammenspiel: Diagramme zu Build, Schichten, App-Teilen, Datenfluss und Speicher; „Wo ändere ich was?“ |
 | `tests/app-source.mjs` | baut vor jedem Testlauf `build/ringzeit.html` frisch (`--readable`) und liefert es |
 | `tests/training.test.mjs` | gebautes App-Script in Node-VM (Logik, Ereignisse, Speicherung, Wiederaufnahme, Ansagen, Historie/Belastung, Sportfeld, Freier Lauf, Bearbeiten/Löschen) – 185 Tests (6d: Tipps/Fakten nach Sport × Stil, Ratgeber je Stil, Packliste, Tour-Texte, Stilwechsel; 6c: ITF-Freischaltung, Namen, Partneraufgaben, Format, Einheitenstil; 6b: Freischaltung, Einheiten je Profil, Namen, Sparring, Abhärtung, Bänder; 4a-U: Boxprofile, Handgelenkblock, Formate, Touch-Sparring, K.o.-Sperre, Sportwechsel; 3-D: IDs/Migration, Skizzen per ID, Text = Timer, A5–A13, A10-Planung) |

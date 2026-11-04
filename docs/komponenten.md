@@ -198,6 +198,7 @@ flowchart LR
 | den Aufbau einer Einheit ändern | `src/app/08-plan.js` (`buildSessionCore`) |
 | Tipps und Fakten ändern | `src/app/02-tips.js` |
 | den Ratgeber ändern | `src/app/34-guide.js` (allgemein), `34b-guide-box.js` (Boxen), `34c-guide-tkd.js` (Taekwondo) |
+| einen Release für die stabile App bauen | `python3 tools/release.py <leerer Ordner>`, danach [release.md](release.md) |
 | „Was ist neu“ ändern | Texte unter `news` in `01-overview-i18n.js`, Zähler `NEWS_V` in `16-onboarding.js` |
 
 Danach: `python3 tools/build_pwa.py`, Tests laufen lassen, `pwa/index.html` und `pwa/sw.js` in die Repo-Wurzel kopieren und alles hochladen.
