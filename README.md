@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan für Kickboxen, Boxen und Taekwondo" width="100%">
+  <img src="docs/banner-sportarten.jpg" alt="Ringzeit – Dein persönlicher Trainingsplan für Kickboxen, Boxen und Taekwondo" width="100%">
 </p>
 
 <p align="center">
