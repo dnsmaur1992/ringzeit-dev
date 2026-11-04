@@ -1,0 +1,227 @@
+# Ringzeit Dev – Umsetzungsstand
+
+## Ziel und Basis
+
+- Ziel: `https://github.com/dnsmaur1992/ringzeit-dev`, Pages `https://dnsmaur1992.github.io/ringzeit-dev/`
+- Referenz (nur lesend): `https://github.com/dnsmaur1992/ringzeit`, Stand `ff7a7d8`
+- Vergleichsbasis: `ringzeit-dev` @ `914ed7deed48b045cd3b220d1c0c3dfd4c2e483b` (manuelle Kopie der stabilen App, kein Git-Klon)
+- Lieferweg: Dateien als ZIP aus dem Chat, manueller Upload durch den Betreiber. Kein Push durch Claude.
+
+## Aktueller Teil
+
+| Paket | Teil | Modell | Status |
+|---|---|---|---|
+| W1 | 0 – Entwicklungskopie isolieren | Opus | ABGENOMMEN (03.11.2026, Stand `b8b6443`) |
+| W1 | 1 – Architektur und Vergleichsbasis | Opus | ABGENOMMEN (03.11.2026, Stand `e708335`) |
+| W2 | 2 – Gemeinsamer Kern und Kickboxmodul | Opus (statt Sonnet, wegen Umfang) | ABGENOMMEN (03.11.2026, Stand `b0c5251`) |
+| W2 | 2-B – Wiederaufnahme, Sprachausgabe, klare Texte | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a7e29d1`) |
+| W3 | 3-Q – Daten- und Belastungskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026, Stand 97bf4f1) |
+| W3 | 3-U – Historie, Belastung, Auswahl | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `5484843`, App-Version 03.11.2026 12:27; Sicherungs-Rückladung nicht von Hand getestet, nur automatisch) |
+| W3 | 3-D – Stabile IDs, strukturierte Dosierung, Timer-Text-Abweichungen | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `e7fb557` inkl. Korrektur „Freier Lauf“, App-Version 03.11.2026 13:50; Altdaten, Full-Contact-Abhärtung und explosive Sätze nur automatisch getestet, auf Wunsch des Betreibers nicht von Hand) |
+| W4 | 4a-Q – Boxquellen und Trainingskonzept | Opus 5.5 | ABGENOMMEN (03.11.2026 15:47, Stand `278b269`; `docs/boxing-concept.md`, `docs/rules-sources.md` R2, T3–T5) |
+| W4 | 4a-U – Boxpläne (Entwicklungsvorschau) | Sonnet 5.5 | ABGENOMMEN (03.11.2026, Stand `a1c2946`, App-Version 03.11.2026 16:32, 164 Tests) |
+| W4 | 4b – Gemeinsame Tipps und Boxeinstieg | Sonnet 5.5 | ABGENOMMEN (03.11.2026 17:27, Stand `e3c44f2`, App-Version 03.11.2026 17:21, 169 Tests) |
+| W5 | 5 – Taekwondoquellen und Grad-/Trainingsmodell | Opus 5.5 | ABGENOMMEN (03.11.2026 18:02, Stand `0d01538`; `docs/taekwondo-concept.md`, `docs/rules-sources.md` R3a–R3d, R4a–R4d; nur Konzept, kein Code) |
+| W5 | 6a – Gürtelbereich und Dobok | Sonnet 5.5 | ABGENOMMEN (03.11.2026 19:45, Stand `86a9b52`, App-Version 03.11.2026 19:13, 186 Tests; Nachbesserungen siehe unten) |
+| W5 | 6b – WT-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:39, App-Version 03.11.2026 21:38, 201 Tests) |
+| W7 | 6c – ITF-D-Pläne | Sonnet 5.5 | ABGENOMMEN (03.11.2026 21:59, Stand `58224bd`, App-Version 03.11.2026 21:47, 206 Tests) |
+| W8 | 6d – Stilbezogene Inhalte | Sonnet 5.5 | ABGENOMMEN (03.11.2026 22:36, Stand `df2ab31`, App-Version 03.11.2026 22:31, 213 Tests; inkl. Nachbesserungen 6d-2 Tipps und 6d-3 Rundentimer) |
+| W8 | 7a – Automatische Gesamtprüfung | Opus 5.5 | ABGENOMMEN (gesichtet 04.11.2026, Stand `07ff90f`) |
+| W8 | 7b – Korrekturen B1–B8 | Opus 5.5 | ABGENOMMEN (04.11.2026 06:43, Stand `6799ac7`, App-Version 04.11.2026 06:24, 223 Tests) |
+| W8 | 7b-2 – Kraft, Kondition, Mobility nach Hauptsport | Opus 5.5 | ABGENOMMEN (04.11.2026 08:47, Stand `11ddc02`, App-Version 04.11.2026 08:06, 227 Tests) |
+| W8 | 7c – Prüflisten, Ablöse-Anleitung, Endlieferung (inkl. 7c-2 ⓘ, 7c-3 Sommer, 7c-4 Gürtelreiter, README) | Opus 5.5 | ABGENOMMEN (04.11.2026 08:47, Stand `11ddc02`) |
+| **W8** | **Gesamtprojekt** | – | **ABGESCHLOSSEN – Gesamtabnahme durch den Betreiber am 04.11.2026 08:47, Stand `11ddc02`, App-Version 04.11.2026 08:06** |
+
+## 4b – Gemeinsame Tipps und Boxeinstieg (Umsetzung)
+
+- **B1 Tipps/Wissenswertes**: dieselbe Anzeige wie beim Kickboxen (Ladebildschirm, Übungshinweise), nach Hauptsport gefiltert. Kickbox-Tipps tragen `k`, Box-Tipps (9) und Box-Fakten (7) `b` (Quellen Olympedia/Wikipedia in den Fakten); Box-Tipps zeigen „Hinweis aus dem Training – im Zweifel mit deinem Trainer abstimmen“ (Trainerprüfung empfohlen).
+- **B2 Kleidung**: blau (links)/rot (rechts) mit weißer Gürtellinie auch im Ladebildschirm und im Onboarding, wenn Hauptsport Boxen.
+- **B3 Ratgeber/Inhalte**: `src/app/34b-guide-box.js` – Themen Handschuhe & Bandagen, Sandsack, Amateurboxen-Geschichte (neutral, mit Quellen), Regeln & Links (DBV-WKB, Stand 01.09.2026, nur verlinkt); Kickbox-/WAKO-Themen (Schienbein, Kampfrichter, Disziplinen, Turniertag, Handschuhe) erscheinen für Boxer nicht, allgemeine Themen bleiben; Materialpflege ohne Schienbeinschutz; Packliste Boxen aus der WKB abgeleitet (eigene Punkte weiter möglich); Tour-Einleitung, Grundlagen-Hinweis und Teilen-Text DE/EN je Sportart; Bandagenvideo des Vereins bleibt für beide Sportarten.
+- **B4 Einstieg und Freigabe**: Onboarding fragt zuerst die Sportart (nur wenn mehr als eine sichtbar), Boxer überspringen die Kickbox-Disziplinfrage; Technik-Test mit Boxbeschreibung (Jab, Cross, Haken, Uppercut, Deckung, Beinarbeit) und reiner Technikbewertung für die andere Sportart ohne Wiederholung des Fitnesstests (`techBy` je Sportart, Verlaufsansicht zeigt weiter den letzten vollständigen Test); Boxen `visible: true`, kein Vorschauhinweis mehr (nur Hinweis „Boxeinheit nach DBV-Regeln“ mit Regel-Link).
+- **Grenzen**: Skizzen für Meiden/Körperhaken noch nicht vorhanden; Boxtipps sind Erinnerungen an bekannte Grundlagen und nicht trainergeprüft; Flexibilitätstest-Beschreibung für Boxer neutraler formuliert (Beinschwung statt Sidekick-Höhe).
+
+## Entscheidungen
+
+- Projektname „Ringzeit Dev“, frische Entwicklungsdaten, kein Altimport (Gesamtauftrag 6A).
+- 03.11.2026, Schritt 0: Dev-App läuft unter `/ringzeit-dev/`. Daten nur lokal auf dem Gerät; Cloud-/Claude-Host-Speicherung abgeschaltet (`CLOUD_SYNC = false`).
+- 03.11.2026, Schritt 0: Sicherungen der stabilen App werden in der Dev-App abgelehnt (Durchsetzung „kein Altimport“); eigene Dev-Sicherungen lassen sich speichern und zurückladen.
+- Kontingent: Wochenlimit setzt dienstags 04:00 zurück.
+- 03.11.2026, Schritt 1: Ordnerstruktur `core/`, `catalog/`, `sports/`, `app/` vom Betreiber als nachvollziehbar bestätigt. Schritt 2 als ein Umbau mit einer Abnahme (2.1–2.3 nur interne Zwischenstände mit Prüfung), weil es eine Entwicklungsversion ist und Rückfallmechanismen vorhanden sind. Übergang über `RZ`-Naht empfohlen (Verträge: `architecture.md` Abschnitt 6).
+- 03.11.2026, Schritt 1: Satzpause, die beim Vor-/Zurückblättern verworfen wird, bleibt in Schritt 2 unverändert; mögliche Korrektur in 2-B (umgesetzt, siehe unten).
+- 03.11.2026, Schritt 2: `RT`, `okEx`/`pickEx` bleiben vorerst in `app/08-plan.js` (mit Planlogik bzw. Profilgrenzen verwoben); Umzug, wenn 3-U/4a sie ohnehin anpassen.
+- 03.11.2026, 2-B (Betreiber: „Android, Deutsch, mehr weiß ich nicht“; übrige Vorschläge unwidersprochen übernommen): Wiederaufnahme mit Dialog (immer, bei Stand älter als 24 h mit Zusatzzeile), Timer pausiert, nichts wird automatisch verbucht; paginierte Satzpause bleibt erhalten, wenn man zur selben Übung zurückkommt; Nackenübung überall „Isometrische Nackenkräftigung – Halteübung“, Dosierung unverändert 4 × 10 s (Text an den Timer angepasst, keine Mehrbelastung – der Full-Contact-Text „15 s, 2 Durchgänge“ entfällt).
+- 03.11.2026, 3-Q (Betreiber): E1 Sportart je Einheit = Hauptsport aus Inbetriebnahme, je Einheit umstellbar (eigene und Verein); E2 Wochenstruktur bleibt, Inhalt aus gewählter Sportart; E3 Turniere/Prüfungen mit Sportart, Turniere jeder Sportart steuern die Belastungsphasen, Gürtelprüfung nur ihr Sport; E4 keine „sonstigen Aktivitäten“, dafür „Freier Lauf“ (Minuten, km, Anstrengung); E5 Dauer und Anstrengung Pflicht, keine Vorauswahl; E6 jede Woche startet mit fester Vorlage, Nicht-Begonnenes verfällt, Ergebnisse steuern Umfang/Intensität auch unbegonnener Einheiten der laufenden Woche, nicht die Tage; E7 Mittelweg: Fitnesstest löst Level aus, Technikteil je Sportart, Level je Sportart, Wettkampfklasse frei wählbar (FC/K1-Fitnesssperre entfällt). Details: `docs/data-load-concept.md`.
+- 03.11.2026, 3-Q-Sichtung: Schutzregeln (Art-Tausch bei KO/Vereins-Sparring/stressiger Woche/Ramadan) bleiben; A1–A4, A8, A9, A11 wie vorgeschlagen; A5 ein Satz = erst links, dann rechts; A6 Nackenprogression bleibt, Text „je Richtung“ + Skizze mit vier Richtungen; A7 Kick-Halten-Timer auf ca. 4 Min.; A10 explosiv bleibt explosiv, langsam bleibt langsam; A12 Satzzahl gilt (3 × 4 Sprints).
+- 03.11.2026, Schritt 1: Vergleichsbasis um vier Profile (Schulter/Rücken, wenig Zeit, 5 Tage, Gürtelprüfung) und zwei Abläufe „Navigieren während des Trainings und Fortsetzen“ erweitert.
+
+## Prüfungen
+
+Schritt 0 (03.11.2026, automatisch, nicht auf echten Geräten):
+- `node --test tests/training.test.mjs`: 105/105 bestanden (vor und nach der Änderung).
+- `node tests/isolation.e2e.mjs` gegen die stabile App `ff7a7d8` in Chromium auf gemeinsamer Origin (localhost): 12/12 bestanden – getrennte Schlüssel, Caches, Service Worker und Manifest; Cloud bleibt aus; eigene Sicherung hin und zurück; stabile Sicherung abgelehnt; Reset und Update der Dev-App lassen stabile Daten und Caches unberührt; Offline-Neustart der Dev-App.
+- Beobachtet: ein Update der *stabilen* App löscht den Dev-Cache (nicht die Dev-Daten); siehe `architecture.md`.
+
+Schritt 1 (03.11.2026, automatisch):
+- `node tests/baseline.mjs`: Vergleichsbasis Kickboxen aufgenommen (12 Profile × ohne/mit Historie × 9 Einheiten + 2 Navigationsabläufe), reproduziert, Empfindlichkeit gegen geänderte Dosierung, Rundenregel und nicht pausierenden Timer geprüft.
+- Bestandstests unverändert 105/105.
+
+Schritt 2 (03.11.2026, automatisch; Zwischenstände lokal geprüft):
+- 2.1 Aufteilung: zusammengesetztes `build/ringzeit.html` byte-gleich zur früheren `src/ringzeit.html`; komprimierte `index.html` bis auf den Versionsstempel byte-gleich zur veröffentlichten; Bestandstests 105/105; Vergleichsbasis identisch; Isolationstest 12/12.
+- 2.2 Kerndienste (`core/format`, `dates`, `random`, `storage`, `fmt`/`fmtS` zusammengeführt): Bestandstests 105/105; neue Modultests 9/9 (u. a. Speicher voll → einmal verdichten, Cloud aus, Cloud-Spiegel mit Testhost, Modulgrenzen); Vergleichsbasis identisch; Isolationstest 12/12.
+- 2.3 Katalog und Kickboxmodul (`catalog/exercises.js`, `sports/kickboxing/*`, `sports/index.js`, `planContext`): Bestandstests 105/105; Modultests 9/9; Vergleichsbasis identisch (24 Profilläufe × 9 Einheiten + 2 Navigationsabläufe); Isolationstest 12/12.
+- Browser-Rauchtest der komprimierten App (Chromium, 390 × 844): Start ohne Konsolenfehler, Speicher lokal unter `ringzeit-dev.v1`, Einheit starten, Aufwärm-Timer läuft.
+- Nicht geprüft: echte Geräte (iOS/Android), Ton/Sprachausgabe, Bildschirmsperre.
+
+2-B (03.11.2026, automatisch; nicht auf echten Geräten):
+- `node --test tests/training.test.mjs tests/core.test.mjs`: 122/122 (113 + 9; neu: Wiederaufnahme ×4, Satzpause beim Blättern, Nackenübung, Ansagen ×2).
+- `node tests/baseline.mjs`: unverändert identisch (24 Profilläufe × 9 Einheiten, 2 Abläufe). Absichtlich geändert, aber von der Vergleichsbasis nicht erfasst: Texte/Name der Nackenübung, Wiederaufnahme, Satzpause beim Blättern, Ansage-Wiederholung – dafür eigene Tests.
+- `node tests/isolation.e2e.mjs ../ringzeit`: 12/12.
+- Chromium (komprimierte App, 390 × 844): Einheit starten → Seite neu laden → Dialog „Training fortsetzen?“ (Dienstag, 3.11. … Schritt 1 von 15) → „Fortsetzen“ → Ablauf an derselben Stelle, Timer auf Pause; keine Konsolenfehler.
+- Android-Sprachausgabe: **nicht reproduziert** (kein Gerät, keine Gerätedaten). Es wurden nur begründete Absicherungen eingebaut, kein Fehler als „behoben“ gemeldet: (1) Sprachcode `de_DE` → `de-DE` (Android meldet Unterstriche; manche Engines wählen sonst die Standardstimme), (2) Stimmenliste beim Start einmal anfordern (Chrome lädt sie verzögert), (3) bei Fehlern (`synthesis-failed`, `language-unavailable` …) bis zu zwei Wiederholungen: nächstbeste Stimme, dann nur Sprache, (4) letzter Fehler erscheint unter Profil → App & Daten → „Stimme der Ansagen“ zur Diagnose. Unverändert: Offline-Stimmen bevorzugt, Online-Stimmen abgewertet, kein Cloud-TTS.
+
+Manuelle Abnahmen:
+- 03.11.2026: 3-D vom Betreiber abgenommen („Ich nehme 3d hiermit ab“; drei Prüfpunkte bewusst nicht von Hand) – Stand `main` @ `e7fb557`, App-Version 03.11.2026 13:50. Korrektur nach Test: bei „Freier Lauf“ war „Intervalle“ mitmarkiert (Fehler aus 3-U), behoben und getestet. **Wochenpaket 3/8 abgeschlossen.**
+- 03.11.2026: 2-B vom Betreiber auf dem Handy (App-Version 03.11.2026 08:34) getestet und abgenommen – Stand `main` @ `a7e29d1` (inkl. Entfernen von `docs/todo-bedienung-akku.md` und `src/core/text.txt`). **Wochenpaket 2/8 abgeschlossen.**
+- 03.11.2026: Schritt 1 vom Betreiber gesichtet und abgenommen – Stand `main` @ `e708335` (`docs/architecture.md`, Vergleichsbasis). Bestätigt: Ordnerstruktur, Übergang über `RZ`, Schritt 2 als ein Umbau. **Wochenpaket 1/8 abgeschlossen.**
+- 03.11.2026: Schritt 0 vom Betreiber manuell getestet und abgenommen („Alle Tests erfolgreich“) – Stand `main` @ `b8b6443`, App-Version 03.11.2026 04:47, Testliste: Dev-Version/Ladebild, frisches Profil, stabile Daten unverändert, eigene installierte App, Sicherung hin/zurück und Ablehnung stabiler Sicherung, Neu starten nur Dev, Offline-Start.
+
+- 03.11.2026, 3-U (Betreiber): Vorauswahlen und vorbelegte Dauer bleiben wie bisher (E5 geändert); Sportwahl wird sichtbar (zurzeit nur Kickboxen); keine interne Testansicht nötig (Dev-App). Umsetzung und Abweichungen: `data-load-concept.md` Abschnitt 9. Schwelle der Bereichsregel 0,35 statt 0,4 (sonst löst hartes Sparring nie aus).
+- 03.11.2026, 4a-Q (Betreiber): B1 Regeln in der App nur verlinkt (WKB-PDF), keine Unzen/Gewichtstabellen · B2 Partnertage = Aufgabensparring, höchstens eine Runde „Freies Touch-Sparring“ (30–40 % Schlaghärte, Partner + Schutz, ab Fortgeschritten, Hinweis „nur nach Absprache mit Trainer“) · B3 keine Abhärtung, dafür Handgelenk & Griff; mehr Beinarbeit und Meiden mit dem Kopf · B4 über 40: 3 × 2 Min., „kein offizielles DBV-Format“. Details `docs/boxing-concept.md`.
+- 03.11.2026, 3-D (Betreiber): A10 nach Vorschlag (in explosiven Blöcken ohne Gewichte nur Schnellkraftübungen mit 3–5 Wdh.; „langsam (3 s ab)“ nur in langsamen Blöcken). Umsetzung und Abweichungen: `docs/data-load-concept.md` §10 (stabile Text-IDs mit Migration in `hydrate`, `core/prescription.js`, A1–A12 und neu A13 Schienbein-Checks). Vergleichsbasis neu aufgezeichnet.
+
+## 4a-U – Boxpläne (Umsetzung)
+
+- **U1 Regeln** (`src/sports/boxing/rules.js`): DBV-Altersklasse nach Kalenderjahr (U13/U15/U17/U19/Erwachsene, §46), Rundenlänge je Klasse (§47, immer 3 Runden, 1 min Pause), Trainingsstandard ohne Turnier (3 × 3 min; jüngere Klassen mit der Rundenlänge ihrer Klasse; über 40: 3 × 2 min, „kein offizielles DBV-Format“), K.o.-Sperre 30 Tage (§89, Hinweis auf Steigerung und Anhang 5), Link zur WKB. Ohne Geburtsjahr gilt „Erwachsene“ (Betreiber, 03.11.2026). Boxen ist als `visible: false, preview: true` registriert.
+- **U2 Technik** (`src/sports/boxing/techniques.js`, `tasks.js`): nur Schläge und gemeinsame Bewegungen aus dem Bestand (keine neuen Skizzen; Skizzen für Meiden/Körperhaken kommen mit 4b), Kombinationen je Level, Konterbausteine mit vorgegebener Gegneraktion, neun Boxaufgaben.
+- **U3 Planer** (`src/app/08-plan.js`): `buildSession` setzt die Sportart der Einheit (`buildSport`); `discOf()` liefert für Boxen „box“, damit keine Kickbox-Disziplinregel greift. Neue Rundenarten „Beinarbeit-Runde“ und „Meiden & Kontern“ (immer mit Gegneraktion, A/B-Rahmen wie bei Partnerrunden); höherer Anteil an Beinarbeit und Meiden. Block „Handgelenk & Griff“ (6 min, fest) statt Abhärtung: Handtuch und Faustschluss immer, dazu eine Übung nach Alter, Level, Einschränkung und Ausrüstung (Faust-Stütz, Faust-Liegestütze, Handgelenk beugen/strecken, Fingerstrecken, Nackenhalten – nie doppelt zur Kraft-Übung); Kinder nur Handtuch und Griff.
+- **U4 Partner**: Aufgabensparring; „Freies Touch-Sparring“ höchstens einmal je Einheit, nicht für Anfänger, Kinder, in Tapering-/Erholungswochen und nicht bei K.o.-Sperre, mit Hinweis „nur nach Absprache mit deinem Trainer und unter Aufsicht“. Kinder sparren nicht mit Partner. Gegneraktionen nur Schläge.
+- **U5 Tests**: Kickbox-Baseline unverändert (24 Profile × 9 Einheiten, 2 Abläufe); neue Tests für Regeln, Daten, Formate, Handgelenkblock, Touch-Sparring, K.o.-Sperre (Boxen 30 Tage, Kickboxen 4 Wochen), Wechsel Boxen ↔ Kickboxen mit gemeinsamer Belastung. Bestehende Tests, die „boxing“ als unfertige Sportart benutzten, nutzen jetzt „taekwondo“.
+- **Entwicklungsvorschau**: Boxen erscheint in der Sportwahl der Einheit und (auf Wunsch des Betreibers, 03.11.2026 16:13) als Hauptsport im Profil, jeweils nur als „Boxen“ beschriftet (die Vorschau ist in der Einheit durch Hinweis und Regel-Link gekennzeichnet); in der Einheit mit Hinweis und Link zum Regelwerk; nicht im normalen Menü und nicht im Onboarding. Mit Hauptsport Boxen entfallen im Profil Disziplin und Fokus, Kopfzeile und Zusammenfassung nennen „Boxen“, Kickbox-Regelmarken werden nicht gezeigt, der Wochenplan nutzt das Boxmuster.
+- **Korrektur nach erstem Test (03.11.2026 16:11)**: In Boxeinheiten tauchte „Kick-Intervalle“ (Kraft/Kondition) auf. Alle Katalogübungen, deren Text Kicks nennt, sind jetzt für Boxen ausgeschlossen (`BOX_NO_EX`: Kick-Intervalle, Einbeinstand mit Kick-Hold, Zeitlupen-Kicks, Kick-Halten, Adduktoren & Spagat, Woodchopper, Copenhagen Plank); ein Test prüft, dass jede Katalogübung mit „Kick“ im Text dort steht.
+- **Meiden-Runde ohne Gegneraussage** (Betreiber, 03.11.2026 16:24): Die Runde „Meiden & Kontern“ nennt nur die Abwehr und den Konter, nicht die Aktion des Gegners (bisher A/B-Rahmen, wirkte wie eine Partnerübung). Beschriftung in der Auswahl nur noch „Boxen“ (Betreiber, 16:28). Echte Gegneraktionen gibt es weiter nur in Partnerrunden. Dehnen/Halteübungen für die Beine bleiben unverändert (Betreiber).
+- **Boxkleidung der Startseiten-Figuren** (Betreiber, 03.11.2026 16:30): Ist die gezeigte Einheit auf Boxen gestellt (Auswahl in der Einheit, sonst gebaute Einheit, sonst Hauptsport), tragen die Figuren Shirt und Hose in einer Farbe mit weißer Gürtellinie: links blau, rechts rot; die Szene zeigt dann die Boxpose (Jab gegen Meiden). Bei Kickboxen unverändert. Vorgezogen aus 4b („Kleidung als Parameter“, `docs/architecture.md`); die Sommer-Badehose wird bei Boxkleidung nicht gezeichnet.
+- **Bekannte Grenzen**: Das Onboarding fragt weiter nur die Kickbox-Disziplin ab (Hauptsport Boxen nur im Profil). Wettkämpfe der Sportart Boxen nutzen das DBV-Format. Keine Skizzen für Meiden/Körperhaken (4b). Keine Gewichtsklassen/Handschuhgewichte (verlinkt). Eigene Kombinationen aus dem Verein (`myCombos`) gelten nur für Kickboxen.
+
+## Offen
+
+- Cacheproblem der stabilen App (siehe oben) – nur per eigenem Auftrag an der stabilen App behebbar.
+- `docs/rules-sources.md` angelegt (3-Q): Trainingsquellen T1/T2 für das Belastungsmodell; Verbandsregeln folgen in 4a-Q/5, WAKO-Fassung weiter unbelegt.
+- 3-U: Technik-Test für eine neue Sportart (nur Technikteil) und die Frage nach dem Hauptsport in der Inbetriebnahme haben noch keine Oberfläche; beides erst sinnvoll, wenn eine zweite Sportart sichtbar ist (Kern `levelFor` ist fertig und getestet).
+- Android-Sprachausgabe: Ursache nicht belegt. Für gezielte Behebung werden Gerät, Android-Version, Browser/installierte App und die Fehlermeldung unter „Stimme der Ansagen“ benötigt.
+- Android-Tonprüfung aus der früheren `docs/todo-bedienung-akku.md` (entfernt) steht jetzt hier.
+
+## 6a – Gürtelbereich und Dobok (Umsetzung)
+
+- **Sichtbarkeit**: Taekwondo steht ab 6a ohne Zusatz „Vorschau“ in allen Sportauswahlen. Einheiten bestehen vorerst nur aus sportneutralen Blöcken (Kraft, Kondition, Beweglichkeit, Abhärtung) mit Hinweis „Taekwondo-Technik und Partnerübungen folgen mit den WT- und ITF-Plänen“; Technik, Formate und Regelprofile kommen mit 6b (WT) und 6c (ITF).
+- **Style** (WT / DTU oder ITF-D) wird im Profil (Ziele → Taekwondo-Grad) und im Onboarding gewählt, nicht je Einheit. Das Onboarding fragt bei Taekwondo Style und aktuellen Grad statt der Kickbox-Disziplin.
+- **Grade**: WT 10.–1. Kup, 1. Dan, unter 15 Jahren 1. Poom statt Dan; ITF-D 10.–1. Kup und 1. Dan; kein höherer Dan, kein Minikup. Grad je Style getrennt, **kein Übertrag**. Ein Grad ändert sich nur durch Ersteintrag, manuelle Korrektur oder eine bestandene Prüfung, die der Betreiber bestätigt („Grad übernehmen?“ – erst nach Ja); Einheiten, Abzeichen und Fitnesstest ändern ihn nie.
+- **Prüfung**: Datum + Zielgrad, Ergebnis bestanden/nicht bestanden, Verlauf (Datum, Style, Grad, Art, Ergebnis). Übersicht je Grad „laut PO“ mit Prüfungsteilen, Formname (nur Name, kein Inhalt; WT: übliche Taegeuk-Folge mit Hinweis, PO nennt nur die Nummer) und Mindestwartezeit als Hinweis (keine Sperre). Teile ohne App-Inhalt: „im Verein vorbereiten“. Kein Bruchtest für unter 15 (WT).
+- **Dobok-Figuren**: Ist Taekwondo gezeigt (Einheit, sonst Hauptsport; Ladebild, Onboarding, Startseite), tragen die Figuren einen weißen Dobok mit V-Kragen; der Gürtel entspricht dem Grad des gewählten Styles (kein Grad = weißer Standardgürtel; Poom rot/schwarz geteilt). Badehose/Saisonschmuck ersetzen den Dobok nicht, keine Logos. Gürtelfarben ITF-D = DTU (Angabe des Betreibers 03.11.2026); die zweite Farbe läuft als Längsstreifen mittig über den ganzen Gürtel (Betreiber, 03.11.2026 19:02), auch am Farbfeld im Profil und an den Gürtelenden.
+- **Technik-Test** Taekwondo: eigene Beschreibung (nur Technik), Stufe je Style.
+- **Sicherung**: `profile.tkd` (Style, Grade, Verlauf, Prüfungen) gehört zum Profil und damit zur Sicherung; `migrate` normalisiert.
+- **Code**: `src/sports/taekwondo/{index,grades}.js`, `src/app/36-tkd-grade.js`; Tests 186 (neu: Grade/Gürtel/Wartezeiten/Formen, Normalisierung, Prüfungsablauf mit Bestätigung, Style-Trennung, Panel, Taekwondo-Einheit, Dobok-/Gürtelfarben, Onboarding, Technik-Test).
+- **Nachbesserung nach erster Sichtung (Betreiber, 03.11.2026 18:56)**: (1) Taekwondo-Einheiten enthielten noch Kickbox-Übungen (Schattenboxen, Kick-Intervalle, Speed-Runden, Kick-Halten, Zeitlupen-Kicks, Beinarbeit „in Kampfstellung“ u. a.) – jetzt per Ausschlussliste `TKDT.NO_EX` (13 Übungen) aus allen Taekwondo-Einheiten entfernt, bis 6b/6c eigene Technikblöcke bringen; neutrale Übungen und die Abhärtung bleiben. (2) Der **Stil (WT/ITF-D)** ist wieder beim Hauptsport einstellbar (Profil → Training), zusätzlich im Gradbereich. (3) **Umschalter „Technik-Namen: Koreanisch / App-Sprache“** (Standard Koreanisch, `profile.tkd.names`, Sicherung/Migration) ist eingebaut; er wirkt auf die Technik-Namen, sobald die WT-/ITF-Pläne (6b/6c) Techniken enthalten, die Sprachausgabe nennt sie immer in der App-Sprache (T4/T5). (3a) **Einheitenart bei Taekwondo** (Betreiber 19:12: „Schattenboxen“ mit Jab/Cross/High Kick trotz Namenseinstellung): die Auswahl in „Einheit anpassen“ bot Technik, Kampf und Partner auch für Taekwondo an und baute damit Kickbox-Kombinationen. Jetzt nur Kraft, Kondition, Mobility; ein Wechsel auf Taekwondo setzt eine unpassende Art auf Kraft, und der Planer wandelt T/C/P bei Taekwondo in Kraft um. Die Kickbox-Technikblöcke bekommen keine koreanischen Namen – die Namen kommen mit den eigenen Technikblöcken (6b/6c). (3b) **Onboarding-Bild** (Betreiber 19:13): bei Taekwondo wurde das Bild auf Höhe 0 zusammengedrückt (fehlte), bei Boxen zeigte es die Kick-Szene – jetzt feste Höhe (`flex-shrink:0`), Boxen zeigt die Boxszene (blau/rot), Taekwondo die Dobok-Figuren, Kickboxen unverändert. (4) **Dobok deutlicher**: reinweiß mit Naht- und Kragenlinien, Weiß-Ärmel mit dunklem Rand, Kopf und Fäuste in Hautton, keine Handschuhe bei Taekwondo-Figuren.
+- **Bekannte Grenzen**: keine Taekwondo-Techniken/Drills/Regelprofile (6b/6c); Tipps/Fakten nur allgemein (6d); Abhärtung: neue Bereiche kamen mit 6b; das Onboarding-Bild bei Boxen ist angepasst (3b).
+
+## 6b – WT-Pläne (Umsetzung)
+
+Entscheidungen 1–10 (Vorschläge des Auftragnehmers, vom Betreiber unverändert übernommen):
+
+1. **Geltung**: 6b nur für WT / DTU. ITF-D bleibt bei Kraft, Kondition, Beweglichkeit (S/K/M) bis 6c; die Typauswahl blendet T/C/P dort aus, der Planer macht daraus S.
+2. **Freischaltung** (`src/sports/taekwondo/techniques.js`, `allowed(id, ctx)`): Grundtechniken (Ap-chagi, Dollyeo-chagi Rumpf, Yeop-chagi, Mireo-chagi, Jireugi Rumpf, Schritte) von Anfang an; ab Level 1: Dollyeo Kopf, Nae-chagi, Ban-dal, Drehschritt; Dwi-chagi nicht unter 19; Dwi-huryeo-chagi ab Level 1 und höchstens 6. Kup (oder ohne Grad); Sprungtritte ab Level 1 und höchstens 4. Kup; Kinder unter 13 nur Grundtechniken; Knie-/Sprunggelenkbeschwerden entfernen die riskanten; ohne Grad zählt nur das Level.
+3. **Technik (T)**: Tritttechnik mit Kombinationen aus 2–4 Techniken (Empfehlung, keine Regel); die ersten Runden ohne Kopftritte.
+4. **Technik & Kondition (C)**: Tritt-Intervalle, Schattentritte, Seil, Pratzenrunden.
+5. **Sparring (P)**: Pratzen, Schrittsparring, Situationssparring, Konter, freies technisches Sparring (nur Touch, höchstens 1 Runde, 50 %, Schutzausrüstung, mit Trainer, ab Level 1, nur mit Partner); Kinder nur Pratzen und Schrittsparring.
+6. **Namen**: Technikname Koreanisch (WT-Umschrift) als Vorgabe, umschaltbar auf App-Sprache (Profil → Hauptsport und Taekwondo-Grad); Ansagen immer in App-Sprache; allgemeine Übungen bleiben DE/EN.
+7. **Abhärtung**: pro Einheit ein Handbereich (Faust/Knöchel, Handkante, Finger) und ein Beinbereich (Schienbein, Fuß), neue Übungen `tkEdge`, `tkTips`, `tkFoot`, `tkBall` (nur Taekwondo); Kinder/Jugend nur sanfte Solo-Varianten; Schläge mit Handschuh/Pratzen („Geraden“) gehören nicht dazu.
+8. **WT-Format** (`rules.js`): 3 × 2 min / 1 min Pause (Jugend B–D und Masters 3 × 1:30), Altersklassen nach WOZ 4.1; K.o.-/Kopftreffer-Sperre nach Alter 30/40/50 Tage (WOZ 17.3). ITF-D weiter 30.
+9. **Wochenmuster**: wie beim Boxen (T zuerst, dann S, P, K, C, M).
+10. **Tests** inkl. Beispiele (Kind 10 J./8. Kup; 16 J./4. Kup).
+
+Weitere Änderungen:
+- **Fehlerbehebung Mobility**: gewählte Ausrüstung „Widerstandsbänder“ wird in Mobility-Einheiten jeder Sportart bevorzugt (Aufwärmen und Mobility-Block). Dadurch änderte sich die Baseline Kickboxen nur bei Mobility-Einheiten zuhause (zwei Profile); die Baseline wurde neu aufgenommen, sonst identisch.
+- **Sichtung 03.11.2026 20:37**: Unter Turniere wurde bei Eintragssportart Boxen noch „Gürtelprüfung“ angeboten – Boxen hat keine Gürtelprüfung, der Umschalter ist dort ausgeblendet und der Eintrag immer „Turnier“ (Tests 197).
+- **Sichtung 03.11.2026 20:42**: Die Fußzeile der Heute-Seite verlinkte immer die WAKO. Jetzt je Hauptsport: Kickboxen WAKO Deutschland, Boxen DBV-Wettkampfbestimmungen (WKB), Taekwondo WT die DTU-Wettkampfordnung, ITF-D die ITF-D-Wettkampfordnung (Quellen R2, R3b, R4b); der Hinweis „Boxeinheit nach DBV-Regeln. Regelwerk (DBV-WKB)“ in der Boxeinheit entfällt deshalb; der Rechtstext nennt allgemein „Regelwerke deines Verbands“ (Tests 198).
+- **Sichtung 03.11.2026 20:57**: Taekwondo-Tritte tragen jetzt V/H (vorderes/hinteres Bein) wie beim Kickboxen: Mireo-chagi vorderes Bein; Dwi-chagi, Dwi-huryeo, Ban-dal und Sprungtritte hinteres Bein; bei den übrigen wechselt die Seite in der Folge. Eigene Legende. Handtechniken (Jireugi) sind bei WT bewusst selten (unter 8 % der Techniken, WT wertet nur Faust zum Rumpf); die volle Handtechnik kommt mit ITF-D in 6c (Tests 199).
+- **Sichtung 03.11.2026 20:59**: Neues Element „Stellungswechsel (kleiner Hüpfer)“, koreanisch Bal-bakkum (Quelle: nbtkda.com/footwork, US-Verband; nicht durch WT/DTU belegt), ab Level 1, in Kombis und Fußarbeit. Ein echter Sprung ohne Bodenkontakt ist in der Quelle nicht beschrieben; das Element bleibt deshalb ein flacher Wechsel mit kleinem Hüpfer.
+- **Sichtung 03.11.2026 21:11**: Serien (schnelle Tritte ohne Absetzen) erscheinen als ein gestrichelt umrandeter Chip mit Pfeilen und festem V/H je Tritt: Dollyeo V → H, Ban-dal V → Dollyeo V, Yeop V → Dwi H → Bal-bakkum, Ap V → Dollyeo H, Dollyeo H → V. Ab Level 1, nie für Kinder, Freischaltung = strengste Grenze der Teile (z. B. kein Dwi-chagi unter 19, nicht mit Knie-/Sprunggelenkbeschwerden). Die Ansage nennt die Teile am Stück mit „vorne/hinten“. Daten `SERIES` in `techniques.js` (Tests 200).
+- **Sichtung 03.11.2026 21:37**: Kickketten wachsen mit dem Level: Anfänger höchstens 3 Tritte, Fortgeschritten bevorzugt ab 3, Wettkampf bevorzugt ab 4 und bis 6 Tritte (Serien zählen mit ihren Teilen); Kinder höchstens 3 Elemente. Verband/Disziplin je Einheit: laut Betreiber mit 6c (Tests 201).
+- Die Boxen-Legende („V vorne / H hinten, Schläge … Kopf“) erscheint nicht mehr in Taekwondo-Einheiten.
+- **Code**: neu `src/sports/taekwondo/{techniques,rules,all}.js`; geändert `08-plan.js`, `13-training-flow.js`, `25-announcer.js`, `36-tkd-grade.js`, `15-player.js`, `38-events.js`, `06-storage.js`, `src/core/prescription.js`; Tests 201 (neu: Freischaltung, Einheiten je Profil, Namensumschalter, Sparringaufgaben, Format/Sperre, ITF, Abhärtung, Bänder).
+- **Bekannte Grenzen**: WT Art. 14 (verbotene Handlungen) in der Fassung ab 01.06.2026 nicht gesehen (R3a bleibt); keine Gewichtsklassen, keine Wertungstabellen.
+
+## 6c – ITF-D-Pläne (Umsetzung)
+
+Entscheidungen 1–11 (Vorschläge des Auftragnehmers, vom Betreiber am 03.11.2026 21:40 unverändert übernommen):
+
+1. **Typen**: ITF-D bekommt Technik, Technik & Kondition, Sparring, Kraft, Kondition, Mobility und dasselbe Wochenmuster wie WT; eigene Inhalte in `src/sports/taekwondo/itf.js`, keine umbenannten WT- oder Kickbox-Pläne.
+2. **Namen**: ITF-Schreibweise nur für Begriffe der ITF-D-PO und der ITF-Wettkampfregeln (Ap Chagi, Dollyo Chagi, Yop Chagi, Dwit Chagi, Bandae Dollyo Chagi, Twimyo Dollyo/Yop Chagi, Ap Joomuk Jirugi, Sambo-/Ibo-/Ilbo-/Jayu-Matsogi, Hosinsul). Axttritt, Sicheltritt, Schiebetritt, Faustrücken-Schlag, Schritte und Stellungswechsel stehen nur auf Deutsch/Englisch (D4: keine erfundenen koreanischen Begriffe). Umschalter Koreanisch/App-Sprache gilt auch hier.
+3. **Freischaltung** (`ITFT.allowed`): Grundtritte und Fauststoß von Anfang an; ab Level 1 Kopftritte, Faustrücken, Axt-, Sichel-, Drehschritt; Rückwärts- und Drehhakentritt ab Level 1 und höchstens 4. Kup, nicht unter 19; Sprungtritte (Twimyo) ab Level 1 und höchstens 2. Kup (Kyok-Pa-Liste, R4a), für Jugendliche erlaubt, für Kinder unter 13 nicht; Knie-/Sprunggelenkbeschwerden entfernen die riskanten; ohne Grad zählt nur das Level. Der Kup stammt aus dem ITF-Grad der Einheit, nicht aus dem WT-Grad.
+4. **Gewichtung**: Hand-Fuß-Verbindungen, Hand ungefähr 20–50 % der Elemente (Test), Ketten wachsen mit dem Level wie bei WT; Belastungsbereiche wie im Konzept (Beine 0,40, Arme 0,25, Rumpf 0,15, Ausdauer 0,20).
+5. **Partner**: Pratze Hand-Fuß, Sambo-Matsogi (ab 12 J.), Ibo-Matsogi (ab 12 J., höchstens 5. Kup), Ilbo-Matsogi (ab 12 J., höchstens 3. Kup), Jayu Matsogi (Leichtkontakt, ab 12 J., Level 1, Schutzausrüstung, höchstens eine Runde, mit Trainer); Kinder unter 12 nur Pratze und Semikontakt-Drill (Punkt-Stopp) (T11). Ohne eingetragenen Grad brauchen die Kup-abhängigen Drills Level 1.
+6. **Tul und Selbstverteidigung**: Tul-Namen nur als Liste in der Prüfungsvorbereitung (6a); eine langsame Hosinsul-Aufgabe ab Level 1 und ab 12 Jahren mit dem Hinweis „im Verein vertiefen“.
+7. **Format** (`itfFormat`): Erwachsene und ab 14 J. 2 × 2 min / 1 min Pause, 10–13 J. 2 × 1:30 / 45 s, 8–9 J. 2 × 1 min / 30 s, unter 8 kein Format (R4c, Fassung 22.03.2026); Altersklassen D/C/B/A-Jugend nach WO 2.5; K.o.-Sperre weiter 30 Tage.
+8. **Verband/Disziplin pro Einheit** („Einheit anpassen“): Zeile „Verband (nur diese Einheit)“ bei Taekwondo (WT / DTU oder ITF-D) und „Disziplin (nur diese Einheit)“ bei Kickboxen (Full Contact und K1 nicht unter 15 Jahren); die Einheit speichert `tstyle` bzw. `disc`, das Profil bleibt unverändert; Namen, Technik, Kup, Level und Aufgaben richten sich nach dem Style der Einheit; Neuerstellen und Zurücksetzen behalten ihn.
+9. **Gürtelfarben ITF-D**: unverändert aus 6a (Angabe des Betreibers).
+10. **Tipps/Fakten**: weiter nur die allgemeinen Tipps; Taekwondo-spezifische Tipps und Ratgeber kommen mit 6d (nichts Unbelegtes angezeigt).
+11. **Tests** (206): Freischaltung, ITF-Namen, Einheiten je Profil (Erwachsener 5. Kup, Kind 9 J., Jugendlicher 16 J. 4. Kup, Knie), Partneraufgaben nach Kup/Alter, Format, Einheitenstil/-disziplin, kein Leck nach dem Bauen.
+
+Weitere Änderungen:
+- Der Hinweis „ITF-D-Technik und Partnerübungen folgen mit den ITF-Plänen“ und die Beschränkung auf S/K/M entfallen; Onboarding-Text angepasst.
+- Fehlerbehebung Anzeige: die Altersklasse des Wettkampfformats in der Turnierliste zeigte für WT und Boxen „undefined“ (fehlende Bezeichnungen); jetzt D-/C-/B-/A-Jugend, U13–U19, Erwachsene. WT-Klassen heißen intern `td`/`tc`/`tb`/`ta`/`s`/`v`.
+- `src/sports/taekwondo/itf.js` (neu), `rules.js` (itfFormat), `index.js` (Muster), `08-plan.js`, `13-training-flow.js`, `14-guided-training.js`, `25-announcer.js`, `36-everyday.js`, `36-tkd-grade.js`, `37-training-mode.js`, `38-events.js`, `07-fitness-test.js`, `01-overview-i18n.js`, `src/modules.js`, `src/app/00-imports.js`.
+- **Bekannte Grenzen**: Tul-Ablauf und Hosinsul-Inhalte (nur Namen/Hinweis); die Zuordnung Tul/Partnerform je Kup (D3) ist nicht am Original geprüft; ITF-Tipps, Fakten und Ratgeber folgen mit 6d.
+
+## 6d – Stilbezogene Inhalte (Umsetzung)
+
+Entscheidungen 1–9 (Vorschläge des Auftragnehmers, vom Betreiber am 03.11.2026 unverändert übernommen):
+
+1. **Tipps und Fakten**: neue Markierung `tk` (`true` = beide Stile, `"wt"` / `"itf"` = nur dieser Stil) in `02-tips.js`: 6 gemeinsame, 4 WT- und 4 ITF-Tipps; 2 gemeinsame, 3 WT- und 2 ITF-Fakten mit Quelle. Taekwondo zeigt die allgemeinen Tipps plus `tk` des gewählten Stils; Kickboxen und Boxen zeigen nie `tk`-Einträge (Filter in `10-loader.js`).
+2. **Faktenquellen**: Namensbedeutung und Grade (Wikipedia „Taekwondo“); WT: Gründung 1973, erste WM Seoul, Umbenennung 2017, IOC-Anerkennung 1980, Demonstrationssport 1988/1992, Medaillensport seit 2000 (taekwondonation.com, Olympedia), DTU-Mitgliedschaften (Wikipedia); ITF: 22.03.1966 Seoul, Choi Hong-hi, Sitz Wien seit 1985, ITF-D vertritt sie in Deutschland (Wikipedia). Keine Regelquellen, geprüft am 03.11.2026 per Suche.
+3. **Ratgeber** (`34c-guide-tkd.js`, stilabhängig, aus den Sportmodulen gebaut): Gürtel binden & Dobok, Grade & Prüfung (Wartezeiten, Formen/Tul aus `TKDT.WAIT`/`WT_FORM`/`ITF_TUL`, kein Doppelstand), Begriffe (nur Techniken mit belegtem Namen aus `TKDT.TECH` / `ITFT.TECH`), Geschichte & Verbände (neutral, mit Quellen). Dazu die gemeinsamen Themen (Mythen, Runde, Mentales, Schlaf); ohne Kickbox-Themen (Schienbein, Kampfgericht, Disziplinen, Turniertag, Handschuhe, Anfängerfehler) und ohne Bandagieren.
+4. **Verbandslinks**: Ratgeberseiten können `links` tragen (DTU-Regelwerke, ITF-D PO und WO); sie öffnen außerhalb der App.
+5. **Pflege und Erste Hilfe** für Taekwondo ohne Handschuhe, Bandagen und Thai-Öl; K.o.-Zeile ohne „WAKO-Sperre“. Die Chip-Verknüpfung „Bandagieren“ in der Einheit und die Ratgeberzeile entfallen bei Taekwondo; Kickboxen und Boxen unverändert.
+6. **Packliste** je Stil (`itemsWt`, `itemsItf` mit Hinweis): aus WT-Wettkampfregeln Art. 4 / DTU WOZ 2.4–2.5 und ITF-Turnierregeln / ITF-D WO 5.2.
+7. **Tour, Teilen, Profilhinweis**: eigene Taekwondo-Texte (`tourIntroTkd`, `tourBasicsTkd`, `tourProfTkd`, `shareTextTkd`, `psec.guideTkd`, `guide.hintTkd`); keine WAKO-Formulierung in Taekwondo.
+8. **Sicherung**: der Export enthält das ganze Profil (Stil, Grade, Historie, Prüfungen, Namensart); Stilwechsel verliert nichts (Test).
+9. **Tests** (212): Tipps/Fakten nach Sport × Stil × Sprache, Ratgeber je Stil und Sprache ohne Kickbox-Wörter, Quellenlinks, Wartezeiten/Formen aus den Moduldaten, Packliste je Stil, Tour-/Share-Texte, Stilwechsel, 390-px-Ansicht (von Hand mit Playwright geprüft).
+
+Weitere Änderungen: `02-tips.js`, `10-loader.js`, `34-guide.js`, `34b-guide-box.js`, `34c-guide-tkd.js` (neu), `35-packing.js`, `13-training-flow.js`, `15-player.js`, `18-tour.js`, `31-install-share.js`, `01-overview-i18n.js`, Tests.
+- **Bekannte Grenzen**: Gürtelbinden und Dobok-Pflege sind allgemeine Praxis (Trainerprüfung empfohlen); die Namensbildung 1950er-Jahre ist bewusst ohne genaues Jahr; Tul-/Partnerform je Kup (D3) weiter nicht am Original geprüft.
+
+Nachbesserungen nach der Sichtung:
+- **6d-2** (03.11.2026 22:23): sechs Tipps mit Box-Technik (Haken ×2, Uppercut, Jab, Cross) bzw. „Füße nie kreuzen“ erscheinen bei Taekwondo nicht mehr (Markierung `nt`).
+- **6d-3** (03.11.2026 22:31): Freier Rundentimer folgt dem Hauptsport. Kickboxen unverändert (WAKO, K1 …); Boxen: „Amateur“ (DBV-Format nach Alter) plus Sparring, Pratzen, HIIT, Profi; Taekwondo: „WT-Kampf“ bzw. „ITF-Kampf“ (Format nach Alter aus `wtFormat`/`itfFormat`) plus Sparring, Pratzen, HIIT. Voreinstellung = Kampfformat des Sports; gespeicherte eigene Werte bleiben. Coach-Ansagen nutzen bei Taekwondo und Boxen die Techniknamen der Sportart (vorher Kickbox-Namen). Dateien: `27-free-timer.js`, `38-events.js`, `01-overview-i18n.js`, Tests.
+
+## 7 – Gesamtprüfung (Umsetzung)
+
+Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automatische Gesamtprüfung und Prüfbericht, 7b begrenzte Korrekturen nur freigegebener Befunde, 7c Geräte- und Trainer-Prüfliste, Delta- und Komplett-ZIP, Ablöse-Anleitung (nur Doku), Stopp für die Gesamtabnahme. Android: nicht belegt (kein Gerät). iPhone: installierte App.
+
+- **7a**: `docs/final-check.md` (Belege getrennt nach automatisch, Gerät, fachlich); neue Prüfskripte `tests/final-check.mjs` (Ablauf-Matrix, H1–H9) und `tests/final-browser.cjs` (Ansichten 390 px, Offline, frisches Profil). App-Code unverändert.
+
+- **7b** (Freigabe „Alles ja“ 04.11.2026 06:11; Betreiber testet stichprobenartig): Korrekturen B1–B8 siehe `docs/final-check.md` Abschnitt 2b. Dateien: `core/history.js`, `sports/taekwondo/index.js` (dayPatternWt), `app/00-imports.js`, `08-plan.js`, `13-training-flow.js`, `14-guided-training.js`, `15-player.js`, `21-sheet.js`, `30-focus-blocks.js`, `33-dose.js`, `38-events.js`, `01-overview-i18n.js`, `tools/build_pwa.py`, `installieren.html`, `README.md`, Tests. Angepasste alte Tests (gewollte Änderung): Boxen ohne Körperabhärtung → nur im Zähigkeitsblock; WT-Wochenmuster T S P M; Titel „Handgelenk & Griff“ für Level 0.
+
+- **7c** (Auftrag 04.11.2026 06:44): `docs/geraete-checkliste.md` (iPhone, installierte App; Android nicht belegt), `docs/trainer-pruefliste.md` (Regelwerke A1–A5, Trainingsinhalte B1–B8, Ratgeber C1–C5), `docs/abloesung.md` (Weg 1 empfohlen: Code übernehmen, Daten bleiben; Datenübernahme-Test vor der Ablösung Pflicht; Cache-Präfix; Rückweg). Endlieferung: Delta-ZIP (nur 7c) und Komplett-ZIP des Endstands. Keine Veröffentlichung, keine Ablösung.
+- **Abnahmen nach 7c**: 7c-2 (ⓘ) und 7c-4 (Gürtelreiter) vom Betreiber am 04.11.2026 08:05 bestätigt; README und Banner am 04.11.2026 08:01.
+- **7b-2** (Freigabe 04.11.2026 08:04, Vorschlag 06:52): Übungsauswahl für Kraft, Kondition, Schnellkraft und Mobility bevorzugt je Sportart eine eigene Liste (`SPORT_FOCUS` in `08-plan.js`; Bonus für etwa drei von vier Fokus-Übungen je Auswahl, damit Abwechslung bleibt). Boxen: Rumpfrotation, Schulter, Griff, Nacken, explosive Liegestütze; Kondition mit Schatten- und Sacksprints, Band-Punches, Speed-Runden, Seil, Bear Crawl; Mobility Schultern/Brustwirbelsäule/Nacken. WT: Einbein, Sprungkraft dosiert, Hüfte/Adduktoren; Kondition Kick-Intervalle, Skater, Sprints, Treppen, Seil; Mobility aktiv. ITF: Einbein und Sprung wie WT plus Schlag-Explosivität und Rumpf; Mobility Hüfte und Schultern. Grundübungen (Kniebeuge, Drücken, Rudern/Stütz) bleiben in allen Sportarten gleich (Vergleichbarkeit), Fokusblöcke und Ausrüstung haben Vorrang, Einschränkungen und Alter filtern weiter. Gemessen: bei Boxen, WT und ITF 87–100 % der Zusatzplätze aus der eigenen Liste, je 4–6 verschiedene Übungen; Kickboxen unverändert (Baseline identisch). Test „7b-2“.
+- **7c-2** (Fehlerbericht Betreiber 04.11.2026 06:55): Das ⓘ an den Übungen öffnete seit 3-D nichts mehr, weil die Text-ID beim Klick in eine Zahl umgewandelt wurde (`38-events.js`). Behoben, mit Test über alle Sportarten (224 Tests). Jahreszeit- und Feiertagsbilder für alle drei Outfits geprüft (Kickboxen, Boxen, Dobok): Mützen, Teilchen und Motive erscheinen bei allen; die Sommer-Badehose gibt es nur ohne Sportkleidung (so gewollt); mit ausgeschaltetem Design gibt es keine Jahreszeit-Elemente.
+- **7c-3** (Wunsch Betreiber 04.11.2026 07:26): Sommer ohne Badehose; stattdessen eine Palme im Hintergrund links (höher als die Figuren) und ein gestreifter Liegestuhl rechts – bei allen Outfits, nur auf der Startseite (die Lade- und Inbetriebnahme-Bilder haben keinen Hintergrund). Test „7c-3“ (225 Tests).
+- **7c-4** (beim Erzeugen der README-Bilder gefunden, 04.11.2026): Test → „Gürtelprüfung“ zeigte bei Hauptsport Taekwondo und Boxen das Kickbox-Programm (BFVKB-Gurte). Jetzt zeigt der Reiter bei Taekwondo den Taekwondo-Gürtelbereich des Stils; Boxen hat keinen Gürtelreiter (nur Fitnesstest), die Tour sagt dort „Fitnesstest“. Test „7c-4“ (226 Tests).
+- **README neu** (Wunsch Betreiber 04.11.2026 07:35): Banner mit drei Sportarten, Verbands-Badges, Tabelle „Drei Sportarten auf einen Blick“, neue Screenshots aus der App (Taekwondo, Boxen, ITF, Gürtelbereich, Ratgeber, Rundentimer), Funktionen je Sportart gekennzeichnet, Gesamtprüfung bei den Prüfbefehlen, Übersicht der Dokumentation. Neue Bilder: `docs/banner.jpg` (ersetzt), `docs/{kb,box,tkd}-heute.jpg`, `docs/{tkd,itf,box}-einheit.jpg`, `docs/tkd-guertel.jpg`, `docs/tkd-ratgeber.jpg`, `docs/tkd-timer.jpg`.
+
+## Gesamtabnahme (04.11.2026 08:47)
+
+- Abgenommen: alle Teile 0–7 (W1–W8) einschließlich 7b-2, 7c-2, 7c-3, 7c-4, README und Banner.
+- Geräteprüfung iPhone (installierte App), Betreiber 04.11.2026: G8 Wiederaufnahme, G11 Offline, G13 Trennung von der stabilen App bestanden; laufende Nutzung seit Projektbeginn ohne Fehler. Android: nicht belegt.
+- Automatisch belegt am Endstand: 227 Tests, Baseline Kickboxen identisch, Isolation 12/12, Ablauf-Matrix 648 Einheiten ohne Befund, H1–H9 OK, Ansichten 390 px DE/EN, Offline-Start, Inbetriebnahme je Sportart.
+- Offen und nicht blockierend: Trainer-Prüfliste (`docs/trainer-pruefliste.md`), Android, Altdaten-Test vor einer Ablösung (`docs/abloesung.md`).
+- Nicht ausgeführt: keine Veröffentlichung oder Ablösung der stabilen App.
+
+## Nach dem Abschluss
+
+- **Altdaten-Test** (Auftrag Betreiber 04.11.2026 08:57, mit seiner Sicherung der stabilen App): bestanden. Ergebnis und Befund siehe `docs/abloesung.md` 3b. Vor dem Release müssen die Texte unter „Was ist neu“ neu geschrieben werden.
+- **7d** (Wunsch Betreiber 04.11.2026 09:05): „Sparring“ ist auch in der einfachen Ansicht wählbar (bisher nur in der ausführlichen; Verhalten aus der stabilen App). Gesperrt bleibt es nach einem K.o. und bei Kindern. Test „7d“, alter Test angepasst (228 Tests).
+
+## Nächster Vorschlag (ohne Freigabe)
+
+Das Gesamtprojekt ist abgeschlossen. Weitere Arbeit nur auf eigenen Auftrag: Rückmeldungen aus der Trainer-Prüfliste als Korrekturauftrag, Android-Prüfung mit Gerät, später die Ablösung der stabilen App nach `docs/abloesung.md` (vorher Altdaten-Test).
