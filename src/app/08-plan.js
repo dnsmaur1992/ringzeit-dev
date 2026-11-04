@@ -512,7 +512,9 @@
     }
     // 7f: from level 1 about every fifth combo is a kick chain (2 kicks, from level 2 also 3); low kicks only where the
     // discipline allows them (Kick Light, K1); not for children, not with a knee/ankle limit
-    if (!kickOnly && p.level >= 1 && ageGroup() !== "kids" && !ka && Math.random() < 0.22) {
+    // 7g: the plan focus steers the share too – more boxing fewer chains, more kicks more chains
+    const chainP = p.focus === "box" ? 0.08 : p.focus === "kick" ? 0.3 : 0.22;
+    if (!kickOnly && p.level >= 1 && ageGroup() !== "kids" && !ka && Math.random() < chainP) {
       const ch = KICK_CHAINS.filter((x) => x.lvl <= p.level && (!x.low || ["kl", "k1"].includes(discOf()))).map((x) => x.c);
       if (ch.length) return partnerClean(rnd(ch).slice());
     }
@@ -1045,6 +1047,8 @@
       lim = p.limits;
     const M = tkm();
     let pool = M.COMBOS.slice(0, (p.level || 0) + 1).flat();
+    // 7g: a technique released by the grade alone (level OR grade) also brings the higher combos that carry it
+    if (ctx.kup != null) pool = pool.concat(M.COMBOS.slice((p.level || 0) + 1).flat().filter((c) => c.some((x) => M.byGrade(x, ctx))));
     pool = pool.filter((c) => c.every((x) => M.allowed(x, ctx)));
     if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.some((x) => TKDT.HANDS.has(x) || (M.HANDS && M.HANDS.has(x))));
     if (noHead) pool = pool.filter((c) => !c.some((x) => M.HEAD.has(x)));
@@ -1295,6 +1299,10 @@
         const r = rnd(cand),
           i = r.combo.lastIndexOf("cross") >= 0 ? r.combo.lastIndexOf("cross") : r.combo.indexOf("jab");
         r.combo[i] = r.combo[i] === "cross" ? "crossb" : "jabb";
+      } else {
+        // 7g: only kick combos left (kick chains, 7f) – one of them opens with a cross to the body (not the 6-kick round, not my combos)
+        const kc = withC.filter((r) => !r.combo.some((x) => BODY.includes(x)) && !r.six && !r.mine);
+        if (kc.length) rnd(kc).combo.unshift("crossb");
       }
     }
     // partner rounds: no defence without a reason in the own combo (my club combos stay as they are)
