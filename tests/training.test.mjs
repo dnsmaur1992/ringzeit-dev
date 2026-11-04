@@ -1174,7 +1174,7 @@ test("an early finish with the untouched planned duration asks about the duratio
   assert.doesNotMatch(a.run("JSON.stringify(ui.sheet.lines)"), /Minuten sind|Eingetragen sind/);
 });
 
-test("simplified start: six-step tour, compact first steps, folded profile details", async () => {
+test("simplified start: six-step tour, compact first steps, profile split into about me and training week", async () => {
   const a = app();
   assert.equal(a.run("TOUR.length"), 6);
   assert.deepEqual(JSON.parse(a.run("JSON.stringify(TOUR.map(x=>x.k))")), ["intro", "today", "timer", "ftimer", "prof", "end"]);
@@ -1185,11 +1185,16 @@ test("simplified start: six-step tour, compact first steps, folded profile detai
   assert.match(compact, /data-act2="starterall"/);
   a.run("ui.starterAll=true");
   assert.ok((a.run("starterHtml()").match(/data-start=/g) || []).length > 1);
+  // 7i: training week holds the days, about me the person and the sport – nothing folded away any more
   a.run("ui.tab='profile';ui.profSec='train';draft=JSON.parse(JSON.stringify(S.profile))");
   const prof = a.run("renderProfile()");
-  assert.match(prof, /<details class="pmore" data-pmore="1" >/);
-  assert.ok(prof.indexOf("data-cday=") < prof.indexOf('data-pmore="1"'));
-  assert.ok(prof.indexOf('data-p="level"') > prof.indexOf('data-pmore="1"'));
+  assert.match(prof, /data-cday=/);
+  assert.doesNotMatch(prof, /data-pmore="1"|data-p="level"|id="pBirth"/);
+  a.run("ui.profSec='me';");
+  const me = a.run("renderProfile()");
+  assert.match(me, /data-p="level"/);
+  assert.match(me, /id="pBirth"/);
+  assert.ok(me.indexOf("data-psport=") < me.indexOf('id="pBirth"'), "sport & belt first, then the person");
 });
 
 test("what's new appears once for existing users, not for new ones, and stays readable in the profile", async () => {
@@ -2331,11 +2336,11 @@ test("3-U case 8: a tournament of another sport drives the phases; a belt exam o
 
 test("3-U case 10: full contact / K1 are not tied to the level any more; the age limit stays", () => {
   const a = app();
-  a.run("S.profile.level=0;S.profile.birthYear=2001;draft=null;ui.profSec='train';");
+  a.run("S.profile.level=0;S.profile.birthYear=2001;draft=null;ui.profSec='me';");
   let h = a.run("renderProfile()");
   assert.doesNotMatch(h, /data-lock="disc"/);
   assert.match(h, /data-p="disc" data-v="fc"/);
-  a.run("S.profile.birthYear=2012;draft=null;ui.profSec='train';");
+  a.run("S.profile.birthYear=2012;draft=null;ui.profSec='me';");
   h = a.run("renderProfile()");
   assert.match(h, /data-lock="age"/);
   assert.doesNotMatch(h, /data-p="disc" data-v="fc"/);
@@ -2355,7 +2360,7 @@ test("3-U case 11: a backup round trip restores exactly the exported state – n
 
 test("3-U: levels above the tested one show a lock; tapping it explains the fitness test", async () => {
   const a = app();
-  a.run("S.profile.level=0;S.tests=[];draft=null;ui.profSec='train';");
+  a.run("S.profile.level=0;S.tests=[];draft=null;ui.profSec='me';");
   const h = a.run("renderProfile()");
   assert.equal((h.match(/data-lock="level"/g) || []).length, 2, "Fortgeschritten and Wettkampf are locked");
   assert.match(h, /data-p="level" data-v="0"/);
@@ -2705,14 +2710,20 @@ test("4a-U fix: no kick exercise (Kick-Intervalle, Kick-Halten, …) in any boxi
 
 test("4a-U: main sport Boxen (development preview) in the profile – no discipline/focus, plan sessions are boxing, label says Boxen", () => {
   const a = app();
-  a.run("draft=null;ui.profSec='train';");
+  a.run("draft=null;ui.profSec='me';ui.psport=null;");
   let h = a.run("renderProfile()");
-  assert.match(h, /data-p="sport" data-v="boxing"[^>]*>Boxen</);
+  assert.match(h, /data-psport="boxing"[^>]*>Boxen</);
   assert.match(h, /data-p="disc"/, "kickboxing: discipline row");
-  a.run("S.profile.sport='boxing';draft=null;");
+  // 7i: choosing boxing in the sport row shows its details; the main sport only changes through its own button
+  a.run("ui.psport='boxing';");
   h = a.run("renderProfile()");
   assert.ok(!/data-p="disc"/.test(h) && !/data-p="focus"/.test(h), "boxing has no discipline and no kick/punch focus");
-  assert.match(h, /data-p="sport" data-v="boxing" aria-pressed="true"/);
+  assert.match(h, /data-p="sport" data-v="boxing"/, "button: make boxing the main sport");
+  a.run("S.profile.sport='boxing';draft=null;ui.psport=null;");
+  h = a.run("renderProfile()");
+  assert.ok(!/data-p="disc"/.test(h) && !/data-p="focus"/.test(h));
+  assert.match(h, /data-psport="boxing" aria-pressed="true">Boxen<small class="hsb">/, "main sport badge");
+  assert.doesNotMatch(h, /data-p="sport"/, "no button when it already is the main sport");
   assert.match(a.run("eyebrow()"), /Boxen/);
   assert.equal(a.run("ruleTags()"), "");
   a.run("S.sessions={};S.sessions['2026-11-03']=buildSession('2026-11-03','T','gym',['bag']);");
@@ -3229,12 +3240,16 @@ test("6b: Mobility uses the brought resistance bands (any sport)", () => {
     assert.ok(hit >= 1, sport + " ignores bands");
   }
 });
-test("6b: boxing has no belt exam entry under tournaments; kickboxing and taekwondo keep it", async () => {
+test("6b: boxing has no belt exam entry under dates; kickboxing and taekwondo keep it", async () => {
   const a = app();
+  // 7i: one form for all dates – a grading offers only the sports with belts
   a.run("S.profile.sport='boxing';draft=null;ui.tab='profile';ui.profSec='goals';ui.csport=null;ui.ckind='grade';");
-  assert.ok(!/data-ckind/.test(a.run("renderProfile()")), "boxing shows no kind switch");
-  a.run("S.profile.sport='taekwondo';ui.csport=null;");
-  assert.ok(/data-ckind/.test(a.run("renderProfile()")), "taekwondo keeps it");
+  let h = a.run("renderProfile()");
+  assert.doesNotMatch(h, /data-csport="boxing"/, "no boxing grading");
+  assert.match(h, /data-csport="kickboxing"/);
+  assert.match(h, /data-csport="taekwondo"/);
+  a.run("ui.ckind='comp';");
+  assert.match(a.run("renderProfile()"), /data-csport="boxing"/, "boxing tournaments stay");
 });
 test("6b: the Today footer links the rule book of the main sport's federation", () => {
   const a = app();
@@ -3996,4 +4011,48 @@ test("7h: WT from level 1 – about every fifth combo carries a spinning hook or
     assert.ok(s >= 0.1 && s <= 0.3, JSON.stringify(o) + " " + s);
   }
   for (const o of [{ lvl: 2, by: 2010 }, { lvl: 2, by: 2017 }, { lvl: 2, lim: ["knee"] }, { lvl: 0 }]) assert.equal(share(o), 0, JSON.stringify(o));
+});
+
+test("7i: profile – six sections; about me asks only the chosen sport's questions; one list of dates; exams prepare the plan", async () => {
+  const a = app();
+  a.run("globalThis.requestAnimationFrame=()=>0;S.profile.sport='kickboxing';S.profile.birthYear=1992;S.profile.level=1;S.profile.days=[1,3,5];S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'wt',wt:'k4',exams:[],hist:[]});draft=null;ui.tab='profile';ui.profSec=null;ui.psport=null;ui.pedit=null;");
+  const ov = a.run("renderProfile()");
+  assert.deepEqual((ov.match(/data-psec="(\w+)"/g) || []).map((x) => x.slice(11, -1)), ["me", "train", "goals", "life", "guide", "app"]);
+  assert.match(ov, /Über mich[\s\S]*Trainingswoche[\s\S]*Termine &amp; Ziele|Über mich[\s\S]*Trainingswoche[\s\S]*Termine & Ziele/);
+  // kickboxing: discipline, focus, belt – nothing of taekwondo
+  a.run("ui.profSec='me';");
+  let h = a.run("renderProfile()");
+  assert.match(h, /data-p="disc"/);
+  assert.match(h, /data-pedit="belt"/);
+  assert.doesNotMatch(h, /data-tk=|data-belt=/, "no taekwondo, belt chips only after Change");
+  await a.click({ dataset: { pedit: "belt" } });
+  assert.match(a.run("renderProfile()"), /data-belt="0"/);
+  // taekwondo: names first, then style, then only this style's grade; the main sport stays kickboxing
+  await a.click({ dataset: { psport: "taekwondo" } });
+  assert.equal(a.run("S.profile.sport"), "kickboxing");
+  h = a.run("renderProfile()");
+  assert.ok(h.indexOf('data-tk="names"') < h.indexOf('data-tk="style"'), "names directly under the sport row");
+  assert.doesNotMatch(h, /data-p="disc"|data-pedit="belt"|data-tk="grade"/, "no kickboxing, grade chips only after Change");
+  assert.match(h, /4\. Kup/);
+  await a.click({ dataset: { pedit: "grade" } });
+  assert.match(a.run("renderProfile()"), /data-tk="grade" data-tv="k3"/);
+  // dates & goals: a planned taekwondo exam is listed with the tournaments and starts the grading preparation
+  a.run("S.profile.sport='taekwondo';draft=null;ui.profSec='goals';ui.ckind='grade';ui.csport='taekwondo';");
+  h = a.run("renderProfile()");
+  assert.match(h, /id="tkTarget"/);
+  const d = a.run("iso(addDays(today(),20))");
+  a.run(`(()=>{const n={value:'${d}'},g={value:'k3'};const ge=document.getElementById;document.getElementById=(id)=>id==='tkDate'?n:id==='tkTarget'?g:ge(id);})()`);
+  await a.click({ dataset: { tk: "plan" } });
+  assert.equal(a.run("S.profile.tkd.exams.length"), 1);
+  assert.equal(a.run("phaseInfo().phase"), "grade", "4 weeks before the exam: grading preparation");
+  h = a.run("renderProfile()");
+  assert.match(h, /Prüfung<\/small>/);
+  assert.match(h, /Prüfung zum 3\. Kup/);
+  a.run(`S.profile.comps=[{id:'c1',date:iso(addDays(today(),40)),kind:'comp',sport:'kickboxing'}];draft=null;`);
+  h = a.run("renderProfile()");
+  assert.ok(h.indexOf("Prüfung</small>") < h.indexOf("Turnier</small>"), "one list sorted by date");
+  // the belt exam link opens the test tab on the exam view
+  await a.click({ dataset: { gotoexam: "1" } });
+  assert.equal(a.run("ui.tab"), "test");
+  assert.equal(a.run("ui.testView"), "exam");
 });

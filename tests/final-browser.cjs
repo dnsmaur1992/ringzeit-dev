@@ -23,7 +23,7 @@ const seed = (sport, style, lang) => ({ v: 2, profile: { lang, sport, disc: "lc"
       await p.goto("http://localhost:8790/", { timeout: 20000 }); await p.waitForTimeout(3500);
       await p.evaluate(() => document.querySelectorAll("#tour,.win").forEach((x) => x.remove()));
       const res = [];
-      for (const [tab, sec] of [["week", null], ["session", null], ["test", null], ["log", null], ["profile", null], ["profile", "train"], ["profile", "goals"], ["profile", "life"], ["profile", "guide"], ["profile", "app"]]) {
+      for (const [tab, sec] of [["week", null], ["session", null], ["test", null], ["log", null], ["profile", null], ["profile", "me"], ["profile", "train"], ["profile", "goals"], ["profile", "life"], ["profile", "guide"], ["profile", "app"]]) {
         const r = await Promise.race([
           p.evaluate(([tab, sec]) => {
             ui.tab = tab; ui.profSec = sec; if (tab === "session") ui.sel = nextTrainingDate();
@@ -36,7 +36,7 @@ const seed = (sport, style, lang) => ({ v: 2, profile: { lang, sport, disc: "lc"
         res.push([tab + "/" + (sec || ""), r]);
       }
       const badv = res.filter((x) => x[1]);
-      ok(`Ansichten ${sport}${sport === "taekwondo" ? "/" + style : ""} ${lang} (10 Seiten, 390 px)`, !badv.length && !errs.length, badv.map((x) => x.join(": ")).join("; ") + (errs.length ? " JS: " + errs.join(" | ") : ""));
+      ok(`Ansichten ${sport}${sport === "taekwondo" ? "/" + style : ""} ${lang} (11 Seiten, 390 px)`, !badv.length && !errs.length, badv.map((x) => x.join(": ")).join("; ") + (errs.length ? " JS: " + errs.join(" | ") : ""));
       await ctx.close();
     }
   }
