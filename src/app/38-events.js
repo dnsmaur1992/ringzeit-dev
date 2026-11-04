@@ -64,7 +64,6 @@
     if (ds.workout) return workoutAction(ds.workout);
     if (ds.player) return playerAction(ds.player, ds);
     if (ds.exerciseTimer) return exerciseTimerAction(ds.exerciseTimer, ds);
-    if (ds.nextOpen) return nextOpenExercise();
     if (ds.effort) {
       const draft = finishDraft();
       draft.rpe = +ds.effort;
@@ -946,10 +945,6 @@
       } else blockAfterTest();
       return;
     }
-    if (ds.tk === "open") {
-      ui.tkdOpen = true;
-      return render();
-    }
     if (ds.tk) return tkdAction(ds);
     // profile
     if (ds.p) {
@@ -1062,13 +1057,6 @@
       (a, p) => a + p.sets.reduce((b, x) => b + (x.r && x.kg && !TIMED.has(p.id) ? x.r * x.kg : 0), 0),
       0,
     );
-  document.addEventListener(
-    "toggle",
-    (ev) => {
-      if (ev.target && ev.target.dataset && ev.target.dataset.pmore) ui.profMore = ev.target.open;
-    },
-    true,
-  );
   document.addEventListener("input", (ev) => {
     const el = ev.target;
     if (el.classList && el.classList.contains("si")) {

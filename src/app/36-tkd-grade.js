@@ -82,7 +82,7 @@
     return h;
   }
 
-  /* style (association) and name language: shown in the profile under "Hauptsport" and in the grade area; both act on S.profile at once */
+  /* style (association) and name language in the grade area of Test → belt grading (in the profile they sit under About me, 15b-profile.js); both act on S.profile at once */
   function tkdPrefsHtml() {
     const K = t("tkd"),
       st = tkdStyle(),

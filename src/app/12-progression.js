@@ -156,19 +156,6 @@
         if (icon) icon.textContent = done ? "✓" : "○";
       }
     });
-    const summary = document.getElementById("sessionProgress"),
-      progress = sessionCompletion(sess);
-    if (summary) {
-      const text = flowText().progress(progress.done, progress.total);
-      if (summary.textContent !== text) summary.textContent = text;
-    }
-    const jump = document.querySelector("[data-next-open]"),
-      warm = sess.blocks.findIndex((b) => b.key === "warm");
-    if (jump)
-      jump.textContent =
-        warm >= 0 && sess.blocks[warm].items.some((it, ni) => !itemDone(sess, warm, ni))
-          ? flowText().warm
-          : flowText().jump;
     updateWorkoutProgress();
     const btn = document.getElementById("fSave");
     if (btn) {

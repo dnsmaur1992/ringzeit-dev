@@ -1,5 +1,5 @@
   /*
-   * Ringzeit – kickboxing training planner (WAKO Light Contact, Kick Light, Full Contact, K1 Style).
+   * Ringzeit – training planner for kickboxing (WAKO), boxing (DBV) and taekwondo (WT/DTU, ITF-D).
    *
    * Structure
    *   i18n ......... all UI text in German and English (L.de / L.en), read through t(key)
@@ -63,7 +63,6 @@
         ],
         ok: "Verstanden",
       },
-      profMore: "Mehr: Level, Disziplin, Alter, Einschränkungen",
       ack: {
         h: "Kurz zur Sicherheit",
         pts: [
@@ -834,9 +833,7 @@
       koNoteBox: "K.-o.-Sperre (DBV, mindestens 30 Tage): kein Sparring und kein Partnerkontakt, nur Solo-Arbeit ohne Treffer. Bei einem weiteren K.o. verlängert sich die Sperre (§89 WKB: 3 Monate, 1 Jahr). Die Rückkehr nach Stufenplan (Anhang 5 WKB) und die ärztliche Freigabe sind nicht Teil der App.",
       boxMasters: "Über 40: Trainingsformat 3 × 2 min – kein offizielles DBV-Format.",
       boxGear: "Sparring nur mit Mundschutz und Kopfschutz (bei Frauen und in den U-Klassen im Wettkampf vorgeschrieben, §26 WKB), Bandagen und Handschuhen.",
-      previewTag: "Vorschau",
       tipTrainer: "Hinweis aus dem Training – im Zweifel mit deinem Trainer abstimmen.",
-      boxPreview: "Boxen ist eine Entwicklungsvorschau und noch nicht fertig.",
       koComp: "liegt in der 4-Wochen-Sperre nach K.-o.",
       compKind: { comp: "Turnier", grade: "Gürtelprüfung" },
       daysToGrade: (n) => `noch ${n} Tage bis zur Prüfung`,
@@ -1121,7 +1118,6 @@
       sportL: "Sportart",
       unitStyleL: "Verband (nur diese Einheit)",
       unitDiscL: "Disziplin (nur diese Einheit)",
-      sportMain: "Hauptsport",
       sportNames: { kickboxing: "Kickboxen", boxing: "Boxen", taekwondo: "Taekwondo" },
       tkd: {
         title: "Taekwondo-Grad",
@@ -1190,7 +1186,6 @@
         fc: "Full Contact",
         k1: "K1 Style",
       },
-      discLock: "Full Contact und K1 Style schaltest du mit dem Fitnesstest frei (ab Level Fortgeschritten).",
       focus: "Technik-Schwerpunkt",
       focusOpt: { box: "Mehr Boxen", bal: "Ausgeglichen", kick: "Mehr Kicks" },
       focusLock: "Anfänger trainieren ausgeglichen.",
@@ -1229,7 +1224,6 @@
       },
       comps: "Turniere",
       compAdd: "Hinzufügen",
-      compNone: "Noch kein Turnier eingetragen. Mit einem Termin plant die App 4–6 Wochen Vorbereitung im Kampfformat.",
       compHint: "Mehrere Turniere sind möglich – nach jedem Turnier folgt eine Erholungswoche.",
       fmtTxt: (r, w, b) => `${r} × ${fmt(w)} min · ${fmt(b)} Pause`,
       noFormat:
@@ -1317,7 +1311,6 @@
         tecTkd: "Trainer oder Partner bewertet Grundtritte (Frontkick, Halbkreistritt, Seitwärtstritt), Fauststoß, Blöcke, Stellungen und Distanzarbeit.",
         flxBox: "Wie hoch kommt dein sauberer, kontrollierter Beinschwung nach vorn – ohne Schwung zu holen?",
       },
-      tecOnlyT: "Nur Technik",
       tecOnlyH: (sp) => `Bewerte nur deine Technik im ${sp}. Kraft, Tempo, Ausdauer und Beweglichkeit gelten für beide Sportarten und müssen nicht wiederholt werden.`,
       tecSportL: "Technik bewerten für",
       tUnit: { str: "Wdh.", spd: "Paare", end: "Min : Sek" },
@@ -1398,7 +1391,6 @@
         ],
         ok: "Got it",
       },
-      profMore: "More: level, discipline, age, limitations",
       ack: {
         h: "Quick safety note",
         pts: [
@@ -2151,9 +2143,7 @@
       koNoteBox: "KO suspension (DBV, at least 30 days): no sparring and no partner contact, solo work without hits only. A further KO extends the ban (WKB §89: 3 months, 1 year). The step plan for returning (WKB Annex 5) and medical clearance are not part of the app.",
       boxMasters: "Over 40: training format 3 × 2 min – not an official DBV format.",
       boxGear: "Sparring only with mouthguard and headgear (compulsory for women and in the U classes in competition, WKB §26), wraps and gloves.",
-      previewTag: "preview",
       tipTrainer: "Training tip – if in doubt, check with your coach.",
-      boxPreview: "Boxing is a development preview and not finished yet.",
       koComp: "falls within the 4-week suspension after a KO",
       compKind: { comp: "Tournament", grade: "Grading" },
       daysToGrade: (n) => `${n} days to grading`,
@@ -2435,7 +2425,6 @@
       sportL: "Sport",
       unitStyleL: "Federation (this unit only)",
       unitDiscL: "Discipline (this unit only)",
-      sportMain: "Main sport",
       sportNames: { kickboxing: "Kickboxing", boxing: "Boxing", taekwondo: "Taekwondo" },
       tkd: {
         title: "Taekwondo grade",
@@ -2504,7 +2493,6 @@
         fc: "Full Contact",
         k1: "K1 Style",
       },
-      discLock: "You unlock Full Contact and K1 Style with the fitness test (from Advanced level).",
       focus: "Technique focus",
       focusOpt: { box: "More boxing", bal: "Balanced", kick: "More kicks" },
       focusLock: "Beginners train balanced.",
@@ -2543,7 +2531,6 @@
       },
       comps: "Tournaments",
       compAdd: "Add",
-      compNone: "No tournament yet. With a date, the app plans 4–6 weeks of preparation in your bout format.",
       compHint: "Several tournaments are possible – each one is followed by a recovery week.",
       fmtTxt: (r, w, b) => `${r} × ${fmt(w)} min · ${fmt(b)} rest`,
       noFormat:
@@ -2625,7 +2612,6 @@
         tecTkd: "A coach or partner rates basic kicks (front, roundhouse, side kick), punch, blocks, stances and distance work.",
         flxBox: "How high does your clean, controlled forward leg swing go – without momentum?",
       },
-      tecOnlyT: "Technique only",
       tecOnlyH: (sp) => `Rate only your technique in ${sp}. Strength, speed, endurance and flexibility apply to both sports and need no repeat.`,
       tecSportL: "Rate technique for",
       tUnit: { str: "reps", spd: "pairs", end: "min : sec" },

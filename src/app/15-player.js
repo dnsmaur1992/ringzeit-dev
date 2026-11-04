@@ -1122,9 +1122,6 @@
       })
       .join("")}</div></div>`;
   }
-  /* main sport of the plan (profile draft): same choice row, written to the profile with the other plan settings */
-  const sportRowP = (p) =>
-    `<div class="field"><span class="lab">${t("sportMain")}</span><div class="seg">${sportChoices(true).map((k) => `<button type="button" data-p="sport" data-v="${k}" aria-pressed="${(p.sport || mainSport()) === k}">${sportLabel(k)}</button>`).join("")}</div></div>${(p.sport || mainSport()) === "taekwondo" ? tkdPrefsHtml() : ""}`;
   /* sport, style and discipline of an entry where they are not obvious (7b B2): other sport than the main one,
      WT/ITF for taekwondo, a discipline other than the profile's for kickboxing */
   function logTag(e) {
@@ -1244,8 +1241,7 @@
   let draft = null;
   function renderProfile() {
     if (!draft) draft = JSON.parse(JSON.stringify(S.profile));
-    const p = draft,
-      ml = Math.max(maxLevel(), S.profile.level);
+    const p = draft;
     const sec = ui.profSec,
       PS = t("psec");
     if (!sec) return profOverview(p);

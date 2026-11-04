@@ -5,12 +5,7 @@
           adjust: "Einheit anpassen",
           why: "Warum diese Einheit?",
           next: "Als Nächstes",
-          warm: "Mit dem Aufwärmen beginnen",
-          main: "Hauptteil-Timer",
-          mainHint:
-            "Dieser Timer begleitet die Runden im Hauptteil. Aufwärmen, Zusatzübungen und Cool-down hakst du separat ab.",
           progress: (n, total) => `${n} von ${total} Übungen erledigt`,
-          jump: "Zur nächsten offenen Übung",
           check: "Hakenfläche antippen zum Abhaken · i öffnet die Übungserklärung.",
           chooseEffort: "Wie anstrengend war die Einheit?",
           effortFine: "Genauer: Skala 1–10",
@@ -36,12 +31,7 @@
           adjust: "Adjust session",
           why: "Why this session?",
           next: "Up next",
-          warm: "Begin with the warm-up",
-          main: "Main-part timer",
-          mainHint:
-            "This timer covers the rounds in the main part. Check off warm-up, extra exercises and cool-down separately.",
           progress: (n, total) => `${n} of ${total} exercises completed`,
-          jump: "Go to next open exercise",
           check: "Tap the check control to mark complete · i opens exercise details.",
           chooseEffort: "How hard was the session?",
           effortFine: "More precise: scale 1–10",
@@ -133,29 +123,6 @@
     if (EX[it.id]) return exText(it.id).name;
     if (it.kind === "round") return roundInfo(it).title;
     return `${t("main")} ${ni + 1}`;
-  }
-  function sessionNavigationHtml(sess) {
-    const txt = flowText(),
-      progress = sessionCompletion(sess),
-      warm = sess.blocks.findIndex((b) => b.key === "warm"),
-      needsWarm = warm >= 0 && sess.blocks[warm].items.some((it, ni) => !itemDone(sess, warm, ni));
-    return `<div class="note session-progress"><b id="sessionProgress" aria-live="polite">${txt.progress(progress.done, progress.total)}</b><div class="minirow"><button type="button" class="btn ghost" data-next-open="1">${needsWarm ? txt.warm : txt.jump}</button>${roundBlock(sess) ? `<button type="button" class="btn ghost" data-fx="open">${txt.main}</button>` : ""}</div><div class="sub">${txt.check}</div>${roundBlock(sess) ? `<div class="sub">${txt.mainHint}</div>` : ""}</div>`;
-  }
-  function nextOpenExercise() {
-    const sess = S.sessions[ui.sel];
-    if (!sess) return;
-    for (let bi = 0; bi < sess.blocks.length; bi++)
-      for (let ni = 0; ni < sess.blocks[bi].items.length; ni++)
-        if (!itemDone(sess, bi, ni)) {
-          document
-            .querySelector(`[data-item="${bi}.${ni}"]`)
-            ?.scrollIntoView({
-              block: "center",
-              behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-            });
-          return;
-        }
-    document.getElementById("sessionFinish")?.scrollIntoView({ block: "center" });
   }
   function exerciseFeedbackHtml(sess, key) {
     const txt = flowText(),
