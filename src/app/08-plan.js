@@ -510,6 +510,12 @@
       if (p.level < 2) pool = pool.filter((c) => !c.includes("jknee"));
       if (!pool.length) pool = HAND_ONLY;
     }
+    // 7f: from level 1 about every fifth combo is a kick chain (2 kicks, from level 2 also 3); low kicks only where the
+    // discipline allows them (Kick Light, K1); not for children, not with a knee/ankle limit
+    if (!kickOnly && p.level >= 1 && ageGroup() !== "kids" && !ka && Math.random() < 0.22) {
+      const ch = KICK_CHAINS.filter((x) => x.lvl <= p.level && (!x.low || ["kl", "k1"].includes(discOf()))).map((x) => x.c);
+      if (ch.length) return partnerClean(rnd(ch).slice());
+    }
     let c = weightedPick(pool, focus).slice();
     if (theme && (!kickOnly || theme.kick)) {
       c = theme.ap(c, p);
@@ -1043,9 +1049,11 @@
     if (lim.includes("wrist") || lim.includes("shoulder")) pool = pool.filter((c) => !c.some((x) => TKDT.HANDS.has(x) || (M.HANDS && M.HANDS.has(x))));
     if (noHead) pool = pool.filter((c) => !c.some((x) => M.HEAD.has(x)));
     if (ctx.kid) pool = pool.filter((c) => c.length <= 3);
-    // the fitter, the longer the kick chains: advanced at least 3 kicks, competition level at least 4 (most of the time)
+    // the fitter, the longer the kick chains: advanced at least 3 kicks, competition level at least 4 (most of the time).
+    // 7f: warm-up rounds without head kicks and ITF (hand-foot, weaker form) need one kick less: 2 / 3
     const lvl = p.level || 0,
-      longer = pool.filter((c) => M.kickCount(c) >= 2 + lvl);
+      need = (noHead || M === ITFT ? 1 : 2) + lvl,
+      longer = pool.filter((c) => M.kickCount(c) >= need);
     // ITF (7b B8): from level 1 about every second combo carries a jumping or spinning kick, as far as grade, age and limits allow
     const spect = M === ITFT && lvl >= 1 ? pool.filter((c) => c.some((x) => ITF_SPECT.has(x))) : [];
     if (lvl >= 1 && longer.length && Math.random() < 0.75) pool = longer;
@@ -1066,7 +1074,13 @@
       kid = ageGroup() === "kids",
       ctx = tkdCtx(),
       bag = eq.includes("bag") && loc !== "out" && !p.limits.includes("shoulder"),
-      cyc = partner ? ["partner", "foot", "partner", "evade"] : bag ? ["shadow", "foot", "bag", "evade"] : ["shadow", "foot", "evade"],
+      // 7f: WT from level 1 has more chain rounds (shadow, bag, pads) between footwork and evade & counter
+      more = tkdUnitStyle() === "wt" && lvl >= 1 && !kid,
+      cyc = partner
+        ? more ? ["partner", "partner", "foot", "partner", "evade"] : ["partner", "foot", "partner", "evade"]
+        : bag
+          ? more ? ["shadow", "bag", "foot", "shadow", "evade", "bag"] : ["shadow", "foot", "bag", "evade"]
+          : more ? ["shadow", "foot", "shadow", "evade"] : ["shadow", "foot", "evade"],
       kinds = [];
     for (let i = 0; i < n; i++) {
       let k = cyc[i % cyc.length];
@@ -1085,6 +1099,11 @@
           pickC = rnd(fresh.length ? fresh : counters.length ? counters : M.COUNTER.slice(0, 2));
         used.add(pickC.d + pickC.att);
         r.combo = pickC.c.slice();
+        // 7f: WT from level 1 – after the counter a short chain follows now and then (trunk, at level 2 up to the head)
+        if (more && Math.random() < 0.5) {
+          const follow = lvl >= 2 && M.allowed("dolh", ctx) ? ["dol", "dolh"] : ["dol"];
+          if (follow.every((x) => M.allowed(x, ctx)) && r.combo.length + follow.length <= 6) r.combo.push(...follow);
+        }
         r.evade = { d: pickC.d };
       }
       return r;
