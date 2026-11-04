@@ -85,7 +85,13 @@ function boxingAdjust(r) {
   }
   return o;
 }
-export function clubRegions(ck, sport) {
+/* Taekwondo by style (docs/taekwondo-concept.md 6.1, own simple setting like 3-Q): WT kicks almost only, ITF with hands. */
+const TKD = { wt: { legs: 0.5, arms: 0.15, core: 0.15, endu: 0.2 }, itf: { legs: 0.4, arms: 0.25, core: 0.15, endu: 0.2 } };
+/** Shares of a taekwondo technique, sparring or fight-conditioning unit (club or own) for the style (default WT). */
+export const tkdRegions = (style) => norm(TKD[style === "itf" ? "itf" : "wt"]);
+export function clubRegions(ck, sport, style) {
+  // taekwondo: technique, sparring and mixed club sessions follow the style table; strength and conditioning stay general
+  if (sport === "taekwondo" && ["T", "P", "X"].includes(ck || "X")) return tkdRegions(style);
   const r = CLUB[ck] || CLUB.X;
   return norm(sport === "boxing" ? boxingAdjust(r) : r);
 }
@@ -117,7 +123,8 @@ export function meanRegions(list) {
 export function entryRegions(e) {
   if (e.reg && Object.keys(e.reg).length) return e.reg;
   if (e.run === "free") return norm(FREE_RUN);
-  if (e.src === "club") return clubRegions(e.ck, entrySport(e));
+  if (e.src === "club") return clubRegions(e.ck, entrySport(e), e.tstyle);
+  if (entrySport(e) === "taekwondo" && ["T", "P", "C"].includes(e.type)) return tkdRegions(e.tstyle);
   return norm(OWN[e.type] || OWN.T);
 }
 /** Regions in which yesterday's entries were hard (RPE ≥ 7, share ≥ 0.35) – today's session is built lighter there. */
