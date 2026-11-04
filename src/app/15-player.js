@@ -1250,16 +1250,13 @@
       PS = t("psec");
     if (!sec) return profOverview(p);
     let h = header(PS[sec][0]) + `<button type="button" class="pback" data-psec="">‹ ${PS.back}</button>`;
-    let train = "",
-      more = "",
+    let me = "",
+      train = "",
       goals = "",
       life = "",
       app = "";
-    more += `<div class="panel">${sportRowP(p)}<div class="field"><span class="lab">${t("level")}</span><div class="seg">${[0, 1, 2].map((k) => (k > ml ? `<button type="button" class="locked" data-lock="level" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("levels")[k]}</button>` : `<button type="button" data-p="level" data-v="${k}" aria-pressed="${p.level === k}">${t("levels")[k]}</button>`)).join("")}</div>${ml < 2 ? `<span class="sub">${t("levelLock")}</span>` : ""}</div>
- ${p.sport === "boxing" || p.sport === "taekwondo" ? "" : `<div class="field"><span class="lab">${t("discipline")}</span><div class="seg g2">${["lc", "kl", "fc", "k1"].map((k) => ((ageAt(today(), p) != null && ageAt(today(), p) < 15) && (k === "fc" || k === "k1") ? `<button type="button" class="locked" data-lock="age" aria-disabled="true"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${t("disc")[k]}</button>` : `<button type="button" data-p="disc" data-v="${k}" aria-pressed="${p.disc === k}">${t("disc")[k]}</button>`)).join("")}</div></div>
- <div class="field"><span class="lab">${t("focus")}</span><div class="seg">${["box", "bal", "kick"].map((k) => `<button type="button" data-p="focus" data-v="${k}" aria-pressed="${(p.level === 0 ? "bal" : p.focus) === k}" ${p.level === 0 && k !== "bal" ? "disabled" : ""}>${t("focusOpt")[k]}</button>`).join("")}</div>${p.level === 0 ? `<span class="sub">${t("focusLock")}</span>` : ""}</div>`}
- <div class="field"><label class="lab" for="pBirth">${t("birth")}</label><input id="pBirth" type="number" inputmode="numeric" min="1950" max="${today().getFullYear() - 8}" placeholder="2001" value="${p.birthYear || ""}"><span class="sub">${t("birthHint")}${ageAt(today(), p) != null ? ` · ${ageAt(today(), p)} · ${t("ages")[ageGroup(p)]}` : ""}</span>${ageGroup(p) === "kids" ? `<span class="sub">${t("kidsNote")}</span>` : ""}</div>
- <div class="field"><span class="lab">${t("sex")}</span><div class="seg g3">${["m", "f", "d"].map((k) => `<button type="button" data-p="sex" data-v="${k}" aria-pressed="${p.sex === k}">${t("sexes")[k]}</button>`).join("")}</div><span class="sub">${t("sexHint")}</span></div></div>`;
+    // 7i: about me = sport & belt (by choice of sport) + person; training week = club, own days, focus block; dates & goals
+    me += profSportHtml(p) + profPersonHtml(p);
     const cl = p.club || { days: [], minutes: 90 },
       overlap = cl.days.some((d) => p.days.includes(d));
     train += `<div class="panel"><div class="field"><span class="lab">${t("clubDays")}</span><div class="chips">${[0, 1, 2, 3, 4, 5, 6].map((i) => `<button type="button" class="chip cday" data-cday="${i}" aria-pressed="${cl.days.includes(i)}">${t("dayNames")[i]}</button>`).join("")}</div><span class="sub">${t("clubDaysHint")}</span></div>${cl.days.length ? `<div class="field"><span class="lab">${t("clubMin")}</span><div class="seg">${[60, 75, 90, 120].map((m) => `<button type="button" data-cmin="${m}" aria-pressed="${cl.minutes === m}">${m} ${t("min")}</button>`).join("")}</div>${overlap ? `<span class="sub">${t("clubOverlap")}</span>` : ""}</div>` : ""}</div>`;
@@ -1268,43 +1265,10 @@
     train += `<div class="panel"><div class="field"><span class="lab">${t("days")} · ${p.days.length}</span><div class="chips">${[0, 1, 2, 3, 4, 5, 6].map((i) => `<button type="button" class="chip${(p.club || { days: [] }).days.includes(i) ? " clubday" : ""}" data-day="${i}" aria-pressed="${p.days.includes(i)}">${t("dayNames")[i]}</button>`).join("")}</div><span class="sub">${t("ownHint")}</span></div>
  <div class="field"><label class="lab" for="pMin">${t("minutes")}: <span id="pMinV">${mv}</span></label><input id="pMin" type="range" min="30" max="${cap}" step="15" value="${mv}"><span class="sub">${t("minCap")}</span></div>
  </div>`;
-    {
-      const T = tkdOf(),
-        show = p.sport === "taekwondo" || ui.tkdOpen || T.wt || T.itf || T.hist.length || T.exams.length;
-      goals += show
-        ? tkdPanelHtml()
-        : `<div class="panel"><button type="button" class="btn sec" data-tk="open">${t("tkd").title}</button></div>`;
-    }
-    goals += `<div class="panel"><div class="field"><span class="lab">${t("comps")}</span>${(p.comps || []).length ? "" : `<span class="sub">${t("compNone")}</span>`}</div>${(
-      p.comps || []
-    )
-      .slice()
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .map((c) => {
-        const grade = c.kind === "grade",
-          f = grade ? null : sportFor(p.sport).rules.format(p.disc, ageAt(parse(c.date), p)),
-          dn = daysBetween(today(), parse(c.date)),
-          info = [t("compKind")[c.kind || "comp"], dn >= 0 ? (grade ? t("daysToGrade") : t("daysToComp"))(dn) : "✓"];
-        if (f) info.push(`${t("cls")[f.cls]} · ${fmtText(f)}`);
-        else if (!grade && p.birthYear) info.push(t("noFormat"));
-        if (!grade && koLock(c.date)) info.push(t("koComp"));
-        if (c.result) info.push(resText(c));
-        return `<div class="row" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${fmtDate(c.date)}</b><div class="sub">${esc(info.join(" · "))}</div></span>${!grade && dn >= 0 ? `<input class="wc" type="text" inputmode="decimal" data-wc="${c.id}" value="${c.wc ?? ""}" placeholder="${t("wcPh")}" aria-label="${t("wc")}">` : ""}<button type="button" class="btn ghost" data-cdel="${c.id}">${t("compClear")}</button></div>`;
-      })
-      .join(
-        "",
-      )}${sportRow("data-csport", ui.csport)}<div class="field">${(ui.csport || mainSport()) === "boxing" ? "" : `<div class="seg">${["comp", "grade"].map((k) => `<button type="button" data-ckind="${k}" aria-pressed="${(ui.ckind || "comp") === k}">${t("compKind")[k]}</button>`).join("")}</div>`}<div class="inline"><input id="pCompNew" type="date" min="${iso(today())}"><button type="button" class="btn sec" id="pCompAdd">${t("compAdd")}</button></div><span class="sub">${t("compHint")}</span></div></div>`;
-    more += `<div class="panel"><div class="field"><span class="lab">${t("limits")}</span><div class="chips">${Object.keys(
-      AV,
-    )
-      .map(
-        (k) =>
-          `<button type="button" class="chip" data-lim="${k}" aria-pressed="${p.limits.includes(k)}">${t("lim")[k]}</button>`,
-      )
-      .join("")}</div><span class="sub">${t("limitsHint")}</span></div></div>`;
+    train += blockProfHtml();
+    goals += profGoalsHtml(p);
     const note = `<p class="sub" style="text-align:center;margin:-4px 0 0">${p.days.length ? t("autoSave") : t("needDay")}</p>`;
-    // days first; level, discipline, age and limitations folded away (changed rarely)
-    train += `<details class="pmore" data-pmore="1" ${ui.profMore ? "open" : ""}><summary>${t("profMore")}</summary>${more}</details>`;
+    me += note;
     train += note;
     goals += note;
     // breaks and KO act on the stored data directly (they are not part of the plan settings above)
@@ -1322,7 +1286,6 @@
       .join(
         "",
       )}<div class="field"><span class="lab">${t("ko")}</span>${S.ko ? `<span class="sub">${esc(koLock(iso(today())) ? t("koActive")(fmtDate(iso(koUntil)), daysBetween(today(), koUntil) + 1) : t("koPast")(fmtDate(S.ko)))}</span><button type="button" class="btn ghost" data-kodel="1" style="align-self:flex-start">${t("del")}</button>` : `<span class="sub">${t("koHint")}</span><button type="button" class="btn sec" data-konew="1">${t("koAdd")}</button>`}</div></div>`;
-    goals += blockProfHtml();
     {
       const hj = hijri(today()),
         F = t("fast");
@@ -1356,11 +1319,12 @@
     app += `<div class="panel"><button type="button" class="row legal-entry" data-news="1"><span class="legal-entry-text"><b>${t("news").row}</b><span class="sub">${t("news").sub}</span></span><span class="chev" aria-hidden="true">›</span></button></div>`;
     app += `<div class="panel"><button type="button" class="row legal-entry" data-legal="1"><span class="legal-entry-text"><b>${t("legal").row}</b><span class="sub">${t("legal").sub}</span></span><span class="chev" aria-hidden="true">›</span></button></div>`;
     app += `<div class="panel"><div class="row"><span style="flex:1">${t("storage")}</span><span class="sub">${store.mode === "cloud" ? t("cloud") : t("local")}</span></div></div>`;
-    h += { train, goals, life, guide: guidePanelHtml(), app }[sec] || "";
+    h += { me, train, goals, life, guide: guidePanelHtml(), app }[sec] || "";
     return h;
   }
-  /* Profile overview: five sections like the iPhone settings, each with a one-line summary */
+  /* Profile overview: six sections (7i) like the iPhone settings, each with a one-line summary */
   const PSEC_ICO = {
+    me: '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/>',
     train: '<path d="M6.5 7.5v9M3.5 10v4M17.5 7.5v9M20.5 10v4M6.5 12h11"/>',
     goals:
       '<path d="M8 4.5h8v4.8a4 4 0 0 1-8 0z"/><path d="M8 6.2H5.4a2.8 2.8 0 0 0 2.8 3.6M16 6.2h2.6a2.8 2.8 0 0 1-2.8 3.6M12 13.3v3.9M9 19.5h6"/>',
@@ -1370,18 +1334,21 @@
   };
   function profOverview(p) {
     const PS = t("psec"),
-      nc = (p.comps || []).filter((c) => c.date >= iso(today())).sort((a, b) => a.date.localeCompare(b.date))[0],
+      td = iso(today()),
+      nd = profDates(p).find((d) => (d.kind === "exam" ? !d.x.result && d.date >= td : d.date >= td)),
       bs = blockState(),
       L = t("life"),
+      sp = p.sport || mainSport(),
+      grade = sp === "kickboxing" ? beltName(beltIdx()) : sp === "taekwondo" && tkdGradeOf() ? tkdGradeLbl(tkdGradeOf()) : "",
       sum = {
-        train: `${discLabel(p)} · ${(p.club && p.club.days.length ? PS.club(p.club.days.length) + " + " : "") + PS.days(p.days.length)}`,
-        goals:
-          [
-            nc ? (nc.kind === "grade" ? PS.nextGrade : PS.nextComp)(fmtDate(nc.date)) : "",
-            bs ? `${t("blk").names[bs.k]}${bs.wk ? " · " + t("blk").wkN(bs.wk) : ""}` : "",
-          ]
-            .filter(Boolean)
-            .join(" · ") || PS.noGoal,
+        me: [discLabel(p), t("levels")[p.level || 0], grade].filter(Boolean).join(" · "),
+        train: [
+          (p.club && p.club.days.length ? PS.club(p.club.days.length) + " + " : "") + PS.days(p.days.length),
+          bs ? `${t("blk").names[bs.k]}${bs.wk ? " · " + t("blk").wkN(bs.wk) : ""}` : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
+        goals: nd ? (nd.kind === "comp" ? PS.nextComp : PS.nextGrade)(fmtDate(nd.date)) : PS.noGoal,
         life: [
           pausedOn(iso(today())) ? PS.paused : "",
           `${L.weekLbl}: ${L.moods[weekMood()]}`,
@@ -1393,7 +1360,7 @@
         app: PS.app[1],
       };
     let h = header(t("profTitle")) + `<div class="panel plist">`;
-    ["train", "goals", "life", "guide", "app"].forEach((k) => {
+    ["me", "train", "goals", "life", "guide", "app"].forEach((k) => {
       h += `<button type="button" class="grow" data-psec="${k}"><span class="gico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${PSEC_ICO[k]}</svg></span><span class="gtx"><b>${PS[k][0]}</b><small>${esc(sum[k])}</small></span><span class="chev">›</span></button>`;
     });
     if (simpleView())

@@ -244,6 +244,8 @@
       g = (S.profile.comps || [])
         .filter((c) => c.kind === "grade" && (c.sport || "kickboxing") === sp)
         .map((c) => c.date)
+        // 7i: a planned taekwondo exam (Dates & goals) prepares like a grading entered as a date
+        .concat(sp === "taekwondo" ? ((S.profile.tkd && S.profile.tkd.exams) || []).filter((x) => !x.result).map((x) => x.date) : [])
         .sort()
         .find((x) => parse(x) >= d);
     if (g && daysBetween(d, parse(g)) <= 28)

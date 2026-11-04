@@ -7,7 +7,7 @@
         k: "profile",
         done: !!p.birthYear && p.days.length > 0,
         tab: "profile",
-        sec: "train",
+        sec: "me",
         sel: "#pBirth",
       },
       {
@@ -55,7 +55,6 @@
     if (x.view) ui.testView = x.view;
     if (x.tab === "profile") ui.profSec = x.sec || null;
     // the year of birth sits in the folded "more" part of the training section
-    if (x.sel === "#pBirth") ui.profMore = true;
     ui.tab = x.tab;
     if (x.tab !== "profile") draft = null;
     render(true);

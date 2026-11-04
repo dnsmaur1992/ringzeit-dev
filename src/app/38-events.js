@@ -483,6 +483,26 @@
       render();
       return;
     }
+    // 7i profile: whose sport details are shown (not the main sport), open/close the belt or grade choice, go to the belt exam
+    if (ds.psport) {
+      ui.psport = ds.psport;
+      ui.pedit = null;
+      render();
+      return;
+    }
+    if (ds.pedit) {
+      ui.pedit = ui.pedit === ds.pedit ? null : ds.pedit;
+      render();
+      return;
+    }
+    if (ds.gotoexam) {
+      ui.tab = "test";
+      ui.testView = "exam";
+      draft = null;
+      render(true);
+      window.scrollTo(0, 0);
+      return;
+    }
     // ----- backup and summary
     if (ds.io === "exp") return exportData();
     if (ds.io === "imp") return document.getElementById("impFile").click();
@@ -519,7 +539,11 @@
     if (ds.tab) {
       if (ui.testOpen && ds.tab !== "test") ui.testOpen = false;
       // the profile tab always opens on its overview
-      if (ds.tab === "profile") ui.profSec = null;
+      if (ds.tab === "profile") {
+        ui.profSec = null;
+        ui.psport = null;
+        ui.pedit = null;
+      }
       ui.tab = ds.tab;
       if (ds.tab !== "profile") draft = null;
       render(true);

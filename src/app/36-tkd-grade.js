@@ -187,6 +187,7 @@
       } else if (x) tkdHistPush({ date: x.date, style: x.style, from: T[x.style] || "", to: T[x.style] || "", target: x.target, kind: "exam", passed: true, applied: false });
       ui.tkdAsk = null;
     }
+    if ((a === "plan" || a === "del" || a === "res") && draft) applyPlan();
     store.save();
     render();
   }
