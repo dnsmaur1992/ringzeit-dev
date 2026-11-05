@@ -4056,3 +4056,66 @@ test("7i: profile – six sections; about me asks only the chosen sport's questi
   assert.equal(a.run("ui.tab"), "test");
   assert.equal(a.run("ui.testView"), "exam");
 });
+
+test("7k relax: breathing plans, voice hand-over after three cycles, meditation timelines for 10–30 min, entries", async () => {
+  const a = app();
+  // breathing: whole cycles, the patterns differ by use
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(rxBreathPlan('calm',4))")).total, 240);
+  assert.equal(a.run("rxBreathPlan('box',4).cyc"), 16);
+  assert.equal(a.run("rxBreathPlan('sleep',2).n"), 6);
+  assert.equal(a.run("rxBreathAt(rxBreathPlan('sleep',4),12).ph"), "out", "4-7-8: from 11 s the long exhale");
+  assert.equal(a.run("rxBreathAt(rxBreathPlan('box',4),9).ph"), "out");
+  // meditations: every kind and length in both languages – same sentences, rising times, the whole length used
+  for (const kind of ["scan", "strong", "sleep"])
+    for (const len of [10, 15, 20, 30]) {
+      const de = JSON.parse(a.run(`JSON.stringify(rxMedPlan('${kind}',${len},'de'))`)),
+        en = JSON.parse(a.run(`JSON.stringify(rxMedPlan('${kind}',${len},'en'))`));
+      assert.equal(de.steps.length, en.steps.length, kind + len + " DE/EN pairs");
+      assert.equal(de.total, len * 60);
+      de.steps.forEach((s, i) => i && assert.ok(s.at > de.steps[i - 1].at, "rising"));
+      const last = de.steps[de.steps.length - 1];
+      assert.ok(last.at < de.total - 5 && last.at > de.total * 0.75, `${kind} ${len}: last sentence near the end (${last.at}/${de.total})`);
+    }
+  assert.ok(a.run("rxMedPlan('scan',30,'de').steps.length") > a.run("rxMedPlan('scan',10,'de').steps.length"), "longer = more sentences");
+  assert.ok(JSON.stringify(JSON.parse(a.run("JSON.stringify(RX_MED.de)"))).includes("Ich bin stark"), "strengthening words");
+  const deTx = a.run("JSON.stringify(RX_MED.de)+JSON.stringify(RXT.de)");
+  assert.doesNotMatch(deTx, /\bIhnen\b|\bIhre[mnrs]?\b|\b(Atmen|Schließen|Spüren|Legen|Setzen|Lassen|Nehmen|Kommen|Bleiben) Sie\b/, "never formal address");
+  assert.ok((deTx.match(/\b(du|dich|dir|dein\w*)\b/gi) || []).length > 40, "the voice says du");
+  assert.equal(a.run("rxEvening(new Date(2026,10,5,21,0))"), true);
+  assert.equal(a.run("rxEvening(new Date(2026,10,5,15,0))"), false);
+  // voice flow: intro, three guided cycles, hand-over, then quiet; the coach voice switch does not mute it
+  a.run(`globalThis.spoken=[];globalThis.speechSynthesis={speak(u){spoken.push(u.text)},cancel(){},resume(){},speaking:false,pending:false,paused:false,getVoices:()=>[]};window.speechSynthesis=speechSynthesis;globalThis.SpeechSynthesisUtterance=function(t){this.text=t};S.profile.voice=false;S.profile.lang='de';
+    globalThis.__now=1e12;Date.now=()=>__now;relaxOpen({mode:'breath',pat:'calm',bmin:4,tone:false});relaxStart();`);
+  assert.equal(a.run("ui.relax.run"), true);
+  assert.equal(a.run("timerRunning()"), true, "keeps the screen awake like the timer");
+  assert.match(a.run("spoken[0]"), /vier Sekunden ein/);
+  for (let s = 0; s <= 80; s += 0.5) a.run(`__now=1e12+8000+${s * 1000};relaxTick()`);
+  const said = JSON.parse(a.run("JSON.stringify(spoken)"));
+  assert.equal(said.filter((x) => x === "Einatmen").length, 3, "three guided inhales");
+  assert.equal(said.filter((x) => x === "Ausatmen").length, 3);
+  assert.ok(said.includes(a.run("RXT.de.sHand")), "hand-over sentence");
+  assert.ok(said.indexOf(a.run("RXT.de.sHand")) > said.lastIndexOf("Ausatmen"));
+  for (let s = 80; s <= 241; s += 0.5) a.run(`__now=1e12+8000+${s * 1000};relaxTick()`);
+  const all = JSON.parse(a.run("JSON.stringify(spoken)"));
+  assert.ok(all.includes("Noch drei Atemzüge."));
+  assert.ok(all.some((x) => /Du machst das gut|Spannung gehen/.test(x)), "encouragement in between");
+  assert.match(all[all.length - 1], /etwas Gutes für dich getan/);
+  assert.equal(a.run("ui.relax.phase"), "done");
+  assert.equal(a.run("timerRunning()"), false);
+  // meditation: the sentences come in order; returning late skips the missed ones
+  a.run(`spoken.length=0;__now=1e12;relaxOpen({mode:'med',kind:'strong',mlen:10});relaxStart();`);
+  const steps = JSON.parse(a.run("JSON.stringify(ui.relax.plan.steps)"));
+  a.run(`__now=1e12+${(steps[0].at + 0.1) * 1000};relaxTick()`);
+  a.run(`__now=1e12+${(steps[5].at + 0.1) * 1000};relaxTick()`);
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(spoken)")), [steps[0].tx, steps[5].tx]);
+  a.run("relaxClose()");
+  assert.equal(a.run("ui.relax"), null);
+  // entries: everyday life section, Today on a rest day; the evening preselects falling asleep
+  a.run("draft=null;ui.tab='profile';ui.profSec='life';");
+  assert.match(a.run("renderProfile()"), /data-rx="open" data-rv="breath"/);
+  a.run("S.profile.days=[];S.profile.club=null;S.sessions={};draft=null;");
+  assert.match(a.run("renderWeek()"), /data-rx="quick"/, "rest day card");
+  a.run("relaxOpen()");
+  assert.equal(a.run("ui.relax.pat === 'sleep'"), a.run("rxEvening()"), "evening: falling asleep first");
+  assert.match(a.run("relaxOpen({mode:'med'});document.getElementById('relax').innerHTML"), /data-rv="30"/);
+});
