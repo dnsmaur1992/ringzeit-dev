@@ -246,6 +246,12 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
   - **Einstiege:** Profil → Alltag & Pausen ganz oben („Entspannen“). Heute an Ruhetagen und in Entlastungswochen eine kleine Karte (Atmen sofort / Mehr). Abends ab 20 Uhr ist beim Öffnen „Einschlafen“ vorausgewählt.
   - Die letzte Wahl wird in `S.profile.relax` gespeichert und landet damit auch in der Sicherung.
   - Neuer Test „7k relax“ (235 Tests): Pläne, Sprachablauf mit Übergabe nach 3 Zyklen, alle Meditationslängen DE/EN, Du-Form, Einstiege. Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
+- **7l Stimmenauswahl** (Auftrag 05.11.2026 06:00; Anlass: Die Einstellung „Markus“ in iOS griff nicht, weil Ringzeit die Stimme selbst wählt und iOS Web-Apps nicht jede Stimme gibt): Unter App & Daten → „Stimme der Ansagen“ stehen jetzt „Automatisch“ und alle Stimmen der App-Sprache, die das Gerät der App gibt. Die Liste ist nach Qualität sortiert (Premium, Erweitert, Standard), jede Stimme hat eine Probe in genau dieser Stimme. Die Wahl wird je Sprache in `S.profile.voicePick` gespeichert und gilt für Coach-Ansagen, Rundentimer und Entspannen.
+  - **Ausweichen:** Die gewählte Stimme kommt zuerst. Fehlt sie (anderes Gerät, iOS-Update) oder schlägt sie fehl, nimmt Ringzeit die beste andere Stimme, zuletzt die Standardstimme der Sprache. Fehlt sie, zeigt das Profil einen Hinweis.
+  - Apples Spaß- und Eloquence-Stimmen (`com.apple.speech.synthesis.voice.*`, z. B. „Grandpa“) erscheinen nicht in der Liste und werden auch automatisch nicht mehr gewählt.
+  - Für iOS gibt es einen Hinweis, warum geladene Stimmen fehlen können.
+  - Der Hinweistext zum Jahreszeiten-Design ist korrigiert („Palme mit Liegestuhl“ statt „Badehose“, seit 7c-3 veraltet).
+  - Neuer Test „7l voice choice“ (236 Tests). Baseline gleich.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
