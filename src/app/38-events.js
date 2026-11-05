@@ -59,8 +59,21 @@
       return toast(t("fb").offline);
     }
     const b = ev.target.closest("button");
+    // 7k relax: a tap on the dark screen (not on a button) gives a little light for a few seconds
+    if (!b && ui.relax && ui.relax.run && ev.target.closest("#relax")) {
+      ui.relax.bright = true;
+      document.getElementById("relax").classList.add("bright");
+      clearTimeout(ui.relax.bt);
+      ui.relax.bt = setTimeout(() => {
+        if (!ui.relax) return;
+        ui.relax.bright = false;
+        document.getElementById("relax")?.classList.remove("bright");
+      }, 4000);
+      return;
+    }
     if (!b || b.disabled) return;
     const ds = b.dataset;
+    if (ds.rx) return relaxAction(ds.rx, ds);
     if (ds.workout) return workoutAction(ds.workout);
     if (ds.player) return playerAction(ds.player, ds);
     if (ds.exerciseTimer) return exerciseTimerAction(ds.exerciseTimer, ds);
@@ -1103,6 +1116,10 @@
     true,
   );
   document.addEventListener("change", (ev) => {
+    if (ev.target.dataset && ev.target.dataset.rxchk && ui.relax) {
+      ui.relax[ev.target.dataset.rxchk] = ev.target.checked;
+      return;
+    }
     if (ev.target.id === "impFile" && ev.target.files && ev.target.files[0]) {
       importFile(ev.target.files[0]);
       ev.target.value = "";

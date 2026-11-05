@@ -243,6 +243,12 @@
     }
     if (load.deload)
       h += `<div class="note warn">${load.why === "rpe" ? t("deloadRpe") : load.why === "acwr" ? t("deloadAcwr") : load.why === "proj" ? t("deloadProj") : t("deloadPlan")}</div>`;
+    // 7k: on rest days (nothing left to do today, no break) and in deload weeks a small offer to wind down
+    {
+      const td = iso(today()),
+        open = (typeOn(td) && !doneOn(td)) || (clubOn(td) && !clubDone(td));
+      if (!pausedOn(td) && (!open || load.deload)) h += relaxCardHtml(open && load.deload);
+    }
     const ts = simple ? null : testStatus();
     if (ts)
       h += `<div class="note act"><span>${t({ due: "testDue", first: "testFirst", pre: "testPre", post: "testPost" }[ts])}</span><button type="button" class="btn ghost" data-tab="test">${t("toTest")}</button></div>`;

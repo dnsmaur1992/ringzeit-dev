@@ -1290,7 +1290,7 @@
         life += `<div class="panel"><div class="field"><span class="lab">${F.lbl}</span><div class="seg">${[0, 1].map((i) => `<button type="button" data-fast="${i ? "off" : "on"}" aria-pressed="${on === !i}">${t("onOff")[i]}</button>`).join("")}</div><span class="sub">${F.hint}</span></div></div>`;
       }
     }
-    life = lifePanelHtml() + life;
+    life = relaxPanelHtml() + lifePanelHtml() + life; // 7k: relaxing comes first
     app += `<div class="panel"><div class="field"><span class="lab">${t("seasonLbl")}</span><div class="seg">${[0, 1].map((i) => `<button type="button" data-season="${i ? "off" : "on"}" aria-pressed="${!!S.profile.seasonOff === !!i}">${t("onOff")[i]}</button>`).join("")}</div><span class="sub">${t("seasonHint")}</span></div></div>`;
     {
       const V = t("view");
