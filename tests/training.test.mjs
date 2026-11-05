@@ -4119,3 +4119,43 @@ test("7k relax: breathing plans, voice hand-over after three cycles, meditation 
   assert.equal(a.run("ui.relax.pat === 'sleep'"), a.run("rxEvening()"), "evening: falling asleep first");
   assert.match(a.run("relaxOpen({mode:'med'});document.getElementById('relax').innerHTML"), /data-rv="30"/);
 });
+
+test("7l voice choice: the chosen voice comes first; missing or failing it falls back to the best other voice", async () => {
+  const a = app();
+  const V = [
+    { name: "Anna", voiceURI: "com.apple.voice.enhanced.de-DE.Anna", lang: "de-DE", localService: true },
+    { name: "Markus", voiceURI: "com.apple.voice.compact.de-DE.Markus", lang: "de-DE", localService: true },
+    { name: "Grandpa", voiceURI: "com.apple.speech.synthesis.voice.Grandpa", lang: "de-DE", localService: true },
+    { name: "Daniel", voiceURI: "com.apple.voice.compact.en-GB.Daniel", lang: "en-GB", localService: true },
+  ];
+  a.run(`globalThis.VOICES=${JSON.stringify(V)};globalThis.spoken=[];globalThis.speechSynthesis={getVoices:()=>VOICES,speak(u){spoken.push(u)},cancel(){},resume(){},speaking:false,pending:false,paused:false};window.speechSynthesis=speechSynthesis;globalThis.SpeechSynthesisUtterance=function(t){this.text=t};S.profile.lang='de';S.profile.voice=true;S.profile.voicePick=null;`);
+  assert.equal(a.run("bestVoice().name"), "Anna", "automatic: enhanced first");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(voiceList().map(v=>v.name))")), ["Anna", "Markus"], "German voices, novelty voices left out, enhanced first");
+  // choose Markus via the list (with a sample in exactly that voice)
+  a.run("draft=null;ui.tab='profile';ui.profSec='app';");
+  assert.match(a.run("renderProfile()"), /data-vpick="com\.apple\.voice\.compact\.de-DE\.Markus"/);
+  await a.click({ dataset: { vpick: "com.apple.voice.compact.de-DE.Markus" } });
+  assert.equal(a.run("S.profile.voicePick.de.name"), "Markus");
+  a.advance(100); // the sample starts 60 ms after cancel() (iOS)
+  assert.equal(a.run("spoken[spoken.length-1].voice.name"), "Markus", "sample in the chosen voice");
+  assert.equal(a.run("bestVoice().name"), "Markus", "the choice wins over the automatic one");
+  assert.match(a.run("renderProfile()"), /Gewählt: Markus/);
+  // a failing chosen voice: the retry skips it and takes the best other one
+  assert.equal(a.run("bestVoice(['com.apple.voice.compact.de-DE.Markus']).name"), "Anna");
+  // the chosen voice disappears (other device, iOS update): automatic, with a note
+  a.run("VOICES.splice(1,1);");
+  assert.equal(a.run("bestVoice().name"), "Anna");
+  assert.match(a.run("renderProfile()"), /„Markus“ ist gerade nicht verfügbar/);
+  // per language: English keeps its own (automatic) choice; "automatic" clears the German one
+  a.run("S.profile.lang='en';");
+  assert.equal(a.run("bestVoice().name"), "Daniel");
+  a.run("S.profile.lang='de';");
+  await a.click({ dataset: { vpick: "" } });
+  assert.equal(a.run("S.profile.voicePick.de"), null);
+  // the relax voice uses the same choice
+  a.run("VOICES.splice(1,0," + JSON.stringify(V[1]) + ");");
+  await a.click({ dataset: { vpick: "com.apple.voice.compact.de-DE.Markus" } });
+  a.run("spoken.length=0;relaxOpen({mode:'breath',pat:'calm',bmin:2});relaxStart();");
+  assert.equal(a.run("spoken[0].voice.name"), "Markus");
+  a.run("relaxClose()");
+});
