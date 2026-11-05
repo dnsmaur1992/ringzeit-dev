@@ -52,7 +52,7 @@
       pickSub: "Tipp an, was du willst. Auf Heute erscheint nur das, was du gewählt hast.",
       groups: { train: "Training", rest: "Erholung", mind: "Mindset", disc: "Disziplin", body: "Körper", look: "Optik" },
       blocks: {
-        train: "Wochenziel Einheiten",
+        train: "Wochenziel Trainings",
         test: "Fitnesstest am Start und am Ende",
         mob: "10 Min Mobility",
         walk: "Spaziergang draußen",
@@ -73,9 +73,20 @@
         weight: "Gewicht 1× pro Woche eintragen",
         winter: "Winter-Design",
       },
-      trainN: "Einheiten pro Woche",
+      trainN: "Trainings pro Woche",
       relaxN: "Entspannen pro Woche",
-      goalNote: "Vereinstraining zählt mit. In Wochen mit Krankheit oder Pause ruht das Ziel, die Serie bleibt.",
+      goalNote: "Gezählt wird jedes eingetragene Training – Ringzeit oder Verein. Vorausgewählt ist deine geplante Zahl pro Woche. In Wochen mit Krankheit oder Pause ruht das Ziel, die Serie bleibt.",
+      sleepNote: "Zählt für die letzte Nacht.",
+      mobGo: "▶ 10 Min",
+      mobGoA: "Geführte 10-Minuten-Mobility starten",
+      mobH: "Mobility",
+      mobIntro: "Zehn Minuten Mobility. Ich sage dir jede Übung an. Bewege dich ruhig und ohne Schmerz.",
+      mobReady: "Gleich geht's los",
+      mobNext: "Danach",
+      mobDone: "Geschafft. Zehn Minuten für deine Beweglichkeit. Stark.",
+      mobFin: "10 Min Mobility geschafft – abgehakt.",
+      mobStopped: "Mobility beendet.",
+      stop: "Beenden",
       coldNote: "Kalt duschen langsam steigern; nicht bei Herz-Kreislauf-Problemen oder wenn du krank bist.",
       weightNote: "Nur als Verlauf – ohne Zielgewicht. Ein Gewichtslimit für einen Kampf trägst du bei den Terminen ein.",
       start: "Winter Arc starten",
@@ -85,7 +96,7 @@
       toTest: "Zum Fitnesstest",
       week: (w, n) => `Winter Arc · Woche ${w} von ${n}`,
       day: (d, n, l) => `Tag ${d} von ${n} · noch ${l} ${l === 1 ? "Tag" : "Tage"}`,
-      unitsWk: "Einheiten diese Woche",
+      unitsWk: "Trainings diese Woche",
       relaxWk: "Entspannen diese Woche",
       today: "Heute",
       thisWeek: "Diese Woche",
@@ -180,7 +191,18 @@
       },
       trainN: "Sessions per week",
       relaxN: "Relax per week",
-      goalNote: "Club training counts. In weeks with sickness or a break the goal rests, the streak stays.",
+      goalNote: "Every logged training counts – Ringzeit or club. Your planned number per week is preselected. In weeks with sickness or a break the goal rests, the streak stays.",
+      sleepNote: "Counts for last night.",
+      mobGo: "▶ 10 min",
+      mobGoA: "Start guided 10-minute mobility",
+      mobH: "Mobility",
+      mobIntro: "Ten minutes of mobility. I'll call out each exercise. Move calmly and without pain.",
+      mobReady: "Starting in a moment",
+      mobNext: "Next",
+      mobDone: "Done. Ten minutes for your mobility. Strong.",
+      mobFin: "10 min mobility done – ticked.",
+      mobStopped: "Mobility stopped.",
+      stop: "Stop",
       coldNote: "Build cold showers up slowly; not with heart or circulation problems or when you're ill.",
       weightNote: "As a curve only – no target weight. A weight limit for a fight goes under your dates.",
       start: "Start Winter Arc",
@@ -308,10 +330,13 @@
     }
     return !!(a.checks && a.checks[ds] && a.checks[ds].includes(id));
   }
-  function arcToggle(id) {
+  /* ticks can be added for today and the two days before (honest, but forgiving) – not before the start */
+  const arcCanTick = (a, ds) => ds <= iso(today()) && ds >= iso(addDays(today(), -2)) && ds >= a.start;
+  function arcToggle(id, day) {
     const a = arcOf();
     if (!a) return;
-    const ds = iso(today());
+    const ds = day || iso(today());
+    if (!arcCanTick(a, ds)) return;
     a.checks = a.checks || {};
     const cur = new Set(a.checks[ds] || []);
     cur.has(id) ? cur.delete(id) : cur.add(id);
@@ -406,7 +431,17 @@
           .map((id) => {
             const on = arcTicked(a, id, td),
               auto = id === "breath";
-            return `<div class="arch"><button type="button" class="arck${on ? " on" : ""}" data-arcchk="${id}" aria-pressed="${on}" ${auto && on ? "disabled" : ""}>${on ? "✓" : ""}</button><span style="flex:1">${esc(A.blocks[id])}${id === "cold" ? `<small class="sub" style="display:block">${A.coldNote}</small>` : ""}</span><span class="sub">${A.of7(cnt(id))}</span>${auto && !on ? `<button type="button" class="btn ghost" data-rx="open" data-rv="breath">🌬️</button>` : ""}</div>`;
+            const wk = Array.from({ length: 7 }, (_, k) => iso(addDays(parse(w.from), k)))
+              .map((ds, k) => {
+                const done = arcTicked(a, id, ds),
+                  can = !auto && arcCanTick(a, ds),
+                  cls = `ad${done ? " on" : ""}${ds === td ? " td" : ""}${ds > td || ds < a.start ? " fut" : ""}`;
+                return can
+                  ? `<button type="button" class="${cls}" data-arcchk="${id}" data-ad="${ds}" aria-pressed="${done}" aria-label="${esc(fmtDate(ds))}">${t("weekday")[k].slice(0, 2)}</button>`
+                  : `<span class="${cls}" aria-hidden="true">${t("weekday")[k].slice(0, 2)}</span>`;
+              })
+              .join("");
+            return `<div class="arch"><button type="button" class="arck${on ? " on" : ""}" data-arcchk="${id}" aria-pressed="${on}" ${auto && on ? "disabled" : ""}>${on ? "✓" : ""}</button><span style="flex:1">${esc(A.blocks[id])}${id === "sleep23" || id === "sleep7" ? `<small class="sub" style="display:block">${A.sleepNote}</small>` : ""}${id === "cold" ? `<small class="sub" style="display:block">${A.coldNote}</small>` : ""}</span><span class="sub">${A.of7(cnt(id))}</span>${auto && !on ? `<button type="button" class="btn ghost" data-rx="open" data-rv="breath">🌬️</button>` : ""}${id === "mob" && !on ? `<button type="button" class="btn ghost" data-arc="mob" aria-label="${A.mobGoA}">${A.mobGo}</button>` : ""}<span class="adays">${wk}</span></div>`;
           })
           .join("")}`;
       if (weekly.length)
@@ -429,6 +464,100 @@
     }</div>`;
     return h;
   }
+
+  /* ---------- 10-minute mobility (7n+): generated by the plan generator for the main sport, run as a guided sequence ----------
+     Own home routine without equipment; it does not touch the plan or the training log and ticks "10 min mobility". */
+  const ARC_MOB_SEC = 600;
+  function arcMobPlan() {
+    let ids = [];
+    try {
+      const s = buildSession(iso(today()), "M", "home", [], { min: 10 });
+      // only mobility, stretching and joint work – no drills from the warm-up (footwork, rope …)
+      ids = s.blocks
+        .flatMap((b) => b.items.map((i) => i.id))
+        .filter((id) => EX[id] && (EX[id].cat === "mob" || EX[id].cat === "cool" || /dynamic|joint|mobil|circle|stretch/.test(id)) && !/breath/.test(id));
+    } catch (e) {}
+    // top up to at least 6 with home mobility exercises that suit the limitations
+    const fits = (id) => EX[id] && !(S.profile.limits || []).some((l) => AV[l] && (EX[id].avoid || "").includes(AV[l])) && (!EX[id].eq || EX[id].eq === "none") && /h/.test(EX[id].locs || "h");
+    const pool = Object.keys(EX).filter((id) => EX[id].cat === "mob" && /^mob\./.test(id) && fits(id));
+    ids = [...new Set(ids)].filter(fits);
+    while (ids.length < 6 && pool.some((id) => !ids.includes(id))) ids.push(rnd(pool.filter((id) => !ids.includes(id))));
+    ids = ids.slice(0, 10);
+    return { ids, per: Math.floor(ARC_MOB_SEC / ids.length) };
+  }
+  const mobRunning = () => !!(ui.mob && ui.mob.run);
+  function mobSay(tx) {
+    if (S.profile.relax && S.profile.relax.voice === false) return;
+    try {
+      if (canSpeak()) speechSynthesis.speak(speakUtterance(tx, 0.95, [], Date.now()));
+    } catch (e) {}
+  }
+  function arcMobStart() {
+    unlockAudio();
+    ui.mob = Object.assign(arcMobPlan(), { run: true, start: Date.now() + 3000, idx: -1 });
+    ui.arc = { view: "mob" };
+    mobSay(arcT().mobIntro);
+    syncTimers();
+    renderArc();
+    clearInterval(arcMobStart.iv);
+    arcMobStart.iv = setInterval(arcMobTick, 250);
+  }
+  function arcMobStop(done) {
+    clearInterval(arcMobStart.iv);
+    if (!ui.mob) return;
+    ui.mob.run = false;
+    ui.mob.done = !!done;
+    if (done) {
+      const a = arcOf(),
+        ds = iso(today());
+      if (a && ds >= a.start) {
+        a.checks = a.checks || {};
+        a.checks[ds] = [...new Set([...(a.checks[ds] || []), "mob"])];
+        store.save();
+      }
+      mobSay(arcT().mobDone);
+      rxTone(528);
+    } else
+      try {
+        if (canSpeak()) speechSynthesis.cancel();
+      } catch (e) {}
+    syncTimers();
+    renderArc();
+    render();
+  }
+  function arcMobTick() {
+    const m = ui.mob;
+    if (!m || !m.run) return clearInterval(arcMobStart.iv);
+    const t = (Date.now() - m.start) / 1000,
+      tot = m.per * m.ids.length;
+    if (t >= tot) return arcMobStop(true);
+    const i = Math.max(0, Math.floor(t / m.per)),
+      left = t < 0 ? Math.ceil(-t) : Math.ceil(m.per - (t - i * m.per));
+    const clk = document.getElementById("mobclk");
+    if (clk) clk.textContent = t < 0 ? String(left) : fmt(left);
+    const all = document.getElementById("mobtot");
+    if (all) all.textContent = fmt(Math.ceil(tot - Math.max(0, t)));
+    if (t < 0 || i === m.idx) return;
+    m.idx = i;
+    const e = exText(m.ids[i]);
+    if (i) rxTone(440);
+    mobSay(`${e.name}. ${e.desc}`);
+    renderArc();
+  }
+  function arcMobHtml() {
+    const A = arcT(),
+      m = ui.mob;
+    if (!m) return "";
+    if (!m.run) return `<div class="arcard wawin" style="text-align:center"><div class="arcbadge">🤸</div><div class="big">${m.done ? A.mobFin : A.mobStopped}</div></div><button type="button" class="btn" data-arc="close">${A.close}</button>`;
+    const i = Math.max(0, m.idx),
+      e = exText(m.ids[i]),
+      nx = m.ids[i + 1] ? exText(m.ids[i + 1]).name : "";
+    return `<div class="mobrun"><div class="rxtop"><span>${A.mobH} · ${i + 1}/${m.ids.length}</span><span id="mobtot" class="num">${fmt(m.per * m.ids.length)}</span></div>
+      <div class="mobclk num" id="mobclk">${m.idx < 0 ? "3" : fmt(m.per)}</div>
+      <h2>${esc(m.idx < 0 ? A.mobReady : e.name)}</h2><p class="sub">${esc(m.idx < 0 ? "" : e.desc)}</p>
+      ${nx && m.idx >= 0 ? `<p class="sub">${A.mobNext}: ${esc(nx)}</p>` : ""}
+      <button type="button" class="btn ghost" data-arc="mobstop">${A.stop}</button></div>`;
+  }
   /* ---------- profile (Dates & goals) ---------- */
   function arcProfileHtml() {
     const A = arcT(),
@@ -445,9 +574,11 @@
     return h + `</div></div>`;
   }
   /* ---------- setup and review overlay ---------- */
+  /* planned trainings per week: own days plus club days (both count when entered) */
+  const arcPlanned = () => Math.max(1, Math.min(7, (S.profile.days || []).length + ((S.profile.club && S.profile.club.days) || []).length));
   function arcOpen(view) {
     const a = arcOf();
-    ui.arc = view === "summary" ? { view } : { view: "setup", weeks: a ? a.weeks : 8, pick: a ? [...a.pick] : [...ARC_DEFAULT], train: a ? a.train : 3, relax: a ? a.relax : 2 };
+    ui.arc = view === "summary" ? { view } : { view: "setup", weeks: a ? a.weeks : 8, pick: a ? [...a.pick] : [...ARC_DEFAULT], train: a ? a.train : arcPlanned(), relax: a ? a.relax : 2 };
     renderArc();
   }
   function renderArc() {
@@ -463,6 +594,12 @@
     const A = arcT(),
       a = arcOf();
     let h = `<div class="fbar"><button type="button" class="x" data-arc="close" aria-label="×">✕</button><span>${A.name}</span><span style="width:40px"></span></div>`;
+    if (r.view === "mob") {
+      el.className = "relax arcov" + (mobRunning() ? " run" : "");
+      el.innerHTML = h.replace('data-arc="close"', 'data-arc="mobstop"') + arcMobHtml();
+      return;
+    }
+    el.className = "relax arcov";
     if (r.view === "summary" && a) {
       const s = arcSummary(a),
         T = s.tests;
@@ -486,7 +623,7 @@
       h += `<div class="panel"><div class="field"><span class="lab">${A.pickH}</span><span class="sub">${A.pickSub}</span></div>`;
       for (const [g, items] of Object.entries(ARC_BLOCKS)) {
         h += `<div class="field"><span class="lab">${A.groups[g]}</span><div class="chips">${items.map(([id]) => `<button type="button" class="chip" data-arcpick="${id}" aria-pressed="${r.pick.includes(id)}">${esc(A.blocks[id])}</button>`).join("")}</div>`;
-        if (g === "train" && r.pick.includes("train")) h += `<div class="row" style="gap:10px;align-items:center"><span style="flex:1">${A.trainN}</span><div class="seg">${[2, 3, 4, 5].map((n) => `<button type="button" data-arc="set" data-ak="train" data-av="${n}" aria-pressed="${r.train === n}">${n}</button>`).join("")}</div></div>`;
+        if (g === "train" && r.pick.includes("train")) h += `<div class="row" style="gap:10px;align-items:center"><span style="flex:1">${A.trainN}</span><div class="seg">${[1, 2, 3, 4, 5, 6, 7].map((n) => `<button type="button" data-arc="set" data-ak="train" data-av="${n}" aria-pressed="${r.train === n}">${n}</button>`).join("")}</div></div>`;
         if (g === "rest" && r.pick.includes("relax")) h += `<div class="row" style="gap:10px;align-items:center"><span style="flex:1">${A.relaxN}</span><div class="seg">${[1, 2, 3].map((n) => `<button type="button" data-arc="set" data-ak="relax" data-av="${n}" aria-pressed="${r.relax === n}">${n}</button>`).join("")}</div></div>`;
         if (g === "train" && (r.pick.includes("train") || r.pick.includes("relax"))) h += `<span class="sub">${A.goalNote}</span>`;
         if (g === "disc" && r.pick.includes("cold")) h += `<span class="sub">${A.coldNote}</span>`;
@@ -502,7 +639,10 @@
       r = ui.arc;
     if (act === "setup") return arcOpen("setup");
     if (act === "summary") return arcOpen("summary");
+    if (act === "mob") return arcMobStart();
+    if (act === "mobstop") return mobRunning() ? arcMobStop(false) : arcAction("close");
     if (act === "close") {
+      ui.mob = null;
       ui.arc = null;
       return renderArc();
     }

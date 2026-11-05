@@ -281,6 +281,15 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
     - Lange Auswahlseiten (Entspannen, Winter Arc) werden nicht mehr zusammengedrückt (`flex-shrink`).
     - Ein Namenskonflikt mit der bestehenden Klasse `.win` ist umgangen (`wawin`).
   - Neuer Test „7n Winter Arc“ (238 Tests), Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
+  - **Nachtrag 10:20 (Rückfrage des Betreibers):**
+    - Gewohnheiten lassen sich für **heute und die 2 Tage davor** abhaken, nicht früher und nicht vor dem Start. Dafür zeigen 7 Tagesfelder die Woche, die antippbaren sind gestrichelt.
+    - Schlaf-Gewohnheiten „zählen für die letzte Nacht“.
+    - Das Wochenziel heißt „Trainings“: Gezählt wird jedes eingetragene Training, Ringzeit oder Verein. Vorausgewählt ist die geplante Zahl (eigene Tage + Vereinstage), wählbar 1–7.
+    - Neuer Test „7n+“ (239 Tests).
+  - **10-Minuten-Mobility** (Wunsch 10:26): Neben „10 Min Mobility“ startet „▶ 10 Min“ eine geführte Folge. Der Plan-Generator (`buildSession`, Typ Mobility, 10 Min, zu Hause, ohne Geräte) wählt passend zu Sportart und Einschränkungen. Übernommen werden nur Mobility-, Dehn- und Gelenkübungen; Drills aus dem Aufwärmen bleiben draußen. Aufgefüllt wird auf 6 bis 10 Übungen, zusammen 10 Minuten.
+    - Ansage von Übung und Beschreibung, leiser Ton beim Wechsel, „Danach: …“. Der Bildschirm bleibt wach.
+    - Am Ende ist die Gewohnheit abgehakt. Plan und Verlauf bleiben unberührt, vorzeitiges Beenden hakt nicht ab.
+    - Neuer Test (240 Tests).
 
 ## Nächster Vorschlag (ohne Freigabe)
 

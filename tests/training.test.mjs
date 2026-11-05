@@ -4286,3 +4286,58 @@ test("7n Winter Arc: season, chosen blocks, weekly goals with club and relax, ti
   a.run("S.profile.relaxLog=[];relaxOpen({mode:'breath',pat:'calm',bmin:2});relaxStart();relaxStop(true);");
   assert.equal(a.run("S.profile.relaxLog.length"), 1);
 });
+
+test("7n+ Winter Arc: tick today and the two days before, not earlier or before the start; goal preselected with own + club days", async () => {
+  const a = app();
+  a.run("S.profile.days=[1,3,5];S.profile.club={days:[2],minutes:90};S.profile.arc=null;");
+  a.run("arcOpen('setup')");
+  assert.equal(a.run("ui.arc.train"), 4, "3 own + 1 club day");
+  assert.match(a.run("document.getElementById('arcov').innerHTML"), /data-av="7"/);
+  a.run("ui.arc=null;S.profile.arc={start:iso(addDays(today(),-20)),weeks:8,pick:['mob','sleep23'],train:3,relax:2,checks:{},paused:[]};ui.tab='week';");
+  const d = (k) => a.run(`iso(addDays(today(),${k}))`);
+  await a.click({ dataset: { arcchk: "mob", ad: d(-2) } });
+  await a.click({ dataset: { arcchk: "mob", ad: d(-1) } });
+  await a.click({ dataset: { arcchk: "mob", ad: d(-3) } });
+  assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-2)}')`), true);
+  assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-1)}')`), true);
+  assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-3)}')`), false, "3 days back is too late");
+  await a.click({ dataset: { arcchk: "mob", ad: d(-1) } });
+  assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-1)}')`), false, "untick");
+  const h = a.run("renderWeek()");
+  assert.match(h, new RegExp(`data-arcchk="mob" data-ad="${d(0)}"`));
+  assert.doesNotMatch(h, new RegExp(`data-ad="${d(-3)}"`));
+  assert.match(h, /Zählt für die letzte Nacht/);
+  // not before the start
+  a.run(`S.profile.arc.start='${d(-1)}';`);
+  await a.click({ dataset: { arcchk: "sleep23", ad: d(-2) } });
+  assert.equal(a.run(`arcTicked(S.profile.arc,'sleep23','${d(-2)}')`), false);
+});
+
+test("7n+ 10-minute mobility: generated for the main sport and limits, guided with voice, ticks the habit, leaves plan and log alone", async () => {
+  const a = app();
+  a.run(`globalThis.spoken=[];globalThis.speechSynthesis={speak(u){spoken.push(u.text)},cancel(){},resume(){},speaking:false,pending:false,paused:false,getVoices:()=>[]};window.speechSynthesis=speechSynthesis;globalThis.SpeechSynthesisUtterance=function(t){this.text=t};
+    S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'wt'});S.profile.limits=['knee'];S.profile.birthYear=1992;S.sessions={};S.log=[];
+    S.profile.arc={start:iso(addDays(today(),-3)),weeks:8,pick:['mob'],train:3,relax:2,checks:{},paused:[]};ui.tab='week';`);
+  const plan = JSON.parse(a.run("JSON.stringify(arcMobPlan())"));
+  assert.ok(plan.ids.length >= 4, "a few exercises");
+  assert.ok(plan.per * plan.ids.length <= 600 && plan.per * plan.ids.length > 540, "about 10 minutes");
+  assert.ok(plan.ids.every((id) => a.run(`!(EX['${id}'].avoid||'').includes('k')`)), "knee limit respected");
+  assert.match(a.run("renderWeek()"), /data-arc="mob"/);
+  a.run("globalThis.__now=1e12;Date.now=()=>__now;");
+  await a.click({ dataset: { arc: "mob" } });
+  assert.equal(a.run("timerRunning()"), true, "screen stays awake");
+  assert.ok(JSON.parse(a.run("JSON.stringify(spoken)")).some((x) => /Zehn Minuten Mobility/.test(x)), "intro");
+  const tot = a.run("ui.mob.per*ui.mob.ids.length");
+  for (let s = 0; s <= tot + 4; s += 1) a.run(`__now=1e12+${s * 1000};arcMobTick()`);
+  const said = JSON.parse(a.run("JSON.stringify(spoken)"));
+  assert.ok(said.length >= plan.ids.length + 1, "every exercise announced");
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), true, "habit ticked");
+  assert.equal(a.run("Object.keys(S.sessions).length + S.log.length"), 0, "plan and log untouched");
+  assert.equal(a.run("timerRunning()"), false);
+  // stopping early does not tick
+  a.run("S.profile.arc.checks={};__now=2e12;");
+  await a.click({ dataset: { arc: "mob" } });
+  a.run("__now=2e12+20000;arcMobTick();");
+  await a.click({ dataset: { arc: "mobstop" } });
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), false);
+});

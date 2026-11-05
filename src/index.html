@@ -2529,6 +2529,55 @@
   .arch {
     flex-wrap: wrap;
   }
+  .mobrun {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    flex: 1;
+  }
+  .mobclk {
+    font: 400 72px/1 var(--display);
+    margin-top: 24px;
+    color: #cfe9ff;
+  }
+  .relax.arcov.run {
+    color: rgba(232, 236, 242, 0.85);
+  }
+  .adays {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    padding-left: 40px;
+  }
+  .adays .ad {
+    flex: 1;
+    min-width: 0;
+    height: 26px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: none;
+    color: var(--mist);
+    font: 600 10px/24px var(--mono);
+    text-align: center;
+    padding: 0;
+  }
+  .adays .ad.on {
+    background: #9fd3ff;
+    border-color: #9fd3ff;
+    color: #0b1220;
+  }
+  .adays .ad.td {
+    border-color: #9fd3ff;
+  }
+  .adays .ad.fut {
+    opacity: 0.35;
+  }
+  .adays button.ad:not(.on) {
+    border-style: dashed;
+    color: var(--frost);
+  }
   .arkg {
     display: flex;
     gap: 8px;
