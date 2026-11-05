@@ -305,6 +305,16 @@
       document.querySelectorAll("[data-scface]").forEach((el) => el.setAttribute("aria-pressed", String(el.dataset.scface === ds.scface)));
       return;
     }
+    if (ds.vpick != null) {
+      const lg = S.profile.lang === "de" ? "de" : "en",
+        v = ds.vpick && voiceList().find((x) => voiceKey(x) === ds.vpick);
+      S.profile.voicePick = Object.assign({}, S.profile.voicePick, { [lg]: v ? { id: ds.vpick, name: v.name } : null });
+      if (draft) draft.voicePick = S.profile.voicePick;
+      store.save();
+      if (v) voiceProbe(ds.vpick);
+      return render();
+    }
+    if (ds.vprobe) return voiceProbe(ds.vprobe);
     if (ds.vtest) {
       if (!voiceOn()) {
         S.profile.voice = true;

@@ -401,6 +401,11 @@
         android: "Bessere Stimme: In den Einstellungen nach „Text-in-Sprache“ suchen und die deutsche Stimme in hoher Qualität laden. Danach Ringzeit neu öffnen.",
         other: "Bessere Stimmen lassen sich in den Sprach-Einstellungen deines Geräts laden.",
         test: "Probe hören",
+        auto: "Automatisch (beste verfügbare)",
+        chosen: (n) => `Gewählt: ${n}. Fehlt sie einmal, nimmt Ringzeit automatisch die beste andere Stimme.`,
+        missing: (n, b) => `Die gewählte Stimme „${n}“ ist gerade nicht verfügbar. Ringzeit nutzt automatisch: ${b}.`,
+        q: { premium: "Premium", enh: "Erweitert", std: "Standard" },
+        iosWeb: "Fehlt eine Stimme, die du in iOS geladen hast? iOS gibt nicht alle Stimmen an Web-Apps weiter, vor allem Premium-Stimmen oft nicht. Frisch geladene Stimmen erscheinen erst, wenn du Ringzeit ganz schließt und neu öffnest.",
       },
       music: {
         lbl: "Musik bei den Rundentimern",
@@ -408,7 +413,7 @@
         hint: "Weiterspielen: Deine Musik läuft weiter, Glocke und Ansagen kommen darüber. Dafür muss der Stummschalter am iPhone aus sein – sonst bleibt die Glocke stumm. Unterbrechen: Die Glocke klingt immer, die Musik startest du danach selbst wieder.",
       },
       seasonHint:
-        "Heute-Seite, Ladebildschirm und Funken passen sich der Jahreszeit an – mit Mütze im Winter und Badehose im Sommer.",
+        "Heute-Seite, Ladebildschirm und Funken passen sich der Jahreszeit an – mit Mütze im Winter und Palme mit Liegestuhl im Sommer.",
       onOff: ["An", "Aus"],
       storeFull: "Speicher voll – bitte unter Profil eine Sicherung speichern.",
       win: {
@@ -1724,6 +1729,11 @@
         android: "Better voice: search your settings for “Text-to-speech” and download the high-quality English voice. Then reopen Ringzeit.",
         other: "Better voices can be downloaded in your device's speech settings.",
         test: "Play sample",
+        auto: "Automatic (best available)",
+        chosen: (n) => `Chosen: ${n}. If it is ever missing, Ringzeit automatically uses the best other voice.`,
+        missing: (n, b) => `The chosen voice “${n}” isn't available right now. Ringzeit automatically uses: ${b}.`,
+        q: { premium: "Premium", enh: "Enhanced", std: "Standard" },
+        iosWeb: "A voice you downloaded in iOS is missing? iOS doesn't pass every voice to web apps, Premium voices often not. Freshly downloaded voices only appear after you fully close and reopen Ringzeit.",
       },
       music: {
         lbl: "Music during round timers",
@@ -1731,7 +1741,7 @@
         hint: "Keep playing: your music continues, bell and voice play on top. The iPhone's silent switch must be off – otherwise the bell stays silent. Interrupt: the bell always sounds, you restart the music yourself afterwards.",
       },
       seasonHint:
-        "Today page, loading screen and sparks follow the season – with a hat in winter and swim shorts in summer.",
+        "Today page, loading screen and sparks follow the season – with a hat in winter and a palm tree with a deckchair in summer.",
       onOff: ["On", "Off"],
       storeFull: "Storage full – please save a backup in your profile.",
       win: {
