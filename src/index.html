@@ -2343,6 +2343,25 @@
   }
   /* quick entry for the free timer */
   /* free timer – full screen, the colour tells the phase from across the room */
+  /* 7l: voice list – chip with name and quality, sample button */
+  .vlist {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vrow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .vrow .chip {
+    flex: 1;
+    text-align: left;
+  }
+  .vrow .chip small {
+    opacity: 0.7;
+    font-weight: 600;
+  }
   /* 7k relax: near-black screen (OLED pixels off), slow breathing circle, very low contrast while running */
   .relax {
     position: fixed;
