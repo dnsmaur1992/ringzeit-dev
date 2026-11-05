@@ -263,6 +263,24 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
   - **Update-Test vom heutigen Prod-Stand** (`40b42d9`, App-Version 04.11. 14:06) auf Release 2 mit der echten Sicherung des Betreibers: 16/16 bestanden. Daten vollständig, „Was ist neu“ genau einmal, Dev-Daten unberührt.
   - Isolation gegen Dev 12/12.
   - Hochgeladen wird nur durch den Betreiber.
+- **Release 2 in Prod** am 05.11.2026: `dnsmaur1992/ringzeit` steht auf `4032e23` und ist gleich mit dem Paket. Um 06:51 waren versehentlich die Dev-Dateien in Prod gelandet; die Prod-Dateien haben sie um 08:07 vollständig überschrieben. Die Prod-Daten (`ringzeit.v1`) waren nicht betroffen. Ab jetzt heißen Pakete `NUR-DEV_…` bzw. `NUR-PROD_…` und enthalten einen Ordner mit dem Ziel im Namen.
+- **7n Winter Arc** (Auftrag 05.11.2026 09:58, nach Entwurf): neue Datei `src/app/34e-arc.js`, Einblendung `#arcov`.
+  - **Start** nur von Oktober bis Januar; ein laufender Arc endet auch später. Länge wählbar: 6, 8, 10 oder 12 Wochen ab dem nächsten Montag.
+  - **Bausteine zum Antippen:**
+    - Training: Wochenziel Einheiten 2–5, Fitnesstest am Start und am Ende, 10 Min Mobility, Spaziergang.
+    - Erholung: Wochenziel Entspannen 1–3, Schlaf vor 23 Uhr, 7 Stunden Schlaf, Atemübung, Handy weg.
+    - Mindset: Impuls der Woche (12 Sätze DE/EN), Meditation „Stärken“ 1× pro Woche, 3 gute Dinge, 10 Min lesen.
+    - Disziplin: Weckzeit, kalt duschen mit Hinweis, 2 Liter Wasser, kein Alkohol, Social-Media-Pause.
+    - Körper: Gewicht 1× pro Woche, nur als Verlauf ohne Ziel.
+    - Optik: Winter-Design.
+  - **Heute:** Karte mit „Woche x von n“, Fortschritt und Wochenzielen. Vereinstraining zählt, Entspannen zählt über das neue Protokoll `S.profile.relaxLog`. Nur die gewählten Gewohnheiten erscheinen zum Abhaken; die Atemübung hakt sich selbst ab, die Meditation „Stärken“ und das Gewicht zählen wochenweise. Dazu Hinweis auf den End-Test, Serie in Wochen sowie Pausieren und Beenden mit Rückfrage. Wochen mit mindestens 3 Pausentagen „ruhen“ und brechen die Serie nicht.
+  - **Bilanz:** Fitnesstest vorher → nachher je Bereich, Gewohnheiten (Tage bzw. Wochen), Gewichtsverlauf, Teilen. „Abschließen“ legt den Arc in `S.profile.arcs` ab, die früheren Arcs stehen unter Termine & Ziele.
+  - **Einstiege:** von Oktober bis Januar eine Karte auf Heute, je Saison ausblendbar; dauerhaft unter Profil → Termine & Ziele.
+  - Daten im Profil (`arc`, `arcs`, `relaxLog`), also auch in der Sicherung.
+  - **Beifang:**
+    - Lange Auswahlseiten (Entspannen, Winter Arc) werden nicht mehr zusammengedrückt (`flex-shrink`).
+    - Ein Namenskonflikt mit der bestehenden Klasse `.win` ist umgangen (`wawin`).
+  - Neuer Test „7n Winter Arc“ (238 Tests), Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
 
 ## Nächster Vorschlag (ohne Freigabe)
 

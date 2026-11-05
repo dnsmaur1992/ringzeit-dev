@@ -364,6 +364,7 @@
       if (!done && canSpeak()) speechSynthesis.cancel();
     } catch (e) {}
     r.phase = done ? "done" : "setup";
+    if (done) relaxLogAdd(r); // 7n: counts for the Winter Arc
     syncTimers();
     renderRelax();
   }

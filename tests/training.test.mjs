@@ -4197,3 +4197,92 @@ test("7m calendar: week arrows on Today and Session, month hint, back to the fir
   assert.equal(a.run("isoWeekNo(new Date(2026,0,1))"), 1);
   assert.equal(a.run("isoWeekNo(new Date(2026,10,5))"), 45);
 });
+
+test("7n Winter Arc: season, chosen blocks, weekly goals with club and relax, ticks, pause keeps the streak, review with tests, archive", async () => {
+  const a = app();
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(Object.keys(ARCT.de).sort())")), JSON.parse(a.run("JSON.stringify(Object.keys(ARCT.en).sort())")), "DE/EN texts");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(Object.keys(ARCT.de.blocks))")), JSON.parse(a.run("JSON.stringify(Object.keys(ARC_KIND))")), "every block has a text");
+  assert.equal(a.run("ARCT.de.impulses.length"), a.run("ARCT.en.impulses.length"));
+  assert.equal(a.run("arcSeason(new Date(2026,9,1))"), true);
+  assert.equal(a.run("arcSeason(new Date(2027,0,20))"), true);
+  assert.equal(a.run("arcSeason(new Date(2027,1,3))"), false, "not from February");
+  assert.equal(a.run("iso(arcNextMon(new Date(2026,10,5)))"), "2026-11-09");
+  assert.equal(a.run("iso(arcNextMon(new Date(2026,10,9)))"), "2026-11-09", "Monday starts the same day");
+  // offer on Today in season (the test clock is in the season); hiding lasts for the season
+  a.run("S.profile.arc=null;S.profile.arcHide=null;S.log=[];S.profile.relaxLog=[];S.weights=[];S.tests=[];ui.tab='week';ui.wk=0;");
+  const inSeason = a.run("arcSeason()");
+  if (inSeason) {
+    assert.match(a.run("renderWeek()"), /data-arc="setup"/);
+    await a.click({ dataset: { arc: "hide" } });
+    assert.doesNotMatch(a.run("renderWeek()"), /class="note act arcoffer"/);
+    a.run("S.profile.arcHide=null;");
+  }
+  // setup: pick blocks (weight on, cold on, relax off), 6 weeks, start
+  a.run("arcOpen('setup')");
+  assert.deepEqual(JSON.parse(a.run("JSON.stringify(ui.arc.pick)")), ["train", "relax", "test", "impulse", "mob", "sleep23", "winter"]);
+  await a.click({ dataset: { arcpick: "weight" } });
+  await a.click({ dataset: { arcpick: "cold" } });
+  await a.click({ dataset: { arcpick: "breath" } });
+  await a.click({ dataset: { arc: "set", ak: "weeks", av: "6" } });
+  await a.click({ dataset: { arc: "set", ak: "train", av: "3" } });
+  const html = a.run("document.getElementById('arcov').innerHTML");
+  assert.match(html, /Kalt duschen langsam steigern/, "cold shower note");
+  assert.match(html, /ohne Zielgewicht/, "weight only as a curve");
+  await a.click({ dataset: { arc: "start" } });
+  assert.equal(a.run("S.profile.arc.weeks"), 6);
+  assert.equal(a.run("S.profile.arc.start"), a.run("iso(arcNextMon())"));
+  if (a.run("iso(today()) < S.profile.arc.start")) assert.match(a.run("renderWeek()"), /startet/);
+  // running: started a week ago Monday → week 2; club and own sessions count, relax comes from finished relax sessions
+  a.run(`S.profile.arc.start=iso(addDays(monday(today()),-7));
+    S.log=[{id:'a',date:iso(monday(today())),type:'S',minutes:60,rpe:6},{id:'b',date:iso(monday(today())),type:'V',minutes:90,rpe:6,club:1}];
+    S.profile.relaxLog=[{d:iso(today()),m:'breath',k:'calm'}];`);
+  const w = JSON.parse(a.run("JSON.stringify(arcWeek(S.profile.arc,1))"));
+  assert.equal(w.units, 2);
+  assert.equal(w.relax, 1);
+  let h = a.run("renderWeek()");
+  assert.match(h, /Woche 2 von 6/);
+  assert.match(h, /2\/3/);
+  assert.match(h, /1\/2/);
+  assert.match(h, /data-arcchk="mob"/);
+  assert.doesNotMatch(h, /data-arcchk="walk"/, "only chosen blocks");
+  assert.equal(a.run("arcTicked(S.profile.arc,'breath',iso(today()))"), true, "breathing ticks itself");
+  await a.click({ dataset: { arcchk: "mob" } });
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), true);
+  // weekly weight: logged once this week
+  a.run("S.weights=[{date:iso(today()),kg:78.4}];");
+  assert.match(a.run("renderWeek()"), /78,4 kg|78\.4 kg/);
+  // streak: last week reached → 1; a paused week neither counts nor breaks
+  a.run(`S.log.push({id:'c',date:iso(addDays(monday(today()),-7)),type:'S',minutes:50,rpe:6},{id:'d',date:iso(addDays(monday(today()),-5)),type:'T',minutes:50,rpe:6},{id:'e',date:iso(addDays(monday(today()),-3)),type:'K',minutes:50,rpe:6});
+    S.profile.relaxLog.push({d:iso(addDays(monday(today()),-6)),m:'med',k:'scan'},{d:iso(addDays(monday(today()),-2)),m:'breath',k:'box'});`);
+  assert.equal(a.run("arcStreak(S.profile.arc,0)"), 1);
+  a.run(`S.profile.arc.start=iso(addDays(monday(today()),-14));S.profile.arc.paused=[{from:iso(addDays(monday(today()),-14)),to:iso(addDays(monday(today()),-8))}];`);
+  assert.equal(a.run("arcWeek(S.profile.arc,0).rest"), true);
+  assert.equal(a.run("arcStreak(S.profile.arc,1)"), 1, "paused week skipped, not broken");
+  // pause / resume from Today
+  await a.click({ dataset: { arc: "pause" } });
+  assert.match(a.run("renderWeek()"), /pausiert seit/);
+  await a.click({ dataset: { arc: "resume" } });
+  assert.doesNotMatch(a.run("renderWeek()"), /pausiert seit/);
+  // finished: review compares the tests around start and end, then archive
+  a.run(`S.profile.arc.start=iso(addDays(monday(today()),-42));S.profile.arc.paused=[];
+    S.tests=[{id:'t1',date:iso(addDays(monday(today()),-44)),total:12,scores:{str:2,spd:3,end:2,flx:3,tec:2}},{id:'t2',date:iso(addDays(monday(today()),-3)),total:16,scores:{str:3,spd:3,end:4,flx:3,tec:3}}];`);
+  assert.match(a.run("renderWeek()"), /data-arc="summary"/);
+  await a.click({ dataset: { arc: "summary" } });
+  const sum = a.run("document.getElementById('arcov').innerHTML");
+  assert.match(sum, /12<\/td><td class="up">16 ↑/);
+  assert.match(sum, /Kalt duschen/);
+  await a.click({ dataset: { arc: "archive" } });
+  assert.equal(a.run("S.profile.arc"), null);
+  assert.equal(a.run("S.profile.arcs.length"), 1);
+  a.run("draft=null;ui.tab='profile';ui.profSec='goals';");
+  assert.match(a.run("renderProfile()"), /Frühere Arcs/);
+  // ending early keeps the review of the weeks done so far
+  a.run("S.profile.arc={start:iso(addDays(monday(today()),-7)),weeks:8,pick:['train'],train:2,relax:2,checks:{},paused:[]};ui.tab='week';");
+  await a.click({ dataset: { arc: "endask" } });
+  await a.click({ dataset: { arc: "end" } });
+  assert.equal(a.run("ui.arc.view"), "summary");
+  assert.match(a.run("renderWeek()"), /data-arc="summary"/);
+  // a finished relax session is logged for the arc
+  a.run("S.profile.relaxLog=[];relaxOpen({mode:'breath',pat:'calm',bmin:2});relaxStart();relaxStop(true);");
+  assert.equal(a.run("S.profile.relaxLog.length"), 1);
+});
