@@ -236,6 +236,16 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
   - Ein Fehlfund des Suchlaufs (`regionNames`, im Textmodul selbst genutzt) fiel durch die Tests auf und ist wiederhergestellt.
   - Offen zur Entscheidung: Test → Gürtelprüfung zeigt bei Taekwondo noch den vollen Gradbereich (Style, Namen, Grad, Prüfungsplanung, Verlauf) und doppelt damit das Profil.
   - Tests 234, Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
+- **Abnahme 7j** am 04.11.2026 14:36 („ich finde es bis jetzt super“). Entscheidung 14:45: Test → Gürtelprüfung bleibt bei Taekwondo so, wie es ist.
+- **Release durchgeführt** am 04.11.2026: Das stabile Repo `dnsmaur1992/ringzeit` steht auf `40b42d9` (15:08) und ist Datei für Datei gleich mit dem Release-Paket (App-Version 04.11.2026 14:06). `src/ringzeit.html` und die 6 Bilder sind gelöscht. Im hochgeladenen Repo laufen 234 Tests, Baseline und Offline-Start ohne Befund. Der Betreiber hat am iPhone bestätigt, dass alles funktioniert (15:10).
+- **7k Entspannen** (Auftrag 05.11.2026 05:35; aus dem Atem-Modul von Studio Care übernommen und erweitert): neue Datei `src/app/34d-relax.js` mit eigener Vollbild-Ansicht `#relax`.
+  - **Atemübung:** Muster je Anwendung: Runterfahren 4-6, Box-Atmung 4-4-4-4 (vor Kampf oder Prüfung), Einschlafen 4-7-8. Dauer 2/4/6/10 Min. Die Stimme spricht eine Einleitung und führt die ersten 3 Zyklen („Einatmen – Halten – Ausatmen“). Danach sagt sie „Gut so. Halte diesen Rhythmus jetzt selbst …“, gibt etwa alle 2 Minuten einen kurzen Zuspruch, sagt „Noch drei Atemzüge“ an und spricht einen stärkenden Abschluss. Ein leiser Sinuston beim Wechsel ist abschaltbar.
+  - **Meditation:** Body-Scan, **Stärken** (Mindset, stärkende Sätze) und Einschlafen (endet leise, ohne Zurückholen). Länge frei wählbar 10/15/20/30 Min. Längere Fassungen haben mehr Sätze, die übrige Zeit verteilt sich nach Gewichten auf die Pausen. Eigene Texte DE/EN, die Stimme duzt durchgehend.
+  - **Anzeige:** Fast schwarze Ansicht, auf OLED-Bildschirmen sind die Pixel dann aus. Die Hintergrundbeleuchtung kann eine Web-App nicht regeln. Antippen gibt 4 Sekunden mehr Licht. Der Bildschirm bleibt wach wie beim Rundentimer (`timerRunning` enthält `relaxRunning`).
+  - **Stimme:** eigener Schalter, unabhängig von der Coach-Stimme, langsamere Rate 0,85. Nach der Rückkehr in die App wird nur der aktuelle Satz gesprochen, verpasste werden übersprungen.
+  - **Einstiege:** Profil → Alltag & Pausen ganz oben („Entspannen“). Heute an Ruhetagen und in Entlastungswochen eine kleine Karte (Atmen sofort / Mehr). Abends ab 20 Uhr ist beim Öffnen „Einschlafen“ vorausgewählt.
+  - Die letzte Wahl wird in `S.profile.relax` gespeichert und landet damit auch in der Sicherung.
+  - Neuer Test „7k relax“ (235 Tests): Pläne, Sprachablauf mit Übergabe nach 3 Zyklen, alle Meditationslängen DE/EN, Du-Form, Einstiege. Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
 
 ## Nächster Vorschlag (ohne Freigabe)
 
