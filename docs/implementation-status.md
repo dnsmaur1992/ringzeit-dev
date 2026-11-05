@@ -290,6 +290,19 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
     - Ansage von Übung und Beschreibung, leiser Ton beim Wechsel, „Danach: …“. Der Bildschirm bleibt wach.
     - Am Ende ist die Gewohnheit abgehakt. Plan und Verlauf bleiben unberührt, vorzeitiges Beenden hakt nicht ab.
     - Neuer Test (240 Tests).
+- **Korrektur nach externer Codeprüfung (05.11.2026, Prüfbasis `971126a`)**: Beide Befunde bestanden noch und sind behoben.
+  - **Gemeinsame Timer-Steuerung** (`24-timer.js`, `34d-relax.js`, `34e-arc.js`):
+    - `pauseOtherTimer` kennt jetzt auch Entspannen und Mobility. Jeder Start (Einheit, Rundentimer, Übungstimer, Entspannen, Mobility) pausiert die anderen Läufe. Ihr Fortschritt bleibt erhalten.
+    - Entspannen und Mobility haben dafür Pausieren und Weiter.
+    - `stopAllTimers` beendet auch Entspannen und Mobility, mit Intervall und offenen Ansagen. Ein abgebrochener Lauf zählt nicht: kein Eintrag, kein Haken.
+    - Wach halten und Ton folgen dem echten Zustand. Pausiert hält nichts den Bildschirm wach.
+  - **Dosierung der 10-Minuten-Mobility**:
+    - Die Mobility nutzt jetzt dieselbe Dosierung wie das Training (`exerciseTiming` → `core/prescription.js`, Text aus `DOSE_FIX`). Anzeige, Ansage und Uhr beschreiben also dieselbe Dosis.
+    - Beidseitige Übungen laufen „Seite 1/2 → Seitenwechsel → Seite 2/2“ mit Ansage. „Kick-Halten“ läuft in Halte- und Pausenphasen.
+    - Wdh.-Übungen behalten ihre Wiederholungen, ohne Uhr: Man tippt „Weiter“.
+    - Die Auswahl kommt auf etwa 9–12 Minuten. Vor dem Start zeigt eine Vorschau Übungen, Dosis und Länge.
+    - Einschränkungen, Sport-Schwerpunkt und Abschlussregel bleiben. Nur ein Lauf bis zum Ende hakt ab.
+  - Tests: Der Mobility-Test ist neu geschrieben, dazu kommt ein Test für die Timer-Wechsel (241 Tests). Die Baseline ist gleich, die Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
 
 ## Nächster Vorschlag (ohne Freigabe)
 

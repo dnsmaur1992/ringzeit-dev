@@ -4313,31 +4313,133 @@ test("7n+ Winter Arc: tick today and the two days before, not earlier or before 
   assert.equal(a.run(`arcTicked(S.profile.arc,'sleep23','${d(-2)}')`), false);
 });
 
-test("7n+ 10-minute mobility: generated for the main sport and limits, guided with voice, ticks the habit, leaves plan and log alone", async () => {
+test("7n+ mobility (review): shared doses – both sides with a change for the pigeon, hold/rest passes for kick holds, reps without a clock; about 9–12 min; plan and log untouched", async () => {
   const a = app();
   a.run(`globalThis.spoken=[];globalThis.speechSynthesis={speak(u){spoken.push(u.text)},cancel(){},resume(){},speaking:false,pending:false,paused:false,getVoices:()=>[]};window.speechSynthesis=speechSynthesis;globalThis.SpeechSynthesisUtterance=function(t){this.text=t};
-    S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'wt'});S.profile.limits=['knee'];S.profile.birthYear=1992;S.sessions={};S.log=[];
+    S.profile.sport='taekwondo';S.profile.tkd=Object.assign(S.profile.tkd||{},{style:'itf'});S.profile.limits=[];S.profile.birthYear=1992;S.sessions={};S.log=[];
     S.profile.arc={start:iso(addDays(today(),-3)),weeks:8,pick:['mob'],train:3,relax:2,checks:{},paused:[]};ui.tab='week';`);
-  const plan = JSON.parse(a.run("JSON.stringify(arcMobPlan())"));
-  assert.ok(plan.ids.length >= 4, "a few exercises");
-  assert.ok(plan.per * plan.ids.length <= 600 && plan.per * plan.ids.length > 540, "about 10 minutes");
-  assert.ok(plan.ids.every((id) => a.run(`!(EX['${id}'].avoid||'').includes('k')`)), "knee limit respected");
-  assert.match(a.run("renderWeek()"), /data-arc="mob"/);
-  a.run("globalThis.__now=1e12;Date.now=()=>__now;");
-  await a.click({ dataset: { arc: "mob" } });
+  // the steps carry exactly the phases of the guided training (exerciseTiming → core/prescription.js)
+  const step = (id) => JSON.parse(a.run(`JSON.stringify(mobStep({blocks:[{key:'mob',min:10,items:[{id:'${id}'}]}]},0,0))`));
+  const pigeon = step("mob.pigeon_stretch");
+  assert.equal(pigeon.kind, "timed");
+  assert.deepEqual(pigeon.phases.map((p) => p.seconds), [60, 5, 60], "60 s side 1, change, 60 s side 2");
+  assert.deepEqual(pigeon.phases.map((p) => p.label), ["Seite 1/2", "Seitenwechsel", "Seite 2/2"]);
+  assert.equal(pigeon.dose, a.run("DOSE_FIX['mob.pigeon_stretch'][0]"), "shown dose = prescription text");
+  const ref = JSON.parse(a.run("JSON.stringify(rxPlan(RX['mob.pigeon_stretch']).phases.map(p=>p.seconds))"));
+  assert.deepEqual(pigeon.phases.map((p) => p.seconds), ref, "no second dose logic");
+  const kick = step("mob.kick_holds");
+  const kref = JSON.parse(a.run("JSON.stringify(rxPlan(RX['mob.kick_holds']).phases.map(p=>p.seconds))"));
+  assert.deepEqual(kick.phases.map((p) => p.seconds), kref, "hold/rest/change passes of kick holds");
+  assert.ok(kick.phases.length > 10 && kick.phases.some((p) => /wechsel/i.test(p.label)));
+  const cat = step("mob.cat_cow");
+  assert.equal(cat.kind, "reps", "rep exercises keep their reps");
+  assert.equal(cat.phases.length, 0, "no invented hold time");
+  assert.match(cat.dose, /10 Wdh/);
+  // a routine: about 9–12 min, every step with a real dose, limits respected
+  for (let n = 0; n < 10; n++) {
+    a.run(`S.profile.limits=${n % 2 ? "['knee']" : "[]"};`);
+    const pl = JSON.parse(a.run("JSON.stringify(arcMobPlan())"));
+    assert.ok(pl.sec >= 540 && pl.sec <= 720, "about 9–12 min: " + pl.sec);
+    assert.equal(pl.sec, pl.steps.reduce((x, st) => x + st.sec, 0));
+    for (const st of pl.steps) {
+      assert.ok(st.dose, "dose shown: " + st.id);
+      if (n % 2) assert.ok(a.run(`!(EX['${st.id}'].avoid||'').includes('k')`), "knee: " + st.id);
+    }
+  }
+  // run a routine with a pigeon (timed, two sides) and a cat-cow (reps): phases are said, reps wait for "Next"
+  a.run("S.profile.limits=[];");
+  const sp = JSON.stringify([step("mob.pigeon_stretch"), step("mob.cat_cow")]);
+  a.run(`globalThis.__now=1e12;Date.now=()=>__now;ui.mob={steps:${sp},sec:${pigeon.sec + 60},run:false,paused:false,i:-1};ui.arc={view:'mob'};arcMobStart();`);
   assert.equal(a.run("timerRunning()"), true, "screen stays awake");
-  assert.ok(JSON.parse(a.run("JSON.stringify(spoken)")).some((x) => /Zehn Minuten Mobility/.test(x)), "intro");
-  const tot = a.run("ui.mob.per*ui.mob.ids.length");
-  for (let s = 0; s <= tot + 4; s += 1) a.run(`__now=1e12+${s * 1000};arcMobTick()`);
+  for (let s = 0; s <= 135; s += 0.5) a.run(`__now=1e12+3000+${s * 1000};arcMobTick()`);
   const said = JSON.parse(a.run("JSON.stringify(spoken)"));
-  assert.ok(said.length >= plan.ids.length + 1, "every exercise announced");
-  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), true, "habit ticked");
+  assert.ok(said.some((x) => /^Taube\. je Seite 60–90 s/.test(x)), "name and dose");
+  assert.ok(said.includes("Seitenwechsel") && said.includes("Seite 2 von 2"), "change and side 2 said");
+  assert.equal(a.run("ui.mob.i"), 1, "reps step waits");
+  assert.match(a.run("arcMobHtml()"), /data-arc="mobnext"/);
+  a.run("__now+=600000;arcMobTick();");
+  assert.equal(a.run("ui.mob.i"), 1, "no clock on a rep step");
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), false);
+  await a.click({ dataset: { arc: "mobnext" } });
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), true, "finished to the end → ticked");
   assert.equal(a.run("Object.keys(S.sessions).length + S.log.length"), 0, "plan and log untouched");
   assert.equal(a.run("timerRunning()"), false);
-  // stopping early does not tick
-  a.run("S.profile.arc.checks={};__now=2e12;");
-  await a.click({ dataset: { arc: "mob" } });
-  a.run("__now=2e12+20000;arcMobTick();");
+  // stopping early never ticks
+  a.run(`S.profile.arc.checks={};__now=2e12;ui.mob={steps:${sp},sec:200,run:false,paused:false,i:-1};arcMobStart();__now=2e12+20000;arcMobTick();`);
   await a.click({ dataset: { arc: "mobstop" } });
   assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), false);
+  // the button opens a preview with the actual length first
+  a.run("ui.mob=null;arcAction('mob');");
+  assert.match(a.run("arcMobHtml()"), /ca\. \d+ Min\.[\s\S]*data-arc="mobstart"/);
+});
+
+test("review 05.11. timers: every start pauses the other runs with their progress; stopAllTimers ends relax and mobility without ticking; wake follows", async () => {
+  const a = app();
+  a.run(`globalThis.cancels=0;globalThis.spoken=[];globalThis.speechSynthesis={speak(u){spoken.push(u.text)},cancel(){cancels++},resume(){},speaking:false,pending:false,paused:false,getVoices:()=>[]};window.speechSynthesis=speechSynthesis;globalThis.SpeechSynthesisUtterance=function(t){this.text=t};
+    globalThis.__now=1e12;Date.now=()=>__now;S.profile.relaxLog=[];
+    S.profile.arc={start:iso(addDays(today(),-3)),weeks:8,pick:['mob'],train:3,relax:2,checks:{},paused:[]};`);
+  const run = () => JSON.parse(a.run("JSON.stringify({free:freeRunning(),relax:relaxRunning(),mob:mobRunning(),sess:!!(ui.timer&&ui.timer.running),ex:!!(ui.exerciseTimer&&ui.exerciseTimer.running),any:timerRunning()})"));
+  const only = (k) => {
+    const r = run();
+    for (const x of ["free", "relax", "mob", "sess", "ex"]) assert.equal(r[x], x === k, `${k} alone, ${x}=${r[x]}`);
+    assert.equal(r.any, !!k, "timerRunning matches");
+  };
+  // 1. free timer → relax: the free timer pauses with its remaining time
+  a.run("openFt();ui.ft.cfg={r:3,w:60,b:30,prep:false,warn:true,coach:false};ftStart();__now+=10000;");
+  only("free");
+  a.run("relaxOpen({mode:'breath',pat:'calm',bmin:2});relaxStart();");
+  only("relax");
+  assert.equal(a.run("ui.ft.paused"), true);
+  assert.ok(a.run("ui.ft.remainingMs") > 45000 && a.run("ui.ft.remainingMs") <= 50000, "free timer progress kept");
+  // 2. relax → free timer again: relax pauses and keeps its position
+  a.run("__now+=30000;relaxTick();");
+  const before = a.run("(Date.now()-ui.relax.start)/1000");
+  a.run("ftStart();");
+  only("free");
+  assert.equal(a.run("ui.relax.paused"), true);
+  a.run("__now+=60000;relaxResume();");
+  only("relax");
+  assert.equal(a.run("Math.round((Date.now()-ui.relax.start)/1000)"), Math.round(before), "relax continues where it paused");
+  // 3. relax → mobility → relax: each pauses the other
+  a.run("arcMobOpen();arcMobStart();");
+  only("mob");
+  assert.equal(a.run("ui.relax.paused"), true);
+  a.run("__now+=5000;arcMobTick();");
+  const mi = a.run("JSON.stringify([ui.mob.i,ui.mob.p])");
+  a.run("relaxResume();");
+  only("relax");
+  assert.equal(a.run("ui.mob.paused"), true);
+  a.run("__now+=40000;arcMobResume();");
+  only("mob");
+  assert.equal(a.run("JSON.stringify([ui.mob.i,ui.mob.p])"), mi, "mobility keeps its step");
+  // 4. session timer and exercise timer pause mobility and relax, and are paused by them
+  a.run("ui.sel='x';S.sessions.x={blocks:[{rounds:true,w:20,b:10,items:[{},{}]}]};timerGo();");
+  only("sess");
+  assert.equal(a.run("ui.mob.paused"), true);
+  a.run("arcMobResume();");
+  only("mob");
+  assert.equal(a.run("ui.timer.running"), false);
+  // 5. stopAllTimers ends mobility: no interval, no tick, no speech left, wake released
+  const c0 = a.run("cancels");
+  a.run("stopAllTimers();");
+  only(null);
+  assert.equal(a.run("ui.mob"), null);
+  assert.ok(a.run("cancels") > c0, "pending speech cancelled");
+  a.run("__now+=3600000;");
+  assert.equal(a.run("arcTicked(S.profile.arc,'mob',iso(today()))"), false, "interrupted mobility never ticks");
+  // 6. stopAllTimers ends a running and a paused relax session without logging it; the screen closes
+  a.run("relaxOpen({mode:'med',kind:'scan',mlen:10});relaxStart();__now+=5000;relaxTick();stopAllTimers();");
+  only(null);
+  assert.equal(a.run("ui.relax"), null);
+  assert.equal(a.run("S.profile.relaxLog.length"), 0, "interrupted relax not counted");
+  a.run("relaxOpen({mode:'breath',pat:'box',bmin:2});relaxStart();relaxPause();stopAllTimers();");
+  assert.equal(a.run("ui.relax"), null);
+  assert.equal(a.run("S.profile.relaxLog.length"), 0);
+  // 7. a paused run neither ticks on nor holds the screen awake
+  a.run("relaxOpen({mode:'breath',pat:'calm',bmin:2});relaxStart();relaxPause();");
+  assert.equal(a.run("timerRunning()"), false, "wake released while paused");
+  a.run("__now+=999999;relaxTick();");
+  assert.equal(a.run("ui.relax.phase"), "run", "no completion while paused");
+  assert.equal(a.run("S.profile.relaxLog.length"), 0);
+  a.run("relaxClose();");
 });
