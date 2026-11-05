@@ -252,6 +252,12 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
   - Für iOS gibt es einen Hinweis, warum geladene Stimmen fehlen können.
   - Der Hinweistext zum Jahreszeiten-Design ist korrigiert („Palme mit Liegestuhl“ statt „Badehose“, seit 7c-3 veraltet).
   - Neuer Test „7l voice choice“ (236 Tests). Baseline gleich.
+- **7m Kalender** (Auftrag 05.11.2026 06:03/06:14): Wochen blättern mit den Pfeilen ‹ › unter Heute und unter Einheit. Die Überschrift zeigt „Diese / Letzte / Nächste Woche“ bzw. „KW n“, dazu die Kalenderwoche und den Zeitraum mit Monat („KW 45 · 2.–8. Nov“, über den Monatswechsel „26. Okt – 1. Nov“, in anderen Jahren mit Jahr). „Heute“ springt zurück.
+  - **Monat im Streifen:** am ersten Tag der Woche und am Monatsersten, der Erste farbig hervorgehoben.
+  - **Reichweite:** zurück bis zur ersten Woche mit Plan oder Verlaufseintrag, vor höchstens **6 Wochen**. Die Planung reagiert Woche für Woche, weiter vorn stünden nur Platzhalter (Entscheidung mit dem Betreiber). Weiter entfernte Turniere und Prüfungen bleiben unter Termine & Ziele.
+  - Die Liste unter dem Streifen (Heute) folgt der gezeigten Woche. Einheit öffnet auf der Woche des gewählten Tages, die Pfeile blättern von dort weiter. Heute startet immer auf der aktuellen Woche.
+  - Künftige Tage zeigen den geplanten Typ. Die Einheit wird wie bisher erst beim Einrichten gebaut, das Blättern speichert also nichts.
+  - Neuer Test „7m calendar“ (237 Tests), Baseline gleich, Gesamtprüfung ohne Befund, Browser 13/13, Isolation 12/12.
 
 ## Nächster Vorschlag (ohne Freigabe)
 

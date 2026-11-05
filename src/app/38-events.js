@@ -566,6 +566,7 @@
         ui.psport = null;
         ui.pedit = null;
       }
+      if (ds.tab === "week") ui.wk = 0; // Today always opens on the current week
       ui.tab = ds.tab;
       if (ds.tab !== "profile") draft = null;
       render(true);
@@ -579,6 +580,12 @@
       store.save();
       render();
       return;
+    }
+    if (ds.wk != null) {
+      const r = wkRange();
+      ui.wk = ds.wk === "0" ? 0 : Math.max(r.min, Math.min(r.max, (ui.wk || 0) + +ds.wk));
+      ui.wkFor = ui.sel;
+      return render();
     }
     if (ds.open) {
       ui.sel = ds.open;

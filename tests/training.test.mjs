@@ -4159,3 +4159,41 @@ test("7l voice choice: the chosen voice comes first; missing or failing it falls
   assert.equal(a.run("spoken[0].voice.name"), "Markus");
   a.run("relaxClose()");
 });
+
+test("7m calendar: week arrows on Today and Session, month hint, back to the first plan week, ahead 6 weeks", async () => {
+  const a = app();
+  a.run("S.profile.days=[1,3,5];S.profile.planStart=iso(addDays(today(),-21));S.log=[];ui.tab='week';ui.wk=0;draft=null;");
+  let h = a.run("renderWeek()");
+  assert.match(h, /data-wk="-1"/);
+  assert.match(h, /Diese Woche/);
+  assert.match(h, /KW \d+ · /);
+  assert.match(h, /class="m[^"]*">[A-ZÄa-zä]{3}/, "month on the first day of the strip");
+  // forward: the strip and the list follow; Today returns
+  await a.click({ dataset: { wk: "1" } });
+  assert.equal(a.run("ui.wk"), 1);
+  h = a.run("renderWeek()");
+  assert.match(h, /Nächste Woche/);
+  assert.match(h, /data-wk="0"/, "back to today");
+  const nextMon = a.run("iso(addDays(monday(today()),7))");
+  assert.ok(h.includes(`data-open="${nextMon}"`), "next week's days");
+  for (let i = 0; i < 10; i++) await a.click({ dataset: { wk: "1" } });
+  assert.equal(a.run("ui.wk"), 6, "at most 6 weeks ahead");
+  assert.match(a.run("renderWeek()"), /data-wk="1" aria-label="[^"]*" disabled/);
+  for (let i = 0; i < 20; i++) await a.click({ dataset: { wk: "-1" } });
+  assert.equal(a.run("ui.wk"), -3, "back to the first plan week");
+  await a.click({ dataset: { wk: "0" } });
+  assert.equal(a.run("ui.wk"), 0);
+  // session tab: opens on the week of the chosen day, arrows browse from there
+  a.run(`ui.tab='session';ui.sel=iso(addDays(monday(today()),14));ui.wkFor=null;`);
+  a.run("renderSession()");
+  assert.equal(a.run("ui.wk"), 2);
+  await a.click({ dataset: { wk: "-1" } });
+  a.run("renderSession()");
+  assert.equal(a.run("ui.wk"), 1, "the arrows are not undone by the chosen day");
+  // the Today tab always starts on the current week
+  await a.click({ dataset: { tab: "week" } });
+  assert.equal(a.run("ui.wk"), 0);
+  // month change inside a week: both months in the range, the 1st marked
+  assert.equal(a.run("isoWeekNo(new Date(2026,0,1))"), 1);
+  assert.equal(a.run("isoWeekNo(new Date(2026,10,5))"), 45);
+});
