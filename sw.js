@@ -1,0 +1,52 @@
+/* Ringzeit Dev service worker: the app works offline; updates are fetched in the background and used on the next start.
+   Only caches with this app's own prefix are touched: the stable Ringzeit app shares the origin and keeps its own caches. */
+const PREFIX = "ringzeit-dev-";
+const CACHE = PREFIX + "202611082114";
+const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
+self.addEventListener("install", (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
+});
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE && !(PREFIX === "ringzeit-" && k.startsWith("ringzeit-dev-"))).map((k) => caches.delete(k)))).then(() => self.clients.claim()),
+  );
+});
+self.addEventListener("fetch", (e) => {
+  if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
+  // the app page itself ("./" or index.html): network first (so an update shows on the next start), the cached copy
+  // offline or after 3 s. Other pages (e.g. installieren.html) are not the app and must never replace it in the cache.
+  const path = new URL(e.request.url).pathname,
+    appShell = path === new URL("./", location.href).pathname || path.endsWith("/index.html");
+  if (e.request.mode === "navigate" && !appShell) {
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request, { ignoreSearch: true })));
+    return;
+  }
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      caches.open(CACHE).then((c) => {
+        const net = fetch(e.request).then((r) => {
+          if (r && r.ok) c.put("index.html", r.clone());
+          return r;
+        });
+        const slow = new Promise((res) => setTimeout(res, 3000));
+        return Promise.race([net, slow.then(() => c.match("index.html"))])
+          .then((r) => r || net)
+          .catch(() => c.match("index.html", { ignoreSearch: true }));
+      }),
+    );
+    return;
+  }
+  e.respondWith(
+    caches.open(CACHE).then((c) =>
+      c.match(e.request, { ignoreSearch: true }).then((hit) => {
+        const net = fetch(e.request)
+          .then((r) => {
+            if (r && r.ok) c.put(e.request, r.clone());
+            return r;
+          })
+          .catch(() => hit);
+        return hit || net;
+      }),
+    ),
+  );
+});
