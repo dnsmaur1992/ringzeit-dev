@@ -679,14 +679,14 @@
             [20, 30],
             [30, 45],
             [45, 60],
-          ][S.profile.level] || [30, 45];
+          ][doseLevel(b)] || [30, 45];
       seconds = choices.includes(choice) ? choice : choices[0];
       sides = DOSE_SIDE.has(name) || DOSE_LEG.has(name) ? 2 : 1;
     } else {
       const rx = RX[name];
       if (rx) fromRx(rx);
       else if (EX[it.id]?.cat === "cond" && !DOSE_FIX[name] && !repDose(it.id, b)) {
-        phases = interval(1, [30, 40, 45][S.profile.level], [30, 20, 15][S.profile.level]);
+        phases = interval(1, [30, 40, 45][doseLevel(b)], [30, 20, 15][doseLevel(b)]);
       } else if (["cool", "mob"].includes(b.key) && !DOSE_FIX[name]) {
         choices = b.key === "mob" ? [60, 90] : [45, 60];
         seconds = choices.includes(choice) ? choice : choices[0];
@@ -989,8 +989,7 @@
     if (view === "exam") return h + (mainSport() === "taekwondo" ? tkdPanelHtml() : renderExam());
     const tests = S.tests.filter((x) => !x.raw || [x.raw.str, x.raw.spd, x.raw.end, x.raw.flx].some((v) => v != null)),
       last = tests[tests.length - 1],
-      prev = tests.length > 1 ? tests[tests.length - 2] : null,
-      ml = maxLevel();
+      prev = tests.length > 1 ? tests[tests.length - 2] : null;
     if (!last) {
       h += `<div class="empty"><b>${t("testNone")}</b>${t("testNoneT")}</div>`;
     } else {
@@ -998,8 +997,7 @@
   ${TCATS.map((k) => `<div class="sub">${t("cats")[k]}: <span class="res">${last.scores[k] ?? "–"}</span>${prev && prev.scores[k] && last.scores[k] ? ` <span class="sub">(${last.scores[k] - prev.scores[k] >= 0 ? "+" : ""}${last.scores[k] - prev.scores[k]})</span>` : ""}</div>`).join("")}
   ${prev ? `<div class="sub">- - - ${t("testPrev")}</div>` : ""}</div></div></div>`;
     }
-    h += `<div class="panel"><div class="row"><span style="flex:1">${t("levels")[1]}<div class="sub">${t("need1")}</div></span><span class="tg ${ml >= 1 ? "ok" : ""}">${ml >= 1 ? t("unlocked") : t("lockedL")}</span></div>
- <div class="row"><span style="flex:1">${t("levels")[2]}<div class="sub">${t("need2")}</div></span><span class="tg ${ml >= 2 ? "ok" : ""}">${ml >= 2 ? t("unlocked") : t("lockedL")}</span></div></div>`;
+    h += fitnessSummaryHtml();
     h += `<button type="button" class="btn" id="tOpen">${t("testStart")}</button><p class="foot">${t("testEvery")}</p>`;
     if (tests.length)
       h +=

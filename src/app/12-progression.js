@@ -299,7 +299,7 @@
   }
   function progressionState(ds, type, run) {
     const cycle = progressionCycle(ds),
-      signature = `${S.profile.disc}:${S.profile.level}:${type}:${run ? "run" : "regular"}`,
+      signature = `${S.profile.disc}:${fitnessLevel()}:${type}:${run ? "run" : "regular"}`,
       cutoff = ds < iso(today()) ? ds : iso(today()),
       groups = new Map();
     for (const e of S.log) {
@@ -412,9 +412,9 @@
             [20, 30],
             [30, 45],
             [45, 60],
-          ][S.profile.level]
+          ][doseLevel(b)]
         : bwHeavy(b, it.id)
-          ? BW_RANGE[S.profile.level] || BW_RANGE[1]
+          ? BW_RANGE[doseLevel(b)] || BW_RANGE[1]
           : match && [+match[1], +match[2]];
     // Circuits, explosive lifts, AMRAP/special prescriptions and changed equipment keep their own dosing.
     if (!range || isCirc(b) || EX[it.id]?.cat !== "str" || (DOSE_FIX[EX[it.id].key] && !timed)) return null;

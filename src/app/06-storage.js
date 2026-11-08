@@ -64,6 +64,12 @@
   function migrate(p) {
     delete p.mode;
     if (!p.sport) p.sport = "kickboxing";
+    if (![0,1,2].includes(p.level)) p.level = 0;
+    if (![0,1,2].includes(p.fitnessBase)) p.fitnessBase = p.level;
+    const levels = p.techLevels && typeof p.techLevels === "object" ? p.techLevels : {};
+    p.techLevels = Object.fromEntries(Object.entries(levels).filter(([k,v]) =>
+      ["kickboxing","boxing","taekwondo:wt","taekwondo:itf"].includes(k) && [0,1,2].includes(v)));
+    p.techLevels[trainingKey(p.sport, undefined, p)] = p.level;
     if (!Array.isArray(p.comps)) p.comps = [];
     if (p.comp) p.comps.push({ id: "c" + Date.now().toString(36), date: p.comp });
     delete p.comp;
@@ -115,6 +121,11 @@
   }
   function hydrate(d) {
     const log = d.log || [];
+    const oldDose = [0,1,2].includes(d.profile?.level) ? d.profile.level : 0;
+    for (const sess of Object.values(d.sessions || {})) {
+      if (![0,1,2].includes(sess.fitnessLevel)) sess.fitnessLevel = oldDose;
+      for (const b of sess.blocks || []) if (![0,1,2].includes(b.fitnessLevel)) b.fitnessLevel = sess.fitnessLevel;
+    }
     return migrateExIds({
       v: 2,
       profile: migrate({ ...DEFAULT_PROFILE, ...(d.profile || {}) }),

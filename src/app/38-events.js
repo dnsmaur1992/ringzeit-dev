@@ -757,6 +757,7 @@
       return;
     }
     if (ds.otstyle) {
+      if (ui.onb.tstyle !== ds.otstyle) ui.onb.techLevel = 0;
       ui.onb.tstyle = ds.otstyle;
       if (ui.onb.tgrade && !TKDT.isGrade(ds.otstyle, ui.onb.tgrade)) ui.onb.tgrade = "";
       renderOnb();
@@ -768,6 +769,7 @@
       return;
     }
     if (ds.osport) {
+      if (ui.onb.sport !== ds.osport) ui.onb.techLevel = 0;
       ui.onb.sport = ds.osport;
       renderOnb();
       return;
@@ -899,7 +901,10 @@
       return;
     }
     if (ds.tdel) {
+      const oldFitness = fitnessLevel();
       S.tests = S.tests.filter((e) => e.id !== ds.tdel);
+      if (fitnessLevel() !== oldFitness) dropOpenSessions(iso(today()));
+      loadCache = {};
       store.save();
       render();
       return;
@@ -958,8 +963,7 @@
         techOnly = tsp !== mainSport();
       if (techOnly) Object.assign(raw, { str: null, spd: null, end: null, flx: null });
       if (Object.values(raw).every((v) => v == null)) return;
-      const before = maxLevel(),
-        r = scoreTest(raw);
+      const oldFitness = fitnessLevel(), r = scoreTest(raw);
       await loading("loadingTest");
       S.tests.push({
         id: "t" + Date.now().toString(36),
@@ -970,12 +974,12 @@
         ...r,
       });
       ui.testOpen = false;
+      if (fitnessLevel() !== oldFitness) dropOpenSessions(iso(today()));
+      loadCache = {};
       store.save();
       render();
       window.scrollTo(0, 0);
-      const after = maxLevel();
-      if (after > before) toast(t("lvlUp")(t("levels")[after]));
-      else toast(t("saved"));
+      toast(t("saved"));
       if (ui.tourAfter) {
         ui.tourAfter = false;
         if (!S.profile.toured) startTour();
@@ -983,8 +987,23 @@
       return;
     }
     if (ds.tk) return tkdAction(ds);
-    // profile
+    // profile: a technical choice changes no physical score, grade or competition goal.
+    if (ds.techlevel != null) {
+      const k = ds.techkey, v = +ds.techlevel;
+      if (!["kickboxing","boxing","taekwondo:wt","taekwondo:itf"].includes(k) || ![0,1,2].includes(v)) return;
+      draft.techLevels = { ...(draft.techLevels || {}), [k]: v };
+      if (k === trainingKey(draft.sport, undefined, draft)) draft.level = v;
+      applyPlan(); render(); return;
+    }
+    if (ds.otech != null && ui.onb) {
+      if ([0,1,2].includes(+ds.otech)) ui.onb.techLevel = +ds.otech;
+      renderOnb(); return;
+    }
     if (ds.p) {
+      if (ds.p === "sport" && sportChoices(true).includes(ds.v)) {
+        draft.techLevels = { ...(draft.techLevels || {}), [trainingKey(draft.sport, undefined, draft)]: draft.level };
+        draft.level = draft.techLevels[trainingKey(ds.v, undefined, draft)] || 0;
+      }
       draft[ds.p] = ds.p === "level" ? +ds.v : ds.v;
       // full contact and K1 are no longer tied to the level; only the age limit applies (pBirth)
       if (draft.level === 0) draft.focus = "bal";
@@ -1032,7 +1051,7 @@
     }
   });
   /* Profile changes take effect at once: the plan settings are copied over and planned sessions from today on are rebuilt */
-  const PLAN_KEYS = ["level", "sport", "disc", "focus", "birthYear", "sex", "days", "minutes", "club", "comps", "limits"];
+  const PLAN_KEYS = ["techLevels", "fitnessBase", "level", "sport", "disc", "focus", "birthYear", "sex", "days", "minutes", "club", "comps", "limits"];
   /* Open sessions from `from` on are dropped and rebuilt with the new settings when they are next shown.
      A session that was already started (player progress, ticks or logged sets) is kept with its entries. */
   function dropOpenSessions(from) {

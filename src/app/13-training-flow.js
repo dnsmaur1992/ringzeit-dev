@@ -288,7 +288,7 @@
         [20, 30],
         [30, 45],
         [45, 60],
-      ][S.profile.level] || [30, 45],
+      ][doseLevel(b)] || [30, 45],
       ph = timed ? String(hold[0]) : ((b.sets || "").match(/(\d+)[–-](\d+)/) || [, "10"])[1];
     let h = timed ? `<div class="last" style="margin-top:6px">${t("holdTarget")(rows.length, hold)}</div>` : "";
     const leg = DOSE_LEG.has(EX[id]?.key),

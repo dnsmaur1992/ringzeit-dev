@@ -37,6 +37,10 @@
     } else {
       h += `<h1>${t("onbQ3")}</h1><div class="sub">${t("onbQ3s")}</div><input id="oBirth" type="number" inputmode="numeric" min="1950" max="${today().getFullYear() - 8}" placeholder="2001" value="${o.birthYear || ""}"><span class="lab">${t("sex")}</span><div class="seg g3">${["m", "f", "d"].map((k) => `<button type="button" data-osex="${k}" aria-pressed="${o.sex === k}">${t("sexes")[k]}</button>`).join("")}</div><span class="sub">${t("sexHint")}</span><label class="lab" for="oComp">${t("onbComp")}</label><input id="oComp" type="date" min="${iso(today())}" value="${o.comp || ""}">`;
     }
+    if (step === 0) {
+      const sp = o.sport || mainSport(), st = sp === "taekwondo" ? o.tstyle || "wt" : undefined;
+      h += techniqueChoices(sp, st, { sport: sp, level: o.techLevel || 0, tkd: { style: st }, techLevels: {} }, true);
+    }
     if (step === 4) {
       const V = t("view");
       h += `<span class="lab">${V.onbQ}</span><div class="seg">${V.opts.map((x, i) => `<button type="button" data-osimple="${i ? 0 : 1}" aria-pressed="${(o.simple !== false) === !i}">${x}</button>`).join("")}</div><span class="sub">${V.hint}</span>`;
@@ -88,6 +92,9 @@
           }
           return T;
         })(),
+        level: o.techLevel || 0,
+        techLevels: { [trainingKey(o.sport || S.profile.sport, o.tstyle)]: o.techLevel || 0 },
+        fitnessBase: 0,
         days: o.days.slice().sort((a, b) => a - b),
         minutes: o.minutes,
         club: { days: (o.clubDays || []).slice(), minutes: o.clubMin || 90 },
