@@ -33,7 +33,7 @@
 | **Gürtel** | BFVKB-Prüfungsprogramm | – | Kup/Poom/Dan nach DTU-PO, Taegeuk | Kup/Dan nach ITF-D-PO, Tul |
 | **Begriffe** | Deutsch/Englisch | Deutsch/Englisch | Koreanisch (Kukkiwon) oder App-Namen | Koreanisch (ITF-D-PO) oder App-Namen |
 
-Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf eine andere Sportart, Disziplin oder einen anderen Stil stellen. **Verlauf, Belastung und Fitnesstest sind gemeinsam**, das Technik-Level gilt je Sportart und Stil.
+Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf eine andere Sportart, Disziplin oder einen anderen Stil stellen. **Verlauf, Belastung und Fitnesstest sind gemeinsam**, das Technikniveau wird je Sportart und Stil nach Vereinserfahrung gewählt. Der Fitnesstest steuert unabhängig davon die körperliche Dosierung.
 
 > **Neu hier?** Öffne die [Installationsanleitung](https://dnsmaur1992.github.io/ringzeit-dev/installieren.html) auf deinem Handy – mit QR-Code und Schritt-für-Schritt-Hilfe für iPhone und Android.
 
@@ -89,7 +89,7 @@ Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf ei
 ## Funktionen
 
 ### 🥋 Die Sportarten im Detail
-- **Hauptsport im Profil** jederzeit wechselbar, zusätzlich eine andere Sportart (bzw. Disziplin oder Stil) für einzelne Einheiten; Verlauf, Belastung und Fitnesstest sind gemeinsam, das Technik-Level gilt je Sportart und Stil
+- **Hauptsport im Profil** jederzeit wechselbar, zusätzlich eine andere Sportart (bzw. Disziplin oder Stil) für einzelne Einheiten; Verlauf, Belastung und Fitnesstest sind gemeinsam, das Technikniveau wird je Sportart und Stil gewählt; Fitness steuert die körperliche Dosierung
 - **Kickboxen** (WAKO): Light Contact, Kick Light, Full Contact, K1 Style – wie bisher
 - **Boxen** (DBV): Schläge ohne Kicks, Altersklassen und Rundenlängen nach den DBV-Wettkampfbestimmungen; Schwerpunkt **Ausdauer und Zähigkeit** – Kondition in 3-Minuten-Runden, längerer Kraftausdauer-Teil, „Handgelenk & Körperabhärtung“ ab Level 1 und 16 Jahren, Mobility mit lockerer Beinarbeit und Schatten
 - **Taekwondo WT / DTU**: Trittketten, die mit der Fitness länger werden, Serien mit schnellem Wechsel, Step- und Situations-Sparring; Schwerpunkt **Beweglichkeit, Spritzigkeit und Kontrolle in der vollen Bewegungsweite** – aktive Beweglichkeit in jeder Technikeinheit, Mobility als aktive Beweglichkeit, ab 4 Tagen eine Mobility-Einheit statt Kondition
