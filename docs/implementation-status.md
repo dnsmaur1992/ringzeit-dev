@@ -307,3 +307,21 @@ Unterteilung (Betreiber, 03.11.2026 22:40, Empfehlungen übernommen): 7a automat
 ## Nächster Vorschlag (ohne Freigabe)
 
 Das Gesamtprojekt ist abgeschlossen. Weitere Arbeit nur auf eigenen Auftrag: Upload des Release-Pakets durch den Betreiber nach `docs/release.md`, Rückmeldungen aus der Trainer-Prüfliste als Korrekturauftrag, Android-Prüfung mit Gerät.
+
+
+## Nachtrag 08.11.2026 – Technikniveau von Fitness trennen
+
+Auftrag nur für `dnsmaur1992/ringzeit-dev`, Basis `b3fd728`. Keine Änderungen an der stabilen App und kein Push.
+Technikniveau je Sportart/WT/ITF ist frei anhand bereits erlernter Techniken wählbar; der gemeinsame Fitnesstest
+steuert unabhängig davon die körperliche Dosierung. Bestehende Auswahl und bisherige Grundeinstellung werden
+übernommen, neue Sportarten erhalten kein fremdes Technikniveau. Begonnene Einheiten behalten ihre Dosierung.
+Profil, Einrichtung, Testauswertung, Ratgeber, Abzeichen-Texte und Trainingsdokumentation angepasst.
+**Manuelle Abnahme durch den Betreiber steht noch aus.** Die frühere Gesamtabnahme gilt für den vorherigen Stand.
+
+Validierung dieses Nachtrags: 246 Tests bestanden; Vergleichsbasis 24 Profile × 9 Einheiten + 2 Abläufe bestanden.
+Gegen die vorherige Vergleichsbasis ausschließlich neue `fitnessLevel`-/`techniqueLevel`-Metadaten,
+keine geänderten Pläne/Dosierungen bei identischen Ausgangseinstellungen. Vollständige Matrix 648 Einheiten
+vor der letzten Mengen-Zuordnung der Kampfsimulation ohne Befund; abschließend 216 Einheiten mit allen
+Zusatzprüfungen einschließlich manueller Technik-/gemeinsamer Fitness-Trennung ohne Befund.
+Browser-/Geräteprüfung hier nicht ausgeführt: Der Chromium-Download war nicht verfügbar.
+Handprüfung und Upload: `docs/technik-fitness-test.md`.
