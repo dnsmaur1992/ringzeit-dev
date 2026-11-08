@@ -111,7 +111,7 @@ function app() {
   // Boot was deliberately not run (see script replacement below).
   const run = (code) => vm.runInContext(code, context, { timeout: 3000 });
   // 3-D: exercises are found by their text id; exKey(fn) returns the id of the first exercise matching fn
-  run(`globalThis.exKey=(f)=>{const e=EX.find(f);return e?e.key:-1};`);
+  run(`globalThis.levelFor=RZ.levelFor;globalThis.exKey=(f)=>{const e=EX.find(f);return e?e.key:-1};`);
   run(
     `S = hydrate({profile:{...DEFAULT_PROFILE, level:1, example:false, planStart:'2026-08-31'}}); ui.onb = null;`,
   );
@@ -1192,7 +1192,7 @@ test("simplified start: six-step tour, compact first steps, profile split into a
   assert.doesNotMatch(prof, /data-pmore="1"|data-p="level"|id="pBirth"/);
   a.run("ui.profSec='me';");
   const me = a.run("renderProfile()");
-  assert.match(me, /data-p="level"/);
+  assert.match(me, /data-techlevel="0"/);
   assert.match(me, /id="pBirth"/);
   assert.ok(me.indexOf("data-psport=") < me.indexOf('id="pBirth"'), "sport & belt first, then the person");
 });
@@ -2358,16 +2358,15 @@ test("3-U case 11: a backup round trip restores exactly the exported state – n
   assert.equal(a.run("new Set(S.log.map(e=>e.id)).size"), 12);
 });
 
-test("3-U: levels above the tested one show a lock; tapping it explains the fitness test", async () => {
+test("technical choices are available without a fitness-test lock", async () => {
   const a = app();
   a.run("S.profile.level=0;S.tests=[];draft=null;ui.profSec='me';");
   const h = a.run("renderProfile()");
-  assert.equal((h.match(/data-lock="level"/g) || []).length, 2, "Fortgeschritten and Wettkampf are locked");
-  assert.match(h, /data-p="level" data-v="0"/);
-  assert.doesNotMatch(h, /data-p="level" data-v="1"/);
-  a.run("toast=(m)=>{globalThis.__t=m}");
-  await a.click({ dataset: { lock: "level" } });
-  assert.match(a.run("globalThis.__t"), /Fitnesstest/);
+  assert.doesNotMatch(h, /data-lock="level"/);
+  for (const k of [0,1,2]) assert.match(h, new RegExp(`data-techlevel="${k}"`));
+  await a.click({dataset:{techlevel:"2",techkey:"kickboxing"}});
+  assert.equal(a.run("techniqueLevel()"),2);
+  assert.equal(a.run("fitnessLevel()"),1,"migrated physical baseline is unchanged");
 });
 
 // ---- 3-D: stable exercise ids, prescriptions, deviations A1–A13 ----
@@ -2597,7 +2596,7 @@ test("4a-U: round formats – DBV age class, standard without tournament, 3 × 2
 test("4a-U: partner days – Aufgabensparring only; touch sparring max once, never for beginners, kids, taper/recovery or after a KO", () => {
   const a = app();
   const tasksOf = (s) => boxItems(s).filter((it) => it.k === "task");
-  a.run("S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];S.profile.comps=[];");
+  a.run("S.profile.sport='boxing';S.profile.level=1;S.profile.birthYear=1995;S.profile.limits=[];S.profile.comps=[];");
   let free = 0;
   for (let i = 0; i < 60; i++) {
     const t = tasksOf(boxSess(a, "P", ["partner"], { min: 90 }));
@@ -4442,4 +4441,90 @@ test("review 05.11. timers: every start pauses the other runs with their progres
   assert.equal(a.run("ui.relax.phase"), "run", "no completion while paused");
   assert.equal(a.run("S.profile.relaxLog.length"), 0);
   a.run("relaxClose();");
+});
+
+// Technical familiarity and physical dosing are independent, per-sport selections survive every switch.
+test("separation: weak fitness cannot demote familiar techniques; high fitness cannot unlock unfamiliar ones", () => {
+  const a=app();
+  a.run("S.profile.level=2;S.profile.birthYear=1990;S.profile.comps=[];S.profile.fitnessBase=0;S.profile.techLevels={kickboxing:2,boxing:0,'taekwondo:wt':1,'taekwondo:itf':0};S.tests=[{date:'2026-11-02',method:'rz-1',scores:{str:1,spd:5,end:5,flx:5,tec:5}}];");
+  assert.equal(a.run("techniqueLevel()"),2);
+  assert.equal(a.run("fitnessLevel()"),0);
+  const low=JSON.parse(a.run("JSON.stringify(buildSession('2026-11-02','S','gym',['weights']))"));
+  assert.equal(low.techniqueLevel,2);
+  assert.equal(low.fitnessLevel,0);
+  const rpeLow=a.run("baseRpe('T','2026-11-02')");
+  a.run("S.tests.push({date:'2026-11-03',method:'rz-1',scores:{str:5,spd:5,end:5,flx:5,tec:1}});");
+  assert.equal(a.run("fitnessLevel()"),2);
+  assert.equal(a.run("techniqueLevel()"),2);
+  assert.ok(a.run("baseRpe('T','2026-11-02')")>rpeLow);
+  assert.equal(a.run("buildSession('2026-11-02','T','gym',[],{sport:'boxing'}).techniqueLevel"),0,"no sport-to-sport technical transfer");
+  assert.equal(a.run("buildSession('2026-11-02','T','gym',[],{sport:'boxing'}).fitnessLevel"),2,"physical test shared");
+  assert.equal(a.run("buildSession('2026-11-02','T','gym',[],{sport:'taekwondo',tstyle:'wt'}).techniqueLevel"),1);
+  assert.equal(a.run("buildSession('2026-11-02','T','gym',[],{sport:'taekwondo',tstyle:'itf'}).techniqueLevel"),0);
+  assert.equal(a.run("buildSport===null && unitStyle===null"),true);
+});
+
+test("separation: profile sport/style choices persist; migration, backup and started dose snapshots retain values", async () => {
+  const a=app();
+  a.run("S=hydrate({profile:{...DEFAULT_PROFILE,level:2,sport:'kickboxing',example:false}});draft=null;ui.profSec='me';renderProfile();");
+  assert.equal(a.run("S.profile.fitnessBase"),2,"old dose is preserved independently");
+  await a.click({dataset:{p:'sport',v:'boxing'}});
+  assert.equal(a.run("S.profile.level"),0);
+  await a.click({dataset:{techlevel:'1',techkey:'boxing'}});
+  assert.equal(a.run("S.profile.level"),1);
+  await a.click({dataset:{p:'sport',v:'kickboxing'}});
+  assert.equal(a.run("S.profile.level"),2);
+  await a.click({dataset:{p:'sport',v:'boxing'}});
+  assert.equal(a.run("S.profile.level"),1);
+  await a.click({dataset:{p:'sport',v:'taekwondo'}});
+  assert.equal(a.run("S.profile.level"),0);
+  await a.click({dataset:{techlevel:'2',techkey:'taekwondo:wt'}});
+  await a.click({dataset:{tk:'style',tv:'itf'}});
+  assert.equal(a.run("S.profile.level"),0);
+  await a.click({dataset:{techlevel:'1',techkey:'taekwondo:itf'}});
+  await a.click({dataset:{tk:'style',tv:'wt'}});
+  assert.equal(a.run("S.profile.level"),2);
+  a.run("S=hydrate(JSON.parse(JSON.stringify(S)));draft=null;");
+  assert.equal(a.run("techniqueLevel('taekwondo','itf')"),1);
+  assert.equal(a.run("fitnessLevel()"),2);
+  // A later test must not alter a running session's conditioning dose or phase lengths.
+  a.run("S.profile.sport='kickboxing';S.profile.level=2;S.tests=[];ui.sel='2026-11-02';S.sessions[ui.sel]=buildSession(ui.sel,'K','home',[]);S.sessions[ui.sel].flow={step:1};");
+  const before=a.run("JSON.stringify(S.sessions[ui.sel].blocks.map(b=>b.items.filter(it=>EX[it.id]).map(it=>doseTxt(it.id,b))))");
+  a.run("S.tests=[{date:'2026-11-03',scores:{str:1,spd:1,end:1,flx:1}}];dropOpenSessions('2026-11-02');");
+  assert.equal(a.run("JSON.stringify(S.sessions[ui.sel].blocks.map(b=>b.items.filter(it=>EX[it.id]).map(it=>doseTxt(it.id,b))))"),before);
+  assert.equal(a.run("fitnessLevel()"),0);
+});
+
+test("separation: beginner onboarding is conservative, technical selection works in DE/EN and does not carry between sports", async () => {
+  const a=app();
+  a.run("ui.onb={step:0,sport:'kickboxing',disc:'lc',days:[0,2,4],clubDays:[],minutes:60};renderOnb();");
+  await a.click({dataset:{otech:'2'}});
+  assert.equal(a.run("ui.onb.techLevel"),2);
+  await a.click({dataset:{osport:'boxing'}});
+  assert.equal(a.run("ui.onb.techLevel"),0);
+  for(const lang of ['de','en']) {
+    a.run(`S.profile.lang='${lang}';renderOnb();draft=null;ui.profSec='me';`);
+    const ui=a.run("renderProfile()+fitnessSummaryHtml()+document.getElementById('onb').innerHTML");
+    assert.doesNotMatch(ui,/undefined|NaN|data-lock="level"/);
+    assert.match(ui,/data-otech="2"/);
+    assert.doesNotMatch(a.run("t('onbQ1s')+t('blk').onbS"), /schaltest.*frei|unlock.*fitness test/i);
+  }
+  a.run("S=hydrate({profile:DEFAULT_PROFILE});S.tests=[];");
+  assert.equal(a.run("fitnessLevel()"),0);
+});
+
+test("separation: saving/deleting a fitness test replans open units, preserves started doses and never changes experience", async()=>{
+  const a=app();
+  a.run("loading=async()=>{};blockAfterTest=()=>{};S.profile.level=2;S.profile.fitnessBase=2;S.profile.example=false;S.tests=[];S.sessions={};ui.sel='2026-11-02';S.sessions[ui.sel]=buildSession(ui.sel,'K','home',[]);S.sessions[ui.sel].flow={step:1};S.sessions['2026-11-03']=buildSession('2026-11-03','T','gym',[]);ui.testDraft={flx:1,tec:5};ui.testOpen=true;");
+  for(const [id,value] of Object.entries({tStr:'1',tSpd:'1',tEndM:'20',tEndS:'0'})) a.node(id).value=value;
+  await a.click({id:'tSave'});
+  assert.equal(a.run("S.tests.length"),1);
+  assert.equal(a.run("fitnessLevel()"),0);
+  assert.equal(a.run("techniqueLevel()"),2);
+  assert.equal(a.run("S.sessions[ui.sel].fitnessLevel"),2);
+  assert.equal(a.run("!!S.sessions['2026-11-03']"),false);
+  const id=a.run("S.tests[0].id");
+  await a.click({dataset:{tdel:id}});
+  assert.equal(a.run("fitnessLevel()"),2,"deleting test restores migrated baseline");
+  assert.equal(a.run("techniqueLevel()"),2);
 });
