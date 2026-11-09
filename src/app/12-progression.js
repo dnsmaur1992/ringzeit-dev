@@ -13,7 +13,7 @@
           ownWeight: "Gewicht selbst wählen",
           learningTitle: "So lernt Ringzeit dein Training kennen",
           learning:
-            "Ringzeit passt dein Training anhand deiner Einträge an. Je regelmäßiger du absolvierte Einheiten, Wiederholungen, Gewichte und deine empfundene Anstrengung erfasst, desto gezielter kann die App die Belastung anpassen. Zu Beginn bleibt die Planung vorsichtig. Nach zwei vergleichbaren, vollständig erfassten Einheiten mit der Rückmeldung „Zu leicht“ kann die nächste einen kleinen Zusatzreiz bekommen. Tagesform und Entlastung haben Vorrang.",
+            "Ringzeit passt dein Training anhand deiner Einträge an. Je regelmäßiger du absolvierte Einheiten, Wiederholungen, Gewichte und deine empfundene Anstrengung erfasst, desto gezielter kann die App die Belastung anpassen. Zu Beginn bleibt die Planung vorsichtig. Deine Abschlussbewertung steuert die nächste eigene Einheit derselben Sportart und Gattung. Tagesform und Entlastung haben Vorrang.",
           understood: "Verstanden",
           data: (level, count, weeks) =>
             `Datengrundlage: ${{ collecting: "im Aufbau", sufficient: "ausreichend", reliable: "gut belegt" }[level]} · ${count} vergleichbare Einheiten in ${weeks} Wochen.`,
@@ -35,8 +35,6 @@
           cycle: (week, weeks) => `Belastungszyklus: Woche ${week}/${weeks}.`,
           density: (old, next) =>
             `Gleiche Rundenzeit, angepasste Pausen: ${old} → ${next} s; innerhalb deiner Trainingszeit.`,
-          quickRest: (old, next) => `Zweimal zu leicht bei vergleichbarer Belastung: Rundenpause ${old} → ${next} s. Sonstige Vorgaben bleiben gleich.`,
-          quickRep: (name, old, next) => `Zweimal zu leicht bei vergleichbarer Belastung: ${name}, ${old} → ${next} Wdh. pro Satz. Gewicht und Satzzahl bleiben gleich.`,
           targetWhy: {
             up: "Ziel regelmäßig erreicht: leicht erhöht.",
             down: "Wiederholt zu schwer: Ziel reduziert.",
@@ -56,7 +54,7 @@
           ownWeight: "choose your weight",
           learningTitle: "How Ringzeit learns about your training",
           learning:
-            "Ringzeit adapts training using your entries. Regularly recording completed sessions, reps, weights and perceived effort helps the app tailor the load. Planning stays cautious at first. After two comparable, fully recorded sessions rated “Too easy”, the next may receive a small extra challenge. Readiness and recovery take priority.",
+            "Ringzeit adapts training using your entries. Regularly recording completed sessions, reps, weights and perceived effort helps the app tailor the load. Planning stays cautious at first. Your final effort rating controls your next own session of the same sport and type. Readiness and recovery take priority.",
           understood: "Got it",
           data: (level, count, weeks) =>
             `Training data: ${{ collecting: "building up", sufficient: "sufficient", reliable: "well supported" }[level]} · ${count} comparable sessions across ${weeks} weeks.`,
@@ -75,8 +73,6 @@
           cycle: (week, weeks) => `Load cycle: week ${week}/${weeks}.`,
           density: (old, next) =>
             `Same work time, adjusted rests: ${old} → ${next} s; within your session time.`,
-          quickRest: (old, next) => `Two comparable sessions felt too easy: round rest ${old} → ${next} s. Other targets stay the same.`,
-          quickRep: (name, old, next) => `Two comparable sessions felt too easy: ${name}, ${old} → ${next} reps per set. Weight and set count stay the same.`,
           targetWhy: {
             up: "Target met regularly: slightly increased.",
             down: "Repeatedly too hard: target reduced.",
@@ -477,6 +473,13 @@
         ),
       ),
     });
+    if (sess.effortDose?.active && sess.effortDose.eligible) {
+      if (hasKg(it.id) && target.kg == null && last?.perf?.sets?.length >= n) {
+        const weights = last.perf.sets.slice(0,n).map(r => r.kg);
+        if (weights.every(w => Number.isFinite(w) && w > 0 && w === weights[0])) target.kg = weights[0];
+      }
+      return {...target,baseR:target.r};
+    }
     if (!last) return waveTarget();
     // A load is only suggested once it was actually entered for all sets; never invent a starting weight.
     if (hasKg(it.id) && target.kg == null) {
@@ -546,12 +549,13 @@
     const pr = progressionState(sess.date, sess.type, sess.run),
       txt = trainingText();
     sess.progression = { ...pr, plannedMin: sess.min };
+    sess.effortDose = effortDoseState(sess, pr);
     if (sess.blocks.some((b) => b.items.some((it) => it.basic))) sess.notes.push(flowText().anchors);
     if (!["T", "C", "K", "S"].includes(sess.type) || sess.run || young()) return sess;
-    sess.notes.push(pr.eligible ? `${txt.cycle(pr.week, pr.weeks, pr.step)} ${txt[pr.reason]}` : txt.protected);
+    sess.notes.push(pr.eligible ? `${txt.cycle(pr.week, pr.weeks, pr.step)} ${sess.effortDose?.active ? (S.profile.lang === "de" ? "Die Abschlussbewertung steuert die nächste Dosierung." : "Final effort controls the next dose.") : txt[pr.reason]}` : txt.protected);
     if (!pr.eligible) return sess;
     sess.notes.push(txt.data(pr.data.level, pr.data.count, pr.data.weeks));
-    if (pr.data.reason) sess.notes.push(txt.dataWhy[pr.data.reason]);
+    if (pr.data.reason && !sess.effortDose?.active) sess.notes.push(txt.dataWhy[pr.data.reason]);
     // Increase density alone, never contact intensity or the official competition format.
     // Changing pauses, with fewer rounds if needed, keeps the existing time budget intact.
     if (["T", "C", "K"].includes(sess.type)) {
@@ -559,11 +563,15 @@
         wave = pr.block ? 1 : pr.data.level === "collecting" ? 0.9 : [0.9, 0.95, 1, 1.05, 1][pr.week - 1];
       if (b && b.w && b.b) {
         const old = b.b,
-          factor = (1 + pr.step * 0.05) * wave;
+          factor = (sess.effortDose?.active
+            ? sess.effortDose.eligible ? sess.effortDose.factor : Math.min(1, sess.effortDose.factor, 1 + pr.step * 0.05)
+            : 1 + pr.step * 0.05) * wave;
         b.b = Math.max(30, Math.round(old / factor));
         const maxRounds = Math.max(1, Math.floor((b.min * 60 + b.b) / (b.w + b.b)));
         if (b.items.length > maxRounds) b.items = b.items.slice(0, maxRounds);
-        if (old !== b.b) sess.notes.push(txt.density(old, b.b));
+        if (sess.effortDose) sess.effortDose.roundRest = b.b;
+        const prev = sess.effortDose?.source && S.log.find(e => e.id === sess.effortDose.source)?.effortDose?.roundRest;
+        if ((prev || old) !== b.b) sess.notes.push(txt.density(prev || old, b.b));
       }
     }
     sess.blocks.forEach((b) => {
@@ -573,72 +581,33 @@
         if (target) it.target = target;
       });
     });
-    applySessionProgression(sess, pr);
+    applyStrengthRestDose(sess);
     return sess;
   }
 
 
-  /* Short feedback loop: only one dose variable after the ordinary cycle/wave has been applied.
-     The context includes that baseline, so a new cycle, wave, sport, grade, technical/fitness setting,
-     equipment or restriction cannot silently reuse an easier prescription as evidence. */
-  function applySessionProgression(sess, pr) {
+  /* Keep one learnt density correction per sport/style/type, independently of location and equipment.
+     The cycle wave still varies recovery. The control replaces the cycle's upward density factor,
+     rather than multiplying two independent increases. */
+  function effortDoseState(sess, pr) {
+    if (!["T","C","K","S"].includes(sess.type) || sess.run || young()) return null;
     const sport = sportNow(), style = sport === "taekwondo" ? tkdUnitStyle() : "",
       disc = sport === "kickboxing" ? discOf() : "",
-      rounds = ["T", "C", "K"].includes(sess.type) ? roundBlock(sess) : null;
-    let anchor = null;
-    if (sess.type === "S") {
-      for (const b of sess.blocks) {
-        if (isCirc(b) || isExplSets(b.sets)) continue;
-        for (const it of b.items) {
-          if (EX[it.id]?.cat === "str" && it.target && !it.target.timed && !DOSE_FIX[it.id] &&
-              Number.isFinite(it.target.r) && it.target.r < it.target.hi) {
-            anchor = { b, it }; break;
-          }
-        }
-        if (anchor) break;
-      }
-    }
-    const baseline = rounds && rounds.w > 0 && rounds.b > 30
-      ? { kind: "rest", w: rounds.w, b: rounds.b, n: rounds.items.length }
-      : anchor ? { kind: "reps", id: anchor.it.id, r: anchor.it.target.r,
-          lo: anchor.it.target.lo, hi: anchor.it.target.hi, n: anchor.it.target.n } : null;
-    if (!baseline) return;
-    const key = JSON.stringify([1, pr.id, pr.step, sport, style, disc, sess.type, sess.loc,
-      [...new Set(sess.eq)].sort(), sess.min, fitnessLevel(), techniqueLevel(),
-      [...S.profile.limits].sort(), sport === "taekwondo" ? tkdGradeOf(style) : null, baseline]);
-    const history = S.log.filter(e => e.src === "own" && !e.run && e.type === sess.type && entrySport(e) === sport &&
+      scope = JSON.stringify([1,sport,style,disc,sess.type,fitnessLevel()]),
+      eligible = pr.eligible && pr.reason !== "down" && !pr.data.worsening && lightRegions({log:S.log,date:sess.date}).length === 0;
+    const entries = S.log.filter(e => e.src === "own" && e.type === sess.type && entrySport(e) === sport &&
       (sport !== "taekwondo" || (e.tstyle || "wt") === style) &&
       (sport !== "kickboxing" || (e.disc || S.profile.disc) === disc));
-    const accepts = e => {
-      if (!progressionRecordComplete(e)) return false;
-      if (!anchor) return true;
-      const p = (e.perf || []).find(p => p.id === anchor.it.id), t = anchor.it.target;
-      return !!p?.target && p.target.n === t.n && p.target.lo === t.lo && p.target.hi === t.hi &&
-        p.effort !== "hard" && p.sets.length >= t.n && p.sets.slice(0,t.n).every(row =>
-          Number.isFinite(row.r) && row.r >= p.target.r &&
-          (!hasKg(p.id) || (Number.isFinite(t.kg) && t.kg > 0 && Number.isFinite(row.kg) && row.kg >= t.kg)));
-    };
-    const eligible = pr.eligible && pr.reason !== "down" && !pr.data.worsening &&
-      lightRegions({ log: S.log, date: sess.date }).length === 0;
-    const decision = nextSessionStep({ entries: history, key, cycle: pr.id, date: sess.date, today: iso(today()), eligible, accepts });
-    sess.fast = { v: 1, key, cycle: pr.id, eligible, raised: false, level: 0, basis: [], mode: baseline.kind };
-    if (!decision.level) return;
-    const requested = decision.level;
-    if (baseline.kind === "rest") {
-      const next = Math.max(30, Math.round(baseline.b / (1 + decision.level * 0.05)));
-      if (next >= baseline.b) return;
-      if (decision.level > 1 && next === Math.max(30, Math.round(baseline.b / (1 + (decision.level - 1) * 0.05)))) decision.level--;
-      rounds.b = next;
-      sess.notes.push(trainingText().quickRest(baseline.b, next));
-    } else {
-      const t = anchor.it.target, next = Math.min(t.hi, t.r + decision.level);
-      if (next <= t.r) return;
-      const delta = next - t.r;
-      sess.notes.push(trainingText().quickRep(exText(anchor.it.id).name, t.r, next));
-      t.r = next; // keep baseR unchanged: the next generation must not compound this bonus
-      if (delta < decision.level) decision.level = delta;
-    }
-    sess.fast.level = decision.level;
-    sess.fast.raised = decision.increased && decision.level === requested;
-    sess.fast.basis = decision.basis;
+    const state = nextEffortDose({entries,scope,date:sess.date,today:iso(today()),fallback:sess.type === "S" ? 1 : 1 + pr.step * .05});
+    return {v:1,scope,eligible,setRest:60,...state};
+  }
+  function applyStrengthRestDose(sess) {
+    const d = sess.effortDose;
+    if (!d?.active || !d.eligible || sess.type !== "S") return;
+    sess.setRest = Math.max(45, Math.min(90, Math.round(60 / d.factor)));
+    sess.lapRest = Math.max(60, Math.min(135, Math.round(90 / d.factor)));
+    d.setRest = sess.setRest;
+    if (sess.setRest !== 60) sess.notes.push(S.profile.lang === "de"
+      ? `Abschlussbewertung: Satzpause 60 → ${sess.setRest} s. Gewichte und Wiederholungen bleiben unverändert.`
+      : `Final effort rating: set rest 60 → ${sess.setRest} s. Weights and reps stay unchanged.`);
   }

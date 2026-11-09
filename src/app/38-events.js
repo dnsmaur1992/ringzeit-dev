@@ -84,20 +84,15 @@
     if (ds.workout) return workoutAction(ds.workout);
     if (ds.player) return playerAction(ds.player, ds);
     if (ds.exerciseTimer) return exerciseTimerAction(ds.exerciseTimer, ds);
-    if (ds.sessionDifficulty) {
-      if (!["easy", "right", "hard"].includes(ds.sessionDifficulty)) return;
-      const d = ds.difficultySheet ? ui.sheet : finishDraft();
-      if (!d) return;
-      if (ds.difficultySheet) readSheet(); else readFinishDraft();
-      d.difficulty = d.difficulty === ds.sessionDifficulty ? null : ds.sessionDifficulty;
-      document.querySelectorAll("[data-session-difficulty]").forEach(el => {
-        if (!!el.dataset.difficultySheet === !!ds.difficultySheet)
-          el.setAttribute("aria-pressed", String(el.dataset.sessionDifficulty === d.difficulty));
-      });
+    if (ds.doseChoice) {
+      if (!["hold","change"].includes(ds.doseChoice)) return;
+      if (ds.doseSheet && ui.sheet) { readSheet(); ui.sheet.doseChoice = ds.doseChoice; renderSheet(); }
+      else { const d = readFinishDraft(); d.doseChoice = ds.doseChoice; document.getElementById("doseAdvice").innerHTML = effortControlHtml(S.sessions[ui.sel],d); }
       return;
     }
     if (ds.effort) {
       const draft = finishDraft();
+      if (effortFace(draft.rpe) !== effortFace(+ds.effort)) draft.doseChoice = "hold";
       draft.rpe = +ds.effort;
       const hidden = document.getElementById("fRpe");
       if (hidden) hidden.value = String(draft.rpe);
@@ -109,19 +104,8 @@
             String(el.dataset.face ? +el.dataset.effort === faceOf(draft.rpe) : +el.dataset.effort === draft.rpe),
           ),
         );
-      return;
-    }
-    if (ds.exerciseEffort) {
-      const sess = S.sessions[ui.sel];
-      if (!sess) return;
-      sess.exerciseEffort = sess.exerciseEffort || {};
-      sess.exerciseEffort[ds.exerciseEffort] =
-        sess.exerciseEffort[ds.exerciseEffort] === ds.value ? null : ds.value;
-      document.querySelectorAll("[data-exercise-effort]").forEach((el) => {
-        if (el.dataset.exerciseEffort === ds.exerciseEffort)
-          el.setAttribute("aria-pressed", String(el.dataset.value === sess.exerciseEffort[ds.exerciseEffort]));
-      });
-      store.save();
+      const advice = document.getElementById("doseAdvice");
+      if (advice) advice.innerHTML = effortControlHtml(S.sessions[ui.sel],draft);
       return;
     }
     if (ds.progressInfoClose) {
@@ -320,8 +304,9 @@
     if (ds.scface) {
       const inp = document.getElementById("scRpe");
       if (inp) inp.value = ds.scface;
-      if (ui.sheet) ui.sheet.rpe = +ds.scface;
+      if (ui.sheet) { if (effortFace(ui.sheet.rpe) !== effortFace(+ds.scface)) ui.sheet.doseChoice = "hold"; ui.sheet.rpe = +ds.scface; }
       document.querySelectorAll("[data-scface]").forEach((el) => el.setAttribute("aria-pressed", String(el.dataset.scface === ds.scface)));
+      if (ui.sheet?.kind === "edit") renderSheet();
       return;
     }
     if (ds.vpick != null) {
@@ -674,7 +659,8 @@
         ck: e.ck,
         min: e.minutes,
         rpe: e.rpe,
-        difficulty: e.difficulty,
+        effortDose: e.effortDose,
+        doseChoice: e.effortControl?.choice || "hold",
         kmRaw: e.km != null ? String(e.km).replace(".", S.profile.lang === "de" ? "," : ".") : "",
         note: e.note || "",
       });

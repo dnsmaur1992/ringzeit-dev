@@ -337,9 +337,9 @@
     }
     // Once short-loop records exist, every own-session correction can affect the next comparable pair.
     // Legacy histories alone keep their former invalidation behaviour.
-    if (S.log.some(e => e.fast?.v === 1)) parts.push(JSON.stringify(S.log.filter(e => e.src === "own").map(e =>
+    if (S.log.some(e => e.effortDose?.v === 1)) parts.push(JSON.stringify(S.log.filter(e => e.src === "own").map(e =>
       [e.id,e.date,e.sport,e.tstyle,e.disc,e.type,e.minutes,e.rpe,e.tHi,e.completed,e.inputConfirmed,
-        e.difficulty,e.fast,e.progression?.eligible,e.perf])));
+        e.effortControl,e.effortDose,e.progression?.eligible,e.perf])));
     return parts.join("|");
   }
   /* Runs a change of the log; if it alters what open sessions depend on, they are dropped (started ones stay).
