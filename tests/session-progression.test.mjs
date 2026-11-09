@@ -1,46 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { nextSessionStep } from '../src/core/session-progression.js';
-const entry = (id,date,extra={}) => ({id,date,inputConfirmed:true,completed:true,minutes:40,rpe:4,tHi:6,
-  progression:{eligible:true},difficulty:'easy',fast:{eligible:true,v:1,key:'k',level:0,basis:[]},...extra});
-const decide = (entries,extra={}) => nextSessionStep({entries,key:'k',date:'2026-11-09',today:'2026-11-09',eligible:true,...extra});
-const a=()=>entry('a','2026-11-02'), b=()=>entry('b','2026-11-05');
-
-test('short loop: two distinct full easy sessions, not the first, enable one small step',()=>{
-  assert.equal(decide([]).level,0);
-  assert.equal(decide([a()]).level,0);
-  assert.deepEqual(decide([a(),b()]),{level:1,basis:['a','b'],increased:true});
+import {effortFace,effortRequest,nextEffortDose} from '../src/core/session-progression.js';
+const e=(rpe,choice='hold',extra={})=>({id:'e',date:'2026-11-02',src:'own',minutes:40,inputConfirmed:true,completed:true,rpe,tHi:7,
+  effortDose:{v:1,scope:'T',eligible:true,factor:1},effortControl:{v:1,face:effortFace(rpe),choice},...extra});
+const next=(entries,extra={})=>nextEffortDose({entries,scope:'T',date:'2026-11-09',today:'2026-11-09',...extra});
+test('final effort: five faces have graded automatic/explicit impulses',()=>{
+  for(const [r,p] of [[2,10],[4,5],[6,0],[8,0],[10,0]])assert.equal(effortRequest(r),p);
+  assert.equal(effortRequest(6,'change'),5);assert.equal(effortRequest(8,'change'),-5);assert.equal(effortRequest(10,'change'),-10);
+  assert.equal(effortRequest(null),null);assert.equal(effortRequest(11),null);
 });
-test('short loop: missing/right/hard/contradictory/incomplete feedback never supplies a second success',()=>{
-  for(const patch of [{difficulty:undefined},{difficulty:'right'},{difficulty:'hard'},{rpe:8},
-    {completed:false},{inputConfirmed:false},{minutes:0},{rpe:null},{progression:{eligible:false}},
-    {fast:undefined},{fast:{eligible:true,v:1,key:'other',level:0}},{perf:[{effort:'hard'}]}]) {
-    assert.equal(decide([a(),b(),entry('c','2026-11-06',patch)]).level,0,JSON.stringify(patch));
-  }
+test('final effort: the very next category session responds, and rebuilding it cannot compound the same answer',()=>{
+  assert.equal(next([e(2)]).factor,1.1);assert.equal(next([e(4)]).factor,1.05);
+  assert.deepEqual(next([e(2)]),next([e(2)]));
+  assert.equal(next([e(6,'change')]).factor,1.05);
+  assert.equal(next([e(8,'change')]).factor,.95);assert.equal(next([e(10,'change')]).factor,.9);
 });
-test('short loop: same evidence is not compounded; two NEW easy sessions at the raised dose enable the second step only',()=>{
-  const c=entry('c','2026-11-06',{fast:{eligible:true,v:1,key:'k',level:1,basis:['a','b']}});
-  assert.equal(decide([a(),b(),c]).level,1);
-  const d=entry('d','2026-11-07',{fast:{eligible:true,v:1,key:'k',level:1,basis:['a','b']}});
-  assert.deepEqual(decide([a(),b(),c,d]),{level:2,basis:['c','d'],increased:true});
-  const e=entry('e','2026-11-08',{fast:{eligible:true,v:1,key:'k',level:2,basis:['c','d']}});
-  assert.equal(decide([c,d,e]).level,2);
-  const right=entry('r','2026-11-08',{difficulty:'right',fast:{eligible:true,v:1,key:'k',level:1,basis:['a','b']}});
-  assert.equal(decide([a(),b(),right]).level,1,'maintain, never add for about-right');
+test('final effort: no implicit consent, no legacy/future/foreign/old votes and no positive inference from protected or partial work',()=>{
+  assert.equal(next([{...e(2),effortControl:undefined}]).active,false);
+  assert.equal(next([e(2,{},{effortDose:{v:1,scope:'S',eligible:true,factor:1}})]).active,false);
+  assert.equal(next([e(2,'hold',{date:'2026-11-10'})]).active,false);
+  assert.equal(next([e(2,'hold',{date:'2026-09-01'})]).active,false);
+  assert.equal(next([e(2,'hold',{completed:false})]).factor,1);
+  assert.equal(next([e(2,'hold',{effortDose:{v:1,scope:'T',eligible:false,factor:1}})]).factor,1);
+  assert.equal(next([e(10)]).factor,1);
+  assert.equal(next([e(10,'change',{completed:false})]).factor,.9,'early stopping may request lower load');
+  assert.equal(next([e(2,'hold',{inputConfirmed:false})]).factor,1);
 });
-test('short loop: pause/recovery, future entries, duplicate dates, changed baseline and stale evidence do not increase',()=>{
-  assert.equal(decide([a(),b()],{eligible:false}).level,0);
-  assert.equal(decide([a(),b()],{key:'new-cycle'}).level,0);
-  assert.equal(decide([a(),entry('b','2026-11-10')]).level,0);
-  assert.equal(decide([a(),entry('b','2026-11-02')]).level,0);
-  assert.equal(decide([entry('old','2026-10-01'),b()]).level,0);
-  assert.equal(decide([a(),b()],{accepts:e=>e.id!=='b'}).level,0);
-});
-
-test('short loop: the two-raise cap covers the full cycle, even after a baseline change or a long gap',()=>{
-  const old1=entry('old1','2026-10-13',{fast:{eligible:true,v:1,key:'old',cycle:'cycle',raised:true,level:1}});
-  const old2=entry('old2','2026-10-16',{fast:{eligible:true,v:1,key:'old',cycle:'cycle',raised:true,level:2}});
-  assert.equal(decide([old1,old2,a(),b()],{cycle:'cycle'}).level,0);
-  assert.equal(decide([old1,a(),b()],{cycle:'cycle'}).level,1);
-  assert.equal(decide([old1,old2,a(),b()],{cycle:'new-cycle'}).level,1);
+test('final effort: repeated signals accumulate only from the experienced snapshot and remain bounded',()=>{
+  let factor=1;
+  for(let i=0;i<20;i++)factor=next([e(2,'hold',{effortDose:{v:1,scope:'T',eligible:true,factor}})]).factor;
+  assert.equal(factor,1.2);
+  for(let i=0;i<20;i++)factor=next([e(10,'change',{effortDose:{v:1,scope:'T',eligible:true,factor}})]).factor;
+  assert.equal(factor,.8);
+  assert.equal(next([e(6,'hold',{effortDose:{v:1,scope:'T',eligible:true,factor:1.1}})]).factor,1.1);
 });
