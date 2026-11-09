@@ -46,27 +46,35 @@ Seit 4b regulär wählbar (Hauptsport im Profil/Onboarding, Sportwahl je Einheit
 - **K.o.:** Sperre 30 Tage (nur Solo ohne Treffer), Hinweis auf Steigerung bei Wiederholung (§89) und Stufenplan (Anhang 5); keine automatische Stufensteuerung, keine medizinische Bewertung.
 
 
-## Zusatzreiz von Einheit zu Einheit (09.11.2026)
+## Abschlussbewertung und nächste Einheit (09.11.2026, ersetzt die frühere Zweimal-„Zu leicht“-Schleife)
 
-- Freiwillige Rückmeldung beim Abschluss: Zu leicht / Passend / Zu schwer. Sie ergänzt die tatsächliche RPE,
-  ersetzt sie nicht und ist im Verlauf korrigierbar. Ohne diese Rückmeldung wird kein früher Zusatzreiz abgeleitet.
-- Zwei aufeinanderfolgende vergleichbare eigene Einheiten an unterschiedlichen Tagen müssen vollständig
-  dokumentiert und abgeschlossen sein; RPE darf das jeweilige Ziel nicht überschreiten. Fehlende Angaben,
-  offene Übungen oder ein „Zu schwer“ an einer Kraftübung zählen nicht als Erfolg.
-- Die nächsten Einheiten können schon vor dem Ende des Fünf-Wochen-Zyklus eine kleine Anpassung erhalten:
-  bei T/C/K nur die Rundenpause (Faktor 1,05 bzw. 1,10, mindestens 30 s), bei S nur die Wiederholungen
-  einer geeigneten, tatsächlich protokollierten Übung (+1 bzw. +2 pro Satz bis zur bisherigen Obergrenze).
-- Eine weitere Steigerung braucht zwei neue leichte Einheiten auf der erhöhten Stufe. Bei „Passend“ bleibt der
-  vorhandene Zusatzreiz stehen. Zu hohe Anstrengung, Abbruch oder fehlende Leistungsnachweise lassen ihn entfallen.
-- Maximal zwei neue kleine Schritte je Sport/Stil, Einheitstyp und Zyklus, auch wenn sich die Grunddosierung ändert.
-  Keine automatischen Kontaktstärken, Gewichte, zusätzlichen Sätze oder neuen Techniken über diesen Mechanismus.
-- Vergleichsfenster 21 Tage; Sport/Stil/Disziplin, Typ, Ort, Ausrüstung, Planzeit, Technik-/Fitnessstufe,
-  Einschränkungen, TKD-Grad und die bereits periodisierte Grunddosierung müssen passen. Neue Zyklen/Wellen
-  oder geänderte Bedingungen benötigen eigene Nachweise; alte Daten werden nicht umgedeutet.
-- Es gelten die vorhandenen Progressionsschutzregeln, zusätzlich keine schnelle Erhöhung bei stark belasteten
-  Bereichen vom Vortag. Kinder/Jugend, Wettkampfvorbereitung, Entlastung, Wiedereinstieg und eingeschränkte
-  Tagesform bekommen daraus keinen Zusatzreiz. Lauf/Mobility/Sparring bleiben außerhalb dieser Kurzschleife.
-- Bereits begonnene Einheiten bleiben unverändert. Noch nicht begonnene Pläne werden nach relevanten
-  Verlaufseinträgen/-korrekturen verworfen und beim Öffnen passend neu erzeugt.
-- Technischer Kern: `src/core/session-progression.js` (`nextSessionStep`, zustandsfrei).
-  Sportübergreifender Plan-Adapter: `applySessionProgression` in `src/app/12-progression.js`.
+Die fünf Emojis am Abschluss sind verpflichtend. Zusätzliche Fragen pro Übung und die separate
+Dreierauswahl entfallen. Die genaue RPE-Skala bleibt alternativ nutzbar (1–2, 3–4, 5–6, 7–8, 9–10).
+
+| Bewertung | Planungsimpuls |
+|---|---|
+| Sehr locker | automatisch +10 % |
+| Locker | automatisch +5 % |
+| Fordernd | Beibehalten (Vorauswahl) oder +5 % |
+| Hart | Beibehalten (Vorauswahl) oder −5 % |
+| Am Limit | Beibehalten (Vorauswahl) oder −10 % |
+
+- Ein Wechsel des Emojis setzt die Zusatzentscheidung auf Beibehalten zurück.
+- Gilt getrennt nach Sport/Stil/Disziplin, Einheitstyp und körperlicher Ausgangsstufe; Ort und
+  Ausrüstung müssen nicht identisch sein. T/C/K/S sind unterstützt, nicht Lauf, Mobility oder Sparring.
+- Der Faktor wird aus der tatsächlich erlebten letzten Einheit fortgeschrieben, auf 0,8–1,2 begrenzt.
+  Prozentwerte sind Planungsimpulse für die Dichte, keine gemessenen physiologischen Belastungsprozente.
+  Rundenpause = Grundpause / Faktor / Periodisierungswelle, mindestens 30 Sekunden.
+  Kraft: Satzpause = 60 / Faktor (45–90 s), Zirkelpause = 90 / Faktor (60–135 s), gerundet.
+- Sobald die neue Steuerung aktiv ist, ersetzt sie die unabhängige bisherige Aufwärtskorrektur;
+  Gewichte und Wiederholungen werden dadurch nicht zusätzlich erhöht. Bekannte protokollierte Gewichte
+  können weiter übernommen werden. Bestehende Reduktionsregeln bleiben wirksam.
+- Automatische Erhöhung nur nach vollständiger, bestätigter Einheit mit positiver Dauer und RPE nicht
+  über deren Ziel, außerhalb der Schutzphasen. Abbrüche erlauben ausdrücklich gewünschte Reduktionen.
+- Tagesform, Vorbelastung, Entlastung, Wiedereinstieg, Kinder/Jugend, Wettkampfvorbereitung und andere
+  bestehende Schutzregeln haben Vorrang. Bei gesperrter Erhöhung wird kein zusätzlicher Druck erzeugt.
+- Nach mehr als 42 Tagen ohne passenden Eintrag greift wieder die normale Planung. Alte RPE-Einträge
+  und frühere `difficulty`-/`fast`-Daten werden nicht nachträglich als Einverständnis umgedeutet.
+- Neuaufbau wendet dieselbe Antwort nicht mehrfach an. Begonnene Einheiten bleiben unverändert;
+  unbegonnene werden nach relevanten Verlaufskorrekturen neu erzeugt. Zukünftige Einträge zählen nicht.
+- Kern: `src/core/session-progression.js`; Adapter: `effortDoseState` und `applyStrengthRestDose`.

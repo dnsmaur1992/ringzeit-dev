@@ -327,7 +327,7 @@ Browser-/Geräteprüfung hier nicht ausgeführt: Der Chromium-Download war nicht
 Handprüfung und Upload: `docs/technik-fitness-test.md`.
 
 
-## Nachtrag 09.11.2026 – Früher Zusatzreiz nach zweimal „Zu leicht“
+## Historisch, ersetzt – Früher Zusatzreiz nach zweimal „Zu leicht“ (09.11.2026)
 
 Nur Dev-Auftrag, Basis `d2dd648`. Freiwillige Rückmeldung im Abschluss und Verlauf ergänzt; kurzer gemeinsamer
 Progressionskern für alle Sportarten; ein Parameter nach zwei passenden Erfolgen, weitere Schritte erst mit
@@ -340,3 +340,22 @@ Ablauf-Matrix 216 Einheiten plus H1–H9 ohne Befund. Bisherige Vergleichspläne
 identisch; die aktualisierte Vergleichsbasis enthält nur neue Metadaten und präzisierte Hinweise.
 Kein Push/Upload, keine Änderung am stabilen Repository. **Manuelle Abnahme noch offen.**
 Handprüfung und Upload: `docs/einheiten-progression-test.md`.
+
+
+## Nachtrag 09.11.2026 – Pflichtbewertung mit fünf Emojis
+
+Dev-Auftrag, Basis `6a6b4e7`. Ersetzt die vorangegangene Kurzschleife: keine separaten Übungsfragen
+und keine zusätzliche Dreierauswahl beim Abschluss. Pflicht-RPE über fünf Emojis oder genaue Skala.
+Sehr locker +10 %, Locker +5 % automatisch; Fordernd optional +5 %, Hart optional −5 %, Am Limit
+optional −10 %, sonst Beibehalten. Emojiwechsel verwirft die vorherige Zusatzentscheidung.
+Gemeinsamer Kern und sport-/stil-/gattungsspezifischer Adapter; Anpassung über Runden-/Satz-/Zirkelpausen,
+Faktor 0,8–1,2, keine zusätzliche automatische Aufwärtsänderung an Gewichten/Wiederholungen.
+Schutz-/Trend-/Erholungsregeln haben Vorrang. Alte RPE ohne Einverständnismarker bleiben historische Daten.
+Speichern, Verlaufskorrektur, Sicherung, unbegonnene und begonnene Pläne berücksichtigt.
+
+Validiert: 257 Tests bestanden, Vergleichsbasis 24 Profile × 9 Einheiten plus 2 Abläufe bestanden.
+Baseline-Änderungen ausschließlich Metadaten: 216 neue effortDose-Felder, 49 entfernte fast-Felder;
+keine geänderten Übungen oder Dosierungen ohne neue Bewertungen. Ablaufmatrix 216 Einheiten,
+zusätzliche Prüfungen H1–H9 ohne Befund. Produktionsbuild erfolgreich erstellt.
+Keine echte Browser-/Geräteprüfung; **manuelle Abnahme steht aus**.
+Handprüfung: `docs/einheiten-progression-test.md`. Kein Push/Upload, stabiles Repository unberührt.

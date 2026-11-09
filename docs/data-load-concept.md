@@ -301,15 +301,13 @@ Dosistext Rudergerät/Laufband), A12 („3 × 4 Läufe à 20 m“), A7 (Kick-Hal
 unverändert; die Vergleichsdatei führt die Übungen weiter unter der alten Zeilennummer (`legacyIndex`), damit nur echte Änderungen auffallen.
 
 
-## Nachtrag 09.11.2026 – Rückmeldung zwischen vergleichbaren Einheiten
+## Nachtrag 09.11.2026 – Einmalige Abschlussbewertung
 
-Ergänzt die Zyklusprogression um den in `trainingslogik.md` beschriebenen frühen Zusatzreiz. Die bestehende
-Periodisierung wird zuerst berechnet; erst danach wird höchstens eine Dosierungsvariable angepasst.
-`session.fast` speichert v1, Vergleichsschlüssel, Zyklus, Eignung der Einheit für die Kurzschleife, tatsächlich angewandte Stufe (0–2), verbrauchte
-Beleg-IDs und ob diese Einheit einen neuen Schritt erhielt. Der Verlauf übernimmt dieses feste Objekt sowie
-`difficulty` (easy/right/hard). Ein gespeicherter Stand wird beim Neuladen nicht neu erhöht.
-Kraftziele behalten ihr `baseR`: ein Zusatzreiz wird beim nächsten Aufbau nicht erneut auf sich selbst addiert.
-Der Vergleichsschlüssel enthält die bereits periodisierte Grunddosierung. So begründen Erfolge bei einer
-leichteren Dosierung nicht zugleich eine zusätzliche Erhöhung bei einem neuen Zyklus-/Wellenziel.
-Die Anzahl neuer Schritte ist zusätzlich zyklusweit auf zwei begrenzt. Änderungen/Löschungen im Verlauf
-invalidieren vorgemerkte, noch nicht begonnene Einheiten; gestartete Einheiten bleiben erhalten.
+Ersetzt den früheren Zusatzreiz nach zwei leichten Einheiten; Verhalten siehe `trainingslogik.md`.
+`session.effortDose` und der entsprechende Verlaufssnapshot speichern Version, Vergleichsbereich,
+Faktor, Eignung, Ausgangsquelle und die angewandte Runden-/Satzpause. `log.effortControl` speichert
+Version, Emoji-Klasse und `hold`/`change`. Die tatsächliche RPE bleibt die einzige Anstrengungsbewertung.
+Der jüngste passende Snapshot begründet die nächste Anpassung, kein wiederholtes Aufsummieren beim
+Neuladen. Alte Daten bleiben lesbar; `fast`, `difficulty` und frühere Übungsbewertungen werden nicht neu erzeugt.
+Die Lastsignatur berücksichtigt die neuen Felder; unbegonnene Pläne werden nach Änderungen invalidiert.
+Begonnene Pläne behalten ihren Snapshot, Timer verwenden dessen Satz-/Zirkelpause.

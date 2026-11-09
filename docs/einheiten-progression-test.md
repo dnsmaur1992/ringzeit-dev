@@ -1,39 +1,24 @@
-# Dev-Update – früher Zusatzreiz
+# Dev-Update – Abschlussbewertung testen
 
-Nur für https://github.com/dnsmaur1992/ringzeit-dev, Basis d2dd648.
+Nur in ringzeit-dev hochladen, Dateien aus dem ZIP mit denselben Pfaden ersetzen. Die Root-Dateien
+index.html und sw.js müssen mit hochgeladen werden. Danach Pages-Veröffentlichung abwarten und App neu öffnen.
+Vorher gegebenenfalls eine Datensicherung exportieren. Keine erfundenen Tests im echten Verlauf speichern.
 
-## Upload
+1. Eine eigene Einheit starten: Bei den Übungen gibt es keine Leicht/Passend/Schwer-Fragen mehr.
+2. Abschluss öffnen: Ohne RPE/Emoji lässt sich die Einheit nicht speichern. Dauer und Notiz bleiben erhalten.
+3. Sehr locker wählen: Hinweis +10 %, Locker: +5 %. Keine zusätzliche Rückfrage.
+4. Fordernd wählen: Beibehalten ist vorausgewählt, optional +5 %. Hart/Am Limit bieten −5 %/−10 % an.
+5. Optionalantwort auswählen, dann anderes Emoji wählen: Die frühere Antwort muss zurückgesetzt sein.
+6. Nächste eigene Einheit derselben Sportart und Gattung ansehen: Bei normalen Bedingungen kürzere
+   bzw. längere Pause. Eine Technikbewertung verändert keine Krafteinheit; WT und ITF bleiben getrennt.
+7. Bei Kraft gilt die angezeigte Satzpause auch tatsächlich im Timer; Gewichte und Wiederholungen
+   werden nicht automatisch um den Emoji-Prozentsatz verändert. Runden-Arbeitszeit bleibt erhalten.
+8. Neu laden/Plan wieder öffnen: Die Erhöhung darf sich nicht erneut aufaddieren. Bereits begonnenes
+   Training behält seine Vorgaben. Bewertung im Verlauf ändern und Wirkung auf unbegonnene Pläne prüfen.
+9. Entlastung, schlechte Tagesform und hohe Vereinsvorbelastung: Schutzregeln haben Vorrang.
+   Unvollständige leichte Einheiten rechtfertigen keine Erhöhung. Kinder und andere nicht unterstützte
+   Einheitstypen erhalten nur die normale RPE-Auswertung.
 
-1. Sicherung der Dev-App exportieren.
-2. ZIP entpacken und die enthaltenen Dateien in den gleichen Pfaden im Dev-Repo ersetzen bzw. ergänzen.
-   Quellcode, Tests und Dokumentation gehören dazu. Neue Dateien unter src/core und tests nicht vergessen.
-3. index.html und sw.js liegen im Hauptverzeichnis und sind die gebaute App. Nach dem Upload prüfen,
-   dass beide Dateien nicht 0 Byte haben. GitHub Pages abwarten, die Dev-App schließen und neu öffnen.
-4. Dieses Paket gehört nicht in das stabile Repo ringzeit. Es wurde nichts automatisch hochgeladen.
-
-## Was du sofort auf dem Handy prüfen kannst
-
-- Im Abschlussformular steht unter der Anstrengung die freiwillige Frage zur passenden Belastung:
-  Zu leicht / Passend / Zu schwer. Ein erneuter Tipp entfernt die Auswahl.
-- Das Abschließen ist weiterhin auch ohne diese zusätzliche Antwort möglich.
-- Die Antwort wird gespeichert. Unter Verlauf → Eintrag bearbeiten lässt sie sich korrigieren.
-- Kontrolliere DE und EN, Lesbarkeit sowie Scrollen bis zum Abschlussknopf.
-- Bei vorzeitigem Abschluss zählen Minuten/RPE wie bisher zur Belastung; offene Übungen verhindern,
-  dass der Eintrag als Erfolg für den frühen Zusatzreiz gilt.
-
-## Prüfung im normalen Trainingsalltag
-
-- Zwei vergleichbare eigene Einheiten an unterschiedlichen Tagen vollständig absolvieren, Dauer/RPE eintragen
-  und nur bei tatsächlich zu geringer Belastung „Zu leicht“ wählen. Keine Testwerte im echten Verlauf erfinden.
-- Im normalen Grundlagentraining kann die nächste passende Einheit bereits einen kleinen Zusatzreiz haben:
-  bei Technik/Konditionsrunden eine etwas kürzere Pause, bei einer passenden Kraftübung +1 Wiederholung pro Satz.
-- In der vollständigen Ansicht erklärt „Warum diese Einheit?“ den konkreten Wechsel.
-- „Passend“ hält einen bestehenden Zusatzreiz, löst aber keinen weiteren aus. Zwei neue leichte Einheiten
-  auf der erhöhten Stufe können den zweiten kleinen Schritt auslösen. Danach greift der Zyklusdeckel.
-- Auch mit zwei Erfolgen ist bei Erholung, geringer Tagesform, hoher Vorbelastung oder geänderten
-  Vergleichsbedingungen keine frühe Erhöhung zu erwarten. Begonnene Einheiten werden nie umgeschrieben.
-- Diese Langzeitfolge wurde automatisch mit simulierten Datumswerten geprüft; du musst nicht sofort mehrere
-  Einheiten absolvieren oder deine Gerätezeit ändern. Die manuelle Prüfung dient vor allem der Bedienung.
-
-Automatisch bestanden: 258 Tests sowie eine Ablaufprüfung mit 216 Einheiten und Zusatzprüfungen.
-Browser-/Handyprüfung der neuen Oberfläche ist noch durchzuführen.
+Die Prozentwerte sind begrenzte Steuerimpulse über Pausen (Faktor insgesamt 0,8–1,2), keine Messung
+körperlicher Belastung. Bei Rundung oder Mindestpause kann eine einzelne Änderung unsichtbar bleiben.
+Automatische Tests ersetzen keine Handprüfung auf iPhone/Android. Manuelle Abnahme steht noch aus.
