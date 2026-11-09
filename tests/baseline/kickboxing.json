@@ -353,15 +353,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -751,15 +751,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -1119,6 +1119,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -1486,15 +1487,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -1845,15 +1846,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":10}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -2117,6 +2118,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -2414,15 +2416,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,0,0,[],null,{\"kind\":\"reps\",\"id\":\"str.lunges\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -2772,15 +2773,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,0,0,[],null,{\"kind\":\"reps\",\"id\":\"str.leg_press\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",0]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -3025,6 +3025,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -3470,6 +3471,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -3836,6 +3846,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -4162,6 +4181,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -4496,6 +4516,15 @@
        },
        "plannedDates": [],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -4836,6 +4865,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -5088,6 +5126,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -5334,6 +5373,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -5633,6 +5681,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",0]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -5876,6 +5933,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 0,
       "fitnessLevel": 0
      },
@@ -6347,15 +6405,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -6757,15 +6815,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -7115,6 +7173,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -7491,15 +7550,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -7866,15 +7925,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":12}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -8138,6 +8197,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -8427,15 +8487,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -8795,15 +8854,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -9053,6 +9111,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -9503,6 +9562,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -9863,6 +9931,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -10197,6 +10274,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -10541,6 +10619,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -10879,6 +10966,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -11123,6 +11219,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -11373,6 +11470,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -11670,6 +11776,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -11918,6 +12033,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -12394,6 +12510,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -12765,6 +12882,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -13116,6 +13234,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -13492,6 +13611,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -13842,6 +13962,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -14097,6 +14218,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -14345,6 +14467,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -14635,6 +14758,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -14876,6 +15000,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -15321,6 +15446,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -15679,6 +15805,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -16011,6 +16138,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -16364,6 +16492,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -16696,6 +16825,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -16939,6 +17069,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -17188,6 +17319,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -17479,6 +17611,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -17720,6 +17853,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -18281,6 +18415,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -18736,6 +18879,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -19122,6 +19274,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -19565,6 +19718,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"C\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -19942,6 +20104,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"K\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -20209,6 +20380,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -20470,6 +20642,15 @@
        },
        "plannedDates": [],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -20764,6 +20945,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -21007,6 +21197,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -21520,6 +21711,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -21925,6 +22125,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -22289,6 +22498,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -22678,6 +22888,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"C\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -23023,6 +23242,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"K\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -23262,6 +23490,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -23506,6 +23735,15 @@
        },
        "plannedDates": [],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -23801,6 +24039,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"fc\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -24044,6 +24291,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -24544,15 +24792,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"T\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -24956,15 +25204,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"T\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -25317,6 +25565,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -25730,15 +25979,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"C\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26078,15 +26327,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"K\",\"gym\",[\"kb\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":6}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"K\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26397,15 +26646,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"K\",\"out\",[],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"K\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26760,15 +27009,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,2,2,[\"knee\"],null,{\"kind\":\"reps\",\"id\":\"str.dumbbell_press\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"S\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -27139,15 +27387,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,2,2,[\"knee\"],null,{\"kind\":\"reps\",\"id\":\"str.bench_press\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"S\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -27398,6 +27645,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -27875,6 +28123,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -28250,6 +28507,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -28582,6 +28848,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -28960,6 +29227,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"C\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -29290,6 +29566,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"K\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -29595,6 +29880,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"K\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -29895,6 +30189,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -30203,6 +30506,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"k1\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -30452,6 +30764,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -30893,6 +31206,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -31233,6 +31547,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -31557,6 +31872,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -31872,6 +32188,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -32190,6 +32507,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -32408,6 +32726,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -32608,6 +32927,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -32854,6 +33174,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -33072,6 +33393,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -33494,6 +33816,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -33814,6 +34137,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -34110,6 +34434,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -34407,6 +34732,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -34702,6 +35028,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -34908,6 +35235,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -35109,6 +35437,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -35356,6 +35685,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -35574,6 +35904,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -36037,15 +36368,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":7}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -36421,15 +36752,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":7}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -36777,6 +37108,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -37131,15 +37463,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -37500,15 +37832,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":11}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -37772,6 +38104,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -38062,15 +38395,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -38431,15 +38763,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -38689,6 +39020,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -39141,6 +39473,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -39483,6 +39824,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -39808,6 +40158,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -40143,6 +40494,15 @@
        },
        "plannedDates": [],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -40483,6 +40843,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -40731,6 +41100,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -40981,6 +41351,15 @@
         "2026-11-26"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -41278,6 +41657,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -41526,6 +41914,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -42006,15 +42395,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":7}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 60
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -42400,15 +42789,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":7}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 60
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -42761,6 +43150,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -43142,15 +43532,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":5}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 60
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -43516,15 +43906,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":60,\"n\":11}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 60
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -43786,6 +44176,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -44079,15 +44470,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -44444,15 +44834,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "block:mob:2026-10-19",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -44700,6 +45089,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -45158,6 +45548,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -45518,6 +45917,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -45847,6 +46255,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -46193,6 +46602,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -46537,6 +46955,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -46783,6 +47210,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -47037,6 +47465,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -47331,6 +47768,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -47577,6 +48023,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -48049,15 +48496,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -48449,15 +48896,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -48805,6 +49252,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -49176,15 +49624,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -49524,15 +49972,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":7}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -49768,6 +50216,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -50081,15 +50530,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"reps\",\"id\":\"str.lunges\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -50468,15 +50916,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"reps\",\"id\":\"str.leg_press\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -50727,6 +51174,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -51181,6 +51629,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -51541,6 +51998,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -51868,6 +52334,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -52213,6 +52680,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -52536,6 +53012,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -52768,6 +53253,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -53018,6 +53504,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -53335,6 +53830,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -53584,6 +54088,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -53984,15 +54489,15 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -54277,15 +54782,15 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -54555,6 +55060,7 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -54828,15 +55334,15 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -55107,15 +55613,15 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -55326,6 +55832,7 @@
        ],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -55586,15 +56093,14 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],30,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -55903,15 +56409,14 @@
        ],
        "plannedMin": 30
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],30,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -56117,6 +56622,7 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -56482,6 +56988,15 @@
        ],
        "plannedMin": 30
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -56761,6 +57276,15 @@
        ],
        "plannedMin": 30
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -57024,6 +57548,7 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -57297,6 +57822,15 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -57556,6 +58090,15 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -57759,6 +58302,7 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -57980,6 +58524,15 @@
         "2026-11-25"
        ],
        "plannedMin": 30
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -58226,6 +58779,15 @@
        ],
        "plannedMin": 30
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -58430,6 +58992,7 @@
        "plannedDates": [],
        "plannedMin": 30
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -58913,15 +59476,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -59327,15 +59890,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -59688,6 +60251,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -60083,15 +60647,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -60455,15 +61019,15 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":12}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "rest"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null,
+       "roundRest": 67
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -60727,6 +61291,7 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -61018,15 +61583,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,2,2,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -61387,15 +61951,14 @@
        ],
        "plannedMin": 75
       },
-      "fast": {
+      "effortDose": {
        "v": 1,
-       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,2,2,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
-       "cycle": "base:2026-11-02",
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",2]",
        "eligible": true,
-       "raised": false,
-       "level": 0,
-       "basis": [],
-       "mode": "reps"
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -61645,6 +62208,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -62102,6 +62666,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -62460,6 +63033,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"T\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -62787,6 +63369,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -63153,6 +63736,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"C\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -63482,6 +64074,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"K\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -63726,6 +64327,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -63976,6 +64578,15 @@
         "2026-11-24"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -64273,6 +64884,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"kl\",\"S\",2]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -64521,6 +65141,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 2,
       "fitnessLevel": 2
      },
@@ -64994,6 +65615,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -65393,6 +66023,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -65764,6 +66403,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -66148,6 +66788,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -66528,6 +67177,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -66800,6 +67458,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -67066,6 +67725,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -67361,6 +68029,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -67609,6 +68286,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -68066,6 +68744,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -68440,6 +69127,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"T\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -68799,6 +69495,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -69167,6 +69864,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"C\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -69510,6 +70216,15 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"K\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -69754,6 +70469,7 @@
        "plannedDates": [],
        "plannedMin": 75
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -70003,6 +70719,15 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -70299,6 +71024,15 @@
        ],
        "plannedMin": 75
       },
+      "effortDose": {
+       "v": 1,
+       "scope": "[1,\"kickboxing\",\"\",\"lc\",\"S\",1]",
+       "eligible": false,
+       "setRest": 60,
+       "factor": 1,
+       "active": false,
+       "source": null
+      },
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
@@ -70547,6 +71281,7 @@
        "plannedDates": [],
        "plannedMin": 45
       },
+      "effortDose": null,
       "techniqueLevel": 1,
       "fitnessLevel": 1
      },
