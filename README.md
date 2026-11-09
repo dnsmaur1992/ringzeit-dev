@@ -180,7 +180,7 @@ Hauptsport im Profil jederzeit wechselbar; einzelne Einheiten lassen sich auf ei
 ### 📈 Leistungsabhängige Progression
 - Fünf-Wochen-Wellen im Grundlagentraining mit vier Aufbauwochen und anschließender Entlastung; Schwerpunkt-Blöcke behalten ihre sechs Wochen
 - Vollständig absolvierte, vergleichbare Einheiten und die eingetragene Anstrengung entscheiden über Steigerung, Wiederholung oder Reduktion im nächsten Zyklus
-- **Zusatzreiz zwischen Einheiten:** Nach zwei vergleichbaren, vollständig dokumentierten Einheiten mit der freiwilligen Rückmeldung „Zu leicht“ kann bereits die dritte leicht fordernder sein: etwas kürzere Rundenpause oder eine zusätzliche Wiederholung pro Satz an einer geeigneten Kraftübung. Höchstens zwei kleine Schritte je Zyklus; Tagesform, Belastung und Entlastung haben Vorrang.
+- **Abschlussbewertung steuert die nächste eigene Einheit derselben Art:** Fünf verpflichtende Emojis statt zusätzlicher Übungsfragen. Sehr locker: +10 %, Locker: +5 %; Fordernd: auf Wunsch +5 %; Hart/Am Limit: auf Wunsch −5 %/−10 %, sonst beibehalten. Die Impulse verändern zunächst Pausen, keine Gewichte oder Kontaktstärke; insgesamt ±20 % begrenzt. Tagesform und Entlastung haben Vorrang.
 - **Datengrundlage statt bloßer Eintragszahl:** Anzahl, Regelmäßigkeit, Vollständigkeit und Abdeckung des geplanten Trainings werden je Trainingsbereich ausgewertet; wenige oder lückenhafte Daten verhindern die langfristige Zyklussteigerung
 - **Lernhinweis** einmalig in der ersten Einheit; der Stand der Datengrundlage steht unter „Warum diese Einheit?“
 - Bei Technik und Kondition wird die **Pausendichte** in kleinen Schritten angepasst, innerhalb der eingeplanten Trainingszeit
