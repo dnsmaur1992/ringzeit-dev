@@ -46,7 +46,7 @@
       h += `<span class="lab" id="scRpeL">${t("rpe")}</span><div class="effort-faces" role="group" aria-labelledby="scRpeL">${effortFaces()
         .map(([n, f, l]) => `<button type="button" data-scface="${n}" aria-pressed="${faceOf(o.rpe) === n}" aria-label="${esc(l)}"><span aria-hidden="true">${f}</span><small>${esc(l)}</small></button>`)
         .join("")}</div><input id="scRpe" type="hidden" value="${o.rpe ?? ""}">
- <label class="lab" for="scNote">${t("note")}</label><textarea id="scNote">${esc(o.note || "")}</textarea>${o.err ? `<div class="note warn" role="alert">${esc(o.err)}</div>` : ""}
+ ${o.kind === "edit" && own && !free ? difficultyHtml(o.difficulty, true) : ""}<label class="lab" for="scNote">${t("note")}</label><textarea id="scNote">${esc(o.note || "")}</textarea>${o.err ? `<div class="note warn" role="alert">${esc(o.err)}</div>` : ""}
  <div class="acts2">${cancel}${save(o.kind === "freerun" ? "freerunsave" : "editsave")}</div>`;
     } else if (o.kind === "move") {
       const rows = [];
@@ -239,6 +239,7 @@
           entry.sport = o.sport || mainSport();
           entry.minutes = o.min;
           entry.rpe = o.rpe;
+          if (entry.src === "own" && !free) entry.difficulty = ["easy","right","hard"].includes(o.difficulty) ? o.difficulty : undefined;
           entry.note = note;
           if (free) entry.km = kmv;
           entry.edited = new Date().toISOString();

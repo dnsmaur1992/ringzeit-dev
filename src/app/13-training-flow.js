@@ -8,6 +8,9 @@
           progress: (n, total) => `${n} von ${total} Übungen erledigt`,
           check: "Hakenfläche antippen zum Abhaken · i öffnet die Übungserklärung.",
           chooseEffort: "Wie anstrengend war die Einheit?",
+          difficultyQ: "Wie passte die Belastung zu dir? (freiwillig)",
+          difficultyHint: "Zweimal „Zu leicht“ bei vergleichbaren, vollständigen Einheiten kann einen kleinen Zusatzreiz auslösen.",
+          difficulty: { easy: "Zu leicht", right: "Passend", hard: "Zu schwer" },
           effortFine: "Genauer: Skala 1–10",
           effortHelp: "1–3 leicht · 4–6 mittel · 7–8 schwer · 9–10 sehr schwer",
           durationHint: "Vorgeschlagen ist die geplante Dauer – ändere sie, wenn du kürzer oder länger trainiert hast.",
@@ -34,6 +37,9 @@
           progress: (n, total) => `${n} of ${total} exercises completed`,
           check: "Tap the check control to mark complete · i opens exercise details.",
           chooseEffort: "How hard was the session?",
+          difficultyQ: "How did the load suit you? (optional)",
+          difficultyHint: "Two comparable, complete sessions rated “Too easy” may trigger a small extra challenge.",
+          difficulty: { easy: "Too easy", right: "About right", hard: "Too hard" },
           effortFine: "More precise: scale 1–10",
           effortHelp: "1–3 easy · 4–6 moderate · 7–8 hard · 9–10 very hard",
           durationHint: "The planned duration is suggested – change it if you trained shorter or longer.",
@@ -61,6 +67,7 @@
         minutesConfirmed: true,
         minutesTouched: false,
         rpe: null,
+        difficulty: null,
         note: "",
       };
     return ui.finishDraft;
@@ -113,7 +120,11 @@
                 )
                 .join("")}</div><span class="sub">${txt.effortHelp}</span></details>`
         }<input id="fRpe" type="hidden" value="${draft.rpe ?? ""}"></div>
-        <div class="field"><label class="lab" for="fNote">${t("note")}</label><textarea id="fNote" placeholder="${esc(t("notePh"))}">${esc(draft.note)}</textarea></div><div class="field"><div id="finishError" role="alert" class="note warn" hidden></div><button type="button" class="btn${completed ? " all-done" : ""}" id="fSave">${completed ? trainingText().ready : trainingText().complete}</button></div></div></div>`;
+        ${difficultyHtml(draft.difficulty)}<div class="field"><label class="lab" for="fNote">${t("note")}</label><textarea id="fNote" placeholder="${esc(t("notePh"))}">${esc(draft.note)}</textarea></div><div class="field"><div id="finishError" role="alert" class="note warn" hidden></div><button type="button" class="btn${completed ? " all-done" : ""}" id="fSave">${completed ? trainingText().ready : trainingText().complete}</button></div></div></div>`;
+  }
+  function difficultyHtml(value, sheet = false) {
+    const txt = flowText();
+    return `<div class="field"><span class="lab">${txt.difficultyQ}</span><div class="chips">${["easy","right","hard"].map(v => `<button type="button" class="chip" data-session-difficulty="${v}"${sheet ? ' data-difficulty-sheet="1"' : ''} aria-pressed="${value === v}">${txt.difficulty[v]}</button>`).join("")}</div><span class="sub">${txt.difficultyHint}</span></div>`;
   }
   function itemTitle(sess, bi, ni) {
     const it = sess.blocks[bi].items[ni];
@@ -193,6 +204,8 @@
       completed: completion.complete,
       openExercises: completion.open,
       progression: sess?.progression,
+      fast: sess?.fast,
+      difficulty: ["easy","right","hard"].includes(actual.difficulty) ? actual.difficulty : undefined,
       rpe: actual.rpe,
       inputConfirmed: true,
       tHi: sess ? sess.tHi : rpeRange(ty, ui.sel).hi,

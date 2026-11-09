@@ -84,6 +84,18 @@
     if (ds.workout) return workoutAction(ds.workout);
     if (ds.player) return playerAction(ds.player, ds);
     if (ds.exerciseTimer) return exerciseTimerAction(ds.exerciseTimer, ds);
+    if (ds.sessionDifficulty) {
+      if (!["easy", "right", "hard"].includes(ds.sessionDifficulty)) return;
+      const d = ds.difficultySheet ? ui.sheet : finishDraft();
+      if (!d) return;
+      if (ds.difficultySheet) readSheet(); else readFinishDraft();
+      d.difficulty = d.difficulty === ds.sessionDifficulty ? null : ds.sessionDifficulty;
+      document.querySelectorAll("[data-session-difficulty]").forEach(el => {
+        if (!!el.dataset.difficultySheet === !!ds.difficultySheet)
+          el.setAttribute("aria-pressed", String(el.dataset.sessionDifficulty === d.difficulty));
+      });
+      return;
+    }
     if (ds.effort) {
       const draft = finishDraft();
       draft.rpe = +ds.effort;
@@ -662,6 +674,7 @@
         ck: e.ck,
         min: e.minutes,
         rpe: e.rpe,
+        difficulty: e.difficulty,
         kmRaw: e.km != null ? String(e.km).replace(".", S.profile.lang === "de" ? "," : ".") : "",
         note: e.note || "",
       });

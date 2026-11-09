@@ -13,12 +13,12 @@
           ownWeight: "Gewicht selbst wählen",
           learningTitle: "So lernt Ringzeit dein Training kennen",
           learning:
-            "Ringzeit passt dein Training anhand deiner Einträge an. Je regelmäßiger du absolvierte Einheiten, Wiederholungen, Gewichte und deine empfundene Anstrengung erfasst, desto gezielter kann die App die Belastung anpassen. Zu Beginn bleibt die Planung vorsichtig.",
+            "Ringzeit passt dein Training anhand deiner Einträge an. Je regelmäßiger du absolvierte Einheiten, Wiederholungen, Gewichte und deine empfundene Anstrengung erfasst, desto gezielter kann die App die Belastung anpassen. Zu Beginn bleibt die Planung vorsichtig. Nach zwei vergleichbaren, vollständig erfassten Einheiten mit der Rückmeldung „Zu leicht“ kann die nächste einen kleinen Zusatzreiz bekommen. Tagesform und Entlastung haben Vorrang.",
           understood: "Verstanden",
           data: (level, count, weeks) =>
             `Datengrundlage: ${{ collecting: "im Aufbau", sufficient: "ausreichend", reliable: "gut belegt" }[level]} · ${count} vergleichbare Einheiten in ${weeks} Wochen.`,
           dataWhy: {
-            few: "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+            few: "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
             missing: "Einige Leistungsangaben fehlen; die Belastung bleibt vorsichtig.",
             coverage: "Vom geplanten Training ist noch zu wenig erfasst; das Niveau bleibt bestehen.",
             trend:
@@ -35,6 +35,8 @@
           cycle: (week, weeks) => `Belastungszyklus: Woche ${week}/${weeks}.`,
           density: (old, next) =>
             `Gleiche Rundenzeit, angepasste Pausen: ${old} → ${next} s; innerhalb deiner Trainingszeit.`,
+          quickRest: (old, next) => `Zweimal zu leicht bei vergleichbarer Belastung: Rundenpause ${old} → ${next} s. Sonstige Vorgaben bleiben gleich.`,
+          quickRep: (name, old, next) => `Zweimal zu leicht bei vergleichbarer Belastung: ${name}, ${old} → ${next} Wdh. pro Satz. Gewicht und Satzzahl bleiben gleich.`,
           targetWhy: {
             up: "Ziel regelmäßig erreicht: leicht erhöht.",
             down: "Wiederholt zu schwer: Ziel reduziert.",
@@ -54,12 +56,12 @@
           ownWeight: "choose your weight",
           learningTitle: "How Ringzeit learns about your training",
           learning:
-            "Ringzeit adapts training using your entries. Regularly recording completed sessions, reps, weights and perceived effort helps the app tailor the load. Planning stays cautious at first.",
+            "Ringzeit adapts training using your entries. Regularly recording completed sessions, reps, weights and perceived effort helps the app tailor the load. Planning stays cautious at first. After two comparable, fully recorded sessions rated “Too easy”, the next may receive a small extra challenge. Readiness and recovery take priority.",
           understood: "Got it",
           data: (level, count, weeks) =>
             `Training data: ${{ collecting: "building up", sufficient: "sufficient", reliable: "well supported" }[level]} · ${count} comparable sessions across ${weeks} weeks.`,
           dataWhy: {
-            few: "More regularly recorded sessions are needed before increasing load.",
+            few: "More regularly recorded sessions are needed for a long-term cycle increase.",
             missing: "Some performance details are missing; training stays cautious.",
             coverage: "Too little of the planned training has been recorded; maintain the current level.",
             trend: "Recent sessions became harder relative to their targets; no increase today.",
@@ -73,6 +75,8 @@
           cycle: (week, weeks) => `Load cycle: week ${week}/${weeks}.`,
           density: (old, next) =>
             `Same work time, adjusted rests: ${old} → ${next} s; within your session time.`,
+          quickRest: (old, next) => `Two comparable sessions felt too easy: round rest ${old} → ${next} s. Other targets stay the same.`,
+          quickRep: (name, old, next) => `Two comparable sessions felt too easy: ${name}, ${old} → ${next} reps per set. Weight and set count stay the same.`,
           targetWhy: {
             up: "Target met regularly: slightly increased.",
             down: "Repeatedly too hard: target reduced.",
@@ -569,6 +573,72 @@
         if (target) it.target = target;
       });
     });
+    applySessionProgression(sess, pr);
     return sess;
   }
 
+
+  /* Short feedback loop: only one dose variable after the ordinary cycle/wave has been applied.
+     The context includes that baseline, so a new cycle, wave, sport, grade, technical/fitness setting,
+     equipment or restriction cannot silently reuse an easier prescription as evidence. */
+  function applySessionProgression(sess, pr) {
+    const sport = sportNow(), style = sport === "taekwondo" ? tkdUnitStyle() : "",
+      disc = sport === "kickboxing" ? discOf() : "",
+      rounds = ["T", "C", "K"].includes(sess.type) ? roundBlock(sess) : null;
+    let anchor = null;
+    if (sess.type === "S") {
+      for (const b of sess.blocks) {
+        if (isCirc(b) || isExplSets(b.sets)) continue;
+        for (const it of b.items) {
+          if (EX[it.id]?.cat === "str" && it.target && !it.target.timed && !DOSE_FIX[it.id] &&
+              Number.isFinite(it.target.r) && it.target.r < it.target.hi) {
+            anchor = { b, it }; break;
+          }
+        }
+        if (anchor) break;
+      }
+    }
+    const baseline = rounds && rounds.w > 0 && rounds.b > 30
+      ? { kind: "rest", w: rounds.w, b: rounds.b, n: rounds.items.length }
+      : anchor ? { kind: "reps", id: anchor.it.id, r: anchor.it.target.r,
+          lo: anchor.it.target.lo, hi: anchor.it.target.hi, n: anchor.it.target.n } : null;
+    if (!baseline) return;
+    const key = JSON.stringify([1, pr.id, pr.step, sport, style, disc, sess.type, sess.loc,
+      [...new Set(sess.eq)].sort(), sess.min, fitnessLevel(), techniqueLevel(),
+      [...S.profile.limits].sort(), sport === "taekwondo" ? tkdGradeOf(style) : null, baseline]);
+    const history = S.log.filter(e => e.src === "own" && !e.run && e.type === sess.type && entrySport(e) === sport &&
+      (sport !== "taekwondo" || (e.tstyle || "wt") === style) &&
+      (sport !== "kickboxing" || (e.disc || S.profile.disc) === disc));
+    const accepts = e => {
+      if (!progressionRecordComplete(e)) return false;
+      if (!anchor) return true;
+      const p = (e.perf || []).find(p => p.id === anchor.it.id), t = anchor.it.target;
+      return !!p?.target && p.target.n === t.n && p.target.lo === t.lo && p.target.hi === t.hi &&
+        p.effort !== "hard" && p.sets.length >= t.n && p.sets.slice(0,t.n).every(row =>
+          Number.isFinite(row.r) && row.r >= p.target.r &&
+          (!hasKg(p.id) || (Number.isFinite(t.kg) && t.kg > 0 && Number.isFinite(row.kg) && row.kg >= t.kg)));
+    };
+    const eligible = pr.eligible && pr.reason !== "down" && !pr.data.worsening &&
+      lightRegions({ log: S.log, date: sess.date }).length === 0;
+    const decision = nextSessionStep({ entries: history, key, cycle: pr.id, date: sess.date, today: iso(today()), eligible, accepts });
+    sess.fast = { v: 1, key, cycle: pr.id, eligible, raised: false, level: 0, basis: [], mode: baseline.kind };
+    if (!decision.level) return;
+    const requested = decision.level;
+    if (baseline.kind === "rest") {
+      const next = Math.max(30, Math.round(baseline.b / (1 + decision.level * 0.05)));
+      if (next >= baseline.b) return;
+      if (decision.level > 1 && next === Math.max(30, Math.round(baseline.b / (1 + (decision.level - 1) * 0.05)))) decision.level--;
+      rounds.b = next;
+      sess.notes.push(trainingText().quickRest(baseline.b, next));
+    } else {
+      const t = anchor.it.target, next = Math.min(t.hi, t.r + decision.level);
+      if (next <= t.r) return;
+      const delta = next - t.r;
+      sess.notes.push(trainingText().quickRep(exText(anchor.it.id).name, t.r, next));
+      t.r = next; // keep baseR unchanged: the next generation must not compound this bonus
+      if (delta < decision.level) decision.level = delta;
+    }
+    sess.fast.level = decision.level;
+    sess.fast.raised = decision.increased && decision.level === requested;
+    sess.fast.basis = decision.basis;
+  }
