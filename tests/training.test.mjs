@@ -4528,3 +4528,130 @@ test("separation: saving/deleting a fitness test replans open units, preserves s
   assert.equal(a.run("fitnessLevel()"),2,"deleting test restores migrated baseline");
   assert.equal(a.run("techniqueLevel()"),2);
 });
+
+/* Actual session generation, logs and UI: same shared short-loop logic in every sport. */
+function shortLoopSetup(a, sport='kickboxing',style='wt') {
+  a.setDate('2026-11-09');
+  a.run(`S=hydrate({profile:{...DEFAULT_PROFILE,example:false,sport:'${sport}',level:1,
+    birthYear:1992,planStart:'2026-11-02',days:[0,1,2,3,4,5,6],minutes:60,club:{days:[]},tkd:{style:'${style}',wt:'',itf:''}},log:[]});
+    loadCache={};ui.onb=null;globalThis.quickBuild=(date,type='T')=>buildSession(date,type,'gym',type==='S'?['weights','bar']:['bag']);
+    globalThis.quickLog=(s,id,difficulty='easy',patch={})=>{const perf=s.blocks.flatMap(b=>b.items.filter(it=>it.target).map(it=>({id:it.id,target:JSON.parse(JSON.stringify(it.target)),sets:Array.from({length:it.target.n},()=>({r:it.target.r,kg:20}))})));
+      const e={id,date:s.date,src:'own',type:s.type,sport:s.sport,tstyle:s.tstyle,disc:s.disc||S.profile.disc,
+        minutes:s.min,inputConfirmed:true,completed:true,rpe:4,tHi:s.tHi,progression:s.progression,fast:s.fast,perf,difficulty,...patch};S.log.push(e);return e;};`);
+}
+const rq=(a,code)=>JSON.parse(a.run(`JSON.stringify(${code})`));
+
+test('short loop app: third comparable round session reduces only the rest, fourth retains, fifth takes one more capped step',()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("globalThis.s1=quickBuild('2026-11-02');quickLog(s1,'one');globalThis.s2=quickBuild('2026-11-04');quickLog(s2,'two');globalThis.s3=quickBuild('2026-11-06');");
+  assert.equal(a.run('s1.fast.level'),0);
+  assert.equal(a.run('s2.fast.level'),0);
+  assert.equal(a.run('s3.fast.level'),1);
+  const old=rq(a,'roundBlock(s2)'), next=rq(a,'roundBlock(s3)');
+  assert.ok(next.b<old.b && next.b>=30);
+  assert.equal(next.w,old.w);
+  assert.equal(next.items.length,old.items.length);
+  assert.equal(a.run('s3.min'),a.run('s2.min'));
+  a.run("quickLog(s3,'three');globalThis.s4=quickBuild('2026-11-07');quickLog(s4,'four');globalThis.s5=quickBuild('2026-11-08');");
+  assert.equal(a.run('s4.fast.level'),1);
+  assert.equal(a.run('s5.fast.level'),2);
+  assert.ok(a.run('roundBlock(s5).b')<next.b);
+  a.run("quickLog(s5,'five');globalThis.s6=quickBuild('2026-11-09');");
+  assert.equal(a.run('s6.fast.level'),2);
+  assert.equal(a.run('roundBlock(s6).b'),a.run('roundBlock(s5).b'));
+});
+
+test('short loop app: voluntary feedback is required; grade/sport/equipment/dose changes and incomplete entries cannot borrow evidence',()=>{
+  for(const [sport,style] of [['kickboxing','wt'],['boxing','wt'],['taekwondo','wt'],['taekwondo','itf']]) {
+    const a=app();shortLoopSetup(a,sport,style);
+    a.run("globalThis.s1=quickBuild('2026-11-02');quickLog(s1,'one');globalThis.s2=quickBuild('2026-11-04');quickLog(s2,'two');globalThis.s3=quickBuild('2026-11-06');");
+    assert.equal(a.run('s3.fast.level'),1,`${sport}/${style}`);
+    a.run("S.log[1].difficulty='right';");
+    assert.equal(a.run("quickBuild('2026-11-06').fast.level"),0);
+    a.run("S.log[1].difficulty='easy';S.log[1].completed=false;");
+    assert.equal(a.run("quickBuild('2026-11-06').fast.level"),0);
+    a.run("S.log[1].completed=true;S.log[1].rpe=10;");
+    assert.equal(a.run("quickBuild('2026-11-06').fast.level"),0);
+    a.run("S.log[1].rpe=4;");
+    assert.equal(a.run("buildSession('2026-11-06','T','home',[]).fast.level"),0,'equipment/location change');
+    a.run("S.profile.level=2;");
+    assert.equal(a.run("quickBuild('2026-11-06').fast.level"),0,'technical selection is not performance evidence');
+  }
+});
+
+test('short loop app: readiness, deload, tournament preparation and return from a pause win over two easy entries',()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("quickLog(quickBuild('2026-11-02'),'one');quickLog(quickBuild('2026-11-04'),'two');");
+  for(const patch of ["S.profile.form={'2026-11-06':{sleep:0,energy:0}};", "S.profile.weekMood={'2026-11-02':'hard'};", "S.profile.comps=[{date:'2026-11-20',kind:'comp',sport:'kickboxing'}];", "S.log.push({id:'club',src:'club',date:'2026-11-05',sport:'boxing',ck:'P',minutes:90,rpe:8});"]) {
+    const b=app();shortLoopSetup(b);
+    b.run("quickLog(quickBuild('2026-11-02'),'one');quickLog(quickBuild('2026-11-04'),'two');"+patch);
+    assert.equal(b.run("quickBuild('2026-11-06').fast?.level||0"),0,patch);
+  }
+  assert.equal(a.run("quickBuild('2026-11-30').fast?.level||0"),0,'deload week');
+});
+
+test('short loop app: strength adds reps to just one anchor, retains weight/set count, and never fabricates evidence from missed targets',()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("globalThis.s1=quickBuild('2026-11-02','S');quickLog(s1,'one');globalThis.s2=quickBuild('2026-11-04','S');quickLog(s2,'two');globalThis.s3=quickBuild('2026-11-06','S');");
+  assert.equal(a.run('s3.fast.level'),1);
+  const old=rq(a,'s2.blocks.flatMap(b=>b.items.filter(it=>it.target).map(it=>({id:it.id,target:it.target})))');
+  const next=rq(a,'s3.blocks.flatMap(b=>b.items.filter(it=>it.target).map(it=>({id:it.id,target:it.target})))');
+  const changed=next.filter(p=>old.some(o=>o.id===p.id&&o.target.r!==p.target.r));
+  assert.equal(changed.length,1);
+  const item=changed[0],before=old.find(p=>p.id===item.id).target;
+  assert.equal(item.target.r,before.r+1);
+  assert.equal(item.target.kg,before.kg);
+  assert.equal(item.target.n,before.n);
+  a.run("S.log[1].perf[0].sets[0].r=0;");
+  assert.equal(a.run("quickBuild('2026-11-06','S').fast.level"),0);
+});
+
+test('short loop UI: feedback is optional, saved explicitly, editable and re-plans only unstarted units',async()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("ui.sel='2026-11-02';S.sessions[ui.sel]=quickBuild(ui.sel);finishDraft();");
+  const h=a.run('finishFormHtml(S.sessions[ui.sel])');
+  assert.match(h,/data-session-difficulty="easy"/);
+  assert.match(h,/freiwillig/);
+  await a.click({dataset:{sessionDifficulty:'easy'}});
+  assert.equal(a.run('ui.finishDraft.difficulty'),'easy');
+  await a.click({dataset:{sessionDifficulty:'easy'}});
+  assert.equal(a.run('ui.finishDraft.difficulty'),null,'can remove rating');
+  await a.click({dataset:{sessionDifficulty:'easy'}});
+  a.run("globalThis.was=quickLog(S.sessions[ui.sel],'one',ui.finishDraft.difficulty);ui.sel='2026-11-09';S.sessions[ui.sel]=quickBuild(ui.sel);S.sessions[ui.sel].flow={step:1};S.sessions['2026-11-10']=quickBuild('2026-11-10');");
+  const retained=a.run('S.sessions[ui.sel].id');
+  a.run("changeLog(()=>quickLog(S.sessions[ui.sel],'two'));");
+  assert.equal(a.run("!!S.sessions['2026-11-10']"),false,'second entry invalidates cached future plan');
+  assert.equal(a.run('S.sessions[ui.sel].id'),retained,'started session stays');
+  await a.click({dataset:{edit:'one'}});
+  assert.match(a.node('sheet').innerHTML,/data-difficulty-sheet="1"/);
+  for(const lang of ['de','en']) {
+    a.run(`S.profile.lang='${lang}';`);
+    assert.doesNotMatch(a.run('difficultyHtml(null)'),/undefined|NaN/);
+  }
+});
+
+test('short loop storage: the actual finish handler saves optional difficulty and its fixed dose, without awarding partial completion',async()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("ui.sel='2026-11-09';S.sessions[ui.sel]=quickBuild(ui.sel);const s=S.sessions[ui.sel];s.checked={};s.perf={};s.rdone=(roundBlock(s)||{items:[]}).items.length;s.blocks.forEach((b,bi)=>b.items.forEach((it,ni)=>{s.checked[bi+'.'+ni]=true;if(EX[it.id]?.cat==='str')s.perf[bi+'.'+ni]=Array.from({length:blockSets(b)},()=>({r:10,kg:20}));}));finishDraft();");
+  assert.equal(a.run('sessionCompletion(S.sessions[ui.sel]).complete'),true);
+  a.node('fMin').value='60';a.node('fRpe').value='4';a.node('fNote').value='';
+  await a.click({dataset:{sessionDifficulty:'easy'}});
+  a.run('saveTrainingSession()');
+  assert.equal(a.run('S.log[0].difficulty'),'easy');
+  assert.equal(a.run('S.log[0].fast.v'),1);
+  assert.equal(a.run('S.log[0].completed'),true);
+  a.run('S=hydrate(JSON.parse(JSON.stringify(S)));');
+  assert.equal(a.run('S.log[0].difficulty'),'easy');
+  await a.click({dataset:{edit:a.run('S.log[0].id')}});
+  a.node('scMin').value='60';a.node('scRpe').value='4';a.node('scNote').value='';
+  await a.click({dataset:{sessionDifficulty:'right',difficultySheet:'1'}});
+  a.run("sheetAction('editsave')");
+  assert.equal(a.run('S.log[0].difficulty'),'right','rating can be corrected in history');
+});
+
+test('short loop: a session protected after hard club training cannot later be counted as an easy success',()=>{
+  const a=app();shortLoopSetup(a);
+  a.run("quickLog(quickBuild('2026-11-02'),'one');S.log.push({id:'club',src:'club',date:'2026-11-05',sport:'boxing',ck:'P',minutes:90,rpe:8});globalThis.protectedUnit=quickBuild('2026-11-06');quickLog(protectedUnit,'protected');");
+  assert.equal(a.run('protectedUnit.fast.eligible'),false);
+  assert.equal(a.run("quickBuild('2026-11-08').fast.level"),0,'two easy ratings do not override a protected session');
+});
