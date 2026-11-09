@@ -309,7 +309,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "5–6",
@@ -352,6 +352,16 @@
         "2026-11-27"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -697,7 +707,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "5–6",
@@ -740,6 +750,16 @@
         "2026-11-27"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -1430,7 +1450,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "5–6",
@@ -1465,6 +1485,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -1779,7 +1809,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "5–7",
@@ -1814,6 +1844,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,0,0,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":10}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -2336,7 +2376,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "4–6",
       "tHi": 6,
@@ -2373,6 +2413,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,0,0,[],null,{\"kind\":\"reps\",\"id\":\"str.lunges\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -2684,7 +2734,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "4–6",
       "tHi": 6,
@@ -2721,6 +2771,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,0,0,[],null,{\"kind\":\"reps\",\"id\":\"str.leg_press\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 0,
       "fitnessLevel": 0
@@ -6247,7 +6307,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -6286,6 +6346,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -6647,7 +6717,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -6686,6 +6756,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -7375,7 +7455,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -7410,6 +7490,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -7740,7 +7830,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -7775,6 +7865,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":12}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -8289,7 +8389,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -8326,6 +8426,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -8647,7 +8757,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -8684,6 +8794,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -24384,7 +24504,7 @@
        "Wegen deiner Einschränkung (Knie/Sprunggelenk) sind Low Kicks und Knie heute nicht eingeplant. Ändern kannst du das unter Profil → Über mich → Einschränkungen.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -24423,6 +24543,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -24786,7 +24916,7 @@
        "Wegen deiner Einschränkung (Knie/Sprunggelenk) sind Low Kicks und Knie heute nicht eingeplant. Ändern kannst du das unter Profil → Über mich → Einschränkungen.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -24825,6 +24955,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -25554,7 +25694,7 @@
        "Wegen deiner Einschränkung (Knie/Sprunggelenk) sind Low Kicks und Knie heute nicht eingeplant. Ändern kannst du das unter Profil → Über mich → Einschränkungen.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -25589,6 +25729,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -25892,7 +26042,7 @@
        "Knie/Sprunggelenk: keine Sprünge, Kicks locker.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "7–8",
@@ -25927,6 +26077,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"K\",\"gym\",[\"kb\",\"rope\"],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":6}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26201,7 +26361,7 @@
        "Knie/Sprunggelenk: keine Sprünge, Kicks locker.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "7–8",
@@ -26236,6 +26396,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"K\",\"out\",[],75,2,2,[\"knee\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26552,7 +26722,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -26589,6 +26759,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,2,2,[\"knee\"],null,{\"kind\":\"reps\",\"id\":\"str.dumbbell_press\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -26921,7 +27101,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -26958,6 +27138,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"k1\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,2,2,[\"knee\"],null,{\"kind\":\"reps\",\"id\":\"str.bench_press\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -35807,7 +35997,7 @@
        "Partner drills: wear a mouthguard; whoever holds the pads holds them firmly with both hands; guards when there is contact.",
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load.",
+       "More regularly recorded sessions are needed for a long-term cycle increase.",
        "Same work time, adjusted rests: 60 → 67 s; within your session time."
       ],
       "rpe": "5–7",
@@ -35846,6 +36036,16 @@
         "2026-11-24"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":7}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -36181,7 +36381,7 @@
       "notes": [
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load.",
+       "More regularly recorded sessions are needed for a long-term cycle increase.",
        "Same work time, adjusted rests: 60 → 67 s; within your session time."
       ],
       "rpe": "5–7",
@@ -36220,6 +36420,16 @@
         "2026-11-24"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":7}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -36885,7 +37095,7 @@
        "Partner drills: wear a mouthguard; whoever holds the pads holds them firmly with both hands; guards when there is contact.",
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load.",
+       "More regularly recorded sessions are needed for a long-term cycle increase.",
        "Same work time, adjusted rests: 60 → 67 s; within your session time."
       ],
       "rpe": "5–7",
@@ -36920,6 +37130,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -37240,7 +37460,7 @@
       "notes": [
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load.",
+       "More regularly recorded sessions are needed for a long-term cycle increase.",
        "Same work time, adjusted rests: 60 → 67 s; within your session time."
       ],
       "rpe": "6–7",
@@ -37279,6 +37499,16 @@
         "2026-11-29"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":11}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -37793,7 +38023,7 @@
        "These basic exercises recur in your plan so strength performances stay comparable.",
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load."
+       "More regularly recorded sessions are needed for a long-term cycle increase."
       ],
       "rpe": "5–6",
       "tHi": 6,
@@ -37831,6 +38061,16 @@
         "2026-11-26"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -38152,7 +38392,7 @@
        "These basic exercises recur in your plan so strength performances stay comparable.",
        "Load cycle: week 1/5. Baseline: complete comparable sessions and record effort first.",
        "Training data: building up · 0 comparable sessions across 0 weeks.",
-       "More regularly recorded sessions are needed before increasing load."
+       "More regularly recorded sessions are needed for a long-term cycle increase."
       ],
       "rpe": "5–6",
       "tHi": 6,
@@ -38190,6 +38430,16 @@
         "2026-11-26"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -41713,7 +41963,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -41755,6 +42005,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":7}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -42097,7 +42357,7 @@
        "Schwerpunkt Beweglichkeit · Kick-Mobilität: kontrollierte Bewegung statt Schwung.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -42139,6 +42399,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":7}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -42834,7 +43104,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -42871,6 +43141,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":60,\"n\":5}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -43198,7 +43478,7 @@
        "Schwerpunkt Beweglichkeit · Kick-Mobilität: kontrollierte Bewegung statt Schwung.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–8",
       "tHi": 8,
@@ -43235,6 +43515,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":60,\"n\":11}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -43747,7 +44037,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -43788,6 +44078,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -44102,7 +44402,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 3/6. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -44143,6 +44443,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"block:mob:2026-10-19\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "block:mob:2026-10-19",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -47699,7 +48009,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -47738,6 +48048,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -48089,7 +48409,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -48128,6 +48448,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -48810,7 +49140,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -48845,6 +49175,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -49148,7 +49488,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -49183,6 +49523,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":7}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -49693,7 +50043,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -49730,6 +50080,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"reps\",\"id\":\"str.lunges\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -50070,7 +50430,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -50107,6 +50467,16 @@
         "2026-11-25"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,1,1,[\"back\",\"shoulder\"],null,{\"kind\":\"reps\",\"id\":\"str.leg_press\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -53574,7 +53944,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -53613,6 +53983,16 @@
         "2026-11-23"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -53857,7 +54237,7 @@
        "Wenig-Zeit-Modus: nur das Wesentliche.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -53896,6 +54276,16 @@
         "2026-11-23"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -54402,7 +54792,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–7",
@@ -54437,6 +54827,16 @@
         "2026-11-04"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":2}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -54671,7 +55071,7 @@
        "Wenig-Zeit-Modus: nur das Wesentliche.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -54706,6 +55106,16 @@
         "2026-11-04"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"K\",\"gym\",[\"kb\",\"rope\"],30,1,1,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -55138,7 +55548,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -55175,6 +55585,16 @@
         "2026-11-25"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],30,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -55445,7 +55865,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "5–7",
       "tHi": 7,
@@ -55482,6 +55902,16 @@
         "2026-11-25"
        ],
        "plannedMin": 30
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"lc\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],30,1,1,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":8,\"lo\":8,\"hi\":12,\"n\":3}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 1,
       "fitnessLevel": 1
@@ -58443,7 +58873,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -58482,6 +58912,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -58847,7 +59287,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -58886,6 +59326,16 @@
         "2026-11-23"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"T\",\"home\",[\"bag\",\"bands\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":8}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -59593,7 +60043,7 @@
        "Partnerübungen: Mundschutz tragen; wer die Pratze hält, hält sie fest mit beiden Händen; bei Kontakt die passenden Schützer.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "6–8",
@@ -59632,6 +60082,16 @@
         "2026-11-27"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"C\",\"gym\",[\"bag\",\"pads\",\"partner\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":180,\"b\":67,\"n\":5}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -59959,7 +60419,7 @@
       "notes": [
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten.",
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten.",
        "Gleiche Rundenzeit, angepasste Pausen: 60 → 67 s; innerhalb deiner Trainingszeit."
       ],
       "rpe": "7–8",
@@ -59994,6 +60454,16 @@
         "2026-11-04"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"K\",\"gym\",[\"kb\",\"rope\"],75,2,2,[],null,{\"kind\":\"rest\",\"w\":120,\"b\":67,\"n\":12}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "rest"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -60509,7 +60979,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -60547,6 +61017,16 @@
         "2026-11-24"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"gym\",[\"bands\",\"bar\",\"kb\",\"weights\"],75,2,2,[],null,{\"kind\":\"reps\",\"id\":\"str.goblet_squats\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
@@ -60868,7 +61348,7 @@
        "Diese Grundübungen bleiben für vergleichbare Kraftprotokolle wiederkehrend im Plan.",
        "Belastungszyklus: Woche 1/5. Ausgangsniveau: zuerst vergleichbare Einheiten vollständig absolvieren und Anstrengung eintragen.",
        "Datengrundlage: im Aufbau · 0 vergleichbare Einheiten in 0 Wochen.",
-       "Für eine Steigerung fehlen noch regelmäßig erfasste Einheiten."
+       "Für eine langfristige Zyklussteigerung fehlen noch regelmäßig erfasste Einheiten."
       ],
       "rpe": "6–7",
       "tHi": 7,
@@ -60906,6 +61386,16 @@
         "2026-11-24"
        ],
        "plannedMin": 75
+      },
+      "fast": {
+       "v": 1,
+       "key": "[1,\"base:2026-11-02\",0,\"kickboxing\",\"\",\"kl\",\"S\",\"studio\",[\"bar\",\"bb\",\"kb\",\"studio\",\"weights\"],75,2,2,[],null,{\"kind\":\"reps\",\"id\":\"str.barbell_back_squat\",\"r\":5,\"lo\":5,\"hi\":8,\"n\":4}]",
+       "cycle": "base:2026-11-02",
+       "eligible": true,
+       "raised": false,
+       "level": 0,
+       "basis": [],
+       "mode": "reps"
       },
       "techniqueLevel": 2,
       "fitnessLevel": 2
