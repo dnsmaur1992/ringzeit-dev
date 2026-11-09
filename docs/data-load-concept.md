@@ -299,3 +299,17 @@ eingebauten 5. „langsam (3 s ab)“ steht nur noch in Blöcken mit schweren Wi
 **Vergleichsbasis.** Neu aufgezeichnet (`node tests/baseline.mjs --write`); Abweichungen gegenüber dem Stand 3-U ausschließlich: A11 (Text und 4 Phasen Seil-Intervalle,
 Dosistext Rudergerät/Laufband), A12 („3 × 4 Läufe à 20 m“), A7 (Kick-Halten Text und 87 statt 21 Phasen), A9 (Gesamtzeit), A6 (Nackentext). Die Einheiten selbst (Übungswahl, Blöcke) sind
 unverändert; die Vergleichsdatei führt die Übungen weiter unter der alten Zeilennummer (`legacyIndex`), damit nur echte Änderungen auffallen.
+
+
+## Nachtrag 09.11.2026 – Rückmeldung zwischen vergleichbaren Einheiten
+
+Ergänzt die Zyklusprogression um den in `trainingslogik.md` beschriebenen frühen Zusatzreiz. Die bestehende
+Periodisierung wird zuerst berechnet; erst danach wird höchstens eine Dosierungsvariable angepasst.
+`session.fast` speichert v1, Vergleichsschlüssel, Zyklus, Eignung der Einheit für die Kurzschleife, tatsächlich angewandte Stufe (0–2), verbrauchte
+Beleg-IDs und ob diese Einheit einen neuen Schritt erhielt. Der Verlauf übernimmt dieses feste Objekt sowie
+`difficulty` (easy/right/hard). Ein gespeicherter Stand wird beim Neuladen nicht neu erhöht.
+Kraftziele behalten ihr `baseR`: ein Zusatzreiz wird beim nächsten Aufbau nicht erneut auf sich selbst addiert.
+Der Vergleichsschlüssel enthält die bereits periodisierte Grunddosierung. So begründen Erfolge bei einer
+leichteren Dosierung nicht zugleich eine zusätzliche Erhöhung bei einem neuen Zyklus-/Wellenziel.
+Die Anzahl neuer Schritte ist zusätzlich zyklusweit auf zwei begrenzt. Änderungen/Löschungen im Verlauf
+invalidieren vorgemerkte, noch nicht begonnene Einheiten; gestartete Einheiten bleiben erhalten.

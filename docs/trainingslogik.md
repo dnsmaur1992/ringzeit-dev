@@ -44,3 +44,29 @@ Seit 4b regulär wählbar (Hauptsport im Profil/Onboarding, Sportwahl je Einheit
 - **Partnertage:** Aufgabensparring. „Freies Touch-Sparring“ (30–40 % Schlaghärte, Partner und volle Schutzausrüstung) höchstens einmal je Einheit, ab Fortgeschritten, nie für Kinder, nie in Tapering-/Erholungswochen oder bei K.o.-Sperre; Hinweis „nur nach Absprache mit deinem Trainer und unter Aufsicht“. Kinder trainieren ohne Partnersparring.
 - **Statt Abhärtung:** Block „Handgelenk & Griff“ (6 min): Handtuch auswringen und Faustschluss immer; dazu je nach Alter, Level, Einschränkung und Ausrüstung eine weitere Übung. Kinder nur Handtuch und Griff.
 - **K.o.:** Sperre 30 Tage (nur Solo ohne Treffer), Hinweis auf Steigerung bei Wiederholung (§89) und Stufenplan (Anhang 5); keine automatische Stufensteuerung, keine medizinische Bewertung.
+
+
+## Zusatzreiz von Einheit zu Einheit (09.11.2026)
+
+- Freiwillige Rückmeldung beim Abschluss: Zu leicht / Passend / Zu schwer. Sie ergänzt die tatsächliche RPE,
+  ersetzt sie nicht und ist im Verlauf korrigierbar. Ohne diese Rückmeldung wird kein früher Zusatzreiz abgeleitet.
+- Zwei aufeinanderfolgende vergleichbare eigene Einheiten an unterschiedlichen Tagen müssen vollständig
+  dokumentiert und abgeschlossen sein; RPE darf das jeweilige Ziel nicht überschreiten. Fehlende Angaben,
+  offene Übungen oder ein „Zu schwer“ an einer Kraftübung zählen nicht als Erfolg.
+- Die nächsten Einheiten können schon vor dem Ende des Fünf-Wochen-Zyklus eine kleine Anpassung erhalten:
+  bei T/C/K nur die Rundenpause (Faktor 1,05 bzw. 1,10, mindestens 30 s), bei S nur die Wiederholungen
+  einer geeigneten, tatsächlich protokollierten Übung (+1 bzw. +2 pro Satz bis zur bisherigen Obergrenze).
+- Eine weitere Steigerung braucht zwei neue leichte Einheiten auf der erhöhten Stufe. Bei „Passend“ bleibt der
+  vorhandene Zusatzreiz stehen. Zu hohe Anstrengung, Abbruch oder fehlende Leistungsnachweise lassen ihn entfallen.
+- Maximal zwei neue kleine Schritte je Sport/Stil, Einheitstyp und Zyklus, auch wenn sich die Grunddosierung ändert.
+  Keine automatischen Kontaktstärken, Gewichte, zusätzlichen Sätze oder neuen Techniken über diesen Mechanismus.
+- Vergleichsfenster 21 Tage; Sport/Stil/Disziplin, Typ, Ort, Ausrüstung, Planzeit, Technik-/Fitnessstufe,
+  Einschränkungen, TKD-Grad und die bereits periodisierte Grunddosierung müssen passen. Neue Zyklen/Wellen
+  oder geänderte Bedingungen benötigen eigene Nachweise; alte Daten werden nicht umgedeutet.
+- Es gelten die vorhandenen Progressionsschutzregeln, zusätzlich keine schnelle Erhöhung bei stark belasteten
+  Bereichen vom Vortag. Kinder/Jugend, Wettkampfvorbereitung, Entlastung, Wiedereinstieg und eingeschränkte
+  Tagesform bekommen daraus keinen Zusatzreiz. Lauf/Mobility/Sparring bleiben außerhalb dieser Kurzschleife.
+- Bereits begonnene Einheiten bleiben unverändert. Noch nicht begonnene Pläne werden nach relevanten
+  Verlaufseinträgen/-korrekturen verworfen und beim Öffnen passend neu erzeugt.
+- Technischer Kern: `src/core/session-progression.js` (`nextSessionStep`, zustandsfrei).
+  Sportübergreifender Plan-Adapter: `applySessionProgression` in `src/app/12-progression.js`.

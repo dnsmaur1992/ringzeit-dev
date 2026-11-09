@@ -325,3 +325,18 @@ vor der letzten Mengen-Zuordnung der Kampfsimulation ohne Befund; abschließend 
 Zusatzprüfungen einschließlich manueller Technik-/gemeinsamer Fitness-Trennung ohne Befund.
 Browser-/Geräteprüfung hier nicht ausgeführt: Der Chromium-Download war nicht verfügbar.
 Handprüfung und Upload: `docs/technik-fitness-test.md`.
+
+
+## Nachtrag 09.11.2026 – Früher Zusatzreiz nach zweimal „Zu leicht“
+
+Nur Dev-Auftrag, Basis `d2dd648`. Freiwillige Rückmeldung im Abschluss und Verlauf ergänzt; kurzer gemeinsamer
+Progressionskern für alle Sportarten; ein Parameter nach zwei passenden Erfolgen, weitere Schritte erst mit
+neuen Belegen und höchstens zwei je Zyklus. Vergleichsbedingungen, Belastung/Erholung und vorhandene
+Periodisierung werden berücksichtigt. Begonnene Einheiten bleiben erhalten.
+
+Validiert: 258 Tests bestanden, darunter Einheitenfolgen 1–5, widersprüchliche/fehlende/abgebrochene Angaben,
+Sport/Stil-/Ausrüstungswechsel, Obergrenze, Körperlast vom Vortag, Speichern/Korrigieren und Sicherungs-Rückladung.
+Ablauf-Matrix 216 Einheiten plus H1–H9 ohne Befund. Bisherige Vergleichspläne/Dosen/Timer bleiben ohne positive neue Rückmeldungen
+identisch; die aktualisierte Vergleichsbasis enthält nur neue Metadaten und präzisierte Hinweise.
+Kein Push/Upload, keine Änderung am stabilen Repository. **Manuelle Abnahme noch offen.**
+Handprüfung und Upload: `docs/einheiten-progression-test.md`.
