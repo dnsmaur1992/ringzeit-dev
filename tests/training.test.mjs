@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
+import { readFileSync } from "node:fs";
 import { appHtml } from "./app-source.mjs";
 
 // Execute the actual inline application, without starting the DOM boot/animation loop.
@@ -4302,7 +4303,15 @@ test("7n+ Winter Arc: tick today and the two days before, not earlier or before 
   assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-3)}')`), false, "3 days back is too late");
   await a.click({ dataset: { arcchk: "mob", ad: d(-1) } });
   assert.equal(a.run(`arcTicked(S.profile.arc,'mob','${d(-1)}')`), false, "untick");
-  const h = a.run("renderWeek()");
+  // Today keeps the card short: the week with the day buttons and the notes opens on demand
+  let h = a.run("renderWeek()");
+  assert.doesNotMatch(h, /data-ad=|Zählt für die letzte Nacht|data-arc="pause"/, "week closed by default");
+  assert.match(h, /data-arcchk="mob" aria-pressed/, "today's tick stays visible");
+  assert.match(h, /data-arc="wk" aria-expanded="false">Woche, Nachtragen/);
+  await a.click({ dataset: { arc: "wk" } });
+  h = a.run("renderWeek()");
+  assert.match(h, /aria-expanded="true">Weniger/);
+  assert.match(h, /data-arc="pause"/);
   assert.match(h, new RegExp(`data-arcchk="mob" data-ad="${d(0)}"`));
   assert.doesNotMatch(h, new RegExp(`data-ad="${d(-3)}"`));
   assert.match(h, /Zählt für die letzte Nacht/);
@@ -4619,4 +4628,119 @@ test('emoji control: a worsening trend cannot reuse a positive density correctio
   const guarded=a.run('roundBlock(protectedUnit).b');
   a.run("S.log=[];loadCache={};globalThis.plainUnit=eb('2026-11-04');");
   assert.ok(guarded>=a.run('roundBlock(plainUnit).b'),'no shorter rests when the cycle requests recovery');
+});
+
+
+test('release 4: actual previous-production states migrate without losing profile, history or begun prescriptions',()=>{
+  const {fixtures}=JSON.parse(readFileSync(new URL('./fixtures/prod-e23d121.json',import.meta.url),'utf8'));
+  for(const f of fixtures){
+    // valid in both apps: the own key is written, the other app's data on the same origin stays untouched
+    const a=app();a.setDate('2026-11-09');
+    const own=a.run('APP_ID'),other=own==='ringzeit'?'ringzeit-dev':'ringzeit';
+    a.saved.set(other+'.v1','other-sentinel');
+    a.saved.set(other+'.resume.v1','other-resume-sentinel');
+    a.run(`S=hydrate(${JSON.stringify(f.state)});store.save();`);
+    assert.equal(a.run('LS'),own+'.v1');
+    assert.equal(a.saved.get(other+'.v1'),'other-sentinel');
+    assert.equal(a.saved.get(other+'.resume.v1'),'other-resume-sentinel');
+    const migrated=JSON.parse(a.saved.get(own+'.v1'));
+    for(const key of ['log','weights','tests','ov','cov','pauses','ko']) assert.deepEqual(migrated[key],f.state[key],`${f.sport}/${f.style}: ${key}`);
+    for(const [key,value] of Object.entries(f.state.profile)) assert.deepEqual(migrated.profile[key],value,`${f.sport}/${f.style}: profile.${key}`);
+    assert.equal(migrated.profile.fitnessBase,2);
+    const sportKey=f.sport==='taekwondo'?'taekwondo:'+f.style:f.sport;
+    assert.equal(migrated.profile.techLevels[sportKey],2);
+    const normalized=JSON.parse(JSON.stringify(migrated.sessions));
+    for(const sess of Object.values(normalized)){
+      delete sess.fitnessLevel;
+      sess.blocks.forEach(b=>delete b.fitnessLevel);
+    }
+    assert.deepEqual(normalized,f.state.sessions,'saved prescriptions/progress remain intact');
+    assert.equal(a.run('needNews()'),true);
+    assert.equal(a.run(`nextEffortDose({entries:S.log,scope:'unseen',date:'2026-11-10',today:'2026-11-09'}).active`),false,'legacy RPE is not interpreted as agreement');
+    a.run('S=hydrate(JSON.parse(localStorage.getItem(LS)));store.save();');
+    assert.deepEqual(JSON.parse(a.saved.get(own+'.v1')),migrated,'reload is idempotent');
+  }
+});
+
+test('release 4: new information is shown once in both languages and survives a reload',async()=>{
+  const a=app();a.run('S.profile.example=false;S.profile.toured=true;S.profile.newsSeen=9;');
+  assert.equal(a.run('needNews()'),true);
+  for(const lang of ['de','en']){
+    a.run(`S.profile.lang='${lang}'`);
+    assert.equal(a.run('t("news").pts.length'),4);
+    assert.match(a.run('t("news").pts.join(" ")'),lang==='de'?/fünf Emojis/:/five emojis/);
+  }
+  await a.click({dataset:{newsOk:'1'}});
+  assert.equal(a.run('needNews()'),false);
+  a.run('S=hydrate(JSON.parse(localStorage.getItem(LS)));');
+  assert.equal(a.run('needNews()'),false);
+});
+
+
+test('release 4: upgrade refreshes untouched old previews with the same settings, retaining every started/resumable plan',()=>{
+  const {fixtures}=JSON.parse(readFileSync(new URL('./fixtures/prod-e23d121.json',import.meta.url),'utf8'));
+  for(const f of fixtures){
+    const a=app();a.setDate('2026-11-09');a.run(`S=hydrate(${JSON.stringify(f.state)});`);
+    const begun=a.run("JSON.stringify(S.sessions['2026-11-09'])");
+    const settings=a.run("JSON.stringify([S.sessions['2026-11-10'].sport,S.sessions['2026-11-10'].type,S.sessions['2026-11-10'].loc,S.sessions['2026-11-10'].eq,S.sessions['2026-11-10'].min])");
+    assert.equal(a.run('refreshLegacyPlans()'),true);
+    assert.equal(a.run("JSON.stringify(S.sessions['2026-11-09'])"),begun);
+    assert.equal(a.run("JSON.stringify([S.sessions['2026-11-10'].sport,S.sessions['2026-11-10'].type,S.sessions['2026-11-10'].loc,S.sessions['2026-11-10'].eq,S.sessions['2026-11-10'].min])"),settings);
+    assert.equal(a.run("S.sessions['2026-11-10'].effortDose.v"),1);
+    assert.equal(a.run('refreshLegacyPlans()'),false,'new previews are not generated twice');
+  }
+  for(const progress of ["s.flow={step:0}","s.perf={'0.0':[{r:5}]}","s.checked={'0.0':true}","s.rdone=1","s.roundChecks={1:false}","localStorage.setItem(RESUME_KEY,JSON.stringify({v:1,ds:'2026-11-10'}))"]){
+    const a=app();a.setDate('2026-11-09');a.run(`S=hydrate(${JSON.stringify(fixtures[0].state)});let s=S.sessions['2026-11-10'];${progress};`);
+    const before=a.run("JSON.stringify(S.sessions['2026-11-10'])");
+    assert.equal(a.run('refreshLegacyPlans()'),false);
+    assert.equal(a.run("JSON.stringify(S.sessions['2026-11-10'])"),before);
+  }
+});
+
+test('Winter Arc mobility: each generated step reuses its exercise illustration across sports and languages',()=>{
+  const a=app();a.run("S.profile.birthYear=1992;S.profile.limits=[];");
+  assert.equal(a.run("EX.filter(e=>(e.cat==='mob'||e.cat==='cool')&&!hasSketch(e.id)).length"),0,'all mobility/cooldown catalogue entries are illustrated');
+  assert.match(a.run("sketchSvg('mob.slow_motion_kicks',true)"),/sketch moving fast slow/);
+  for(const [sport,style] of [['kickboxing','wt'],['boxing','wt'],['taekwondo','wt'],['taekwondo','itf']]){
+    for(const lang of ['de','en']){
+      a.run(`S.profile.sport='${sport}';S.profile.tkd.style='${style}';S.profile.lang='${lang}';arcMobOpen();ui.mob.run=true;`);
+      const n=a.run('ui.mob.steps.length');assert.ok(n>0);
+      for(let i=0;i<n;i++){
+        a.run(`Object.assign(ui.mob,{i:${i},p:0,at:Date.now(),paused:false});`);
+        assert.equal(a.run('hasSketch(ui.mob.steps[ui.mob.i].id)'),true,`${sport}/${style}: ${a.run('ui.mob.steps[ui.mob.i].id')} has no illustration`);
+        const html=a.run('arcMobHtml()');
+        assert.match(html,/class="mobdemo skwrap"/);
+        assert.match(html,/<svg class="sketch/);
+        assert.doesNotMatch(html,/undefined|NaN/);
+        if(a.run('!!SKETCH[EX[ui.mob.steps[ui.mob.i].id].key].hold')) assert.match(html,/class="skhold"/);
+      }
+    }
+  }
+});
+
+test('Winter Arc mobility: paused and resumed views keep the actual remaining phase time',()=>{
+  const a=app();
+  a.run("S.profile.limits=[];globalThis.__now=1e12;Date.now=()=>__now;const arcTestStep=mobStep({blocks:[{key:'mob',min:10,items:[{id:'mob.pigeon_stretch'}]}]},0,0);ui.mob={steps:[arcTestStep],sec:arcTestStep.sec,run:false,paused:false,i:-1};ui.arc={view:'mob'};arcMobStart();__now+=20000;arcMobTick();arcMobPause();");
+  const remaining=a.run('mobPosition(ui.mob).seconds');assert.equal(remaining,43);
+  assert.match(a.run('arcMobHtml()'),/id="mobclk">0:43</);
+  assert.match(a.run('arcMobHtml()'),/mobdemo skwrap is-paused/);
+  a.run('__now+=300000;');
+  assert.equal(a.run('mobPosition(ui.mob).seconds'),remaining);
+  a.run('arcMobResume();');
+  assert.equal(a.run('mobPosition(ui.mob).seconds'),remaining);
+  assert.match(a.run('arcMobHtml()'),/id="mobclk">0:43</);
+  assert.doesNotMatch(a.run('arcMobHtml()'),/mobdemo skwrap is-paused/);
+  a.run('__now+=43000;arcMobTick();');
+  assert.equal(a.run('mobPosition(ui.mob).p'),1,'next phase starts at its actual boundary');
+  assert.equal(a.run('mobPosition(ui.mob).seconds'),a.run('ui.mob.steps[0].phases[1].seconds'));
+});
+
+test('compact round focus: the work phase renders the same exercise sketch as its rest preview',()=>{
+  const a=app();
+  a.run("ui.sel='2026-11-02';ui.tab='session';ui.focus=true;S.sessions[ui.sel]=buildSession(ui.sel,'K','gym',['bag']);const rb=roundBlock(S.sessions[ui.sel]);rb.items=[{k:'ex',id:'mob.cat_cow'},{k:'ex',id:'mob.cat_cow'}];ui.timer=newTimer(ui.sel);ui.timer.phase='work';renderFocus();");
+  assert.match(a.node('focus').innerHTML,/fcur sks/);
+  assert.match(a.node('focus').innerHTML,/<svg class="sketch moving fast"/);
+  a.run("ui.timer.phase='rest';renderFocus();");
+  assert.match(a.node('focus').innerHTML,/fcur skb/);
+  assert.match(a.node('focus').innerHTML,/<svg class="sketch moving fast"/);
 });

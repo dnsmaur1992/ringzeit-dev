@@ -97,7 +97,7 @@
       coldNote: "Kalt duschen langsam steigern; nicht bei Herz-Kreislauf-Problemen oder wenn du krank bist.",
       weightNote: "Nur als Verlauf – ohne Zielgewicht. Ein Gewichtslimit für einen Kampf trägst du bei den Terminen ein.",
       start: "Winter Arc starten",
-      startsOn: (d) => `Dein Winter Arc startet ${d}.`,
+      startsOn: (d) => `Dein Winter Arc startet ${d}${d.endsWith(".") ? "" : "."}`,
       testFirst: "Mach vorher den Fitnesstest – am Ende siehst du, was der Winter gebracht hat.",
       testEnd: "Letzte Woche: Zeit für den Endtest.",
       toTest: "Zum Fitnesstest",
@@ -108,6 +108,9 @@
       today: "Heute",
       thisWeek: "Diese Woche",
       of7: (n) => `${n} von 7`,
+      more: "Woche, Nachtragen & Optionen ▾",
+      less: "Weniger ▴",
+      backNote: "Vergessen? Heute und die 2 Tage davor kannst du nachtragen.",
       kgPh: "kg",
       kgSave: "Eintragen",
       kgDone: (kg) => `Eingetragen: ${kg} kg`,
@@ -119,12 +122,13 @@
       rests: "Diese Woche ruht das Ziel (Pause).",
       pause: "Pausieren",
       resume: "Weiter",
-      paused: (d) => `Winter Arc pausiert seit ${d}. Das Ziel ruht, die Serie bleibt.`,
+      paused: (d) => `Winter Arc pausiert seit ${d}${d.endsWith(".") ? "" : "."} Das Ziel ruht, die Serie bleibt.`,
       end: "Beenden",
       endAsk: "Winter Arc wirklich beenden? Dein Fortschritt bleibt in der Bilanz.",
       endYes: "Ja, beenden",
       endNo: "Weitermachen",
       cancel: "Nicht starten",
+      edit: "Anpassen",
       done: "Winter Arc geschafft",
       doneCard: "Dein Winter Arc ist vorbei. Schau dir an, was du geschafft hast.",
       doneBtn: "Bilanz ansehen",
@@ -231,6 +235,9 @@
       today: "Today",
       thisWeek: "This week",
       of7: (n) => `${n} of 7`,
+      more: "Week, catch up & options ▾",
+      less: "Less ▴",
+      backNote: "Forgot one? You can add today and the 2 days before.",
       kgPh: "kg",
       kgSave: "Log",
       kgDone: (kg) => `Logged: ${kg} kg`,
@@ -248,6 +255,7 @@
       endYes: "Yes, end it",
       endNo: "Keep going",
       cancel: "Don't start",
+      edit: "Edit",
       done: "Winter Arc done",
       doneCard: "Your Winter Arc is over. See what you achieved.",
       doneBtn: "See review",
@@ -409,74 +417,80 @@
     if (td > end || a.endedEarly) return `<div class="arcard${win}"><span class="eb">${A.tag}</span><div class="big">${A.done}</div><p class="sub">${A.doneCard}</p><button type="button" class="btn" data-arc="summary">${A.doneBtn}</button></div>`;
     if (td < a.start) {
       const T = arcTests(a);
-      return `<div class="arcard${win}"><span class="eb">${A.tag}</span><div class="big">${esc(A.startsOn(fmtDate(a.start)))}</div>${arcHas(a, "test") && !T.first ? `<p class="sub">${A.testFirst}</p><button type="button" class="btn sec" data-tab="test">${A.toTest}</button>` : ""}<div class="minirow"><button type="button" class="btn ghost" data-arc="setup">✎</button><button type="button" class="btn ghost" data-arc="cancel">${A.cancel}</button></div></div>`;
+      return `<div class="arcard${win}"><span class="eb">${A.tag}</span><div class="big">${esc(A.startsOn(fmtDate(a.start)))}</div>${arcHas(a, "test") && !T.first ? `<p class="sub">${A.testFirst}</p><button type="button" class="btn sec" data-tab="test">${A.toTest}</button>` : ""}<div class="minirow"><button type="button" class="btn ghost" data-arc="setup">✎ ${A.edit}</button><button type="button" class="btn ghost" data-arc="cancel">${A.cancel}</button></div></div>`;
     }
     const day = daysBetween(parse(a.start), today()) + 1,
       n = a.weeks * 7,
       wi = Math.floor((day - 1) / 7),
       w = arcWeek(a, wi),
       pz = (a.paused || []).find((p) => !p.to);
-    let h = `<div class="arcard${win}"><span class="eb">${esc(A.week(wi + 1, a.weeks))}</span>`;
-    h += `<div class="big">${esc(arcHas(a, "impulse") ? A.impulses[wi % A.impulses.length] : A.name)}</div>`;
+    let h = `<div class="arcard arcmain${win}"><span class="eb">${esc(A.week(wi + 1, a.weeks))}</span>`;
+    h += arcHas(a, "impulse") ? `<div class="big quote">${esc(A.impulses[wi % A.impulses.length])}</div>` : `<div class="big">${esc(A.name)}</div>`;
     h += `<div class="arcbar"><i style="width:${Math.round((day / n) * 100)}%"></i></div><span class="sub">${esc(A.day(day, n, n - day))}</span>`;
     if (pz) return h + `<p class="sub">${esc(A.paused(fmtDate(pz.from)))}</p><button type="button" class="btn" data-arc="resume">${A.resume}</button></div>`;
     const dots = (k, of) => `<div class="arcdots">${Array.from({ length: of }, (_, i) => `<span class="${i < k ? "on" : ""}"></span>`).join("")}</div>`;
+    // weekly goals: one slim line each (the calendar below already lists the sessions themselves)
     const goals = [];
-    if (arcHas(a, "train")) goals.push(`<div class="g"><b>${w.units}/${a.train}</b><small>${A.unitsWk}</small>${dots(w.units, a.train)}</div>`);
-    if (arcHas(a, "relax")) goals.push(`<div class="g"><b>${w.relax}/${a.relax}</b><small>${A.relaxWk}</small>${dots(w.relax, a.relax)}</div>`);
+    if (arcHas(a, "train")) goals.push(`<div class="g${w.units >= a.train ? " ok" : ""}"><b class="num">${w.units}/${a.train}</b><small>${A.unitsWk}</small>${dots(w.units, a.train)}</div>`);
+    if (arcHas(a, "relax")) goals.push(`<div class="g${w.relax >= a.relax ? " ok" : ""}"><b class="num">${w.relax}/${a.relax}</b><small>${A.relaxWk}</small>${dots(w.relax, a.relax)}</div>`);
     if (goals.length) h += `<div class="arcgoals">${goals.join("")}</div>`;
     if (w.rest) h += `<p class="sub">${A.rests}</p>`;
-    h += `</div>`;
-    // ticks of today and of this week
-    const daily = a.pick.filter((id) => ARC_KIND[id] === "daily"),
+    // Today shows only today's ticks; the week (ticking up to two days back), weight entry, notes, streak,
+    // pause and end open on demand – so the plan below stays in reach
+    const open = !!ui.arcWk,
+      daily = a.pick.filter((id) => ARC_KIND[id] === "daily"),
       weekly = a.pick.filter((id) => ARC_KIND[id] === "weekly"),
-      cnt = (id) => {
-        let k = 0;
-        for (let d = 0; d < 7; d++) {
-          const ds = iso(addDays(parse(w.from), d));
-          if (ds <= td && arcTicked(a, id, ds)) k++;
-        }
-        return k;
-      };
+      days = Array.from({ length: 7 }, (_, k) => iso(addDays(parse(w.from), k))),
+      cnt = (id) => days.filter((ds) => ds <= td && arcTicked(a, id, ds)).length,
+      lw = S.weights.find((x) => x.date >= w.from && x.date <= w.to);
     if (daily.length || weekly.length) {
-      h += `<div class="panel wapan arcticks">`;
-      if (daily.length)
-        h += `<span class="lab">${A.today}</span>${daily
-          .map((id) => {
-            const on = arcTicked(a, id, td),
-              auto = id === "breath";
-            const wk = Array.from({ length: 7 }, (_, k) => iso(addDays(parse(w.from), k)))
-              .map((ds, k) => {
-                const done = arcTicked(a, id, ds),
-                  can = !auto && arcCanTick(a, ds),
-                  cls = `ad${done ? " on" : ""}${ds === td ? " td" : ""}${ds > td || ds < a.start ? " fut" : ""}`;
-                return can
-                  ? `<button type="button" class="${cls}" data-arcchk="${id}" data-ad="${ds}" aria-pressed="${done}" aria-label="${esc(fmtDate(ds))}">${t("weekday")[k].slice(0, 2)}</button>`
-                  : `<span class="${cls}" aria-hidden="true">${t("weekday")[k].slice(0, 2)}</span>`;
-              })
-              .join("");
-            return `<div class="arch"><button type="button" class="arck${on ? " on" : ""}" data-arcchk="${id}" aria-pressed="${on}" ${auto && on ? "disabled" : ""}>${on ? "✓" : ""}</button><span style="flex:1">${esc(A.blocks[id])}${id === "sleep23" || id === "sleep7" ? `<small class="sub" style="display:block">${A.sleepNote}</small>` : ""}${id === "cold" ? `<small class="sub" style="display:block">${A.coldNote}</small>` : ""}</span><span class="sub">${A.of7(cnt(id))}</span>${auto && !on ? `<button type="button" class="btn ghost" data-rx="open" data-rv="breath">🌬️</button>` : ""}${id === "mob" && !on ? `<button type="button" class="btn ghost" data-arc="mob" aria-label="${A.mobGoA}">${A.mobGo}</button>` : ""}<span class="adays">${wk}</span></div>`;
-          })
-          .join("")}`;
-      if (weekly.length)
-        h += `<span class="lab">${A.thisWeek}</span>${weekly
-          .map((id) => {
-            const on = arcTicked(a, id, td);
-            if (id === "weight") {
-              const lw = S.weights.find((x) => x.date >= w.from && x.date <= w.to);
-              return `<div class="arch"><span class="arck${on ? " on" : ""}" aria-hidden="true">${on ? "✓" : ""}</span><span style="flex:1">${esc(A.blocks.weight)}${lw ? `<small class="sub" style="display:block">${esc(A.kgDone(numF(lw.kg)))}</small>` : `<small class="sub" style="display:block">${A.weightNote}</small>`}</span>${lw ? "" : `<span class="arkg"><input id="arcKg" class="wc" type="text" inputmode="decimal" placeholder="${A.kgPh}" aria-label="${A.kgPh}"><button type="button" class="btn ghost" data-arc="kg">${A.kgSave}</button></span>`}</div>`;
-            }
-            return `<div class="arch"><span class="arck${on ? " on" : ""}" aria-hidden="true">${on ? "✓" : ""}</span><span style="flex:1">${esc(A.blocks[id])}</span>${on ? "" : `<button type="button" class="btn ghost" data-arc="strong" aria-label="${A.strongGo}">🌙 ${A.go}</button>`}</div>`;
-          })
-          .join("")}`;
+      h += `<div class="arcticks">`;
+      h += daily
+        .map((id) => {
+          const on = arcTicked(a, id, td),
+            auto = id === "breath";
+          return `<div class="arch"><button type="button" class="arck${on ? " on" : ""}" data-arcchk="${id}" aria-pressed="${on}" ${auto && on ? "disabled" : ""}>${on ? "✓" : ""}</button><span class="an">${esc(A.blocks[id])}</span><span class="sub num">${cnt(id)}/7</span>${auto && !on ? `<button type="button" class="btn ghost" data-rx="open" data-rv="breath">🌬️</button>` : ""}${id === "mob" && !on ? `<button type="button" class="btn ghost" data-arc="mob" aria-label="${A.mobGoA}">${A.mobGo}</button>` : ""}</div>`;
+        })
+        .join("");
+      h += weekly
+        .map((id) => {
+          const on = arcTicked(a, id, td);
+          if (id === "weight")
+            return `<div class="arch"><span class="arck${on ? " on" : ""}" aria-hidden="true">${on ? "✓" : ""}</span><span class="an">${esc(A.blocks.weight)}</span>${lw ? `<span class="sub">${numF(lw.kg)} kg</span>` : open ? "" : `<button type="button" class="btn ghost" data-arc="wk">${A.kgSave} ›</button>`}</div>`;
+          return `<div class="arch"><span class="arck${on ? " on" : ""}" aria-hidden="true">${on ? "✓" : ""}</span><span class="an">${esc(A.blocks[id])}</span>${on ? "" : `<button type="button" class="btn ghost" data-arc="strong" aria-label="${A.strongGo}">🌙 ${A.go}</button>`}</div>`;
+        })
+        .join("");
       h += `</div>`;
     }
-    if (arcHas(a, "test") && wi === a.weeks - 1 && !arcTests(a).last) h += `<div class="note act"><span>${A.testEnd}</span><button type="button" class="btn ghost" data-tab="test">${A.toTest}</button></div>`;
-    const ask = ui.arcEndAsk;
-    h += `<div class="panel"><div class="row between" style="flex-wrap:wrap;gap:8px"><span class="sub">${esc(A.streak(arcStreak(a, wi - 1)))}</span><span class="minirow"><button type="button" class="btn ghost" data-arc="pause">${A.pause}</button><button type="button" class="btn ghost" data-arc="endask">${A.end}</button></span></div>${
-      ask ? `<div class="note"><b>${A.endAsk}</b><div class="inline" style="margin-top:8px"><button type="button" class="btn" data-arc="end">${A.endYes}</button><button type="button" class="btn sec" data-arc="endno">${A.endNo}</button></div></div>` : ""
-    }</div>`;
-    return h;
+    if (open) {
+      h += `<div class="arcwk">`;
+      if (daily.length)
+        h += `<span class="lab">${A.thisWeek}</span><span class="sub">${A.backNote}</span>${daily
+          .map((id) => {
+            const auto = id === "breath",
+              pills = days
+                .map((ds, k) => {
+                  const done = arcTicked(a, id, ds),
+                    can = !auto && arcCanTick(a, ds),
+                    cls = `ad${done ? " on" : ""}${ds === td ? " td" : ""}${ds > td || ds < a.start ? " fut" : ""}`;
+                  return can
+                    ? `<button type="button" class="${cls}" data-arcchk="${id}" data-ad="${ds}" aria-pressed="${done}" aria-label="${esc(fmtDate(ds))}">${t("weekday")[k].slice(0, 2)}</button>`
+                    : `<span class="${cls}" aria-hidden="true">${t("weekday")[k].slice(0, 2)}</span>`;
+                })
+                .join("");
+            const note = id === "sleep23" || id === "sleep7" ? A.sleepNote : id === "cold" ? A.coldNote : "";
+            return `<div class="awk"><span class="an">${esc(A.blocks[id])}${note ? `<small class="sub">${note}</small>` : ""}</span><span class="adays">${pills}</span></div>`;
+          })
+          .join("")}`;
+      if (weekly.includes("weight"))
+        h += `<div class="awk"><span class="an">${esc(A.blocks.weight)}<small class="sub">${lw ? esc(A.kgDone(numF(lw.kg))) : A.weightNote}</small></span>${lw ? "" : `<span class="arkg"><input id="arcKg" class="wc" type="text" inputmode="decimal" placeholder="${A.kgPh}" aria-label="${A.kgPh}"><button type="button" class="btn ghost" data-arc="kg">${A.kgSave}</button></span>`}</div>`;
+      h += `<div class="arcfoot"><span class="sub">${esc(A.streak(arcStreak(a, wi - 1)))}</span><span class="minirow"><button type="button" class="btn ghost" data-arc="pause">${A.pause}</button><button type="button" class="btn ghost" data-arc="endask">${A.end}</button></span></div>`;
+      if (ui.arcEndAsk) h += `<div class="arcnote"><b>${A.endAsk}</b><div class="inline"><button type="button" class="btn" data-arc="end">${A.endYes}</button><button type="button" class="btn sec" data-arc="endno">${A.endNo}</button></div></div>`;
+      h += `</div>`;
+    }
+    if (arcHas(a, "test") && wi === a.weeks - 1 && !arcTests(a).last) h += `<div class="arcnote"><span>${A.testEnd}</span><button type="button" class="btn ghost" data-tab="test">${A.toTest}</button></div>`;
+    h += `<button type="button" class="arcmore" data-arc="wk" aria-expanded="${open}">${open ? A.less : A.more}</button>`;
+    return h + `</div>`;
   }
 
   /* ---------- 10-minute mobility (7n+, reworked after the external review 05.11.2026) ----------
@@ -555,16 +569,24 @@
     mobSay(`${e.name}. ${st.dose ? st.dose + ". " : ""}${st.kind === "reps" ? arcT().mobRepsSay : ""}`);
     renderArc();
   }
+  /* One clock position for live ticks, paused views and redraws after a phase change. */
+  function mobPosition(m) {
+    const st = m?.steps[m.i];
+    if (!st || st.kind !== "timed") return null;
+    let elapsed = ((m.paused ? m.pausedAt : Date.now()) - m.at) / 1000;
+    if (elapsed < 0) return { p: 0, seconds: Math.ceil(-elapsed), lead: true };
+    let p = 0;
+    while (p < st.phases.length && elapsed >= st.phases[p].seconds) elapsed -= st.phases[p++].seconds;
+    return { p, seconds: p < st.phases.length ? Math.ceil(st.phases[p].seconds - elapsed) : 0, done: p >= st.phases.length };
+  }
   function arcMobTick() {
     const m = ui.mob;
     if (!m || !m.run) return clearInterval(arcMobStart.iv);
     const st = m.steps[m.i];
     if (!st || st.kind === "reps") return;
-    let t = (Date.now() - m.at) / 1000;
-    if (t < 0) return mobClock(Math.ceil(-t));
-    let k = 0;
-    while (k < st.phases.length && t >= st.phases[k].seconds) t -= st.phases[k++].seconds;
-    if (k >= st.phases.length) return mobGo(m.i + 1);
+    const pos = mobPosition(m), k = pos.p;
+    if (pos.lead) return mobClock(pos.seconds);
+    if (pos.done) return mobGo(m.i + 1);
     if (k !== m.p || m.spoke !== k) {
       const changed = k !== m.p;
       m.p = k;
@@ -576,7 +598,7 @@
       }
       renderArc();
     }
-    mobClock(Math.ceil(st.phases[k].seconds - t));
+    mobClock(pos.seconds);
   }
   function mobClock(sec) {
     const el = document.getElementById("mobclk");
@@ -643,15 +665,18 @@
     if (!m.run && !m.paused)
       // preview: the exercises with their doses and the actual length
       return `<div class="panel wapan"><span class="lab">${esc(A.mobPrev(Math.round(m.sec / 60)))}</span>${m.steps
-        .map((st) => `<div class="row between" style="gap:10px"><span>${esc(exText(st.id).name)}</span><span class="sub" style="text-align:right">${esc(st.dose)}</span></div>`)
+        .map((st, k) => `<div class="row between mobli"><span class="n num">${k + 1}</span><span class="nm">${esc(exText(st.id).name)}</span><span class="sub">${esc(st.dose)}</span></div>`)
         .join("")}</div><button type="button" class="btn" data-arc="mobstart" ${m.steps.length ? "" : "disabled"}>${A.mobStart}</button>`;
     const st = m.steps[Math.max(0, m.i)],
       e = exText(st.id),
-      ph = st.kind === "timed" ? st.phases[m.p || 0] : null,
+      pos = mobPosition(m),
+      ph = st.kind === "timed" ? st.phases[Math.min(pos.p, st.phases.length - 1)] : null,
+      illustration = hasSketch(st.id) ? `<div class="mobdemo skwrap${m.paused ? " is-paused" : ""}">${sketchSvg(EX[st.id].key)}${SKETCH[EX[st.id].key].hold ? `<span class="skhold">${t("skHold")}</span>` : ""}</div>` : "",
       nx = m.steps[m.i + 1] ? exText(m.steps[m.i + 1].id).name : "";
-    return `<div class="mobrun"><div class="rxtop"><span>${A.mobH} · ${m.i + 1}/${m.steps.length}</span><span class="num">${esc(A.mobAbout(Math.round(m.sec / 60)))}</span></div>
-      ${st.kind === "timed" ? `<div class="mobclk num" id="mobclk">${fmt(ph.seconds)}</div><p class="mobph">${esc(ph.label)}</p>` : `<div class="mobclk mobreps">${esc(st.dose)}</div><p class="mobph">${A.mobRepsH}</p>`}
-      <h2>${esc(e.name)}</h2><p class="sub">${esc(st.dose)} · ${esc(e.desc)}</p>
+    const bar = `<div class="mobsteps" aria-hidden="true">${m.steps.map((_, k) => `<i class="${k < m.i ? "on" : k === m.i ? "cur" : ""}"></i>`).join("")}</div>`;
+    return `<div class="mobrun"><div class="rxtop"><span>${A.mobH} · ${m.i + 1}/${m.steps.length}</span><span class="num">${esc(A.mobAbout(Math.round(m.sec / 60)))}</span></div>${bar}
+      ${st.kind === "timed" ? `<div class="mobclk num" id="mobclk">${fmt(pos.seconds)}</div><p class="mobph">${esc(ph.label)}</p>` : `<div class="mobclk mobreps">${esc(st.dose)}</div><p class="mobph">${A.mobRepsH}</p>`}
+      ${illustration}<h2>${esc(e.name)}</h2><p class="sub">${esc(st.dose)} · ${esc(e.desc)}</p>
       ${nx ? `<p class="sub">${A.mobNext}: ${esc(nx)}</p>` : ""}
       ${m.paused ? `<p class="mobph">${A.mobPaused}</p><button type="button" class="btn" data-arc="mobresume">${A.resume}</button>` : st.kind === "reps" ? `<button type="button" class="btn" data-arc="mobnext">${A.mobNextBtn}</button>` : ""}
       <div class="inline">${m.paused ? "" : `<button type="button" class="btn ghost" data-arc="mobpause">${A.pause}</button>`}<button type="button" class="btn ghost" data-arc="mobstop">${A.stop}</button></div></div>`;
@@ -738,6 +763,11 @@
     if (act === "setup") return arcOpen("setup");
     if (act === "summary") return arcOpen("summary");
     if (act === "mob") return arcMobOpen();
+    if (act === "wk") {
+      ui.arcWk = !ui.arcWk;
+      if (!ui.arcWk) ui.arcEndAsk = false;
+      return render();
+    }
     if (act === "mobstart") return arcMobStart();
     if (act === "mobpause") return arcMobPause();
     if (act === "mobresume") return arcMobResume();

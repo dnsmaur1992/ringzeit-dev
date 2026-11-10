@@ -359,3 +359,50 @@ keine geänderten Übungen oder Dosierungen ohne neue Bewertungen. Ablaufmatrix 
 zusätzliche Prüfungen H1–H9 ohne Befund. Produktionsbuild erfolgreich erstellt.
 Keine echte Browser-/Geräteprüfung; **manuelle Abnahme steht aus**.
 Handprüfung: `docs/einheiten-progression-test.md`. Kein Push/Upload, stabiles Repository unberührt.
+
+
+## Prod-Release 4 – Vorbereitung 09.11.2026
+
+Dev 3385b8b gegen Prod e23d121 geprüft. Übernahme der Technik-/Fitness-Trennung und Abschlusssteuerung
+mit Prod-Kennung, NEWS_V 10 (DE/EN) und Übergang für unbegonnene Altpläne. Begonnene/fortsetzbare
+Einheiten bleiben erhalten. 261 Tests, Baseline, vollständige Matrix 648 und H1–H9 bestanden.
+Synthetische Daten des vorherigen Prod-Codes geprüft, keine echten Nutzerdaten im Testfixture.
+Kein Push/Upload und keine neue echte Browser-/Geräteabnahme. Aktueller Prüfbericht: `release-4-pruefung.md`.
+
+
+## Prod-Korrektur 09.11.2026 – Mobility-Skizzen und Anzeige
+
+Basis f0048fd. Vorhandene Skizzen im Winter-Arc-Player eingebunden, Haltemarkierung und Pausenstatus;
+fehlende Skizze für Zeitlupen-Kicks ergänzt (langsamer CSS-Zyklus). Gemeinsame Zeitpositionsfunktion
+für laufende/pausierte Anzeige. Falschen deutschen Namensschlüssel bei der kompakten Rundenskizze korrigiert.
+264 Tests, Baseline und 216 Abläufe mit H1–H9 bestanden. Handprüfung steht aus, kein Push/Upload.
+Details: `winterarc-mobility-test.md`. Keine Änderung an Datenspeicher oder Trainingsdosierungen.
+
+
+## Prod-Feinschliff 10.11.2026 – Winter Arc
+
+Basis a8d7169. Nur Darstellung und Texte, keine Änderung an Daten, Plänen oder Dosierungen.
+- Heute: Die Winter-Arc-Karte ist jetzt **eine** Karte. Kopf, Wochenziele, Haken und die Fußzeile mit Serie,
+  Pausieren und Beenden teilen sich Rahmen und Winter-Design. Der Impuls-Satz steht kleiner und kursiv.
+- Fehlende CSS-Klasse `.row.between` ergänzt. Mobility-Vorschau und Bilanz zeigen Dosis und Werte jetzt rechts
+  bündig. Die Bilanz hatte „Fitnesstest vorher → nachherFür den Vergleich …“ ohne Umbruch.
+- Doppelter Punkt nach deutschen Daten entfernt („startet Mo., 16. Nov..“, „pausiert seit Mo., 9. Nov..“).
+- Vor dem Start: „✎“ heißt jetzt „✎ Anpassen“ / „✎ Edit“.
+- Mobility: nummerierte Vorschau, Fortschrittsbalken der Übungen, engere Abstände, Wdh.-Angabe passt in eine
+  Zeile, Bedienknöpfe unten.
+- Angebotskarte im Oktober bis Januar im Winter-Look. „Trainings pro Woche“ in der Einrichtung bündig.
+Prüfung: 264 Tests (zweimal), Baseline gleich, 648 Abläufe ohne Befund, H1–H9, Browser 13/13, Update vom Prod-Stand
+a8d7169 mit echter Sicherung (Daten vollständig; die zusätzliche Einheit ist die heute neu angelegte und tritt
+genauso mit dem unveränderten Prod-Stand auf). Kein Push/Upload.
+
+## Winter Arc kompakt und Angleich Prod ↔ Dev (10.11.2026)
+
+- **Heute:** Die Winter-Arc-Karte zeigt nur noch die Wochenziele als schlanke Zeilen und die Haken für heute.
+  Die Woche mit den Tages-Knöpfen (Nachtragen bis 2 Tage zurück), die Gewichtseingabe, die Hinweise, die Serie
+  und Pausieren/Beenden öffnen sich über „Woche, Nachtragen & Optionen ▾“. Die Karte ist eingeklappt etwa halb so hoch.
+- **Angleich:** Dev hat jetzt alles, was Codex direkt in Prod gebracht hatte: Release 4 (Übergang alter Planvorschauen,
+  „Was ist neu“ Version 10), Mobility-Skizzen, die stehende Restzeit in der Pause und die Rundentimer-Skizze. Dazu kommt der
+  Feinschliff vom 10.11. Die Release-4-Tests und der Cache-Test gelten jetzt in beiden Apps (eigene Kennung aus `APP_ID`).
+  `tools/release.py` erzeugt aus Dev wieder genau den Prod-Code (geprüft: nur Version und Zeitstempel unterscheiden sich).
+- Prüfung: 264 Tests in Dev und Prod, Baseline gleich, 648 Abläufe ohne Befund, Browser, Isolation, Update vom Prod-Stand
+  a8d7169 mit echter Sicherung.

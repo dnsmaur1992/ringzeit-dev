@@ -21,6 +21,7 @@ R = [
     ("src/app/06-storage.js", 'const APP_ID = "ringzeit-dev";', 'const APP_ID = "ringzeit";', 1),
     ("src/app/06-storage.js", 'const APP_NAME = "Ringzeit Dev";', 'const APP_NAME = "Ringzeit";', 1),
     ("src/app/06-storage.js", "/* Development copy (ringzeit-dev): its own app id", "/* Stable app (ringzeit; development copy: ringzeit-dev): its own app id", 1),
+    ("src/app/06-storage.js", "apart from the stable Ringzeit, which runs on the same origin", "apart from Ringzeit Dev, which runs on the same origin", 1),
     ("src/index.html", "<title>Ringzeit Dev</title>", "<title>Ringzeit</title>", 1),
     ("src/index.html", '<div class="lt" id="loaderTitle">Ringzeit Dev</div>', '<div class="lt" id="loaderTitle">Ringzeit</div>', 1),
     ("src/app/01-overview-i18n.js", 'impBad: "Diese Datei ist keine Sicherung von Ringzeit Dev. Sicherungen der stabilen Ringzeit-App werden hier bewusst nicht geladen.",', 'impBad: "Diese Datei ist keine Ringzeit-Sicherung. Sicherungen der Entwicklungsversion Ringzeit Dev werden hier bewusst nicht geladen.",', 1),
@@ -95,7 +96,7 @@ def main(out):
                     for m in re.finditer(r"ringzeit-dev(?!-)|Ringzeit Dev", t):
                         line = t[: m.start()].count("\n") + 1
                         ctx = t[max(0, m.start() - 60) : m.end() + 20]
-                        if "Entwicklungsversion Ringzeit Dev" in ctx or "development version Ringzeit Dev" in ctx or "development copy: ringzeit-dev" in ctx or 'storage key, e.g. "ringzeit-dev.v1"' in ctx:
+                        if "Entwicklungsversion Ringzeit Dev" in ctx or "development version Ringzeit Dev" in ctx or "development copy: ringzeit-dev" in ctx or 'storage key, e.g. "ringzeit-dev.v1"' in ctx or "apart from Ringzeit Dev, which runs" in ctx or "other=own==='ringzeit'?'ringzeit-dev'" in ctx:
                             continue
                         left.append(f"{os.path.relpath(os.path.join(base, fn), out)}:{line}")
     if left:
