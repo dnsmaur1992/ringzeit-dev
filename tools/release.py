@@ -14,7 +14,9 @@ import os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP = {".git", "node_modules", "build", "pwa"}
 # files of the dev repo that do not belong into the stable repo
-DROP = ["tests/isolation.e2e.mjs", "tools/release.py", "tools/release-qr.svg"]
+DROP = ["tests/isolation.e2e.mjs", "tools/release.py", "tools/release-qr.svg",
+        # test guides with upload hints for one repo – each repo keeps its own (docs/release.md)
+        "docs/technik-fitness-test.md", "docs/einheiten-progression-test.md"]
 
 # (file, old, new, count)
 R = [
@@ -55,9 +57,9 @@ R = [
 ]
 # the development note under the intro becomes a short release note
 DEV_NOTE = re.compile(r"> \*\*Ringzeit Dev – Entwicklungsversion\.\*\*[^\n]*\n")
-REL_NOTE = ("> **Neu:** Neben Kickboxen plant Ringzeit jetzt auch **Boxen** (DBV) und **Taekwondo** (WT/DTU, ITF-D). Wer Ringzeit schon nutzt, "
-            "behält alle Daten – Profil, Verlauf, Gürtel und Turniere werden beim ersten Start übernommen. Entwickelt wird in "
-            "[ringzeit-dev](https://github.com/dnsmaur1992/ringzeit-dev). Stand und Prüfungen: [Umsetzungsstand](docs/implementation-status.md) · "
+REL_NOTE = ("> **Ringzeit** plant dein Training für Kickboxen, Boxen und Taekwondo. Wer Ringzeit nutzt, behält bei jedem Update "
+            "alle Daten. Entwickelt wird in [ringzeit-dev](https://github.com/dnsmaur1992/ringzeit-dev); diese App wird nur über ein "
+            "Release von dort aktualisiert. Stand und Prüfungen: [Umsetzungsstand](docs/implementation-status.md) · "
             "[Gesamtprüfung](docs/final-check.md) · [Release](docs/release.md).\n")
 
 
