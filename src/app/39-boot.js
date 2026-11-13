@@ -21,6 +21,18 @@
     }
     return changed;
   }
+  /* all data lives on this device: the installed app asks the browser once per start not to clear it under storage
+     pressure (a normal tab asks nothing, so no permission prompt appears there) */
+  function askPersist() {
+    try {
+      if (isStandalone() && navigator.storage && navigator.storage.persist)
+        return navigator.storage
+          .persisted()
+          .then((p) => p || navigator.storage.persist())
+          .catch(() => false);
+    } catch (e) {}
+    return null;
+  }
   (function boot() {
     const local = store.readLocal();
     if (local) S = hydrate(local);
@@ -31,6 +43,7 @@
     }
     if (!S.profile.planStart) S.profile.planStart = iso(today());
     if (local && refreshLegacyPlans()) store.save();
+    askPersist();
     if (!local && S.profile.example)
       ui.onb = {
         step: 0,
@@ -38,6 +51,7 @@
         days: [0, 2, 4],
         minutes: 75,
         birthYear: "",
+        birth: "",
         comp: "",
         clubDays: [],
         clubMin: 90,
@@ -52,6 +66,13 @@
         ui.onb = { ack: {}, ackOnly: true };
         renderOnb();
         return;
+      }
+      if (!ui.onb && needBirth()) {
+        resumeReady = true;
+        return askBirth(() => {
+          if (needNews()) return showNews();
+          if (!S.profile.toured) startTour();
+        });
       }
       const next = () => {
         if (!ui.onb && needNews()) return showNews();
