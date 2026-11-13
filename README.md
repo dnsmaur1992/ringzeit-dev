@@ -258,6 +258,12 @@ Die Tests führen die echte Trainingslogik und Ereignisbehandlung in Node aus. T
 
 ## Updates veröffentlichen
 
+> **Arbeitsregel: Änderungen immer zuerst in [Ringzeit Dev](https://github.com/dnsmaur1992/ringzeit-dev).** Die stabile
+> App (`ringzeit`) wird nur über ein Release aus `ringzeit-dev` aktualisiert (`python3 tools/release.py`, siehe
+> [Release](docs/release.md)), nie direkt –
+> auch nicht durch andere Werkzeuge wie Codex. Sonst laufen die beiden Repos auseinander und das nächste Release
+> überschreibt Änderungen, die nur in Prod stehen.
+
 Für den Betreiber des Repositorys:
 
 1. Die neuen Dateien `index.html`, `sw.js` und – falls geändert – `manifest.webmanifest` hochladen (*Add file → Upload files*) und committen – dazu die geänderten Quelldateien in ihre Ordner unter `src/`. Quelldateien gehören **nur** nach `src`, nicht in den Hauptordner.
