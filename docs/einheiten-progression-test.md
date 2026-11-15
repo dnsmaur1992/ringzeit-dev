@@ -12,7 +12,8 @@ Vorher gegebenenfalls eine Datensicherung exportieren. Keine erfundenen Tests im
 6. Nächste eigene Einheit derselben Sportart und Gattung ansehen: Bei normalen Bedingungen kürzere
    bzw. längere Pause. Eine Technikbewertung verändert keine Krafteinheit; WT und ITF bleiben getrennt.
 7. Bei Kraft gilt die angezeigte Satzpause auch tatsächlich im Timer; Gewichte und Wiederholungen
-   werden nicht automatisch um den Emoji-Prozentsatz verändert. Runden-Arbeitszeit bleibt erhalten.
+   werden nicht um den Emoji-Prozentsatz verändert, sondern folgen den eingetragenen Sätzen (2 von 3
+   Einheiten mehr geschafft → Ziel steigt, Satzpause an diesem Tag 60 s). Runden-Arbeitszeit bleibt erhalten.
 8. Neu laden/Plan wieder öffnen: Die Erhöhung darf sich nicht erneut aufaddieren. Bereits begonnenes
    Training behält seine Vorgaben. Bewertung im Verlauf ändern und Wirkung auf unbegonnene Pläne prüfen.
 9. Entlastung, schlechte Tagesform und hohe Vereinsvorbelastung: Schutzregeln haben Vorrang.
