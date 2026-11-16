@@ -589,3 +589,28 @@ genauso mit dem unveränderten Prod-Stand auf). Kein Push/Upload.
   ohne sie gesperrt ist.
 - Tests: 279.
 
+## iOS: untere Leiste bleibt nach dem Scrollen mitten im Bild hängen (15.11.2026)
+
+- Meldung: installierte App (Home-Bildschirm), ohne Tastatur, Leiste bleibt hängen. Im Chromium nicht nachstellbar.
+- Gegenmaßnahmen: `.tabbar` mit eigener Ebene (`translateZ(0)`, `will-change`), kein `background-attachment: fixed`
+  am `body` mehr (iOS ignoriert es, malt aber feste Ebenen fehlerhaft neu), `tabsReanchor()`: nach dem Scrollen, bei
+  Größenänderung und Rückkehr in die App wird die Leiste neu gesetzt, wenn ihre Unterkante nicht am Fensterende liegt
+  (nicht während einer Eingabe mit Tastatur, nicht während des Trainings).
+- Wirkung muss auf dem iPhone bestätigt werden; falls nicht: App-Gerüst mit eigenem Scrollbereich (größerer Umbau).
+- Tests: 280.
+
+## Leitsatz zum Schwerpunkt und ausgeschriebene Ansagen (16.11.2026)
+
+- Leitsatz („Schwerpunkt heute: Achte auf …, ohne … zu vernachlässigen“) für jeden Schwerpunkt bzw. jedes versteckte
+  Thema aller Sportarten, DE/EN (`t("cues")`). Erscheint bei jeder Einheit mit Technikrunden (Technik, Technik +
+  Kondition, Sparring) als **eigene Seite zwischen Aufwärmen und Hauptteil** (Betreiber): groß der Satz, „Zurück“ und
+  „Los geht's“, beim Erscheinen einmal angesagt (`cueGate`, `cuePageHtml`). Die Schritte des Trainings bleiben
+  unverändert (begonnene Trainings behalten ihren Platz); ist im Hauptteil schon eine Runde erledigt, entfällt die
+  Seite. Nicht auf der Planseite, nicht im Rundenbild.
+- Taekwondo Technik + Kondition und Sparring bekommen dafür einen Tritt als Schwerpunkt (`chooseFocus(true)`, ohne
+  breite Schwerpunkte – die Rundenarten bleiben). Kickboxen/Boxen behalten dort die versteckten Themen.
+- Ansagen: `spokenText()` schreibt für die Sprachausgabe aus – s/Sek. → Sekunden, min → Minuten, Wdh. →
+  Wiederholungen, × → mal, 8–12 → 8 bis 12, kg, km, m, %, z. B., bzw., ca., à … (EN entsprechend). Angezeigt
+  bleiben die Abkürzungen. Gilt für jede Ansage (`say`).
+- Tests: 282.
+
