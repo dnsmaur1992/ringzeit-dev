@@ -45,7 +45,8 @@
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     background-image: radial-gradient(120% 60% at 50% -10%, #16181d 0%, var(--night) 60%);
-    background-attachment: fixed;
+    /* no background-attachment: fixed – iOS ignores it but repaints fixed layers (the tab bar) badly while scrolling */
+    background-repeat: no-repeat;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
     padding-block: 0 calc(92px + env(safe-area-inset-bottom, 0px));
@@ -128,6 +129,33 @@
     letter-spacing: 0.18em;
     color: var(--mist);
     margin: 0 0 10px 2px;
+  }
+  /* own page between warm-up and main part: the focus of the unit */
+  .cuepage {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .cuebox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 6px;
+  }
+  .cuebox small {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ice);
+  }
+  .cuebox p {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 700;
   }
   /* help "?" next to the language switch (Betreiber 15.11.2026) */
   .top > div:first-child {
@@ -1127,6 +1155,10 @@
     right: 0;
     bottom: 0;
     z-index: 20;
+    /* own compositing layer: iOS (installed app) otherwise sometimes leaves the bar mid-screen after scrolling */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
     background: rgba(10, 11, 13, 0.86);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
