@@ -515,22 +515,6 @@
     const s = c.filter((x) => STRIKE.has(x));
     return s.length ? s.filter((x) => KICKS.has(x)).length / s.length : 0;
   };
-  /* "More boxing"/"More kicks": combos with the preferred share are picked clearly more often (squared weight),
-     the other side still appears – nobody should lose kicks or punches entirely */
-  function weightedPick(pool, focus) {
-    if (focus === "bal") return rnd(pool);
-    const w = pool.map((c) => {
-      const k = kickShare(c),
-        x = focus === "kick" ? k : 1 - k;
-      return (0.15 + x) ** FOCUS_POW;
-    });
-    let r = Math.random() * w.reduce((a, b) => a + b, 0);
-    for (let i = 0; i < pool.length; i++) {
-      r -= w[i];
-      if (r <= 0) return pool[i];
-    }
-    return pool[pool.length - 1];
-  }
   const kneeAnk = () => S.profile.limits.some((l) => l === "knee" || l === "ankle");
   function chooseTheme() {
     if (isTkd()) return null; // taekwondo has no hidden themes yet
@@ -1184,6 +1168,45 @@
       if (a === "lowk" && ds.length === 2) return { a, d: lowTurn++ % 2 ? "step" : "check" };
       return { a, d: (ds[Math.floor(Math.random() * ds.length)] || ["cover"])[0] };
     };
+    /* in the middle of the combo (28.11.2026): the partner's counter fits the distance A is at (after a hook or uppercut
+       no kick to the head or push kick, after a push kick no hook), and A's defence fits how the combo goes on (an
+       evasive step out only when a reaching technique follows; before a hook or uppercut A stays – cover, parry, block) */
+    const OUTD = new Set(["step", "deflect", "lift"]);
+    const inPlace = (a) => COUNTER_ATT[a].d.filter(([d, l]) => lvl >= l && !OUTD.has(d) && !(ka && d === "check")).map(([d]) => d);
+    const NEAR = new Set(["jab", "cross", "hook", "hookb", "crossb", "upper", "knee", "lowk"]),
+      FAR = new Set(["jab", "cross", "front", "side", "round", "roundh", "lowk", "sweep", "crossb"]);
+    const fitsAt = (prev) => {
+      const R = (FT[prev] || {}).r || "M";
+      return (a) => (R === "C" ? NEAR.has(a) : R === "L" ? FAR.has(a) : a !== "knee");
+    };
+    // a cut where the partner still has a fresh attack that fits (no attack twice in a unit)
+    const freshAt = (i) => {
+      const fits = fitsAt(c[i - 1]),
+        stay = (FT[c[i]] || {}).r === "C";
+      return focus.length ? focus.some((x) => fits(x.att) && !usedAtt.has(x.att) && !(stay && OUTD.has(x.d))) : atts.some((a) => fits(a) && !usedAtt.has(a) && (!stay || inPlace(a).length));
+    };
+    const pickMid = (prev, next) => {
+      const fits = fitsAt(prev),
+        stay = (FT[next] || {}).r === "C";
+      const keepF = focus.slice(),
+        keepA = atts.slice();
+      // the pool by distance – and, when A stays close, only attacks with a defence in place (a focus keeps its own
+      // attacks when none of them fits)
+      const fF = focus.filter((x) => fits(x.att) && !(stay && OUTD.has(x.d)));
+      if (fF.length) focus.splice(0, focus.length, ...fF);
+      const fA = atts.filter((a) => fits(a) && (!stay || inPlace(a).length));
+      if (fA.length) atts.splice(0, atts.length, ...fA);
+      let x = pick(false);
+      focus.splice(0, focus.length, ...keepF);
+      atts.splice(0, atts.length, ...keepA);
+      if (stay && OUTD.has(x.d) && !focus.length && inPlace(x.a).length) {
+        const ds = inPlace(x.a);
+        // (low kicks stay half checked, half stepped out over the unit)
+        if (x.a === "lowk") lowTurn--;
+        x = { ...x, d: ds[Math.floor(Math.random() * ds.length)] };
+      }
+      return x;
+    };
     // the quick exchange: after the defence you answer right away (Fortgeschritten about half the time, Wettkampf mostly)
     const answer = (x) => {
       if (kid || Math.random() >= [0, 0.5, 0.85][lvl]) return x;
@@ -1208,7 +1231,11 @@
       r = {};
     if (at === "pre") r.pre = pick(lowOk && Math.random() < 0.5);
     else if (at === "post") r.post = answer(pick(lowOk && Math.random() < 0.35));
-    else r.mid = { at: cuts[Math.floor(Math.random() * cuts.length)], ...pick(false) };
+    else {
+      const order = cuts.slice().sort(() => Math.random() - 0.5),
+        i = order.find(freshAt) || order[0];
+      r.mid = { at: i, ...pickMid(c[i - 1], c[i]) };
+    }
     // Wettkampf: in some rounds the partner comes in twice – before your combo and again after it
     const dbl = discOf() === "fc" ? [0, 0.25, 0.6][lvl] : lvl >= 2 ? 0.4 : 0;
     // only with an attack not used yet in this unit – no partner attack twice (17.11.2026: with 6 rounds × 2 actions
@@ -2432,8 +2459,11 @@
         }
       }
       // with a partner (technique and conditioning): theme blocks of 8–12 minutes in one go instead of rounds (Teil 43)
-      const pbL = (type === "T" || type === "C") && eq.includes("partner") && !lowTime() ? pbLayout(main, rb) : null;
-      if (pbL) main = Math.round((pbL.n * pbL.w + (pbL.n - 1) * rb) / 60);
+      const pbOn = (type === "T" || type === "C") && eq.includes("partner") && !lowTime(),
+        // with a bag as well: 2 bag rounds after the blocks (26.11.2026)
+        pbBag = pbOn && eq.includes("bag") ? 2 : 0,
+        pbL = pbOn ? pbLayout(main - (pbBag * (fw + rb)) / 60, rb) : null;
+      if (pbL) main = Math.round((pbL.n * pbL.w + (pbL.n - 1) * rb + pbBag * (fw + rb)) / 60);
       const sup = rest - exMin - main;
       if (type === "P" && eq.includes("partner")) {
         notes.push(t("gearNote"));
@@ -2460,6 +2490,7 @@
       } else if (type === "P") items = sparRounds(nR, loc, eq, soft || ph.phase === "grade");
       else if (pbL) {
         items = pbUnit(type, pbL, theme);
+        for (let k = 0; k < pbBag; k++) items.push({ kind: "round", k: "bag", combo: combo("bag", theme), w: fw, fin: 1 });
         // tournament pace / focus block: the pace stage and the last stage at fight pace
         if ((fmtR && !taper) || (br && br.pace)) items.forEach((it) => (it.pace = true));
         if (br && br.cue) items.forEach((it) => (it.cue = br.cue));

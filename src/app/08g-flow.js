@@ -114,6 +114,8 @@
     if (SPECIAL.has(b) && c.some((x) => SPECIAL.has(x))) return 0;
     if (A.push && B.r === "C") return 0;
     if (A.r === "C" && B.r === "L") return 0;
+    // (28.11.2026) out of an uppercut or a knee no head kick – too close, the partner's glove is under the chin
+    if ((a === "upper" || a === "knee") && B.k && B.head) return 0;
     if (B.spin && (A.spin || sa !== "L" || !FLOW_SPIN_FROM.has(a) || (b === "back" && a === "hook"))) return 0;
     if (B.jump && !A.h) return 0;
     if (b === "sweep" && sa !== "R") return 0;
@@ -133,7 +135,7 @@
   };
   /* is a combo built by the rules? (own club combos are never checked – they stay as entered) */
   function flowOk(c, ctx = flowCtx()) {
-    const core = c[c.length - 1] === "step" ? c.slice(0, -1) : c;
+    const core = c[c.length - 1] === "step" || c[c.length - 1] === "stepb" ? c.slice(0, -1) : c;
     if (!core.length) return false;
     // a kick chain (only kicks: wrist limit on the bag, kick chains) may hold more kicks in a row
     if (!ctx.tkd && core.every((x) => KICKS.has(x))) ctx = { ...ctx, kickOnly: true };
@@ -263,7 +265,8 @@
     const fs = kickOnly || handOnly ? {} : focusSpec(theme),
       must0 = o.must ? (c) => c.includes(o.must) && (!fs.must || fs.must(c)) : fs.must,
       must = o.mustFn ? (c) => o.mustFn(c) && (!must0 || must0(c)) : must0,
-      len = o.len || kbLen(),
+      // boxing with a wrist or shoulder limit: light work – the short end (4 actions)
+      len = o.len || (isBox() && (lim.includes("wrist") || lim.includes("shoulder")) && ageGroup() !== "kids" ? [4, 4] : kbLen()),
       base = { allowed, len, ctx: { kickOnly }, avoid: o.avoid };
     // kick chains (7f): from level 1 about every fifth combo only kicks – not for children, not with a knee/ankle limit;
     // "more boxing" fewer, "more kicks" more
@@ -272,8 +275,11 @@
       const kc = flowGen({ allowed: new Set([...allowed].filter((x) => KICKS.has(x))), len: [4, 5], ctx: { kickOnly: true }, avoid: o.avoid });
       if (kc) return kc;
     }
+    const first = () => flowGen({ ...base, start: o.start || (fs.start && fs.start.every((x) => allowed.has(x)) ? fs.start : null), end: fs.end && [...fs.end].some((x) => allowed.has(x)) ? fs.end : null, must, exit: fs.exit && !o.noExit });
+    // strict (partner theme blocks, 28.11.2026): the theme is never dropped – no combo rather than one without it
+    if (o.strict) return first();
     const one = () =>
-      flowGen({ ...base, start: o.start || (fs.start && fs.start.every((x) => allowed.has(x)) ? fs.start : null), end: fs.end && [...fs.end].some((x) => allowed.has(x)) ? fs.end : null, must, exit: fs.exit && !o.noExit }) ||
+      first() ||
       flowGen({ ...base, must: o.must ? (c) => c.includes(o.must) : null }) ||
       flowGen({ ...base, len: [2, Math.max(2, len[1])] });
     const c = one();
